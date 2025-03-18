@@ -3,33 +3,50 @@
 skinparam packageStyle rectangle
 'skinparam shadowing false
 
-skinparam rectangle{
-    BorderColor yellow
-}
 
 'title Use Case Diagram Example
 
 left to right direction
 
 rectangle "System Actors" as actors {
-    actor Freelancer
-    actor "Organization\nEmployee" as Employee
+    actor "Player" as Player
+    actor "Editor" as Editor
+    actor "Product\nOwner" as Owner
 }
-
-
-note right of Freelancer
-    Actor identified but still
-    no concrete use cases
-end note
 
 rectangle "Use Cases" as usecases{
-    usecase "UC6 - Create a Task" as UC6
-    Employee --> UC6
+    usecase "UC1 - Create a map with a size and name" as UC1
+    Editor --> UC1
+
+    usecase "UC2 - Add an industry in a position XY of the selected map." as UC2
+    Editor --> UC2
+
+    usecase "UC3 - Add a city in a position XY of the selected map, with a name and a positive number of house blocks" as UC3
+    Editor --> UC3
+
+    usecase "UC4 - Create a scenario for a selected map." as UC4
+    Editor --> UC4
+
+    usecase "UC5 - Build a station." as UC5
+    Player --> UC5
+
+    usecase "UC6 - Upgrade a selected station with a building" as UC6
+    Player --> UC6
+
+    usecase "UC7 -  List all the stations to select one to see its details." as UC7
+    Player --> UC7
+
+    usecase "UC9 -  Buy a train." as UC9
+    Player --> UC9
+
+    usecase "UC10 - Assign a selected train to a route with a valid station and the respective list of cargoes to be picked up." as UC10
+    Player --> UC10
+
+    usecase "UC12 - Create a simulator that generates cargoes at current stations, automatically." as UC12
+    Owner --> UC12
+
+
 }
-note right of actors
-    Rectangles and Titles are for
-    demonstration purposes only.
-    Omitt on your diagrams.
-end note
+
 
 @enduml

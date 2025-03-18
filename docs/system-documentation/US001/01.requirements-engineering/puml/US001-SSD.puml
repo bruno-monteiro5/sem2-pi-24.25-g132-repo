@@ -5,28 +5,28 @@ skinparam shadowing false
 
 autonumber
 
-actor "Organization\nEmployee" as Employee
+actor "Editor" as Editor
 participant ":System" as System
 
-activate Employee
+activate Editor
 
-    Employee -> System : asks to create a new map
+    Editor -> System : asks to create a new map
     activate System
 
 
 
-        System --> Employee : requests data (i.e. size and name)
+        System --> Editor : requests data (i.e. size and name)
     deactivate System
 
-    Employee -> System : types requested data
+    Editor -> System : types requested data
     activate System
 
-        System --> Employee : shows all data and requests confirmation
+        System --> Editor : shows all data and requests confirmation
     deactivate System
 
-    Employee -> System : confirms data
+    Editor -> System : confirms data
     activate System
 
-        System --> Employee : displays operation success
+        System --> Editor : displays operation success
     deactivate System
 @enduml
