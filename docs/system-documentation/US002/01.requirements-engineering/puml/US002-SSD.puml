@@ -10,19 +10,19 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : select a map
+    Employee -> System : asks to add and industry
     activate System
 
-        System --> Employee : show the selected map
+        System --> Employee : show a maps list and asks to select one
     deactivate System
 
-    Employee -> System : choose the position XY for the new industry
+    Employee -> System :selects a map
     activate System
 
-        System --> Employee : requests data (i.e. type, name, cost,)
+        System --> Employee : requests data (i.e. type, name, cost, XY position)
     deactivate System
 
-    Employee -> System : insert the industry details
+    Employee -> System : types requested data
     activate System
 
         System --> Employee : shows all data and requests confirmation
