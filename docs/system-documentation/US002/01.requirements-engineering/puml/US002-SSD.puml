@@ -10,7 +10,7 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to add and industry
+    Employee -> System : asks to add an industry
     activate System
 
         System --> Employee : show a maps list and asks to select one
