@@ -44,7 +44,7 @@ map, with a name and a positive number of house blocks.
     * Number of house blocks
 	
 * Selected data:
-    * Manual or automatic (random) house block placement.
+    * Manual or automatic (random) house block placement
 
 **Output Data:**
 
