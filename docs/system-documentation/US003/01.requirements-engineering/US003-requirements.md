@@ -32,7 +32,7 @@ map, with a name and a positive number of house blocks.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US001 - Create a map" as there must be at least one map to creat the city.
 
 ### 1.5 Input and Output Data
 
