@@ -51,7 +51,7 @@ There is no acceptance criteria yet.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/US006-SSD.svg)
+![System Sequence Diagram](svg/US007-SSD.svg)
 
 **_Other alternatives might exist._**
 

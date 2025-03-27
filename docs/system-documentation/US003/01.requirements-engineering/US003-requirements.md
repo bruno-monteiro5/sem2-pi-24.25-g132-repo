@@ -52,7 +52,7 @@ map, with a name and a positive number of house blocks.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/US006-SSD.svg)
+![System Sequence Diagram](svg/US003-SSD.svg)
 
 **_Other alternatives might exist._**
 
