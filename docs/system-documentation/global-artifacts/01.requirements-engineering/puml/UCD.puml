@@ -39,7 +39,7 @@ rectangle "Use Cases" as usecases{
     usecase "UC9 -  Buy a train." as UC9
     Player --> UC9
 
-    usecase "UC10 - Assign a selected train to a route." as UC10
+    usecase "UC10 - Assign a train to a route." as UC10
     Player --> UC10
 
     usecase "UC12 - Create a simulator." as UC12
