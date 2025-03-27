@@ -4,12 +4,12 @@
 
 The team is formed by the students identified in the following table.
 
-| Student Number | Name              |
-|----------------|-------------------|
-| **1XXXXXX**    | Name of student 1 |
-| **1XXXXXX**    | Name of student 2 |
-| **1XXXXXX**    | Name of student 3 |
-| **1XXXXXX**    | Name of student 4 |
+| Student Number | Name             |
+|----------------|------------------|
+| **1241478**    | Lourenço Aragão  |
+| **1241129**    | Gustavo Ferreira |
+| **1241039**    | Francisco Vieira |
+| **1240901**    | Bruno Monteiro   |
 
 # 2. Task Distribution ###
 
@@ -33,8 +33,13 @@ At last, remember that each User Story does not stand alone... it needs to be in
 | [Use Case Diagram (UCD)](system-documentation/global-artifacts/01.requirements-engineering/use-case-diagram.md)                | all                                  | all      | all      |
 | [Supplementary Specification](system-documentation/global-artifacts/01.requirements-engineering/suplementary-specification.md) | all                                  | all      | all      |
 | [Domain Model](system-documentation/global-artifacts/01.requirements-engineering/domain-model.md)                              | all                                  | all      | all      |
-| US01 (SDP Activities)                                                                                                          | [1XXXXXX](system-documentation/US01) |          |          |
-| US02 (SDP Activities)                                                                                                          | [1XXXXXX](system-documentation/US02) |          |          |
-| US03 (SDP Activities)                                                                                                          | [1XXXXXX](system-documentation/US03) |          |          |
-| ...                                                                                                                            | ...                                  | ...      | ...      |
-| ...                                                                                                                            | ...                                  | ...      | ...      |
+| US01 (SDP Activities)                                                                                                          | [1240901](system-documentation/US01) |          |          |
+| US02 (SDP Activities)                                                                                                          | [1241039](system-documentation/US02) |          |          |
+| US03 (SDP Activities)                                                                                                          | [1241129](system-documentation/US03) |          |          |
+| US04 (SDP Activities)                                                                                                          | [1241478](system-documentation/US04) | ...      | ...      |
+| US05 (SDP Activities)                                                                                                          | [1240901](system-documentation/US05) | ...      | ...      |
+| US06 (SDP Activities)                                                                                                          | [1241039](system-documentation/US06) |          |          |  
+| US07 (SDP Activities)                                                                                                          | [1240901](system-documentation/US07) |          |          |
+| US09 (SDP Activities)                                                                                                          | [1241039](system-documentation/US09) |          |          |
+| US10 (SDP Activities)                                                                                                          | [1241129](system-documentation/US10) |          |          |
+| US12 (SDP Activities)                                                                                                          | [1241478](system-documentation/US12) | ...      | ...      |
