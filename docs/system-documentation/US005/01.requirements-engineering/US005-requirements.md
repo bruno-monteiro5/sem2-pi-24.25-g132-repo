@@ -1,65 +1,65 @@
-# US006 - Create a Task
+# US005 - Build a station
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As a Player, I want to build station (can be a depot, a station or a terminal) with a location in the current map.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+>   There are three types of stations:
+>   * Depot: Costs 50k, has a 3x3 radius
+>   * Station: Costs 100k, has a 4x4 radius
+>   * Terminal: Costs 200k, has a 5x5 radius
+ 
+>   The system should propose a name for the station based on the closest city and the station (e.g., Porto Terminal, Ovar Station or Silvalde Depot).
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+>   For Depots and Terminals, the center is the geometric center. For Stations, the player must define the center (NE, SE, NW, SW).
+
+
+
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** Should there be a predefined name for the station?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** There should be a name sugestion
 
-> **Question:** Monetary data is expressed in any particular currency?
->
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC1:** Overbuilding is not possible.
+* **AC2:** The system suggests a name for the station based on the closest city and station type.
+* **AC3:**  
+
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US001 - Create a map" as there must be a map to the station to be built on.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
-	
+    * selected location on the map
+   
 * Selected data:
-    * a task category 
+    * a station type
+    * center (in the case of a station)
 
 **Output Data:**
 
-* List of existing task categories
+* List of station types
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/US006-SSD.svg)
+![System Sequence Diagram](svg/US005-SSD.svg)
 
 **_Other alternatives might exist._**
 
 ### 1.7 Other Relevant Remarks
-
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
