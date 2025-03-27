@@ -1,4 +1,4 @@
-# US006 - Create a Task
+# US004 - Create a scenario
 
 ## 1. Requirements Engineering
 

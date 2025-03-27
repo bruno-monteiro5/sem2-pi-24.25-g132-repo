@@ -1,4 +1,4 @@
-# US002 - Create a Task
+# US002 - Add an industry
 
 ## 1. Requirements Engineering
 

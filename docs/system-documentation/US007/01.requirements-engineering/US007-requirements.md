@@ -1,4 +1,4 @@
-# US007 - Sees the Details of a Station
+# US007 - See the details of a station
 
 ## 1. Requirements Engineering
 

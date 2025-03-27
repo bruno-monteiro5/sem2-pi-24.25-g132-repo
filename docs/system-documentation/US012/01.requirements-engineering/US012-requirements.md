@@ -1,4 +1,4 @@
-# US006 - Create a Task
+# US006 - Create a simulator
 
 ## 1. Requirements Engineering
 
