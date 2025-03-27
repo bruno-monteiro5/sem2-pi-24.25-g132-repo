@@ -1,4 +1,4 @@
-# US002 - Adds an industry
+# US002 - Add an industry
 
 [Requirements Engineering](01.requirements-engineering/US002-requirements)
 

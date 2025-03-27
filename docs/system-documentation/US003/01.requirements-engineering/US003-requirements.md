@@ -1,4 +1,4 @@
-# US003 - Adds a City
+# US003 - Add a City
 
 ## 1. Requirements Engineering
 

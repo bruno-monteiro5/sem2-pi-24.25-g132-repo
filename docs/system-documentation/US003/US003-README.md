@@ -1,4 +1,4 @@
-# US003 - adds a city
+# US003 - Add a City
 
 [Requirements Engineering](01.requirements-engineering/US003-requirements)
 
