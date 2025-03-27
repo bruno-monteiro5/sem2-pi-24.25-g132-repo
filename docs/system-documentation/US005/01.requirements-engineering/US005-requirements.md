@@ -26,7 +26,7 @@ As a Player, I want to build station (can be a depot, a station or a terminal) w
 
 > **Question:** Should there be a predefined name for the station?
 >
-> **Answer:** There should be a name sugestion
+> **Answer:** There should be a name suggestion based on the nearest city and the type of station.
 
 
 ### 1.3. Acceptance Criteria
@@ -63,3 +63,5 @@ As a Player, I want to build station (can be a depot, a station or a terminal) w
 **_Other alternatives might exist._**
 
 ### 1.7 Other Relevant Remarks
+
+* When built, a station consists of just one building, which can be upgraded with other buildings that can increase the station’s performance.
