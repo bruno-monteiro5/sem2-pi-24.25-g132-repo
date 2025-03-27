@@ -4,15 +4,17 @@
 
 ### 1.1. User Story Description
 
-As an Editor, I want to add an industry in a position XY of the selected map.
+As an Editor, I want to add an industry (selected from the available industries) in a position XY of the selected (current) map.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+>	 There are three different types of industries :
+>* Primary sector industries (generate resources, such as mines and farms)
+>* Transforming industries (Transform resources provided by the Primary Sector into new products)
+>* Mixed industries (Ports pottencially have the capacity, depending on what is defined in the scneario, to import or export any cargo)
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
 
 **From the client clarifications:**
 
@@ -26,28 +28,22 @@ As an Editor, I want to add an industry in a position XY of the selected map.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US001 - Create a map" there must be a map to choose a position XY. 
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
-	
+    * an industry type
+    * an industry name
+    * an XY position
+
 * Selected data:
-    * a task category 
+    * a map
 
 **Output Data:**
 
@@ -62,4 +58,4 @@ As an Editor, I want to add an industry in a position XY of the selected map.
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+* 
