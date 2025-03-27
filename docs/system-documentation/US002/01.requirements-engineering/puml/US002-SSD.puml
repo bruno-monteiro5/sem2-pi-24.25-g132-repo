@@ -13,13 +13,13 @@ activate Employee
     Employee -> System : asks to add an industry
     activate System
 
-        System --> Employee : show a maps list and asks to select one
+        System --> Employee : show an industries list and asks to select one
     deactivate System
 
-    Employee -> System :selects a map
+    Employee -> System :selects an industry
     activate System
 
-        System --> Employee : requests data (i.e. type, name, cost, XY position)
+        System --> Employee : requests data (i.e. type, name, cost, XY position of the current map)
     deactivate System
 
     Employee -> System : types requested data

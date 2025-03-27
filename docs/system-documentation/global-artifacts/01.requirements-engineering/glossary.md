@@ -20,15 +20,15 @@ Column "TEA (PT)" is optional. If the team does not intend to use it, then remov
 | **Primary sector industries** | Generate resources, such as mines and farms                                                                       |
 | **Transforming industries**   | Transform resources provided by the Primary Sector into new products                                              |
 | **Mixed industries**          | Ports pottencially have the capacity, depending on what is defined in the scneario, to import or export any cargo |
-| **...**                       | **...**                                                                                                           |
-| **...**                       | **...**                                                                                                           |
-| **...**                       | **...**                                                                                                           |
-| **...**                       | **...**                                                                                                           |
-| **...**                       | **...**                                                                                                           |
-| **...**                       | **...**                                                                                                           |
-| **...**                       | **...**                                                                                                           |
-| **...**                       | **...**                                                                                                           |
-| **...**                       | **...**                                                                                                           |
+| **User Story**                | Short, simples description of a feature told from the perspective of the person who desires the new funcionality  |
+| **US**                        | User Story                                                                                                        |
+| **AC**                        | Acceptance Criteria                                                                                               |
+| **SVG**                       | Scalable Vector Graphics                                                                                          |
+| **Historical Restrictions**   | Historical events that make sense in the scenario and change to operating conditions of the simulator             |
+| **Time Restrictions**         | The period in which the simulation will take place                                                                |
+| **Product Owner**             | The person representing the organization that intends to develop the game                                         |
+| **MVP**                       | Minimal Viable Product                                                                                            |
+| **...**                       |                                                                                                                   |
 | **...**                       | **...**                                                                                                           |
 | **...**                       | **...**                                                                                                           |
 | **...**                       | **...**                                                                                                           |

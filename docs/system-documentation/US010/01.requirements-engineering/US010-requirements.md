@@ -1,4 +1,4 @@
-# US006 - Create a Task
+# US010 - Assign a train to a route
 
 ## 1. Requirements Engineering
 
@@ -56,7 +56,7 @@ As an organization employee, I want to create a new task in order to be further 
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/US006-SSD.svg)
+![System Sequence Diagram](svg/US010-SSD.svg)
 
 **_Other alternatives might exist._**
 

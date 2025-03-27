@@ -1,6 +1,6 @@
-# US006 - Create a Task 
+# US004 - Create a Scenario 
 
-[Requirements Engineering](01.requirements-engineering/US003-requirements)
+[Requirements Engineering](01.requirements-engineering/US004-requirements)
 
 [Analysis](02.analysis/US006-analysis.md)
 

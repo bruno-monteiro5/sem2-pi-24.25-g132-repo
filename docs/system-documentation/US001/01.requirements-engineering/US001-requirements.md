@@ -1,4 +1,4 @@
-# US006 - Create a map
+# US001 - Create a map
 
 ## 1. Requirements Engineering
 
@@ -16,42 +16,34 @@ As an Editor, I want to create a map with a size and a name.
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** The map has a size limit?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** The limit should be 100000*100000
 
-> **Question:** Monetary data is expressed in any particular currency?
->
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC1:** The maps dimensions are positive integers.
+* **AC2:** Map name should be a valid file name.
+
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* Don't have any dependency with other's User Stories.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
-	
+    * a name
+    * a size
+  
 * Selected data:
-    * a task category 
+    * none
 
 **Output Data:**
 
-* List of existing task categories
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -62,4 +54,4 @@ As an Editor, I want to create a map with a size and a name.
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+* N/A
