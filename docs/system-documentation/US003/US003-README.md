@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US003 - adds a city
 
 [Requirements Engineering](01.requirements-engineering/US003-requirements)
 
