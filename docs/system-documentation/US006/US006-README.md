@@ -1,4 +1,4 @@
-# US006 - Upgrade a selected station with a building 
+# US006 - Upgrade a station with a building 
 
 [Requirements Engineering](01.requirements-engineering/US006-requirements.md)
 
