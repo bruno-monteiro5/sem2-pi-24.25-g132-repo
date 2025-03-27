@@ -8,13 +8,13 @@ skinparam packageStyle rectangle
 
 left to right direction
 
-rectangle "System Actors" as actors {
+'rectangle "System Actors" as actors {
     actor "Player" as Player
     actor "Editor" as Editor
     actor "Product\nOwner" as Owner
-}
+'}
 
-rectangle "Use Cases" as usecases{
+'rectangle "Use Cases" as usecases{
     usecase "UC1 - Create a map" as UC1
     Editor --> UC1
 
@@ -46,7 +46,7 @@ rectangle "Use Cases" as usecases{
     Owner --> UC12
 
 
-}
+'}
 
 
 @enduml
