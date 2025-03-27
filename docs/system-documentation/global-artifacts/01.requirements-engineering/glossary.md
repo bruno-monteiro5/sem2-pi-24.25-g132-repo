@@ -28,7 +28,7 @@ Column "TEA (PT)" is optional. If the team does not intend to use it, then remov
 | **Time Restrictions**         | The period in which the simulation will take place                                                                |
 | **Product Owner**             | The person representing the organization that intends to develop the game                                         |
 | **MVP**                       | Minimal Viable Product                                                                                            |
-| **...**                       | **...**                                                                                                           |
+| **...**                       |                                                                                                                   |
 | **...**                       | **...**                                                                                                           |
 | **...**                       | **...**                                                                                                           |
 | **...**                       | **...**                                                                                                           |
