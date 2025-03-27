@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Player" as Player
+participant ":System" as System
+
+activate Player
+
+    Player -> System : asks to build a station
+    activate System
+
+        System --> Player : shows station category list and asks to select one
+    deactivate System
+
+    Player -> System : selects a station category
+    activate System
+
+        System --> Player : requests data (i.e. location, centre)
+    deactivate System
+
+    Player -> System : types requested data
+    activate System
+
+        System --> Player : shows all data and requests confirmation
+    deactivate System
+
+    Player -> System : confirms data and station building
+    activate System
+
+        System --> Player : displays operation success
+    deactivate System
+@enduml

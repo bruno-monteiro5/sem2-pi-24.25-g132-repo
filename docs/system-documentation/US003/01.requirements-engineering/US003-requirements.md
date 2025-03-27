@@ -1,4 +1,4 @@
-# US003 - Create a Task
+# US003 - Add a City
 
 ## 1. Requirements Engineering
 
@@ -32,7 +32,7 @@ map, with a name and a positive number of house blocks.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US001 - Create a map" as there must be at least one map to creat the city.
 
 ### 1.5 Input and Output Data
 
@@ -44,7 +44,7 @@ map, with a name and a positive number of house blocks.
     * Number of house blocks
 	
 * Selected data:
-    * Manual or automatic (random) house block placement 
+    * Manual or automatic (random) house block placement
 
 **Output Data:**
 
@@ -52,7 +52,7 @@ map, with a name and a positive number of house blocks.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/US006-SSD.svg)
+![System Sequence Diagram](svg/US003-SSD.svg)
 
 **_Other alternatives might exist._**
 
