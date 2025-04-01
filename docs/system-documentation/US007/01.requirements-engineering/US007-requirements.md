@@ -11,17 +11,26 @@ details, including the existing building and the demand/supply cargoes.
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+> There are three types of stations as represented in figure 
+Depots (50k, 3x3 radius), Stations (100k, 4x4 radius), and 
+Terminals (200k, 5x5 radius). Their cost and economic radius 
+distinguish the stations.
+
+> All industrial and population sites within the radius 
+of a station send (supply) and receive (demand) 
+business through the station.
+
+> When viewing a station, in addition to the buildings 
+present, the cargo that is ready for collection and the 
+cargo that needs to be delivered should also be displayed. 
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** When the user selects an existing station, does it 
+automatically show all the associated info to that station or the user 
+selects the station then has to select the required option ? eg: 'show details'
 >
-> **Answer:** Duration is estimated in days.
-
-> **Question:** Monetary data is expressed in any particular currency?
->
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** That's a matter of UX/UI, each team can decide what works best.
 
 ### 1.3. Acceptance Criteria
 
