@@ -18,9 +18,10 @@ As an Editor, I want to add an industry (selected from the available industries)
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:**
+When adding a new industry to a map, is there any other necessary input aside from position and industry type?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** No
 
 > **Question:** Monetary data is expressed in any particular currency?
 >
