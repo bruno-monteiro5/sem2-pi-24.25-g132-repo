@@ -16,13 +16,17 @@ As a Player, I want to assign a selected train to a route with valid stations an
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** Can multiple cargo types be assigned to the same train?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** Yes
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** Does a route have a limit of stations that can be assigned?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** No
+
+> **Question:** A route is a list of stations where the train passes. If there is many stations but no railway lines, are we able to create a route?
+>
+> **Answer:** If there is no path between any pair of consective points of the route, the player should be warned, then the player can opt between cancel/proceed.
 
 ### 1.3. Acceptance Criteria
 
@@ -37,7 +41,7 @@ As a Player, I want to assign a selected train to a route with valid stations an
 ### 1.5 Input and Output Data
 
 **Input Data:**
-
+  
 * Typed data:
     * route
     * cargo
