@@ -11,19 +11,37 @@ map, with a name and a positive number of house blocks.
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+>	A city bears a name, a location (with XY coordinates on the map), 
+and a set of blocks that represent housing. 
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+>In the simulator’s context, cities generate and consume passengers 
+and mail, but they also consume final products (e.g., food, textiles, cars).
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** Dear client, can the city name contain spaces in its nomenclature?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** Yes, it can, "Torres Novas," for example.
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** Should the city name be unique within the same map?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** It can be repeated, but it may become confusing for the 
+players. The editor should be alerted to this situation.
+
+> **Question:** Is there a minimum or maximum number of house blocks 
+that can be assigned?
+>
+> **Answer:** The number needs to be a positive on; there is no maximum, 
+it's up to the editor to decide.
+
+> **Question:** Is it possible for a city to be destroyed by a natural 
+disaster or a war? If so, is it necessary to create a mechanism to 
+remove the city from the map and create a new one to transfer the 
+active elements from the first one(people, mail, ...)?
+>
+> **Answer:** A city can be removed in edit mode, but not in 
+simulation mode.
+
 
 ### 1.3. Acceptance Criteria
 
