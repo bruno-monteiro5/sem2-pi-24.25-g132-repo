@@ -4,15 +4,15 @@
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As a Player, I want to assign a selected train to a route with valid stations and the respective list of cargoes to be picked up in each station
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+>	 A route is a list of stations where the train passes.
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+>	The cargo types are passengers, mail, coal, iron ore, steel and cars. 
 
 **From the client clarifications:**
 
@@ -26,32 +26,27 @@ As an organization employee, I want to create a new task in order to be further 
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* There are no AC yet
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US008 - Build a railway line" because to exist a route, stations need to be connected by a railway line first.
+* There is a dependency on "US009 - Buy a train" because it is needed to buy a locomotive to assign a train.
+* There is a dependency on "US012 - Create a simulator" because as we need a list of cargoes to be picked up, cargoes need to be generated
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
+    * route
+    * cargo
 	
 * Selected data:
-    * a task category 
+    * train 
 
 **Output Data:**
 
-* List of existing task categories
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -61,5 +56,3 @@ As an organization employee, I want to create a new task in order to be further 
 **_Other alternatives might exist._**
 
 ### 1.7 Other Relevant Remarks
-
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.

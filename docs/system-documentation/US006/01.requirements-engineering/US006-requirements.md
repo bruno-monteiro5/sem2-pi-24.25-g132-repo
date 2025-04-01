@@ -49,6 +49,7 @@ As a Player, I want to upgrade a selected station with a building. Each type of 
 
 * Typed data:
     * type of building
+    * size of the building
 	
 * Selected data:
     * a station 

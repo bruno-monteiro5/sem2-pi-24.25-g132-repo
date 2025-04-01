@@ -15,7 +15,7 @@ Column "TEA (PT)" is optional. If the team does not intend to use it, then remov
 | **Editor**                    | Person who can create maps and scenarios that can be provided in a bundle with the game or sold separately        |
 | **Locomotive**                | Powered railway vehicle used for pulling trains                                                                   |
 | **Train**                     | Composition of locomotives and carriages used for transportation                                                  |
-| **Route**                     | Predifined path that trains follow                                                                                |
+| **Route**                     | List of stations where the train passes                                                                           |
 | **Railway line**              | Connection between two train stations                                                                             |
 | **Primary sector industries** | Generate resources, such as mines and farms                                                                       |
 | **Transforming industries**   | Transform resources provided by the Primary Sector into new products                                              |

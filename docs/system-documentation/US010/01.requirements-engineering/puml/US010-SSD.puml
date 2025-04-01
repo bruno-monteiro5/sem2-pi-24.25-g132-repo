@@ -10,7 +10,7 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to select a train to a route
+    Employee -> System : asks to assign a train to a route
     activate System
 
         System --> Employee : shows a list of available trains and asks to select one
@@ -19,7 +19,7 @@ activate Employee
     Employee -> System : selects a train
     activate System
 
-        System --> Employee : requests data (i.e. route stations, locomotive type, cargo list)
+        System --> Employee : requests data (i.e. route, cargo)
     deactivate System
 
     Employee -> System : types requested data
