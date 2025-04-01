@@ -24,8 +24,8 @@ Column "TEA (PT)" is optional. If the team does not intend to use it, then remov
 | **US**                        | User Story                                                                                                        |
 | **AC**                        | Acceptance Criteria                                                                                               |
 | **SVG**                       | Scalable Vector Graphics                                                                                          |
-| **Historical Restrictions**   | Historical events that make sense in the scenario and change to operating conditions of the simulator             |
-| **Time Restrictions**         | The period in which the simulation will take place                                                                |
+| **Historical Restriction**    | Historical events that make sense in the scenario and change to operating conditions of the simulator             |
+| **Time Restriction**          | The period in which the simulation will take place                                                                |
 | **Product Owner**             | The person representing the organization that intends to develop the game                                         |
 | **MVP**                       | Minimal Viable Product                                                                                            |
 | **...**                       |                                                                                                                   |

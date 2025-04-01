@@ -47,8 +47,7 @@ As an Editor, I want to add an industry (selected from the available industries)
 
 **Output Data:**
 
-* List of existing task categories
-* (In)Success of the operation
+* Operation success
 
 ### 1.6. System Sequence Diagram (SSD)
 

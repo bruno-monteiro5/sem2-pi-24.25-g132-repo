@@ -10,7 +10,7 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to upgrade a station
+    Employee -> System : asks to upgrade a station with a building
     activate System
 
         System --> Employee : shows a station list and asks to select one
