@@ -23,10 +23,6 @@ When adding a new industry to a map, is there any other necessary input aside fr
 >
 > **Answer:** No
 
-> **Question:** Monetary data is expressed in any particular currency?
->
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
-
 ### 1.3. Acceptance Criteria
 
 
