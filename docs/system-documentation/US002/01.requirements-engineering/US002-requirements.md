@@ -50,7 +50,7 @@ When adding a new industry to a map, is there any other necessary input aside fr
 
 ![System Sequence Diagram](svg/US006-SSD.svg)
 
-**_Other alternatives might exist._**
+
 
 ### 1.7 Other Relevant Remarks
 
