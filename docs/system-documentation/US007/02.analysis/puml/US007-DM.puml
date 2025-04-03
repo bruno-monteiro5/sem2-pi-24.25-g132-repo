@@ -7,10 +7,15 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+hide circle
+hide methods
+
 class Player {
-    username
-    password
-    +listStations()
 }
 
 class Station {
@@ -20,27 +25,21 @@ class Station {
     positionY
 }
 
-class StationBuildings {
+class Building {
     type
-
 }
 
-class CargosInDemand {
-    type
-    quantity
-}
-class CargosInSupply {
+class CargoDemand {
     type
     quantity
 }
-
-class ListStations {
-    Station
+class CargoSupply {
+    type
+    quantity
 }
 
-Player --> ListStations : requests to >
-ListStations "1" -- "*" Station : has >
-Station -- "*" StationBuildings : has
-Station "1" -- "*" CargosInDemand : has
-Station "1" -- "*" CargosInSupply : has
+Player "1" -- "1"Station : requests to list all and selects >
+Station -- "*" Building : has >
+Station -- "*" CargoSupply : sends >
+Station -- "*" CargoDemand : receive >
 @enduml

@@ -30,9 +30,9 @@ class Editor {
     password
 
 }
-Map "1" - "*" City : has
+City "*" - "1" Map : in the selected >
 
-Editor "1" - "*" City : adds
+Editor "1" - "*" City : adds >
 
 
 
