@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+'title Domain Model
+
+class Map {
+name
+dimensionX
+dimensionY
+}
+class Player {
+    username
+    password
+}
+
+class Station {
+    name
+    type
+    positionX
+    positionY
+}
+
+'Relações
+Player "1" -- "0..*" Station : "builds >"
+Map "1" - "*" Station : "contains >"
+
+@enduml

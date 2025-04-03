@@ -55,10 +55,30 @@ class MixedIndustry {
 }
 
 class Player {
+    username
+    password
 }
 
 class Station {
-name
+    name
+    type
+    positionX
+    positionY
+}
+
+class StationBuildings {
+    type
+}
+class CargosInDemand {
+    type
+    quantity
+}
+class CargosInSupply {
+    type
+    quantity
+}
+
+class Locomotive {
 }
 
 
@@ -75,5 +95,11 @@ Industry "1" -- "1" PrimaryIndustry : Consists of
 Industry "1" -- "1" TransformingIndustry : Consists of
 Industry "1" -- "1" MixedIndustry : Consists of
 
-Player -- Station : Build
+Player "1" -- "0..*" Station : Builds >
+Player "1" -- "0..*" Locomotive : Buys >
+
+Station -- "*" StationBuildings : has
+Station "1" -- "*" CargosInDemand : has
+Station "1" -- "*" CargosInSupply : has
+
 @enduml
