@@ -32,6 +32,18 @@ selects the station then has to select the required option ? eg: 'show details'
 >
 > **Answer:** That's a matter of UX/UI, each team can decide what works best.
 
+> **Question:** What information should be visible directly in the list? 
+Just the station name, or also other details like type, location, and operational 
+status (active/inactive), etc.?
+>
+> **Answer:** Name and a summary of available cargos to be collected and the ones that are demanded.
+
+> **Question:** Besides the existing buildings and demand/supply cargo, are 
+there any other details that should be shown when viewing a station's 
+information? For example, location, capacity, or operational status?
+>
+> **Answer:** Available cargos to be collected and the ones that are demanded.
+
 ### 1.3. Acceptance Criteria
 
 There is no acceptance criteria yet.

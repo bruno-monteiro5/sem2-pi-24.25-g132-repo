@@ -12,33 +12,22 @@ hide methods
 
 'title Domain Model
 
-class Organization {
-    name
-    vatNumber
-    website
-    phoneNumber
-    email
+class Station {
+    Existing building
+    Demand cargo list
+    Supply cargo list
+
 }
 
-class Task {
-    reference
-    description
-    informalDescription
-    technicalDescription
-    duration
-    cost
+class ListAllStations {
+
 }
 
-class TaskCategory {
-    description
+class Player {
+
 }
 
-class Employee {
-    name
-    email
-    position
-    phone
-}
+
 
 Organization "1" - "*" Employee : has
 Organization "1" - "*" Task: owns
