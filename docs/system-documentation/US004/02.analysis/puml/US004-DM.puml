@@ -1,0 +1,35 @@
+@startuml
+skinparam monochrome true
+hide circle
+hide methods
+
+class Editor {
+
+}
+
+class Scenario {
+  name
+  startYear
+  endYear
+  description
+}
+
+class Map {
+  name
+  dimensionX
+  dimensionY
+}
+
+
+class LocomotiveType {
+  steam
+  diesel
+  electric
+}
+
+
+Editor --> Scenario : "creates" >
+Scenario "1" -- "1" Map : "applies to" >
+Scenario "1" -- "1" LocomotiveType : "restricts" >
+
+@enduml

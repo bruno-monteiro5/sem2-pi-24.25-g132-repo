@@ -5,19 +5,24 @@ skinparam shadowing false
 
 autonumber
 
-actor "Editor" as Employee
+actor "Editor" as Editor
 participant ":System" as System
 
-activate Employee
+activate Editor
 
-    Employee -> System : asks to create a scenario
-    activate System
+Editor -> System : asks to create a scenario
+activate System
 
-        System --> Employee : shows a map list and asks to select one
+    System --> Editor : request map selection
+    Editor -> System : select map
 
-        Employee -> System : selects a map
-        activate System
+    System --> Editor : request locomotive restrictions
+    Editor -> System : set allowed types
 
-        System --> Employee : displays operation success
-    deactivate System
+    System --> Editor : show summary and confirm
+    Editor -> System : confirm data
+
+    System --> Editor :displays operation success
+deactivate System
+deactivate Editor
 @enduml
