@@ -9,68 +9,71 @@ hide circle
 hide methods
 title Domain Model
 
-class Organization {
-    name
-    vatNumber
-    website
-    phoneNumber
-    email
+class Editor {
+name
+password
 }
 
-class Task {
-    reference
-    description
-    informalDescription
-    technicalDescription
-    duration
-    cost
+class Map {
+name
+dimensionX
+dimensionY
+ }
+
+class Scenario {
+name
+configuration
+status
 }
 
-class Category {
-    description
+
+class City {
+name
+positionX
+positionY
+houseBlocks
 }
 
-class Employee {
-    name
-    email
-    position
-    phone
+class Industry {
+positionX
+positionY
 }
 
-class TechnicalSkill{
-    shortDescription
-    fullDescription
+class PrimaryIndustry {
+    resource
+    farms
 }
 
-class ActivityArea{
-    shortDescription
-    fullDescription
+class TransformingIndustry {
+    initialResource
+    finalResource
 }
 
-class FeatureTS{
-    mandatory
+class MixedIndustry {
+    importedResource
+    exportedResource
 }
 
-'class User {
-'    name
-'    email
-'    password
-'}
-class PostalAddress{
-    street
-    zipCode
-    city
+class Player {
 }
 
-Organization "1" - "*" Employee : has >
-Organization "1" - "*" Task: owns >
-Employee "1" -- "*" Task : creates >
-Task "*" - "1" Category: cataloged as >
-TechnicalSkill "*" - "1" ActivityArea: regarding an >
+class Station {
+name
+}
 
-Category "*" - "*" TechnicalSkill :  requires >
-(Category, TechnicalSkill) . FeatureTS
 
-Organization "1" -left "1" PostalAddress : located At >
 
+Editor "1" -- "0..*" Map : Create >
+Editor "1" -- "0..*" Industry : Adds >
+Editor "1" -- "0..*" City : Adds >
+Editor "1" -- "0..*" Scenario : Creates >
+
+Map "1" -- "*" Industry : Has >
+Map "1" -- "*" City : Has >
+
+Industry "1" -- "1" PrimaryIndustry : Consists of
+Industry "1" -- "1" TransformingIndustry : Consists of
+Industry "1" -- "1" MixedIndustry : Consists of
+
+Player -- Station : Build
 @enduml
