@@ -78,6 +78,9 @@ class CargosInSupply {
     quantity
 }
 
+class Locomotive {
+}
+
 
 
 Editor "1" -- "0..*" Map : Create >
@@ -93,8 +96,10 @@ Industry "1" -- "1" TransformingIndustry : Consists of
 Industry "1" -- "1" MixedIndustry : Consists of
 
 Player "1" -- "0..*" Station : Builds >
+Player "1" -- "0..*" Locomotive : Buys >
 
 Station -- "*" StationBuildings : has
 Station "1" -- "*" CargosInDemand : has
 Station "1" -- "*" CargosInSupply : has
+
 @enduml
