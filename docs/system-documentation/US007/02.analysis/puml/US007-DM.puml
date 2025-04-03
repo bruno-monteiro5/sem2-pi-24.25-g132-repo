@@ -40,7 +40,7 @@ class ListStations {
 
 Player --> ListStations : requests to >
 ListStations "1" -- "*" Station : has >
-Station "1" -- "*" StationBuildings : has
+Station -- "*" StationBuildings : has
 Station "1" -- "*" CargosInDemand : has
 Station "1" -- "*" CargosInSupply : has
 @enduml
