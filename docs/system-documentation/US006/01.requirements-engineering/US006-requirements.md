@@ -24,13 +24,22 @@ As a Player, I want to upgrade a selected station with a building. Each type of 
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** Is there a limit on the number of buildings a station can be upgraded with?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** No.
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** Does the upgrade from telegraph to telephone occur automatically once a certain year is reached?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** There are no automatic updates; When a new building is available, the player can buy it and then the previous building is replaced.
+
+> **Question:** In the statement, the example of a small hotel and a large hotel is given as mutually exclusive facilities. Does this mean that all upgrades of the same type are always mutually exclusive? Or, for example, is it possible to have more than one unit of liquid storage at the same station?
+>
+> **Answer:** There are no automatic updates; When a new building is available, the player can buy it and then the previous building is replaced.
+
+> 
+> **Question:** Does the upgrade from telegraph to telephone occur automatically once a certain year is reached?
+>
+>**Answer:** There are no automatic updates; When a new building is available, the player can buy it and then the previous building is replaced.
 
 ### 1.3. Acceptance Criteria
 

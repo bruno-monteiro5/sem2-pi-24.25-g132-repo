@@ -16,7 +16,7 @@ As a Player, I want to build station (can be a depot, a station or a terminal) w
 >   * Terminal: Costs 200k, has a 5x5 radius
  
 >   The system should propose a name for the station based on the closest city and the station (e.g., Porto Terminal, Ovar Station or Silvalde Depot).
-
+>
 >   For Depots and Terminals, the center is the geometric center. For Stations, the player must define the center (NE, SE, NW, SW).
 
 
@@ -27,6 +27,15 @@ As a Player, I want to build station (can be a depot, a station or a terminal) w
 > **Question:** Should there be a predefined name for the station?
 >
 > **Answer:** There should be a name suggestion based on the nearest city and the type of station.
+
+> **Question:** If overbuilding occurs, the program stops running and the game ends or simply gives an error message and asks again for the station construction place?
+>
+> **Answer:** Overbuilding in the Editor is possible, the existing building is replaced for the new one. Overbuilding in the Simulator is NOT possible, the player gets a warning and games continues.
+
+> **Question** Should users have options to select different station types (Depot, Station, Terminal) based on the game rules?
+> 
+> **Answer** No, a player can build depots, stations and terminal as far he have available budget and there no overbuilding.
+
 
 
 ### 1.3. Acceptance Criteria
