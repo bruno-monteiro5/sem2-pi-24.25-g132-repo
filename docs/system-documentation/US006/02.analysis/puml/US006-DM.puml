@@ -10,7 +10,6 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-'title Domain Model
 
 class Station {
     name
@@ -22,6 +21,7 @@ class Player {
 class Building {
     type
     year
+
 }
 
 Player "1" - "*" Station: selects
