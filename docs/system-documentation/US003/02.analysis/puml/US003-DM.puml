@@ -25,7 +25,15 @@ class City {
     houseBlocks
 }
 
+class Editor {
+    username
+    password
+
+}
 Map "1" - "*" City : has
+
+Editor "1" - "*" City : adds
+
 
 
 @enduml

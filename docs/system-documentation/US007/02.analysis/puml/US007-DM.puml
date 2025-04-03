@@ -20,11 +20,12 @@ class Station {
 }
 
 class ListAllStations {
-
+    Station
 }
 
 class Player {
-
+    Username
+    Password
 }
 
 
