@@ -12,39 +12,55 @@ hide methods
 
 'title Domain Model
 
-class Organization {
-    name
-    vatNumber
-    website
-    phoneNumber
-    email
+class Player {
 }
 
-class Task {
-    reference
-    description
-    informalDescription
-    technicalDescription
-    duration
+
+class Train {
+}
+
+class Locomotive {
+    type
+    power
+    acceleration
+    topSpeed
+    yearOperation
     cost
+    fuelCost
+    maintantenanceCostYear
+    acquisitionPrice
 }
 
-class TaskCategory {
-    description
+class Carriage {
+    cargoType
 }
 
-class Employee {
+class Route {
     name
-    email
-    position
-    phone
 }
 
-Organization "1" - "*" Employee : has
-Organization "1" - "*" Task: owns
+class Station {
+    name
+    type
+    cost
+    economicRadius
+}
 
-Employee "1" -- "*" Task : creates
+class Cargo {
+    type
+}
 
-Task "*" - "1" TaskCategory: cataloged as
+
+Player "1" - "1" Train : owns
+Train "1" -- "*" Locomotive: has
+Train "1" -- "*" Carriage: has
+Train "1" - "1" Route: assigned to
+Route "1" - "*" Station: contains
+Cargo "1" - "1" Station: is picked up at >
+Cargo "1" -- "1" Route: is transported >
+
+
+
+
 
 @enduml

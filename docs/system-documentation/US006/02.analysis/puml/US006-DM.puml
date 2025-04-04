@@ -13,6 +13,10 @@ hide methods
 
 class Station {
     name
+    type
+    cost
+    economicRadius
+
 }
 
 class Player {
