@@ -5,32 +5,23 @@ skinparam shadowing false
 
 autonumber
 
-actor "Organization\nEmployee" as Employee
+actor "Player" as Player
 participant ":System" as System
 
-activate Employee
+activate Player
 
-    Employee -> System : asks to create a new task
+    Player -> System : The player asks to start the simulation
     activate System
-
-        System --> Employee : shows task category list and asks to select one
+        System --> Player : The simulation starts running
     deactivate System
 
-    Employee -> System : selects a task category
+    Player -> System : The player asks to pause the simulation
     activate System
-
-        System --> Employee : requests data (i.e. reference, designation, informal\ndescription, technical description, duration, cost)
+        System --> Player : The simulation is paused
     deactivate System
 
-    Employee -> System : types requested data
+    Player -> System : The player asks to change the speed
     activate System
-
-        System --> Employee : shows all data and requests confirmation
-    deactivate System
-
-    Employee -> System : confirms data
-    activate System
-
-        System --> Employee : displays operation success
+        System --> Player : The simulation speed is changed
     deactivate System
 @enduml

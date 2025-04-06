@@ -3,26 +3,22 @@
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
-
-As an editor, I want to create a new scenario in order to be further published.
-
+As an Editor, I want to create a new scenario to configure simulation parameters.
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
-
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
-
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+> **Ports**: Define imports/exports (e.g., coal→steel)
+> 
+> **Locomotives**: Restrict types (steam/diesel/electric)
+> 
+> **Industries**: Set production frequency (months) and demand multipliers
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** Are the rates of production and quantity produce from industries decided in the scenario's specifications?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** No answer has been given.
 
-> **Question:** Monetary data is expressed in any particular currency?
->
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
 
 ### 1.3. Acceptance Criteria
 
@@ -33,11 +29,15 @@ As an editor, I want to create a new scenario in order to be further published.
   of generating industries
 ### 1.4. Found out Dependencies
 
-* There are no dependencies to other requirements.
+* There is a dependency on "US001 - Create a map" as there must be a map to create a scenario.
 
 ### 1.5 Input and Output Data
 
-* There aren't any input or output data.
+**Input Example:**  
+
+- Ports: imports coal, exports steel
+- Locomotives: steam only
+- Industries: coal every 6 months
 
 ### 1.6. System Sequence Diagram (SSD)
 
@@ -47,4 +47,4 @@ As an editor, I want to create a new scenario in order to be further published.
 
 ### 1.7 Other Relevant Remarks
 
-* The created scenario stays in a "not published" state in order to distinguish from "published" scenarios.
+- N/A

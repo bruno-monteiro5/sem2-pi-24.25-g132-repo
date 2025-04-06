@@ -10,29 +10,35 @@ As a player, I want to buy a new locomotive.
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
-
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+>Locomotives have types (steam/diesel/electric)
+> 
+>Must match scenario restrictions
+> 
+>Requires sufficient funds
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** Is there a limit to the number of locomotives a player can buy?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** No limit.
 
-> **Question:** Monetary data is expressed in any particular currency?
->
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> 
+> **Question:** What happens if the player does not have enough budget to buy a locomotive?
+> 
+> **Answer:** He can't buy! Bonds and loans will not be considered right now.
+
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The player should choose the locomotive from a list of available
-  locomotives for the scenario as well as a current date. 
+  locomotives for the scenario as well as a current date.
+* **AC2:** Validate player budget. If the player does not have enough funds, the
+  operation should fail.
 * 
 ### 1.4. Found out Dependencies
 
-* There are no dependencies to other requirements.
-
+- Requires existing scenario (US04) 
+- Needs at least one station (US05)
 ### 1.5 Input and Output Data
 
 **Input Data:**
@@ -54,3 +60,7 @@ As a player, I want to buy a new locomotive.
 ![System Sequence Diagram](svg/US009-SSD.svg)
 
 **_Other alternatives might exist._**
+
+### 1.7 Other Relevant Remarks
+
+- N/A
