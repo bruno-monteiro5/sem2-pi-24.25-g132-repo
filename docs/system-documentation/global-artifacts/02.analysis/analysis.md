@@ -152,14 +152,16 @@ To identify domain conceptual classes, start by making a list of candidate conce
 | Industry    |      consists of      |           PrimaryIndustry |
 | Industry    |        demands        |                     Cargo |
 | Industry    |       supplies        |                     Cargo |
-| Player      |        builds         |                     Route |
+| Player      |        builds         |                   Station |
 | Player      |   assigns train to    |                     Route |
 | Player      | upgrades station with |                  Building |
-| Player      |         buys          |                     Train |
+| Player      |         buys          |                Locomotive |
 | Train       |       comprises       |                Locomotive |
 | Train       |       comprises       |                  Carriage |
+| Train       |         follows       |                     Route |
 | Carriage    |        carries        |                     Cargo |
 | Route       |          has          |                 RouteStop |
+| Route       | includes              |                 Staion    |
 | RouteStop   |       occurs at       |                   Station |
 | RouteStop   |         loads         |                     Cargo |
 | RouteStop   |       includes        |                  Carriage |
