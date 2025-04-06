@@ -34,6 +34,7 @@ To identify domain conceptual classes, start by making a list of candidate conce
 **Transaction Records**
 
 * OperationLog
+* BudgetRecord
 
 ---  
 
@@ -52,7 +53,6 @@ To identify domain conceptual classes, start by making a list of candidate conce
 * City
 * Industry (Primary/Transforming/Mixed)
 * Station (Depot/Station/Terminal)
-* Railway Line
 
 ---
 
@@ -75,6 +75,8 @@ To identify domain conceptual classes, start by making a list of candidate conce
 **Descriptions of Things**
 
 * ScenarioDescription 
+* TechnologicalRestrictions 
+* HistoricalRestrictions
 
 ---
 
@@ -115,52 +117,53 @@ To identify domain conceptual classes, start by making a list of candidate conce
 
 **Records of finance, work, contracts, legal matters**
 
-* BudgetRecord
+* N/A
 
 ---
 
 **Financial Instruments**
 
-* 
+* N/a
     
 ---
 
 **Documents mentioned/used to perform some work/**
 
-* ScenarioDocument
-* UserManual
-
+* N/A
 ---
 
 
 ## Rationale to identify associations between conceptual classes
 
 
-| Concept (A) 		    |   Association   	   |            Concept (B) |
-|-------------------|:-------------------:|-----------------------:|
-| Map  	            |      contains       |                   City |
-| Map               |      contains	      |                   City |
-| Map	              |      contains	      |               Industry |
-| Map	              |      contains	      |                Station |
-| Station	          |       serves	       |                   City |
-| Station	          |       serves	       |               Industry |
-| Train	            |     comprises	      |             Locomotive |
-| Train	            |     comprises	      |               Carriage |
-| Train	            |    assigned to	     |                  Route |
-| Route	            |     comprises	      |              RouteStop |
-| RouteStop	        |     refers to	      |                Station |
-| CargoTransaction	 |      contains	      |              CargoItem |
-| CargoTransaction	 |    recorded in	     | CargoTransactionRecord |
-| City	             | generates/consumes	 |       CargoTransaction |
-| Industry	         | generates/consumes	 |       CargoTransaction |
-| Player	           |       builds	       |                Station |
-| Editor	           |      creates	       |                    Map |
-| Product Owner	    |      oversees	      |        FinancialRecord |
-| RailwayOperator	  |      manages	       |                Station |
-| RailwayOperator	  |      manages	       |                  Train |
-| Scenario	         |     restricts	      |                    Map |
-| Station	          |   upgraded with	    |               Building |
-| Simulator	        |     generates	      |                  Cargo |
+| Concept (A) |      Association      |               Concept (B) |
+|-------------|:---------------------:|--------------------------:|
+| Editor      |        creates        |                  Scenario |
+| Editor      |        creates        |                       Map |
+| Editor      |         adds          |                  Industry |
+| Editor      | adds                  |                      City |
+| Scenario    |        defines        |    HistoricalRestrictions |
+| Scenario    |        defines        | TechnologicalRestrictions |
+| Scenario    |       restricts       |                       Map |
+| Map         |       contains        |                      City |
+| Map         |       contains        |                  Industry |
+| Industry    |      consists of      |      TransformingIndustry |
+| Industry    |      consists of      |             MixedIndustry |
+| Industry    |      consists of      |           PrimaryIndustry |
+| Industry    |        demands        |                     Cargo |
+| Industry    |       supplies        |                     Cargo |
+| Player      |        builds         |                     Route |
+| Player      |   assigns train to    |                     Route |
+| Player      | upgrades station with |                  Building |
+| Player      |         buys          |                     Train |
+| Train       |       comprises       |                Locomotive |
+| Train       |       comprises       |                  Carriage |
+| Carriage    |        carries        |                     Cargo |
+| Route       |          has          |                 RouteStop |
+| RouteStop   |       occurs at       |                   Station |
+| RouteStop   |         loads         |                     Cargo |
+| RouteStop   |       includes        |                  Carriage |
+| Station     |   is upgraded with    |                  Building |
 
 
 

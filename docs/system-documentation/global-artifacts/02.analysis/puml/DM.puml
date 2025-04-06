@@ -10,8 +10,7 @@ hide methods
 title Domain Model
 
 class Editor {
-name
-password
+id
 }
 
 class Map {
@@ -22,10 +21,19 @@ dimensionY
 
 class Scenario {
 name
-configuration
+timePeriod
 status
 }
 
+class TechnologicalRestrictions {
+availableLocomotives
+availableIndustries
+}
+
+class HistoricalRestrictions {
+event
+demand
+}
 
 class City {
 name
@@ -55,34 +63,55 @@ class MixedIndustry {
 }
 
 class Player {
-    username
-    password
+id
 }
 
 class Station {
     name
     type
+    cost
     positionX
     positionY
+    centre
+    economicRadius
 }
 
-class StationBuildings {
-    type
-}
-class CargosInDemand {
-    type
-    quantity
-}
-class CargosInSupply {
-    type
-    quantity
+class Train {
+name
 }
 
 class Locomotive {
+type
+power
+acceleration
+topSpeed
+yearOfOperation
+fuelCost
+maintenanceCost
+acquisitionPrice
+}
+
+class Route {
+name
+length
+}
+
+class RouteStop {
+carriages
+}
+
+class Cargo {
+type
+quantity
+}
+
+class Carriage {
+cargoType
 }
 
 class Building {
-
+type
+cost
 }
 
 
@@ -95,19 +124,33 @@ Editor "1" -- "0..*" Scenario : Creates >
 Map "1" -- "*" Industry : Contains >
 Map "1" -- "*" City : Contains >
 
-Scenario "1" -- "1" Map : is based on >
+Scenario "1" -- "1" Map : Restricts >
+Scenario "1" -- "1" TechnologicalRestrictions : Defines >
+Scenario "1" -- "1" HistoricalRestrictions : Defines >
 
 Industry "1" -- "1" PrimaryIndustry : Consists of
 Industry "1" -- "1" TransformingIndustry : Consists of
 Industry "1" -- "1" MixedIndustry : Consists of
+Industry "1" -- "0..*" Cargo : Demands >
+Industry "1" -- "0..*" Cargo : Supplies >
 
 Player "1" -- "0..*" Station : Builds >
 Player "1" -- "0..*" Locomotive : Buys >
 Player "1" -- "*"  Building : Upgrades Station With >
+Player "1" -- "*" Route : Assigns Train to >
 
-Station -- "*" StationBuildings : has
-Station -- "*" CargosInDemand : has
-Station -- "*" CargosInSupply : has
+Train "1" -- "1" Locomotive : Comprises >
+Train "1" -- "0..*" Carriage : Comprises >
+Train "1" -- "1" Route : Follows >
+
+Carriage "1" -- "0..*" Cargo : Carries >
+
+Route "1" -- "1..*" RouteStop : has >
+Route "1" -- "1..*" Station : includes >
+
+RouteStop "1" -- "1" Station : Occurs at >
+RouteStop "*" -- "*" Cargo : Loads >
+
 Station "1" -- "1" Building : is upgraded with >
 
 @enduml
