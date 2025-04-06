@@ -10,103 +10,126 @@ To identify domain conceptual classes, start by making a list of candidate conce
 
 **Business Transactions**
 
-* 
+* CargoTransaction
 
 ---
 
-**Transaction Line Itemss**
+**Transaction Line Items**
 
-* 
+* CargoItem 
 
 ---
 
 **Product/Service related to a Transaction or Transaction Line Item**
 
-* 
+* Passengers
+* Mail
+* Coal
+* Iron ore
+* Steel
+* Cars
+* Final products
 
 ---
 
 **Transaction Records**
 
-* 
+* OperationLog
 
 ---  
 
 **Roles of People or Organizations**
 
-* 
+* Product Owner
+* Editor
+* Player
+
 
 ---
 
 **Places**
 
-* 
+* Map
+* City
+* Industry (Primary/Transforming/Mixed)
+* Station (Depot/Station/Terminal)
+* Railway Line
 
 ---
 
 **Noteworthy Events**
 
-* 
+* War
+* Vaccination campaign
 
 ---
 
 **Physical Objects**
 
-* 
+* Train
+* Locomotive (Steam/Diesel/Electric)
+* Carriage
+* Buildings (Telegraph/Café/Customs/Post office/Hotel/Silo/Liquid storage)
 
 ---
 
 **Descriptions of Things**
 
-* 
+* ScenarioDescription 
 
 ---
 
 **Catalogs**
 
-* 
+* LocomotiveCatalog
+* CarriageCatalog
+* IndustryCatalog
+* StationCatalog
+
+
 
 ---
 
 **Containers**
 
-* 
+* Route
 
 ---
 
 **Elements of Containers**
 
-* 
+* RouteStop
 
 ---
 
 **Organizations**
 
-* 
+* TheCompany (ou RailwayOperator)
 
 ---
 
 **Other External/Collaborating Systems**
 
-* 
+* MapService
 
 ---
 
 **Records of finance, work, contracts, legal matters**
 
-* 
+* BudgetRecord
 
 ---
 
 **Financial Instruments**
 
 * 
-
+    
 ---
 
 **Documents mentioned/used to perform some work/**
 
-* 
+* ScenarioDocument
+* UserManual
 
 ---
 
