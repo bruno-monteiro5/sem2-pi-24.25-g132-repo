@@ -37,7 +37,7 @@ _Refers to the integrity, compliance and interoperability of the software. The r
 ## Performance
 
 _Evaluates the performance requirements of the software, namely: response time, start-up time, recovery time, memory consumption, CPU usage, load capacity and application availability._
-
+.
 (fill in here )
 
 ## Supportability
