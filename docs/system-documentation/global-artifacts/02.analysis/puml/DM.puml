@@ -99,7 +99,7 @@ Player "1" -- "0..*" Station : Builds >
 Player "1" -- "0..*" Locomotive : Buys >
 
 Station -- "*" StationBuildings : has
-Station "1" -- "*" CargosInDemand : has
-Station "1" -- "*" CargosInSupply : has
+Station -- "*" CargosInDemand : has
+Station -- "*" CargosInSupply : has
 
 @enduml
