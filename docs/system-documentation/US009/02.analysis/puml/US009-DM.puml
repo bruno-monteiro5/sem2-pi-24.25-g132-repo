@@ -30,10 +30,10 @@ class Train {
   assignedRoute
 }
 
-Player "1" --> "*" Locomotive : "buys" >
-Locomotive "1" -- "1" Scenario : "restricted by" >
-Locomotive "1" -- "1" Train : "powers" >
+Player "1" --> "*" Locomotive : buys >
+Locomotive "1" -- "1" Scenario : restricted by >
+Locomotive "1" -- "1" Train : powers >
 LocomotiveType <|-- Locomotive
 
-Train "1" -- "*" Route : "assigned to" >
+Train "1" -- "*" Route : assigned to >
 @enduml

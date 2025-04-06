@@ -16,6 +16,6 @@ class Scenario {
   endYear
 }
 
-Player "1" -- "1" Simulator : "controls" >
-Simulator "1" -- "1" Scenario : "uses" >
+Player "1" -- "1" Simulator : controls >
+Simulator "1" -- "1" Scenario : uses >
 @enduml
