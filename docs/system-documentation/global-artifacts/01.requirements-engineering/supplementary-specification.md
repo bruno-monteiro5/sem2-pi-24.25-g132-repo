@@ -10,7 +10,7 @@ _Specifies functionalities that:
 * Scenario configuration;
 * Railway network operation;
 * Stations management;
-* Password authentication;
+* All those who wish to use the application must be authenticated with a password of seven alphanumeric characters, including three capital letters and two digits.
 * Saving when you close the simulator;
 
 ## Usability
@@ -20,10 +20,14 @@ among them: error prevention; interface aesthetics and design; help and
 documentation; consistency and standards._
 
 * It must be developed in Java;
+* Javadoc must be used to generate useful documentation for Java code; 
+* The application must be in English;
+* It must be adopted recognized coding standards like CamelCase;
 * The name of the station should be automatic with the name of the closest city;
 * A visual difference between the three types of stations;
 * Prevent invalid city names with special chars or digits;
 * Prevent the station overbuilding;
+
 
 ## Reliability
 
@@ -59,7 +63,10 @@ configurability, installability, scalability and more._
 
 _Specifies or constraints the system design process. Examples may include: programming languages, software process, mandatory standards/patterns, use of development tools, class library, etc._
 
-N/A
+Development tools:
+* GitHub;
+* Intellij;
+
 ### Implementation Constraints
 
 _Specifies or constraints the code or construction of a system such
@@ -73,7 +80,9 @@ For the development we use:
 
 The mandatory standards are:
 * Test-Driven Development (TDD);
-* JUnit 5 for unit testing.
+* JUnit 5 for unit testing;
+* Use of CamelCase;
+* Java as the language used for the application.
 
 ### Interface Constraints
 
