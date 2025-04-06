@@ -81,6 +81,10 @@ class CargosInSupply {
 class Locomotive {
 }
 
+class Building {
+
+}
+
 
 
 Editor "1" -- "0..*" Map : Create >
@@ -88,8 +92,10 @@ Editor "1" -- "0..*" Industry : Adds >
 Editor "1" -- "0..*" City : Adds >
 Editor "1" -- "0..*" Scenario : Creates >
 
-Map "1" -- "*" Industry : Has >
-Map "1" -- "*" City : Has >
+Map "1" -- "*" Industry : Contains >
+Map "1" -- "*" City : Contains >
+
+Scenario "1" -- "1" Map : is based on >
 
 Industry "1" -- "1" PrimaryIndustry : Consists of
 Industry "1" -- "1" TransformingIndustry : Consists of
@@ -97,9 +103,11 @@ Industry "1" -- "1" MixedIndustry : Consists of
 
 Player "1" -- "0..*" Station : Builds >
 Player "1" -- "0..*" Locomotive : Buys >
+Player "1" -- "*"  Building : Upgrades Station With >
 
 Station -- "*" StationBuildings : has
 Station -- "*" CargosInDemand : has
 Station -- "*" CargosInSupply : has
+Station "1" -- "1" Building : is upgraded with >
 
 @enduml
