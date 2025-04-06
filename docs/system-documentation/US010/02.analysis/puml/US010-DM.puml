@@ -51,16 +51,12 @@ class Cargo {
 }
 
 
-Player "1" - "1" Train : owns
-Train "1" -- "*" Locomotive: has
-Train "1" -- "*" Carriage: has
-Train "1" - "1" Route: assigned to
-Route "1" - "*" Station: contains
+Player "1" - "*" Train : owns >
+Train "1" -- "*" Locomotive: comprises >
+Train "1" -- "*" Carriage: comprises >
+Train "1" - "1" Route: assigned to >
+Route "1" - "*" Station: includes >
 Cargo "1" - "1" Station: is picked up at >
 Cargo "1" -- "1" Route: is transported >
-
-
-
-
 
 @enduml

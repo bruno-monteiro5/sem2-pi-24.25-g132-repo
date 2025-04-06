@@ -42,8 +42,6 @@ As a Player, I want to build station (can be a depot, a station or a terminal) w
 
 * **AC1:** Overbuilding is not possible.
 * **AC2:** The system suggests a name for the station based on the closest city and station type.
-* **AC3:**  
-
 
 ### 1.4. Found out Dependencies
 

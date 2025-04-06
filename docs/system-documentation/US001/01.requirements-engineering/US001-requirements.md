@@ -19,11 +19,19 @@ As an Editor, I want to create a map with a size and a name.
 
 > **Question:** The map has a size limit?
 >
-> **Answer:** The limit should be 100000*100000
+> **Answer:** The limit should be 100000*100000.
 
 > **Question:** Is there a predefined list of sizes, or should users be able to input custom dimensions?
 >
 > **Answer:** Custom dimensions but suggesting predefined sizes could be a good idea.
+
+> **Question:** Will there be predefined maps, or will all maps be created by editors?
+>
+> **Answer:** No.
+
+> **Question:** Are there any naming conventions for maps (no special characters, character limit)?
+>
+> **Answer:** File name.
 
 ### 1.3. Acceptance Criteria
 
@@ -54,7 +62,6 @@ As an Editor, I want to create a map with a size and a name.
 
 ![System Sequence Diagram](svg/US001-SSD.svg)
 
-**_Other alternatives might exist._**
 
 ### 1.7 Other Relevant Remarks
 

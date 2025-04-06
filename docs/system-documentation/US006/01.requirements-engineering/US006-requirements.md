@@ -73,3 +73,5 @@ As a Player, I want to upgrade a selected station with a building. Each type of 
 **_Other alternatives might exist._**
 
 ### 1.7 Other Relevant Remarks
+
+* N/A

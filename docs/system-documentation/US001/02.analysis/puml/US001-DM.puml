@@ -22,12 +22,6 @@ class Editor {
  dimensionY
  }
 
-
-
-
-
- 'Platform "1" -- "*" Organization : has registered >
- 'Platform "1" -- "*" Category : defines >
- Editor "1" -- "0..*" Map : Create>
+ Editor "1" -- "*" Map : Create >
 
 @enduml

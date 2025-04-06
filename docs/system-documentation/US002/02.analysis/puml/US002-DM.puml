@@ -43,10 +43,10 @@ class Editor {
 
 Editor "1" -- "*" Industry: adds >
 
-Map "1" -- "*" Industry : has >
-Industry "1" -- "1" PrimaryIndustry : Consists of
-Industry "1" -- "1" TransformingIndustry : Consists of
-Industry "1" -- "1" MixedIndustry : Consists of
+Map "1" -- "*" Industry : contains >
+Industry "1" -- "1" PrimaryIndustry : Consists of >
+Industry "1" -- "1" TransformingIndustry : Consists of >
+Industry "1" -- "1" MixedIndustry : Consists of >
 
 
 @enduml

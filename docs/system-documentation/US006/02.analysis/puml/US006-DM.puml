@@ -28,8 +28,7 @@ class Building {
 
 }
 
-Player "1" - "*" Station: selects
-
-Station "1" -- "*" Building : is upgraded with
+Player "1" -- "*" Station: selects >
+Station "1" -- "*" Building : is upgraded with >
 
 @enduml

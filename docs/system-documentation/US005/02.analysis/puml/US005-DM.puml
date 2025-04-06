@@ -10,16 +10,14 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-'title Domain Model
 
 class Map {
 name
 dimensionX
 dimensionY
 }
+
 class Player {
-    username
-    password
 }
 
 class Station {
@@ -29,8 +27,7 @@ class Station {
     positionY
 }
 
-'Relações
-Player "1" -- "0..*" Station : "builds >"
-Map "1" - "*" Station : "contains >"
+Player "1" -- "*" Station : builds >
+Map "1" -- "*" Station : contains >
 
 @enduml

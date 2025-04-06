@@ -28,6 +28,7 @@ As a player, I want to buy a new locomotive.
 
 * **AC1:** The player should choose the locomotive from a list of available
   locomotives for the scenario as well as a current date. 
+* 
 ### 1.4. Found out Dependencies
 
 * There are no dependencies to other requirements.
