@@ -6,7 +6,12 @@ _Specifies functionalities that:
 &nbsp; &nbsp; (i) are common across several US/UC;  
 &nbsp; &nbsp; (ii) are not related to US/UC, namely: Audit, Reporting and Security._
 
-(fill in here)
+* Map creation and editing;
+* Scenario configuration;
+* Railway network operation;
+* Stations management;
+* Password authentication;
+* Saving when you close the simulator;
 
 ## Usability
 
@@ -14,53 +19,72 @@ _Evaluates the user interface. It has several subcategories,
 among them: error prevention; interface aesthetics and design; help and
 documentation; consistency and standards._
 
-(fill in here )
+* It must be developed in Java;
+* The name of the station should be automatic with the name of the closest city;
+* A visual difference between the three types of stations;
+* Prevent invalid city names with special chars or digits;
+* Prevent the station overbuilding;
 
 ## Reliability
 
 _Refers to the integrity, compliance and interoperability of the software. The requirements to be considered are: frequency and severity of failure, possibility of recovery, possibility of prediction, accuracy, average time between failures._
 
-(fill in here )
+* All business rules must be respected recording and updating data;
+* The application ought to employ object serialization to guarantee the
+  persistence of the data in two successive runs;
+* Password authentication for security;
 
 ## Performance
 
 _Evaluates the performance requirements of the software, namely: response time, start-up time, recovery time, memory consumption, CPU usage, load capacity and application availability._
+.
 
-(fill in here )
-
+N/A
 ## Supportability
 
 _The supportability requirements gathers several characteristics, such as:
 testability, adaptability, maintainability, compatibility,
 configurability, installability, scalability and more._
 
-(fill in here )
-
+* OO analysis and design principles followed;
+* Best practicies identifying requirements;
+* Adoption of recognized coding standards, for example, CamelCase;
+* JavaDoc to generate all the documentation for Java code;
+* Unit tests that should be implemented for all methods, except for the methods that implement Input/Output operations, using JUnit 5 framework;
+* JaCoCo plugin for the generation of the coverage report;
+* All the images or figures should be recorded in SVG format.
 ## +
 
 ### Design Constraints
 
 _Specifies or constraints the system design process. Examples may include: programming languages, software process, mandatory standards/patterns, use of development tools, class library, etc._
 
-(fill in here )
-
+N/A
 ### Implementation Constraints
 
 _Specifies or constraints the code or construction of a system such
 such as: mandatory standards/patterns, implementation languages,
 database integrity, resource limits, operating system._
 
-(fill in here )
+For the development we use:
+* Intellij IDEA;
+* GitHub;
+* Scrum methodology.
+
+The mandatory standards are:
+* Test-Driven Development (TDD);
+* JUnit 5 for unit testing.
 
 ### Interface Constraints
 
 _Specifies or constraints the features inherent to the interaction of the
 system being developed with other external systems._
 
-(fill in here )
+*  This is an application with no requirements for external system integrations;
+
 
 ### Physical Constraints
 
 _Specifies a limitation or physical requirement regarding the hardware used to house the system, as for example: material, shape, size or weight._
 
-(fill in here )
+N/A
