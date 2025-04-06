@@ -6,7 +6,12 @@ _Specifies functionalities that:
 &nbsp; &nbsp; (i) are common across several US/UC;  
 &nbsp; &nbsp; (ii) are not related to US/UC, namely: Audit, Reporting and Security._
 
-(fill in here)
+* Map creation and editing;
+* Scenario configuration;
+* Railway network operation;
+* Stations management;
+* Password authentication;
+* Saving when you close the simulator;
 
 ## Usability
 
@@ -14,13 +19,20 @@ _Evaluates the user interface. It has several subcategories,
 among them: error prevention; interface aesthetics and design; help and
 documentation; consistency and standards._
 
-(fill in here )
+* It must be developed in Java;
+* The name of the station should be automatic with the name of the closest city;
+* A visual difference between the three types of stations;
+* Prevent invalid city names with special chars or digits;
+* Prevent the station overbuilding;
 
 ## Reliability
 
 _Refers to the integrity, compliance and interoperability of the software. The requirements to be considered are: frequency and severity of failure, possibility of recovery, possibility of prediction, accuracy, average time between failures._
 
-(fill in here )
+* All business rules must be respected recording and updating data;
+* The application ought to employ object serialization to guarantee the
+  persistence of the data in two successive runs;
+* Password authentication for security;
 
 ## Performance
 
