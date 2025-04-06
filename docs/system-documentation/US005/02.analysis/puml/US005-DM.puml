@@ -22,9 +22,12 @@ class Player {
 
 class Station {
     name
-    type
-    positionX
-    positionY
+        type
+        cost
+        positionX
+        positionY
+        centre
+        economicRadius
 }
 
 Player "1" -- "*" Station : builds >
