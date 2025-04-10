@@ -36,12 +36,17 @@ left to right direction
     usecase "UC7 -  See the details of a station" as UC7
     Player --> UC7
 
+    usecase "UC8 -  Build railway line" as UC8
+    Player --> UC8
+
     usecase "UC9 -  Buy a train" as UC9
     Player --> UC9
 
     usecase "UC10 - Assign a train to a route" as UC10
     Player --> UC10
 
+    usecase "UC11 - List all trains" as UC11
+    Player --> UC11
 
     usecase "UC12 - Run a simulator" as UC12
     "Player" --> UC12
