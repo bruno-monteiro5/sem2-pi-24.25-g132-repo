@@ -10,17 +10,17 @@ participant ":System" as System
 
 activate Player
 
-    Player -> System : The player asks to start the simulation
+    Player -> System : Asks to start the simulation
     activate System
         System --> Player : The simulation starts running
     deactivate System
 
-    Player -> System : The player asks to pause the simulation
+    Player -> System : Asks to pause the simulation
     activate System
         System --> Player : The simulation is paused
     deactivate System
 
-    Player -> System : The player asks to change the speed
+    Player -> System : Asks to change the speed
     activate System
         System --> Player : The simulation speed is changed
     deactivate System
