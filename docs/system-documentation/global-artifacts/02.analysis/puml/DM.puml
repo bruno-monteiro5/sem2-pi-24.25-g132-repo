@@ -53,8 +53,7 @@ positionY
 }
 
 class PrimaryIndustry {
-    resource
-    farms
+    resourceType
 }
 
 class TransformingIndustry {
@@ -108,6 +107,11 @@ carriages
 class Cargo {
 type
 quantity
+}
+
+class CargoType {
+
+
 }
 
 class Carriage {
