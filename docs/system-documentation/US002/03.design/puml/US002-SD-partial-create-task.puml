@@ -11,10 +11,9 @@ autonumber 16
 
 autonumber 16.1
 activate ORG
-    group Create Task
-
+    group Task Creation
         ORG --> TASK**: create(reference, description, informalDescription, \ntechnicalDescription, duration, cost, taskCategory, employee)
-        ORG -> ORG: addTask (task)
+        ORG -> ORG: addTask(task)
 
         activate ORG
             ORG -> ORG: validateTask(task)
@@ -30,6 +29,4 @@ activate ORG
     autonumber 17
     <-- ORG : task
 deactivate ORG
-
-
 @enduml
