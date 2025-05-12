@@ -15,25 +15,28 @@ id
 
 class Map {
 name
-dimensionX
-dimensionY
+width
+height
  }
 
 class Scenario {
 name
-timePeriod
-status
 }
 
-class Simulator {
+class TimePeriod
+
+class Date {
+day
+month
+year
+}
+
+class CargoSimulator {
   currentTime
   isRunning
 }
 
-class TechnologicalRestrictions {
-availableLocomotives
-availableIndustries
-}
+class TechnologicalRestrictions
 
 class HistoricalRestrictions {
 event
@@ -48,37 +51,27 @@ houseBlocks
 }
 
 class Industry {
-positionX
-positionY
 }
 
-class PrimaryIndustry {
-    resource
-    farms
-}
+class PrimaryIndustry
 
-class TransformingIndustry {
-    initialResource
-    finalResource
-}
+class TransformingIndustry
 
-class MixedIndustry {
-    importedResource
-    exportedResource
-}
+class MixedIndustry
 
 class Player {
 id
 }
 
+class RailwayLine{
+length
+cost
+}
+
+
 class Station {
     name
-    type
-    cost
-    positionX
-    positionY
-    centre
-    economicRadius
+
 }
 
 class Train {
@@ -86,7 +79,6 @@ name
 }
 
 class Locomotive {
-type
 power
 acceleration
 topSpeed
@@ -94,6 +86,10 @@ yearOfOperation
 fuelCost
 maintenanceCost
 acquisitionPrice
+}
+
+class LocomotionType{
+name
 }
 
 class Route {
@@ -119,6 +115,12 @@ type
 cost
 }
 
+class Position {
+x
+y
+}
+
+
 
 
 Editor "1" -- "*" Map : Create >
@@ -129,13 +131,15 @@ Editor "1" -- "*" Scenario : Creates >
 Map "1" -- "*" Industry : Contains >
 Map "1" -- "*" City : Contains >
 
-Scenario "1" -- "1" Map : Restricts >
 Scenario "1" -- "1" TechnologicalRestrictions : Defines >
 Scenario "1" -- "1" HistoricalRestrictions : Defines >
+Scenario "*" -- "1" Map: is based on >
+Scenario "1" -- "1" TimePeriod: Takes place in >
 
-Industry "1" -- "1" PrimaryIndustry : Consists of
-Industry "1" -- "1" TransformingIndustry : Consists of
-Industry "1" -- "1" MixedIndustry : Consists of
+Industry *-- PrimaryIndustry
+
+Industry *-- TransformingIndustry
+Industry *-- MixedIndustry
 Industry "1" -- "*" Cargo : Demands >
 Industry "1" -- "*" Cargo : Supplies >
 
@@ -143,9 +147,10 @@ Player "1" -- "*" Station : Builds >
 Player "1" -- "*" Locomotive : Buys >
 Player "1" -- "*  "  Building : Upgrades Station With >
 Player "1" -- "*" Route : Assigns Train to >
-Player "1" -- "1" Simulator : controls >
+Player "1" -- "1" CargoSimulator : controls >
+Player "1" -- "*" RailwayLine : builds >
 
-Simulator "1" -- "1" Scenario : uses >
+CargoSimulator "1" -- "1" Scenario : uses >
 
 
 Train "1" -- "1" Locomotive : Comprises >
@@ -161,5 +166,16 @@ RouteStop "1" -- "1" Station : Occurs at >
 RouteStop "*" -- "*" Cargo : Loads >
 
 Station "1" -- "1" Building : is upgraded with >
+
+TechnologicalRestrictions "1" -- "*" Locomotive : Restricts >
+
+Locomotive --* LocomotionType
+
+TimePeriod "1" -- "1" Date: start/ends at >
+
+RailwayLine "1" -- "1" Station : start/ends at >
+
+Building "1" -- "1" Building : can replace >
+
 
 @enduml
