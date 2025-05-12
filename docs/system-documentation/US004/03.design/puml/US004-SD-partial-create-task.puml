@@ -3,33 +3,32 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
-participant "task\n:Task" as TASK
+participant "controller\n:CreateScenarioController" as CTRL
+participant "scenario\n:Scenario" as SCEN
 
 autonumber 16
--> ORG: createTask(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee )
+-> CTRL : createScenario(name, map,\nports, locomotives, rules)
 
 autonumber 16.1
-activate ORG
-    group Create Task
+activate CTRL
+    group Create Scenario
 
-        ORG --> TASK**: create(reference, description, informalDescription, \ntechnicalDescription, duration, cost, taskCategory, employee)
-        ORG -> ORG: addTask (task)
+        CTRL --> SCEN** : create(name, map,\nports, locomotives, rules)
+        CTRL -> CTRL : saveScenario(scenario)
 
-        activate ORG
-            ORG -> ORG: validateTask(task)
-            activate ORG
-                ORG --> ORG : true
-            deactivate ORG
+        activate CTRL
+            CTRL -> CTRL : validateScenario(scenario)
+            activate CTRL
+                CTRL --> CTRL : true
+            deactivate CTRL
 
-            ORG --> ORG : true
+            CTRL --> CTRL : true
             |||
-        deactivate ORG
+        deactivate CTRL
     end
 
     autonumber 17
-    <-- ORG : task
-deactivate ORG
-
+    <-- CTRL : scenario
+deactivate CTRL
 
 @enduml
