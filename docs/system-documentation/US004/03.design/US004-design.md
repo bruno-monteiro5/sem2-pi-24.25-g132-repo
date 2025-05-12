@@ -61,7 +61,7 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 **Get Task Category List Partial SD**
 
-![Sequence Diagram - Partial - Get Task Category List](svg/US006-SD-partial-get-task-category-list.svg)
+![Sequence Diagram - Partial - Get Task Category List](svg/US004-SD-partial-get-task-category-list.svg)
 
 **Get Task Category Object**
 

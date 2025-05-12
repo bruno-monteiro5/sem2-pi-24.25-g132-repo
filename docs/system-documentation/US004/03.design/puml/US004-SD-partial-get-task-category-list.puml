@@ -5,38 +5,35 @@ skinparam shadowing false
 
 autonumber
 
-'hide footbox
-
-participant ":CreateTaskController" as CTRL
+participant ":CreateScenarioController" as CTRL
 participant "Repositories" as REPOS
 participant "repositories\n:Repositories" as REPOS_SINGLETON
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TASK_CAT_REPO
+participant "locomotiveRepository:\nLocomotiveRepository" as LOCO_REPO
 
 autonumber 3
-
- -> CTRL : getTaskCategories()
+-> CTRL : getAvailableLocomotiveTypes()
 autonumber 3.1
 activate CTRL
-    group Get Task Category List
+    group Get Locomotive Type List
 
-            CTRL -> REPOS : getInstance()
-            activate REPOS
-                REPOS --> CTRL: repositories
-            deactivate REPOS
+        CTRL -> REPOS : getInstance()
+        activate REPOS
+            REPOS --> CTRL : repositories
+        deactivate REPOS
 
-            CTRL -> REPOS_SINGLETON : getTaskCategoryRepository()
-            activate REPOS_SINGLETON
-                REPOS_SINGLETON --> CTRL: taskCategoryRepository
-            deactivate REPOS_SINGLETON
+        CTRL -> REPOS_SINGLETON : getLocomotiveRepository()
+        activate REPOS_SINGLETON
+            REPOS_SINGLETON --> CTRL : locomotiveRepository
+        deactivate REPOS_SINGLETON
 
-            CTRL -> TASK_CAT_REPO : getTaskCategories()
-            activate TASK_CAT_REPO
-                TASK_CAT_REPO --> CTRL : taskCategoryList
-            deactivate TASK_CAT_REPO
+        CTRL -> LOCO_REPO : getAvailableLocomotiveTypes()
+        activate LOCO_REPO
+            LOCO_REPO --> CTRL : locomotiveTypeList
+        deactivate LOCO_REPO
 
     end
-    autonumber 4
-    <-- CTRL  : taskCategoryList
+autonumber 4
+<-- CTRL : locomotiveTypeList
 deactivate CTRL
 
 @enduml
