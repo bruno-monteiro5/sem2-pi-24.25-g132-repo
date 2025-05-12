@@ -1,0 +1,73 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+skinparam classAttributeIconSize 0
+
+'--- Classes Principais ---
+class Editor {
+    + name: String
+}
+
+class Map {
+    + name: String
+}
+
+class Scenario {
+    + name: String
+    + map: Map
+    + ports: List<PortConfiguration>
+    + locomotives: List<LocomotiveType>
+    + industryRules: List<IndustryGenerationRule>
+}
+
+class PortConfiguration {
+    + portName: String
+    + imports: List<CargoType>
+    + exports: List<CargoType>
+    + transforms: List<CargoType>
+}
+
+enum LocomotiveType {
+    STEAM
+    DIESEL
+    ELECTRIC
+}
+
+enum CargoType {
+    COAL
+    STEEL
+    PASSENGERS
+}
+
+class IndustryGenerationRule {
+    + industryType: IndustryType
+    + modifier: double
+}
+
+enum IndustryType {
+    FARM
+    MINE
+    FACTORY
+}
+
+class CreateScenarioController {
+    + createScenario()
+}
+
+class CreateScenarioUI {
+    + openInterface()
+}
+
+Editor --> CreateScenarioUI : uses
+CreateScenarioUI .> CreateScenarioController : controls
+CreateScenarioController --> Scenario : creates
+Scenario --> Map : links
+Scenario --> PortConfiguration : includes
+Scenario --> LocomotiveType : defines
+Scenario --> IndustryGenerationRule : configures
+PortConfiguration --> CargoType : handles
+IndustryGenerationRule --> IndustryType : targets
+
+@enduml

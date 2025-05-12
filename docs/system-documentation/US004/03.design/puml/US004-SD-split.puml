@@ -1,0 +1,78 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Editor" as EDITOR
+
+participant ":CreateScenarioUI" as UI
+participant ":CreateScenarioController" as CTRL
+participant "editor\n:Editor" as EDITOR_OBJ
+participant "scenarioRepository\n:ScenarioRepository" as SCEN_REPO
+participant "scenario\n:Scenario" as SCEN
+
+activate EDITOR
+
+    EDITOR -> UI : asks to create a new scenario
+    activate UI
+
+        UI --> CTRL** : create()
+        UI -> CTRL : getAvailableLocomotiveTypes()
+        ref over CTRL
+            Get Locomotive Type List
+        end ref
+
+        UI -> CTRL : getAvailableMaps()
+        ref over CTRL
+            Get Map List
+        end ref
+
+        UI -> CTRL : getAvailableIndustryTypes()
+        ref over CTRL
+            Get Industry Type List
+        end ref
+
+        CTRL --> UI : all selection lists
+    deactivate UI
+
+    EDITOR -> UI : selects items and fills scenario data
+    activate UI
+
+        UI --> EDITOR : shows data summary and asks for confirmation
+    deactivate UI
+
+    EDITOR -> UI : confirms creation
+    activate UI
+
+        UI -> CTRL : createScenario(name, map, ports,\nlocomotives, industryRules)
+        activate CTRL
+
+            CTRL -> CTRL : getEditorFromSession()
+            activate CTRL
+                ref over CTRL
+                    Get Editor
+                end ref
+                CTRL --> CTRL : editor
+            deactivate CTRL
+
+            CTRL -> SCEN : create(name, map, ports,\nlocomotives, industryRules, editor)
+            activate SCEN
+                SCEN --> CTRL : scenario
+            deactivate SCEN
+
+            CTRL -> SCEN_REPO : saveScenario(scenario)
+            activate SCEN_REPO
+                SCEN_REPO --> CTRL : success
+            deactivate SCEN_REPO
+
+            CTRL --> UI : scenario
+        deactivate CTRL
+
+        UI --> EDITOR : displays success
+    deactivate UI
+
+deactivate EDITOR
+
+@enduml

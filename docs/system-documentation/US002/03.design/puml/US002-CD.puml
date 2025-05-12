@@ -1,0 +1,58 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+skinparam classAttributeIconSize 0
+
+'--- Classes Principais ---
+class Editor {
+    + name: String
+}
+
+class Map {
+    + name: String
+    + width: int
+    + height: int
+    + addElement(element: Element)
+    + validatePosition(x: int, y: int): boolean
+}
+
+class Industry {
+    + type: IndustryType
+    + x: int
+    + y: int
+}
+
+class IndustryType {
+    COAL_MINE, STEEL_MILL, PORT, FARM, BAKERY
+}
+
+class Scenario {
+    + availableIndustries: List<IndustryType>
+    + isIndustryAvailable(type: IndustryType): boolean
+}
+
+class IndustryRepository {
+    + getAvailableIndustries(scenario: Scenario): List<IndustryType>
+}
+
+class AddIndustryController {
+    + AddIndustryController()
+    + loadAvailableIndustries(scenario: Scenario): List<IndustryType>
+    + addIndustryToMap(type: IndustryType, x: int, y: int, map: Map): boolean
+}
+
+class AddIndustryUI {
+    + openInterface()
+}
+
+Editor --> AddIndustryUI : uses
+AddIndustryUI .> AddIndustryController : depends on
+AddIndustryController --> IndustryRepository : fetches data
+AddIndustryController --> Map : updates
+AddIndustryController --> Scenario : checks restrictions
+Map "1" --> "*" Industry : contains
+Industry --> IndustryType : type
+Scenario --> IndustryType : restricts
+@enduml

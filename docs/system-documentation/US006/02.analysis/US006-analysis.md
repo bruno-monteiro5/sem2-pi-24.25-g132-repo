@@ -8,4 +8,4 @@
 
 ### 2.2. Other Remarks
 
-* N/A
+* N/A.

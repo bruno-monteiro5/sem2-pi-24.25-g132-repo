@@ -5,32 +5,46 @@ skinparam shadowing false
 
 autonumber
 
-actor "Player" as Employee
+actor "Player" as Player
 participant ":System" as System
 
-activate Employee
+activate Player
 
-    Employee -> System : asks to upgrade a station with a building
+    Player -> System : asks to upgrade a station
     activate System
 
-        System --> Employee : shows a station list and asks to select one
+        System --> Player : shows map list and asks to select one
     deactivate System
 
-    Employee -> System : selects a station
-    activate System
+        Player -> System : selects map
+        activate System
 
-        System --> Employee : requests upgrade details (i.e. type of building, size)
+        System --> Player : requests to select scenario
     deactivate System
 
-    Employee -> System : types requested data
-    activate System
+        Player -> System : selects scenario
+        activate System
 
-        System --> Employee : shows all data and requests confirmation
+        System --> Player : shows station list
     deactivate System
 
-    Employee -> System : confirms the upgrade
+    Player -> System : selects a station
     activate System
 
-        System --> Employee : displays operation success
+loop while player wants to upgrade
+        System --> Player : requests upgrade type
+    deactivate System
+
+    Player -> System : selects upgrade type
+    activate System
+
+end loop
+        System --> Player : shows all new station data\n and requests confirmation
+    deactivate System
+
+    Player -> System : confirms data
+    activate System
+
+        System --> Player : displays operation success
     deactivate System
 @enduml

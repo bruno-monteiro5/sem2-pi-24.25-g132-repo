@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "controller\n:CreateScenarioController" as CTRL
+participant "scenario\n:Scenario" as SCEN
+
+autonumber 16
+-> CTRL : createScenario(name, map,\nports, locomotives, rules)
+
+autonumber 16.1
+activate CTRL
+    group Create Scenario
+
+        CTRL --> SCEN** : create(name, map,\nports, locomotives, rules)
+        CTRL -> CTRL : saveScenario(scenario)
+
+        activate CTRL
+            CTRL -> CTRL : validateScenario(scenario)
+            activate CTRL
+                CTRL --> CTRL : true
+            deactivate CTRL
+
+            CTRL --> CTRL : true
+            |||
+        deactivate CTRL
+    end
+
+    autonumber 17
+    <-- CTRL : scenario
+deactivate CTRL
+
+@enduml

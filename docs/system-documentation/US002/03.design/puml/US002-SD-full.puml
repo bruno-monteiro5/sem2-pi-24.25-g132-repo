@@ -1,0 +1,50 @@
+@startuml
+actor "Editor" as EDITOR
+participant ":AddIndustryUI" as UI
+participant ":AddIndustryController" as CTRL
+participant "Repositories" as REPOS
+participant "IndustryRepository" as INDUSTRY_REPO
+participant "Scenario" as SCENARIO
+participant "Map" as MAP
+participant "Industry" as INDUSTRY
+
+activate EDITOR
+
+EDITOR -> UI : opens add industry interface
+activate UI
+    UI -> CTRL : load available industries
+    activate CTRL
+        CTRL -> REPOS : getInstance()
+        REPOS --> CTRL : repositories
+        CTRL -> INDUSTRY_REPO : getAvailableIndustries()
+        activate INDUSTRY_REPO
+            INDUSTRY_REPO -> SCENARIO : isIndustryAvailable()
+            SCENARIO --> INDUSTRY_REPO : list of industries
+        deactivate INDUSTRY_REPO
+        CTRL --> UI : industry list
+    deactivate CTRL
+    UI --> EDITOR : displays options
+deactivate UI
+
+EDITOR -> UI : selects industry and XY position
+activate UI
+    UI -> CTRL : addIndustry(type, x, y)
+    activate CTRL
+        CTRL -> MAP : validatePosition(x, y)
+        activate MAP
+            MAP --> CTRL : true/false
+        deactivate MAP
+        alt Valid position
+            CTRL -> MAP : addIndustry(new Industry(type, x, y))
+            MAP --> CTRL : success
+            CTRL --> UI : confirmation
+            UI --> EDITOR : "Industry added!"
+        else Invalid position
+            CTRL --> UI : error
+            UI --> EDITOR : "Invalid position!"
+        end
+    deactivate CTRL
+deactivate UI
+
+deactivate EDITOR
+@enduml

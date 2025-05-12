@@ -1,0 +1,79 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Editor" as EDITOR
+participant ":CreateScenarioUI" as UI
+participant ":CreateScenarioController" as CTRL
+participant "Repositories" as REPOS
+participant "repositories\n:Repositories" as REPOS_SINGLETON
+participant "mapRepository\n:MapRepository" as MAP_REPO
+participant "scenarioRepository\n:ScenarioRepository" as SCEN_REPO
+participant "Scenario" as SCEN
+
+activate EDITOR
+
+    EDITOR -> UI : asks to create scenario
+    activate UI
+        UI --> CTRL : create()
+
+        UI -> CTRL : getAvailableMaps()
+        activate CTRL
+            CTRL -> REPOS : getInstance()
+            activate REPOS
+                REPOS --> CTRL: repositories
+            deactivate REPOS
+
+            CTRL -> REPOS_SINGLETON : getMapRepository()
+            activate REPOS_SINGLETON
+                REPOS_SINGLETON --> CTRL: mapRepository
+            deactivate REPOS_SINGLETON
+
+            CTRL -> MAP_REPO : getAllMaps()
+            activate MAP_REPO
+                MAP_REPO --> CTRL : mapList
+            deactivate MAP_REPO
+
+            CTRL --> UI : mapList
+        deactivate CTRL
+
+        UI --> EDITOR : shows maps and requests data (scenario name,\nports, locomotives, industry rules)
+    deactivate UI
+
+    EDITOR -> UI : provides all data
+    activate UI
+        UI -> CTRL : createScenario(name, map, ports, locomotives, rules)
+        activate CTRL
+
+            CTRL -> SCEN : create(name, map, ports, locomotives, rules)
+            activate SCEN
+                SCEN --> CTRL : scenario
+            deactivate SCEN
+
+            CTRL -> REPOS : getInstance()
+            activate REPOS
+                REPOS --> CTRL : repositories
+            deactivate REPOS
+
+            CTRL -> REPOS_SINGLETON : getScenarioRepository()
+            activate REPOS_SINGLETON
+                REPOS_SINGLETON --> CTRL : scenarioRepository
+            deactivate REPOS_SINGLETON
+
+            CTRL -> SCEN_REPO : saveScenario(scenario)
+            activate SCEN_REPO
+                SCEN_REPO --> CTRL : success
+            deactivate SCEN_REPO
+
+        CTRL --> UI : creation result
+        deactivate CTRL
+
+        UI --> EDITOR : display success
+    deactivate UI
+
+deactivate EDITOR
+
+@enduml
