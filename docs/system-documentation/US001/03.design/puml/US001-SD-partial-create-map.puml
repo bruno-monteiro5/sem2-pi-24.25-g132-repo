@@ -1,0 +1,44 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+participant ":CreateMapController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as REPO
+participant "mapRepository:\nMapRepository" as mapRepository
+participant "Map:\nMap" as Map
+
+autonumber 5
+-> CTRL : createMap(mapDetails)
+
+activate CTRL
+    CTRL -> CTRL : validateMapLocally(mapDetails)
+
+    CTRL -> RepositorySingleton : getInstance()
+    activate RepositorySingleton
+        RepositorySingleton --> CTRL : repositories
+    deactivate RepositorySingleton
+
+    CTRL -> REPO : getMapRepository()
+    activate REPO
+        REPO --> CTRL : mapRepository
+    deactivate REPO
+
+    activate mapRepository
+
+        CTRL -> mapRepository : createMap(mapDetails)
+
+        mapRepository -> Map** : create(name, width, height)
+
+        mapRepository -> mapRepository : checkUniquenessAndSave(map)
+
+    mapRepository --> CTRL : confirmation
+
+autonumber 15
+<-- CTRL : confirmation
+deactivate CTRL
+
+@enduml

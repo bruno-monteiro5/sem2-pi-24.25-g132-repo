@@ -18,8 +18,8 @@ class Editor {
 
  class Map {
  name
- dimensionX
- dimensionY
+ width
+ length
  }
 
  Editor "1" -- "*" Map : Create >
