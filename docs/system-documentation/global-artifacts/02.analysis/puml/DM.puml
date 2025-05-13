@@ -45,10 +45,9 @@ demand
 
 class City {
 name
-positionX
-positionY
-houseBlocks
 }
+
+class HouseBlock
 
 class Industry {
 }
@@ -71,7 +70,12 @@ cost
 
 class Station {
     name
+}
 
+class StationType {
+cost
+economicRadius
+centre
 }
 
 class Train {
@@ -131,7 +135,7 @@ Editor "1" -- "*" Scenario : Creates >
 Map "1" -- "*" Industry : Contains >
 Map "1" -- "*" City : Contains >
 
-Scenario "1" -- "1" TechnologicalRestrictions : Defines >
+Scenario "1" -- "1" TechnologicalRestrictions : Imposes >
 Scenario "1" -- "1" HistoricalRestrictions : Defines >
 Scenario "*" -- "1" Map: is based on >
 Scenario "1" -- "1" TimePeriod: Takes place in >
@@ -142,6 +146,7 @@ Industry *-- TransformingIndustry
 Industry *-- MixedIndustry
 Industry "1" -- "*" Cargo : Demands >
 Industry "1" -- "*" Cargo : Supplies >
+Industry "1" -- "1" Position : is positioned at >
 
 Player "1" -- "*" Station : Builds >
 Player "1" -- "*" Locomotive : Buys >
@@ -151,7 +156,12 @@ Player "1" -- "1" CargoSimulator : controls >
 Player "1" -- "*" RailwayLine : builds >
 
 CargoSimulator "1" -- "1" Scenario : uses >
+CargoSimulator "1" -- "1" Station : generates cargo at >
 
+City "1" -- "1" Position : is positioned at >
+City "1" -- "*" HouseBlock : has >
+
+HouseBlock "1" -- "1" Position : is positioned at >
 
 Train "1" -- "1" Locomotive : Comprises >
 Train "1" -- "*" Carriage : Comprises >
@@ -166,6 +176,8 @@ RouteStop "1" -- "1" Station : Occurs at >
 RouteStop "*" -- "*" Cargo : Loads >
 
 Station "1" -- "1" Building : is upgraded with >
+Station "1" -- "1" Position : is positioned at >
+Station "1" -- "1" StationType : is of type >
 
 TechnologicalRestrictions "1" -- "*" Locomotive : Restricts >
 
