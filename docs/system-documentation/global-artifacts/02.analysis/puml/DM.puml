@@ -23,7 +23,10 @@ class Scenario {
 name
 }
 
-class TimePeriod
+class TimePeriod {
+startYear
+endYear
+}
 
 class Date {
 day
@@ -31,16 +34,20 @@ month
 year
 }
 
+class Event {
+arrive/departure
+}
+
 class CargoSimulator {
   currentTime
-  isRunning
+ status
 }
 
 class TechnologicalRestrictions
 
 class HistoricalRestrictions {
-event
-demand
+title
+description
 }
 
 class City {
@@ -65,6 +72,7 @@ id
 class RailwayLine{
 length
 cost
+isEletrical
 }
 
 
@@ -157,9 +165,13 @@ Player "1" -- "*" RailwayLine : builds >
 
 CargoSimulator "1" -- "1" Scenario : uses >
 CargoSimulator "1" -- "1" Station : generates cargo at >
+CargoSimulator "1" -- "*" Event : displays >
+
+Event "1" -- "1" Station : occurs at >
 
 City "1" -- "1" Position : is positioned at >
 City "1" -- "*" HouseBlock : has >
+City "1" -- "*" Cargo : Demands >
 
 HouseBlock "1" -- "1" Position : is positioned at >
 
@@ -168,6 +180,13 @@ Train "1" -- "*" Carriage : Comprises >
 Train "1" -- "1" Route : Follows >
 
 Carriage "1" -- "*" Cargo : Carries >
+
+HistoricalRestrictions "1" -- "*" Cargo : restricts >
+
+PrimaryIndustry "1" -- "*" Cargo : suplies >
+
+TransformingIndustry "1" -- "*" Cargo : suplies >
+TransformingIndustry "1" -- "*" Cargo : Demands >
 
 Route "1" -- "1..*" RouteStop : has >
 Route "1" -- "1..*" Station : includes >
