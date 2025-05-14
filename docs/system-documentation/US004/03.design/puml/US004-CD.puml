@@ -7,7 +7,7 @@ skinparam classAttributeIconSize 0
 
 '--- Classes Principais ---
 class Editor {
-    + name: String
+    + email: String
 }
 
 class Map {
