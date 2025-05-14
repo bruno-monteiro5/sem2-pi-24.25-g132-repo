@@ -22,8 +22,14 @@ public class City {
      * or if {@code name} is null or empty.
      */
     public City(String name, int x, int y, int numberOfHouseBlocks) {
-        if (x <= 0 || y <= 0 || numberOfHouseBlocks <= 0) {
-            throw new IllegalArgumentException("Os valores de x, y e numberOfHouseBlocks devem ser positivos.");
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("City name cannot be null or empty.");
+        }
+        if (x < 0 || y < 0 ) {
+            throw new IllegalArgumentException("Coordinates cannot be negative.");
+        }
+        if (numberOfHouseBlocks <= 0) {
+            throw new IllegalArgumentException("The number of houseBlocks must be positive.");
         }
         this.name = name;
         this.x = x;
@@ -31,14 +37,13 @@ public class City {
         this.numberOfHouseBlocks = numberOfHouseBlocks;
     }
 
-    /**
-     * Returns the name of the city.
-     *
-     * @return The name of the city.
-     */
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
+
+    public int getX() { return x; }
+
+    public int getY() { return y; }
+
+    public int getNumberOfHouseBlocks() { return numberOfHouseBlocks; }
 
     /**
      * Sets the name of the city.
@@ -47,15 +52,12 @@ public class City {
      * @throws IllegalArgumentException if {@code name} is null or empty.
      */
     public void setName(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("O nome da cidade não pode ser nulo ou vazio.");
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("City name cannot be null or empty.");
         }
         this.name = name;
     }
 
-    public int getX() {
-        return x;
-    }
 
     /**
      * Sets the x-coordinate of the city's location.
@@ -65,14 +67,11 @@ public class City {
      */
     public void setX(int x) {
         if (x <= 0) {
-            throw new IllegalArgumentException("O valor de x deve ser positivo.");
+            throw new IllegalArgumentException("Coordinates cannot be negative.");
         }
         this.x = x;
     }
 
-    public int getY() {
-        return y;
-    }
 
     /**
      * Sets the y-coordinate of the city's location.
@@ -82,14 +81,11 @@ public class City {
      */
     public void setY(int y) {
         if (y <= 0) {
-            throw new IllegalArgumentException("O valor de y deve ser positivo.");
+            throw new IllegalArgumentException("Coordinates cannot be negative.");
         }
         this.y = y;
     }
 
-    public int getNumberOfHouseBlocks() {
-        return numberOfHouseBlocks;
-    }
 
     /**
      * Sets the number of house blocks in the city.
@@ -99,8 +95,17 @@ public class City {
      */
     public void setNumberOfHouseBlocks(int numberOfHouseBlocks) {
         if (numberOfHouseBlocks <= 0) {
-            throw new IllegalArgumentException("O número de blocos de casas deve ser positivo.");
+            throw new IllegalArgumentException("The number of houseBlocks must be positive.");
         }
         this.numberOfHouseBlocks = numberOfHouseBlocks;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "name='" + name + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
     }
 }
