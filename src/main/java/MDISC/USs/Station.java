@@ -1,4 +1,4 @@
-package MATDISC.USs;
+package MDISC.USs;
 
 public class Station {
     private String Name;

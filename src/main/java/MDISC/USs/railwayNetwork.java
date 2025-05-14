@@ -1,4 +1,4 @@
-package MATDISC.USs;
+package MDISC.USs;
 
 import java.io.File;
 import java.io.IOException;

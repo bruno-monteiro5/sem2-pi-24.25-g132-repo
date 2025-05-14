@@ -1,4 +1,4 @@
-# US006 - Create a Task
+# US014 - ...
 
 ## 1. Requirements Engineering
 
@@ -43,15 +43,9 @@ As a Player, given a railway with stations and railway lines, I want to see a ro
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
 	
 * Selected data:
-    * a task category 
+  * lines
 
 **Output Data:**
 
