@@ -2,6 +2,10 @@ package pt.ipp.isep.dei.domain;
 
 public class Industry {
 
+
+    public static enum IndustryType {TRANSFORMING, PRIMARY, MIXED}
+
+
     private String name;
     private IndustryType type;
     private Position position;
