@@ -27,8 +27,23 @@ public class Position {
     }
 
     @Override
-    public String toString() {
-        return String.format("Position{x=%d, y=%d}", x, y);
+    public boolean equals(Object objCompare) {
+        if (this == objCompare) {
+            return true;
+        }
+        if (getClass() == objCompare.getClass()) {
+            Position other = (Position) objCompare;
+
+            return this.x == other.x && this.y == other.y;
+        }
+        return false;
+
     }
+
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
+
 
 }

@@ -3,7 +3,22 @@ package pt.ipp.isep.dei.domain;
 public class Industry {
 
 
-    public static enum IndustryType {TRANSFORMING, PRIMARY, MIXED}
+    public static enum IndustryType {
+        TRANSFORMING("Transforming Industry"),
+        PRIMARY("Primary Industry"),
+        MIXED("Mixed Industry");
+
+        private final String description;
+
+        IndustryType(String description) {
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+    }
 
 
     private String name;
@@ -45,6 +60,11 @@ public class Industry {
     public String toString() {
         return String.format("Industry{name='%s', type=%s, position=%s}", name, type, position);
     }
+
+    public boolean isAtPosition(Position position) {
+        return this.position.equals(position);
+    }
+
 
 
 }
