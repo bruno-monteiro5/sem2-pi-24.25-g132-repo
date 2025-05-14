@@ -31,8 +31,9 @@ class MaintenanceRoute {
 Player "1" -- "1" MaintenanceRoute : requests
 
 Station "1" - "*" RailwayLine : connected to
+
 RailwayLine "*" - "2" Station :connects
 
-MaintenanceRoute "*" - "*" RailwayLine : uses
+MaintenanceRoute "*" -- "*" RailwayLine : uses
 
 @enduml
