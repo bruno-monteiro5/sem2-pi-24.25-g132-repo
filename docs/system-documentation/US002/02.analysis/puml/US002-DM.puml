@@ -18,8 +18,6 @@ class Map {
 }
 
 class Industry {
-    positionX
-    positionY
 }
 
 class PrimaryIndustry {
@@ -39,6 +37,11 @@ class MixedIndustry {
 class Editor {
 }
 
+class Position {
+x
+y
+}
+
 
 Editor "1" -- "*" Industry: adds >
 
@@ -46,6 +49,7 @@ Map "1" -- "*" Industry : contains >
 Industry "1" -- "1" PrimaryIndustry : Consists of >
 Industry "1" -- "1" TransformingIndustry : Consists of >
 Industry "1" -- "1" MixedIndustry : Consists of >
+Industry "1" - "1" Position : Is positioned at >
 
 
 @enduml
