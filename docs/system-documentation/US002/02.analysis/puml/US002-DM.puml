@@ -24,7 +24,6 @@ class Industry {
 
 class PrimaryIndustry {
     resource
-    farms
 }
 
 class TransformingIndustry {

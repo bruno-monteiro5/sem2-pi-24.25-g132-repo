@@ -1,0 +1,5 @@
+package pt.ipp.isep.dei.controller;
+
+public class IndustryController {
+
+}
