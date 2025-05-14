@@ -1,7 +1,5 @@
 package pt.ipp.isep.dei.ui.console.menu;
 
-import pt.ipp.isep.dei.ui.console.DevTeamUI;
-import pt.ipp.isep.dei.ui.console.authorization.AuthenticationUI;
 import pt.ipp.isep.dei.ui.console.utils.Utils;
 
 import java.util.ArrayList;

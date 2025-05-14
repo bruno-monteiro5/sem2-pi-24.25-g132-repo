@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei;
 
-import pt.ipp.isep.dei.controller.AuthenticationController;
 import pt.ipp.isep.dei.domain.Employee;
 import pt.ipp.isep.dei.domain.Organization;
 import pt.ipp.isep.dei.domain.TaskCategory;
