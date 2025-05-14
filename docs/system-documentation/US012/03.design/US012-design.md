@@ -49,7 +49,7 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/US006-SD-full.svg)
+![Sequence Diagram - Full](svg/US012-SD-full.svg)
 
 ### Split Diagrams
 
@@ -69,11 +69,11 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 **Get Employee**
 
-![Sequence Diagram - Partial - Get Employee](svg/US006-SD-partial-get-employee.svg)
+![Sequence Diagram - Partial - Get Employee](svg/US012-SD-partial-get-employee.svg)
 
 **Create Task**
 
-![Sequence Diagram - Partial - Create Task](svg/US006-SD-partial-create-task.svg)
+![Sequence Diagram - Partial - Create Task](svg/US012-SD-partial-create-task.svg)
 
 ## 3.3. Class Diagram (CD)
 

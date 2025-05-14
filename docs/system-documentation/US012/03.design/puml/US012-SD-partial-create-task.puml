@@ -3,33 +3,27 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
-participant "task\n:Task" as TASK
+participant "controller\n:CreateSimulatorController" as CTRL
+participant "simulator\n:Simulator" as SIM
 
 autonumber 16
--> ORG: createTask(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee )
+-> CTRL : createSimulator(editor, stationList)
 
 autonumber 16.1
-activate ORG
-    group Create Task
+activate CTRL
+    group Create Simulator
 
-        ORG --> TASK**: create(reference, description, informalDescription, \ntechnicalDescription, duration, cost, taskCategory, employee)
-        ORG -> ORG: addTask (task)
+        CTRL --> SIM** : create(editor, stationList)
+        CTRL -> SIM : generateCargo()
 
-        activate ORG
-            ORG -> ORG: validateTask(task)
-            activate ORG
-                ORG --> ORG : true
-            deactivate ORG
+        activate SIM
+            SIM -> SIM : start()
+            SIM --> CTRL : simulator
+        deactivate SIM
 
-            ORG --> ORG : true
-            |||
-        deactivate ORG
     end
 
-    autonumber 17
-    <-- ORG : task
-deactivate ORG
-
-
+autonumber 17
+<-- CTRL : simulator
+deactivate CTRL
 @enduml
