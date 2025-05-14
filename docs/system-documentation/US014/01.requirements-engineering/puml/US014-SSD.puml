@@ -5,32 +5,26 @@ skinparam shadowing false
 
 autonumber
 
-actor "Organization\nEmployee" as Employee
-participant ":System" as System
+actor "Player" as Player
+participant "Game System" as System
 
-activate Employee
+activate Player
 
-    Employee -> System : asks to create a new task
+    Player -> System : Requests verification of maintenance route
     activate System
 
-        System --> Employee : shows task category list and asks to select one
+        System --> Player : Gives the choice between all lines or only electrified lines
     deactivate System
 
-    Employee -> System : selects a task category
+    Player -> System : Selects one of the available options
     activate System
 
-        System --> Employee : requests data (i.e. reference, designation, informal\ndescription, technical description, duration, cost)
+        alt valid maintenance route exists
+            System --> Player : Returns the route starting from a valid station and passes only once through each railway line
+        else invalid or no route from selected station
+            System --> Player : Displays error: selected station cannot serve as the starting point of the maintenance route
+        end
+
     deactivate System
 
-    Employee -> System : types requested data
-    activate System
-
-        System --> Employee : shows all data and requests confirmation
-    deactivate System
-
-    Employee -> System : confirms data
-    activate System
-
-        System --> Employee : displays operation success
-    deactivate System
 @enduml

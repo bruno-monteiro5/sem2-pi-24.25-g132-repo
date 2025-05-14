@@ -4,7 +4,7 @@
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As a Player, given a railway with stations and railway lines, I want to see a route that passes once, and only once, by each railway line to carry out maintenance on the lines
 
 ### 1.2. Customer Specifications and Clarifications 
 
@@ -16,23 +16,27 @@ As an organization employee, I want to create a new task in order to be further 
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** What kind of unit performs the maintenance route? can it be any kind of train? is there a specific train configuration that needs to be setup by the player?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** Any kind of train will be good.
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** Can we use java.util.Map to count the conections each station has?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** No.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC1:** The player should be able to choose between the maintenance of all the lines, or only the electrified ones.
+* **AC2:** A warning message should be displayed in case it is not possible to get such route. If possible, the station(s) where the route can start, should be displayed so that the player may select it.
+* **AC3:** A visualization of the rail network (stations, railway lines) should be displayed to the player (using, for example, Graphviz or GraphStream packages), where electrified railway lines are drawn with a different color from the others.
+* **AC4** All implemented procedures (except the used for graphic visualization) must only use primitive operations, and not existing functions in JAVA libraries.
+* **AC5** The algorithm(s) implemented to solve this problem should be documented/detailed in the repository documentation, using markdown format.
+
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+* There is a dependency on "US008 - Build a railway line" as we need a given railway
+* There is a dependency on "US005 - Build a station" as routes connect stations.
 
 ### 1.5 Input and Output Data
 
