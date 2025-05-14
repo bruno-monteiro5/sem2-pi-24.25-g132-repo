@@ -10,6 +10,7 @@ The team is formed by the students identified in the following table.
 | **1241129**    | Gustavo Ferreira |
 | **1241039**    | Francisco Vieira |
 | **1240901**    | Bruno Monteiro   |
+| **1211103**    | João Sousa       |
 
 # 2. Task Distribution ###
 
