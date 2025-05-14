@@ -19,9 +19,9 @@ activate Player
     Player -> System : Selects one of the available options
     activate System
 
-        alt valid maintenance route exists
+        alt valid
             System --> Player : Returns the route starting from a valid station and passes only once through each railway line
-        else invalid or no route from selected station
+        else invalid
             System --> Player : Displays error: selected station cannot serve as the starting point of the maintenance route
         end
 
