@@ -36,7 +36,7 @@ public class CreateTaskController {
 
     private TaskCategoryRepository getTaskCategoryRepository() {
         if (taskCategoryRepository == null) {
-            Repositories repositories = Repositories.getInstance();
+            Repositories repositories = pt.ipp.isep.dei.repository.Repositories.getInstance();
 
             //Get the TaskCategoryRepository
             taskCategoryRepository = repositories.getTaskCategoryRepository();
@@ -46,7 +46,7 @@ public class CreateTaskController {
 
     private OrganizationRepository getOrganizationRepository() {
         if (organizationRepository == null) {
-            Repositories repositories = Repositories.getInstance();
+            Repositories repositories = pt.ipp.isep.dei.repository.Repositories.getInstance();
             organizationRepository = repositories.getOrganizationRepository();
         }
         return organizationRepository;
@@ -55,7 +55,7 @@ public class CreateTaskController {
 
     private AuthenticationRepository getAuthenticationRepository() {
         if (authenticationRepository == null) {
-            Repositories repositories = Repositories.getInstance();
+            Repositories repositories = pt.ipp.isep.dei.repository.Repositories.getInstance();
 
             //Get the AuthenticationRepository
             authenticationRepository = repositories.getAuthenticationRepository();
