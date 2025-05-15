@@ -13,9 +13,6 @@ hide methods
 
 class Station {
     name
-    type
-    cost
-    economicRadius
 
 }
 
@@ -28,7 +25,13 @@ class Building {
 
 }
 
+class StationType {
+    cost
+    economicRadius
+}
+
 Player "1" -- "*" Station: selects >
 Station "1" -- "*" Building : is upgraded with >
+Station "1" -- "*" StationType : is of type >
 
 @enduml

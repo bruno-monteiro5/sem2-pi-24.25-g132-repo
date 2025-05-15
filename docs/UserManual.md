@@ -41,7 +41,7 @@ By following this guide, users can fully harness the potential of the Railway Ne
 rail systems with efficiency and precision.
 
 ## 2. Glossary
-- [Link to Glossary](01.requirements-engineering/glossary.md)
+- [Link to Glossary](system-documentation/global-artifacts/01.requirements-engineering/glossary.md)
 
 ## 3. System Overview
 
