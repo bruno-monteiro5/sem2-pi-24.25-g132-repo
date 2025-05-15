@@ -21,17 +21,12 @@ class Industry {
 }
 
 class PrimaryIndustry {
-    resource
 }
 
 class TransformingIndustry {
-    initialResource
-    finalResource
 }
 
 class MixedIndustry {
-    importedResource
-    exportedResource
 }
 
 class Editor {
