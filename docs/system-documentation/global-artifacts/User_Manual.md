@@ -22,6 +22,8 @@
 ## Table of Content
 
 1. [Introduction](#introduction)
+2. [Glossary](#2-glossary)
+3. [System Overview](#3-system-overview)
 
 
 
@@ -38,18 +40,20 @@ frequently asked questions to assist users in overcoming potential challenges.
 By following this guide, users can fully harness the potential of the Railway Network Simulator to manage and analyze 
 rail systems with efficiency and precision.
 
+## 2. Glossary
+- [Link to Glossary](01.requirements-engineering/glossary.md)
 
-## 2. System Overview
+## 3. System Overview
 
 This section provides a comprehensive overview of the railway network simulation software, detailing its purpose, structure, and main functionalities.
-### 2.1 Purpose and Use
+### 3.1 Purpose and Use
 The primary purpose of this software is to simulate the operation of railway networks, offering tools to:
 - Create and edit maps and scenarios.
 - Define and interact with the operation of a railway network.
 - Analyze network performance and connectivity.
 
 This software can be used for both management purposes and recreational simulation of railway systems.
-### 2.2 System Structure
+### 3.2 System Structure
 The software is organized into two main components and additional supporting modules:
 #### 1. Map and Scenario Editor
 - **Map Creation:** Allows users to design rectangular maps and place static elements, such as cities and industries.
@@ -71,7 +75,7 @@ The software is organized into two main components and additional supporting mod
 
 - **Operational Controls:** Start, pause, and monitor simulation progress.
 
-### 2.3 Main Features and Functionalities
+### 3.3 Main Features and Functionalities
 The software provides tools and functionalities to:
 - Create and edit detailed maps with cities and industries.
 - Define scenarios with specific restrictions, such as technological limitations and historical periods.
@@ -82,7 +86,7 @@ The software provides tools and functionalities to:
 - Simulate railway network operations, including generating cargo and visualizing train journeys.
 - Perform statistical analyses of network connectivity and operational performance.
 
-### 2.4 Analytical Modules
+### 3.4 Analytical Modules
 The software also includes powerful analytical modules for optimization of railway network operations:
 - **Connectivity Analysis:** Validate if trains can travel between stations (e.g., electrified trains require electrified lines).
 - **Maintenance Planning:** Generate routes to cover the maintenance of all lines.
@@ -90,7 +94,7 @@ The software also includes powerful analytical modules for optimization of railw
     - Calculate KPIs (e.g., average profit, passenger traffic).
     - Data visualization through graphs, such as boxplots, histograms, and pie charts, for analyzing cargo distribution, train allocation, and more.
 
-### 2.5 Key Technologies and Dependencies
+### 3.5 Key Technologies and Dependencies
 - **Core Development:** Java applications built using Test-Driven Development (TDD) principles and Object-Oriented Programming.
 - **Visualization:** Tools such as Graphviz/GraphStream for network topology diagrams (e.g., station connections).
 - **Data Analysis:** Python, including Jupyter Notebook, is used for advanced statistical calculations and visualizations.

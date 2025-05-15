@@ -13,13 +13,28 @@ public abstract class Station {
     private int radius;
 
     /**
-     * Constructs a Station object.
+     * Constructs a Station object, representing a point in the railway network
+     * with its associated properties such as name, coordinates, type, operational cost,
+     * and the radius of influence.
+     * <p>
+     * This constructor ensures that all input values are valid, enforcing constraints to prevent
+     * the creation of invalid station objects.
+     * </p>
      *
-     * @param name The name of the station.
-     * @param x    The x-coordinate.
-     * @param y    The y-coordinate.
-     * @throws IllegalArgumentException If name is invalid or coordinates are negative.
+     * @param name  The name of the station. Must not be {@code null} or empty.
+     * @param x     The x-coordinate of the station in the map. Must be a non-negative integer.
+     * @param y     The y-coordinate of the station in the map. Must be a non-negative integer.
+     * @param type  The type of the station (e.g., "passenger", "freight"). Must not be {@code null}.
+     * @param cost  The operational cost associated with the station. Typically represents
+     *              maintenance or operational expenses.
+     * @param radius The radius of influence of the station, representing its effective
+     *               range of service (e.g., coverage area).
+     *
+     * @throws IllegalArgumentException If {@code name} is {@code null} or empty,
+     *                                  if {@code x} or {@code y} are negative,
+     *                                  or if any invalid value is specified.
      */
+
     public Station(String name, int x, int y, String type, int cost, int radius) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Station name cannot be null or empty.");
