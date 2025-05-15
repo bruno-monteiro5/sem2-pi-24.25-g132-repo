@@ -83,7 +83,6 @@ class Station {
 class StationType {
 cost
 economicRadius
-centre
 }
 
 class Train {
