@@ -5,38 +5,34 @@ skinparam shadowing false
 
 autonumber
 
-'hide footbox
-
-participant ":CreateTaskController" as CTRL
+participant ":CreateSimulatorController" as CTRL
 participant "Repositories" as REPOS
 participant "repositories\n:Repositories" as REPOS_SINGLETON
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TASK_CAT_REPO
+participant "stationRepository:\nStationRepository" as STATION_REPO
 
 autonumber 3
-
- -> CTRL : getTaskCategories()
+-> CTRL : getAvailableStations()
 autonumber 3.1
 activate CTRL
-    group Get Task Category List
 
-            CTRL -> REPOS : getInstance()
-            activate REPOS
-                REPOS --> CTRL: repositories
-            deactivate REPOS
+    group Get Station List
+        CTRL -> REPOS : getInstance()
+        activate REPOS
+            REPOS --> CTRL : repositories
+        deactivate REPOS
 
-            CTRL -> REPOS_SINGLETON : getTaskCategoryRepository()
-            activate REPOS_SINGLETON
-                REPOS_SINGLETON --> CTRL: taskCategoryRepository
-            deactivate REPOS_SINGLETON
+        CTRL -> REPOS_SINGLETON : getStationRepository()
+        activate REPOS_SINGLETON
+            REPOS_SINGLETON --> CTRL : stationRepository
+        deactivate REPOS_SINGLETON
 
-            CTRL -> TASK_CAT_REPO : getTaskCategories()
-            activate TASK_CAT_REPO
-                TASK_CAT_REPO --> CTRL : taskCategoryList
-            deactivate TASK_CAT_REPO
-
+        CTRL -> STATION_REPO : getAllStations()
+        activate STATION_REPO
+            STATION_REPO --> CTRL : stationList
+        deactivate STATION_REPO
     end
-    autonumber 4
-    <-- CTRL  : taskCategoryList
-deactivate CTRL
 
+autonumber 4
+<-- CTRL : stationList
+deactivate CTRL
 @enduml

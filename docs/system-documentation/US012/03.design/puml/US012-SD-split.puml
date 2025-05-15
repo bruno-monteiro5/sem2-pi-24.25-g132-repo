@@ -5,89 +5,57 @@ skinparam shadowing false
 
 autonumber
 
-'hide footbox
-actor "Organization Employee" as ORG_EMPLOYEE
+actor "Player" as PLAYER
 
-participant ":CreateTaskUI" as UI
-participant ":CreateTaskController" as CTRL
-participant "organization\n:Organization" as ORG
+participant ":CreateSimulatorUI" as UI
+participant ":CreateSimulatorController" as CTRL
+participant "simulator\n:Simulator" as SIMULATOR
 
-activate ORG_EMPLOYEE
+activate PLAYER
 
-    ORG_EMPLOYEE -> UI : asks to create a new task
-
+    PLAYER -> UI : asks to create a new simulator
     activate UI
 
         UI --> CTRL** : create()
-        UI -> CTRL : getTaskCategories()
+        UI -> CTRL : getAvailableStations()
         ref over CTRL
-            Get Task Category List
-
+            Get Station List
         end ref
 
         activate CTRL
-
-            CTRL --> UI : taskCategoryList
+            CTRL --> UI : stationList
         deactivate CTRL
 
-        UI --> ORG_EMPLOYEE : shows task category list and asks to select one
+        UI --> PLAYER : shows station list and asks to confirm
     deactivate UI
 
-    ORG_EMPLOYEE -> UI : selects a task category
+    PLAYER -> UI : confirms creation
     activate UI
 
-        UI --> ORG_EMPLOYEE : requests data (reference, description,\ninformal description, technical description,\nduration, cost)
-    deactivate UI
-
-    ORG_EMPLOYEE -> UI : types requested data
-    activate UI
-
-        UI --> ORG_EMPLOYEE : shows all data and requests confirmation
-    deactivate UI
-
-    ORG_EMPLOYEE -> UI : confirms data
-    activate UI
-
-        UI -> CTRL : createTask(reference, description, informalDescription,\ntechnicalDescription, duration, cost, taskCategoryDescription)
+        UI -> CTRL : createSimulator()
         activate CTRL
 
-            CTRL -> CTRL : getTaskCategoryByDescription(taskCategoryDescription)
+            CTRL -> CTRL : getEditorFromSession()
             activate CTRL
-
                 ref over CTRL
-                    Get Task Category Object
-
+                    Get Editor
                 end ref
-
-                CTRL --> CTRL : taskCategory
+                CTRL --> CTRL : editor
             deactivate CTRL
 
-            CTRL -> CTRL : getEmployeeFromSession()
-            activate CTRL
-
-                ref over CTRL
-                    Get Employee
-
-                end ref
-                CTRL --> CTRL : employee
-            deactivate CTRL
-
-            CTRL -> ORG: createTask(reference, description, informalDescription,\ntechnicalDescription, duration, cost, taskCategory, employee)
-            activate ORG
-
-                ref over ORG
-                    Create Task
-
+            CTRL -> SIMULATOR : create(editor, stationList)
+            activate SIMULATOR
+                ref over SIMULATOR
+                    Create Simulator
                 end
+                SIMULATOR --> CTRL : simulator
+            deactivate SIMULATOR
 
-                ORG --> CTRL : task
-            deactivate ORG
+            CTRL --> UI : simulator
+        deactivate CTRL
 
-            CTRL --> UI: task
-            deactivate CTRL
-            UI --> ORG_EMPLOYEE: displays operation success
+        UI --> PLAYER : displays simulation success
     deactivate UI
 
-deactivate ORG_EMPLOYEE
-
+deactivate PLAYER
 @enduml
