@@ -55,11 +55,13 @@ public class Main {
                             break;
 
                         case 3:
-                            System.out.print("Apenas eletrificadas? (s/n): ");
-                            String resp = scanner.nextLine();
-                            boolean eletricas = resp.equalsIgnoreCase("s");
-                            net.checkMaintenanceRoute(eletricas);
+                            System.out.print("Tipo de manutenção? (geral/elétrica): ");
+                            String lineType = scanner.nextLine();
+                            boolean onlyElectrified = lineType.equalsIgnoreCase("elétrica");
+
+                            net.findEulerianPath(onlyElectrified);
                             break;
+
 
                         case 4:
                             GraphVisualizer.visualize(net, false, "grafo.svg");
