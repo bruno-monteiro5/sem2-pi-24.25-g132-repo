@@ -13,6 +13,8 @@ public class Map {
     private final int width;
     private final int height;
     private final List<Station> stations = new ArrayList<>();
+    private final List<Industry> industries = new ArrayList<>();
+
 
     /**
      * Constructs a Map with a name, width, and height.
@@ -85,6 +87,40 @@ public class Map {
         }
         stations.add(s);
     }
+
+    public void addIndustry(Industry industry) {
+        if (industry == null || industry.getPosition() == null) {
+            throw new IllegalArgumentException("A indústria ou sua posição não pode ser nula.");
+        }
+        if (!isPositionValid(industry.getPosition())) {
+            throw new IllegalArgumentException("A posição da indústria está fora dos limites do mapa.");
+        }
+        if (isPositionOccupied(industry.getPosition())) {
+            throw new IllegalArgumentException("Já existe uma indústria nesta posição.");
+        }
+        industries.add(industry);
+    }
+
+    private boolean isPositionValid(Position position) {
+        return position.getX() >= 0 && position.getX() < width &&
+                position.getY() >= 0 && position.getY() < height;
+    }
+
+    private boolean isPositionOccupied(Position position) {
+        for (Industry industry : industries) {
+            if (industry.getPosition().equals(position)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public List<Industry> getIndustries() {
+        return new ArrayList<>(industries);
+    }
+
+
 
     /**
      * Gets a copy of the list of all placed stations.
