@@ -1,46 +1,41 @@
 package MDISC.USs;
 
-import guru.nidi.graphviz.attribute.*;
-import guru.nidi.graphviz.engine.*;
-import guru.nidi.graphviz.model.*;
+import guru.nidi.graphviz.attribute.Color;
+import guru.nidi.graphviz.attribute.Label;
+import guru.nidi.graphviz.engine.Format;
+import guru.nidi.graphviz.engine.Graphviz;
+import guru.nidi.graphviz.model.Graph;
+import guru.nidi.graphviz.model.LinkSource;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
 
-import static guru.nidi.graphviz.model.Factory.*;
+import static guru.nidi.graphviz.model.Factory.graph;
+import static guru.nidi.graphviz.model.Factory.node;
+import static guru.nidi.graphviz.model.Factory.to;
 
 public class GraphVisualizer {
 
-    public static void exportNetwork(RailwayNetwork network, boolean onlyElectrified, String outputFilePath) throws IOException {
-        MutableGraph graph = mutGraph("Railway").setDirected(false);
+    public static void visualize(RailwayNetwork network, boolean onlyElectrified, String outputFilePath) {
+        Graph g = graph("railway").directed(); // sem RankDir
 
-        Set<String> addedEdges = new HashSet<>();
+        for (Line line : network.getLines()) {
+            if (onlyElectrified && !line.isElectrified()) continue;
 
-        for (Station station : network.getAllStations()) {
-            String from = station.getName();
-            graph.add(mutNode(from).add(Shape.CIRCLE, Style.FILLED, Color.rgb("DDDDDD")));
+            String from = line.getStationA().getName();
+            String to = line.getStationB().getName();
+            String label = line.getDistance() + "km";
+            Color color = line.isElectrified() ? Color.RED : Color.BLACK;
 
-            for (Connection conn : station.getConnections()) {
-                String to = conn.getDestination().getName();
-                boolean electrified = conn.isElectrified();
-
-                String edgeId = from + "--" + to;
-                String reverseEdgeId = to + "--" + from;
-
-                if (addedEdges.contains(edgeId) || addedEdges.contains(reverseEdgeId)) continue;
-                if (onlyElectrified && !electrified) continue;
-
-                graph.add(
-                        mutNode(from).addLink(
-                                to(mutNode(to)).with(electrified ? Color.BLUE : Color.GRAY)
-                        )
-                );
-
-                addedEdges.add(edgeId);
-            }
+            LinkSource edge = node(from).link(to(node(to)).with(Label.of(label), color));
+            g = g.with(edge);
         }
 
-        Graphviz.fromGraph(graph).render(Format.PNG).toFile(new File(outputFilePath));
+        try {
+            Graphviz.fromGraph(g).render(Format.SVG).toFile(new File(outputFilePath));
+            System.out.println("Graph saved to " + outputFilePath);
+        } catch (IOException e) {
+            System.err.println("Error saving graph: " + e.getMessage());
+        }
     }
 }
