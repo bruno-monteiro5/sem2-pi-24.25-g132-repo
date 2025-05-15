@@ -6,69 +6,49 @@ package pt.ipp.isep.dei.domain;
  */
 public abstract class Station {
     private String name;
-    private int x;
-    private int y;
-    private String type;
-    private int cost;
-    private int radius;
+    private Position location;
+    private StationType type;
 
     /**
      * Constructs a Station object.
      *
      * @param name The name of the station.
-     * @param x    The x-coordinate.
-     * @param y    The y-coordinate.
      * @throws IllegalArgumentException If name is invalid or coordinates are negative.
      */
-    public Station(String name, int x, int y, String type, int cost, int radius) {
+    public Station(String name, Position location, StationType type) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Station name cannot be null or empty.");
         }
-        if (x < 0 || y < 0) {
-            throw new IllegalArgumentException("Coordinates cannot be negative.");
-        }
         this.name = name;
-        this.x = x;
-        this.y = y;
+        this.location = location;
         this.type = type;
-        this.cost = cost;
-        this.radius = radius;
 
     }
 
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public int getX() { return x; }
+    public Position getLocation() {
+        return location;
+    }
 
-    public int getY() { return y; }
+    public StationType getType() {
+        return type;
+    }
 
-    public String getType() { return type; }
-
-    public int getCost() { return cost; }
-
-    public int getRadius() { return radius; }
 
     public void setName(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Station name cannot be null or empty.");
-        }
         this.name = name;
     }
-
-    public void setX(int x) {
-        if (x < 0) {
-            throw new IllegalArgumentException("Coordinates cannot be negative.");
-        }
-        this.x = x;
+    public void setLocation(Position location) {
+        this.location = location;
+    }
+    public void setType(StationType type) {
+        this.type = type;
     }
 
-    public void setY(int y) {
-        if (y < 0) {
-            throw new IllegalArgumentException("Coordinates cannot be negative.");
-        }
-        this.y = y;
-    }
 
     /**
      * Returns a string representation of the station.
@@ -79,14 +59,10 @@ public abstract class Station {
      */
     @Override
     public String toString() {
-        return String.format(
-                "Station: '%s'%n" +
-                        "    - Coordinates: (x=%d, y=%d)%n" +
-                        "    - Type: %s%n" +
-                        "    - Cost: %d%n" +
-                        "    - Radius: %d",
-                name, x, y, type, cost, radius
-        );
-
+        return "Station{" +
+                "-Name='" + name + '\'' +
+                "-Location=" + location +
+                "-Type=" + type +
+                '}';
     }
 }
