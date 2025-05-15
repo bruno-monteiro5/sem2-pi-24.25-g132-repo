@@ -6,6 +6,9 @@ public class Position {
     private int y;
 
     public Position(int x, int y) {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException("Position coordinates must be non-negative.");
+        }
         this.x = x;
         this.y = y;
     }
@@ -39,6 +42,7 @@ public class Position {
         return false;
 
     }
+
 
     @Override
     public String toString() {
