@@ -11,6 +11,7 @@ public class Repositories {
     private final OrganizationRepository organizationRepository;
     private final TaskCategoryRepository taskCategoryRepository;
     private final AuthenticationRepository authenticationRepository;
+    private final ScenarioRepository scenarioRepository = new ScenarioRepository();
 
     /**
      * The Singleton's constructor should always be private to prevent direct construction calls with the new operator.
@@ -46,4 +47,6 @@ public class Repositories {
     public AuthenticationRepository getAuthenticationRepository() {
         return authenticationRepository;
     }
+
+    public ScenarioRepository getScenarioRepository() { return scenarioRepository; }
 }
