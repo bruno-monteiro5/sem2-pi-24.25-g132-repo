@@ -11,6 +11,7 @@ public class Repositories {
     private final OrganizationRepository organizationRepository;
     private final TaskCategoryRepository taskCategoryRepository;
     private final AuthenticationRepository authenticationRepository;
+    private final MapRepository mapRepository;
 
     /**
      * The Singleton's constructor should always be private to prevent direct construction calls with the new operator.
@@ -19,6 +20,7 @@ public class Repositories {
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
+        mapRepository = new MapRepository();
     }
 
     /**
@@ -41,6 +43,10 @@ public class Repositories {
 
     public TaskCategoryRepository getTaskCategoryRepository() {
         return taskCategoryRepository;
+    }
+
+    public MapRepository getMapRepository() {
+        return mapRepository;
     }
 
     public AuthenticationRepository getAuthenticationRepository() {

@@ -9,11 +9,23 @@ import java.util.List;
  * Supports placing and validating stations within its boundaries.
  */
 public class Map {
+
+    private int id;
     private final String name;
     private final int width;
     private final int height;
+    private String emailEditor;
+
+    private final List<City> cities = new ArrayList<>();
     private final List<Station> stations = new ArrayList<>();
     private final List<Industry> industries = new ArrayList<>();
+    private final List<Position> ocupiedPositions = new ArrayList<>();
+
+    private static final int ID_BY_OMISSION = 1;
+    private static final String NAME_BY_OMISON = "Without name";
+    private static final int WIDTH_BY_OMISSION = 1;
+    private static final int HEIGHT_BY_OMISSION = 1;
+    private static final String EMAIL_EDITOR_BY_OMISSION = null;
 
 
     /**
@@ -22,7 +34,7 @@ public class Map {
      * @param width number of columns
      * @param height number of rows
      */
-    public Map(String name, int width, int height) {
+    public Map(String name, int width, int height, String createdBy) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException("Map must have positive width and height");
         }
@@ -32,6 +44,16 @@ public class Map {
         this.name = name;
         this.width = width;
         this.height = height;
+        this.emailEditor = createdBy;
+    }
+
+    public Map() {
+        this(NAME_BY_OMISON, WIDTH_BY_OMISSION, HEIGHT_BY_OMISSION, EMAIL_EDITOR_BY_OMISSION);
+        this.id = ID_BY_OMISSION;
+    }
+
+    public int getId() {
+        return id;
     }
 
     private boolean isValidFileName(String name) {
@@ -49,6 +71,12 @@ public class Map {
     public int getHeight() {
         return height;
     }
+
+    public String getEmailEditor() {
+        return emailEditor;
+    }
+
+
 
     /**
      * Checks if a given position is within the map boundaries.
@@ -73,6 +101,11 @@ public class Map {
         return false;
     }
 
+
+
+
+    //ADDERS
+
     /**
      * Places a station on the map if the position is valid and unoccupied.
      * @param s the station to place
@@ -86,6 +119,7 @@ public class Map {
             throw new IllegalArgumentException("There is already a station at this position.");
         }
         stations.add(s);
+        ocupiedPositions.add(p);
     }
 
     public void addIndustry(Industry industry) {
@@ -99,7 +133,14 @@ public class Map {
             throw new IllegalArgumentException("Já existe uma indústria nesta posição.");
         }
         industries.add(industry);
+        ocupiedPositions.add(industry.getPosition());
     }
+
+    public void addCity(City city) {
+        cities.add(city);
+        ocupiedPositions.add(city.getPosition());
+    }
+
 
     private boolean isPositionValid(Position position) {
         return position.getX() >= 0 && position.getX() < width &&
@@ -107,8 +148,11 @@ public class Map {
     }
 
     private boolean isPositionOccupied(Position position) {
-        for (Industry industry : industries) {
-            if (industry.getPosition().equals(position)) {
+        if (position.getX() > width || position.getY() > height) {
+            return false;
+        }
+        for (Position occupiedPosition : ocupiedPositions) {
+            if (occupiedPosition.equals(position)) {
                 return true;
             }
         }
@@ -120,7 +164,13 @@ public class Map {
         return new ArrayList<>(industries);
     }
 
+    public List<City> getCities() {
+        return new ArrayList<>(cities);
+    }
 
+    public List<Position> getOcupiedPositions() {
+        return new ArrayList<>(ocupiedPositions);
+    }
 
     /**
      * Gets a copy of the list of all placed stations.
