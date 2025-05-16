@@ -1,15 +1,17 @@
 
 package pt.ipp.isep.dei.domain;
 
-public abstract class Industry {
+public class Industry {
 
 
     private String name;
     private Position position;
+    private IndustryTypes.IndustryType type;
 
-    public Industry (String name, Position position) {
+    public Industry (String name, Position position, IndustryTypes.IndustryType type) {
         this.name = name;
         this.position = position;
+        this.type = type;
     }
 
     public String getName() {
@@ -28,9 +30,21 @@ public abstract class Industry {
         this.position = position;
     }
 
+    public IndustryTypes.IndustryType getType() {
+        return type;
+    }
+
+    public void setType (IndustryTypes.IndustryType type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
-        return "Industry: " + name + " at position " + position;
+        return "Industry{" +
+                "-Name='" + name + '\'' +
+                "-Position=" + position +
+                "-Type=" + type +
+                '}';
     }
 
 
@@ -38,6 +52,4 @@ public abstract class Industry {
         return this.position.equals(position);
     }
 
-
-    public abstract String getTypeDescription();
 }

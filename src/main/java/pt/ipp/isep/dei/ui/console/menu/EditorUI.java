@@ -1,12 +1,12 @@
 package pt.ipp.isep.dei.ui.console.menu;
 
-import pt.ipp.isep.dei.AddIndustryUI;
 import pt.ipp.isep.dei.ui.CreateScenarioUI;
 import pt.ipp.isep.dei.ui.console.CreateCityUI;
 import pt.ipp.isep.dei.ui.console.CreateMapUI;
 import pt.ipp.isep.dei.ui.console.CreateTaskUI;
 import pt.ipp.isep.dei.ui.console.ShowTextUI;
 import pt.ipp.isep.dei.ui.console.utils.Utils;
+import pt.ipp.isep.dei.ui.console.AddIndustryUI;
 
 import java.util.ArrayList;
 import java.util.List;
