@@ -7,9 +7,9 @@ import pt.ipp.isep.dei.ui.console.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminUI implements Runnable {
+public class EditorUI implements Runnable {
 
-    public AdminUI() {}
+    public EditorUI() {}
 
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
