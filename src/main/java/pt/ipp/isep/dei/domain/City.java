@@ -80,7 +80,6 @@ public class City {
         this.position.setX(x);
     }
 
-
     /**
      * Sets the y-coordinate of the city's location.
      *
@@ -93,7 +92,6 @@ public class City {
         }
         this.position.setY(y);
     }
-
 
     /**
      * Sets the number of house blocks in the city.
@@ -111,7 +109,6 @@ public class City {
     private boolean isValidName(String name) {
         return name.matches("^[a-zA-Z\\s]+$");
     }
-
 
     /**
      * Generates house blocks for the city based on either manual or automatic placement.
