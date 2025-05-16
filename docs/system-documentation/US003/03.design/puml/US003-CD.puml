@@ -3,6 +3,82 @@
 skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam linetype polyline
+
+skinparam classAttributeIconSize 0
+
+class ApplicationSession {
+    - ApplicationSession()
+    + {static} getInstance()
+    + getCurrentSession()
+}
+
+class UserSession {
+    + getUserEmail()
+}
+
+class Employee {
+    - name : String
+    - email : String
+}
+
+class Task {
+    - reference : String
+    - description : String
+    - informalDescription : String
+    + Task(reference, description, ...)
+}
+
+class Map {
+    - name : String
+    - cities : List<<City>>
+    - industries : List<<Industry>>
+
+    + isPositionValid(x : int, y : int) : boolean
+    + addCity(city : City) : boolean
+    + removeCity(city : City)
+}
+
+class City {
+    - name : String
+    - coordinates : (int, int)
+    - houseBlocks : int
+
+    + City(name, coordinates, houseBlocks)
+    + validateCityName() : boolean
+    + validatePosition() : boolean
+    + placeBlocks(manual : boolean)
+}
+
+class CityRepository {
+    - cities : List<<City>>
+
+    + addCity(city : City) : boolean
+    + removeCity(city : City) : boolean
+    + existsCityAtPosition(x : int, y : int) : boolean
+}
+
+class CreateCityController {
+    + CreateCityController()
+    + createCity(name : String, x : int, y: int, blocks : int, manual : boolean) : boolean
+    - validateCityName(name : String) : boolean
+    - validatePosition(x : int, y : int) : boolean
+}
+
+ApplicationSession ..> UserSession
+
+City --> "1" Map
+City --> "*" City : manages (via CityRepository)
+Map --> "*" City : manages
+Map .-> ApplicationSession : uses
+CreateCityController ..> City
+CreateCityController ..> Map
+CreateCityController ..> CityRepository
+CityRepository --> "*" City
+@enduml@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
 'skinparam linetype orto
 
 skinparam classAttributeIconSize 0

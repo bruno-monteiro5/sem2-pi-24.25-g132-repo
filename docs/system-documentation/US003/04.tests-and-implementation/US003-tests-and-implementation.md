@@ -123,10 +123,10 @@
  * It also supports automatic or manual generation of house blocks.
  */
 public class City {
-    private final String name;
-    private final Position position;
-    private final int houseBlocks;
-    private final List<HouseBlock> houseBlocksList;
+    private String name;
+    private Position position;
+    private int houseBlocks;
+    private List<HouseBlock> houseBlocksList;
 
     /**
      * Constructs a new City instance.
@@ -159,18 +159,68 @@ public class City {
         return name.matches("^[a-zA-Z\\s]+$");
     }
 
-    public String getName() {
-        return name;
+    public String getName() { return name; }
+
+    public int getX() { return position.getX(); }
+
+    public int getY() { return position.getY(); }
+
+    public int getNumberOfHouseBlocks() { return houseBlocks; }
+
+    /**
+     * Sets the name of the city.
+     *
+     * @param name The new name for the city. Must not be null or empty.
+     * @throws IllegalArgumentException if {@code name} is null or empty.
+     */
+    public void setName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("City name cannot be null or empty.");
+        }
+        this.name = name;
     }
 
-    public Position getPosition() {
-        return position;
+
+    /**
+     * Sets the x-coordinate of the city's location.
+     *
+     * @param x The new x-coordinate. Must be a positive integer.
+     * @throws IllegalArgumentException if {@code x} is not positive.
+     */
+    public void setPositionX(int x) {
+        if (x <= 0) {
+            throw new IllegalArgumentException("Coordinates cannot be negative.");
+        }
+        this.position.setX(x);
     }
 
-    public int getHouseBlocks() {
-        return houseBlocks;
+
+    /**
+     * Sets the y-coordinate of the city's location.
+     *
+     * @param y The new y-coordinate. Must be a positive integer.
+     * @throws IllegalArgumentException if {@code y} is not positive.
+     */
+    public void setY(int y) {
+        if (y <= 0) {
+            throw new IllegalArgumentException("Coordinates cannot be negative.");
+        }
+        this.position.setY(y);
     }
 
+    /**
+     * Sets the number of house blocks in the city.
+     *
+     * @param numberOfHouseBlocks The new number of house blocks. Must be a positive integer.
+     * @throws IllegalArgumentException if {@code numberOfHouseBlocks} is not positive.
+     */
+    public void setNumberOfHouseBlocks(int numberOfHouseBlocks) {
+        if (numberOfHouseBlocks <= 0) {
+            throw new IllegalArgumentException("The number of houseBlocks must be positive.");
+        }
+        this.houseBlocks = numberOfHouseBlocks;
+    }
+    
     /**
      * Retrieves the list of house blocks generated for the city.
      *
