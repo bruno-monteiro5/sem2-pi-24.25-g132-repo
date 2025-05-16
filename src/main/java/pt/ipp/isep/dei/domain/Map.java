@@ -179,4 +179,14 @@ public class Map {
     public List<Station> getStations() {
         return new ArrayList<>(stations);
     }
+
+    @Override
+    public String toString() {
+        return "Map{" +
+                "id=" + id +
+                "name='" + name + '\'' +
+                "width=" + width +
+                "height=" + height +
+                '}';
+    }
 }
