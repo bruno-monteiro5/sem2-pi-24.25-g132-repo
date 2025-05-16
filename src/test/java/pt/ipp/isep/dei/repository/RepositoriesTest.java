@@ -8,19 +8,19 @@ class RepositoriesTest {
 
     @Test
     void testGetInstance() {
-        Repositories instance = Repositories.getInstance();
+        Repositories instance = pt.ipp.isep.dei.repository.Repositories.getInstance();
         assertNotNull(instance);
     }
 
     @Test
     void testGetOrganizationRepository() {
-        Repositories instance = Repositories.getInstance();
+        Repositories instance = pt.ipp.isep.dei.repository.Repositories.getInstance();
         assertNotNull(instance.getOrganizationRepository());
     }
 
     @Test
     void testGetTaskCategoryRepository() {
-        Repositories instance = Repositories.getInstance();
+        Repositories instance = pt.ipp.isep.dei.repository.Repositories.getInstance();
         assertNotNull(instance.getTaskCategoryRepository());
     }
 }

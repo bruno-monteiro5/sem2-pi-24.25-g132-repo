@@ -1,7 +1,13 @@
 package pt.ipp.isep.dei;
 
 import pt.ipp.isep.dei.controller.AuthenticationController;
+import pt.ipp.isep.dei.domain.Employee;
+import pt.ipp.isep.dei.domain.Organization;
+import pt.ipp.isep.dei.domain.TaskCategory;
 import pt.ipp.isep.dei.repository.AuthenticationRepository;
+import pt.ipp.isep.dei.repository.OrganizationRepository;
+import pt.ipp.isep.dei.repository.Repositories;
+import pt.ipp.isep.dei.repository.TaskCategoryRepository;
 
 public class Bootstrap implements Runnable {
 
@@ -42,10 +48,10 @@ public class Bootstrap implements Runnable {
         //get authentication repository
         AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
 
-        authenticationRepository.addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);
-        authenticationRepository.addUserRole(AuthenticationController.ROLE_EMPLOYEE, AuthenticationController.ROLE_EMPLOYEE);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_EDITOR, AuthenticationController.ROLE_EDITOR);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_PLAYER, AuthenticationController.ROLE_PLAYER);
 
-        authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin", AuthenticationController.ROLE_ADMIN);
-        authenticationRepository.addUserWithRole("Employee", "employee@this.app", "pwd", AuthenticationController.ROLE_EMPLOYEE);
+        authenticationRepository.addUserWithRole("Editor", "editor@this.app", "editor", AuthenticationController.ROLE_EDITOR);
+        authenticationRepository.addUserWithRole("Player", "player@this.app", "player", AuthenticationController.ROLE_PLAYER);
     }
 }

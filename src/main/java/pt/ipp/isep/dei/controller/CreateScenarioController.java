@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.controller;
 
 import pt.ipp.isep.dei.domain.*;
+import pt.ipp.isep.dei.repository.Repositories;
 import pt.ipp.isep.dei.repository.ScenarioRepository;
 
 public class CreateScenarioController {

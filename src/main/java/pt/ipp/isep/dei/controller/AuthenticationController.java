@@ -1,14 +1,15 @@
 package pt.ipp.isep.dei.controller;
 
 import pt.ipp.isep.dei.repository.AuthenticationRepository;
+import pt.ipp.isep.dei.repository.Repositories;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.util.List;
 
 public class AuthenticationController {
 
-    public static final String ROLE_ADMIN = "ADMINISTRATOR";
-    public static final String ROLE_EMPLOYEE = "EMPLOYEE";
+    public static final String ROLE_EDITOR = "EDITOR";
+    public static final String ROLE_PLAYER = "PLAYER";
 
     //private final ApplicationSession applicationSession;
     private final AuthenticationRepository authenticationRepository;
