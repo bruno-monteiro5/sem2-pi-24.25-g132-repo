@@ -7,6 +7,7 @@ import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.domain.Position;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CreateCityUI implements Runnable {
@@ -39,12 +40,17 @@ public class CreateCityUI implements Runnable {
         try {
             Position position = new Position(x, y);
             City city = controller.createCity(name, position, houseblocks);
-            System.out.println("Map created successfully!");
-            System.out.println("Name: " + newMap.getName());
-            System.out.println("Dimensions: " + newMap.getWidth() + " x " + newMap.getHeight());
+            System.out.println("City created successfully!");
+            System.out.println("Name: " + city.getName());
+            System.out.println("Coordinates: " + city.getX() + " ; " + city.getY());
+            System.out.println("House blocks: " + city.getNumberOfHouseBlocks());
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
+
+        List<City> cities = controller.getCities();
+        System.out.println("Cities: " + cities);
+
 
 
 
