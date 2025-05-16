@@ -1,29 +1,40 @@
 package pt.ipp.isep.dei.controller;
 
 import pt.ipp.isep.dei.domain.City;
+import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.domain.Position;
 import pt.ipp.isep.dei.repository.CityRepository;
+import pt.ipp.isep.dei.repository.MapRepository;
+import pt.ipp.isep.dei.repository.Repositories;
 
 import java.util.List;
 
 public class CreateCityController {
 
     private CityRepository repository;
+    private MapRepository mapRepository;
 
     public CreateCityController() {
-        this.repository = new CityRepository();
+        this.repository = Repositories.getInstance().getCityRepository();
+        this.mapRepository = Repositories.getInstance().getMapRepository();
     }
 
-    public City createCity(String name, Position position, int houseblocks) {
-        if(repository.cityExists(name)){
+    public List<Map> getMaps() {
+        return mapRepository.getMaps();
+    }
+
+    public City createCity(Map mapa, String name, Position position, int houseblocks) {
+        if (repository.cityExists(name)) {
             throw new IllegalArgumentException("City with that name already exists.");
         }
 
-        if(repository.positionInvalid(position)){
+        if (repository.positionInvalid(position)) {
             throw new IllegalArgumentException("Position is invalid.");
         }
 
-        City city = new City(name,position,houseblocks);
+
+        City city = new City(mapa, name, position, houseblocks);
+        city.generateRandomHouseBlocks();
         repository.save(city);
         return city;
     }

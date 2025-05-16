@@ -56,4 +56,8 @@ public class Repositories {
     public ScenarioRepository getScenarioRepository() {
         return new ScenarioRepository();
     }
+
+    public CityRepository getCityRepository() {
+        return new CityRepository();
+    }
 }

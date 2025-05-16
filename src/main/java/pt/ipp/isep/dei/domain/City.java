@@ -44,7 +44,7 @@ public class City {
      * @param houseBlocks The number of house blocks in the city. Must be a positive integer.
      * @throws IllegalArgumentException if {@code name} is invalid, {@code position} has negative values, or {@code houseBlocks} is not positive.
      */
-    public City(String name, Position position, Integer houseBlocks) {
+    public City(Map mapa, String name, Position position, Integer houseBlocks) {
         if (name == null || position == null || houseBlocks == null) {
             throw new IllegalArgumentException("No argument can be null");
         }
@@ -53,14 +53,15 @@ public class City {
             throw new IllegalArgumentException("City name cannot contain special characters or digits");
         }
 
-        if (houseBlocks <= 0) {
-            throw new IllegalArgumentException("The number of house blocks must be positive");
+        if (houseBlocks <= 0) {// esta a escolher auto
+            Random random = new Random();
+            this.houseBlocks = random.nextInt(10) + 1;
         }
 
         this.name = name;
         this.position = position;
         this.houseBlocks = houseBlocks;
-        this.houseBlocksList = houseBlocksList;
+        this.map = mapa;
     }
 
     public Map getMap() { return map; }
@@ -165,7 +166,7 @@ public class City {
         houseBlocksList.clear();
 
         if (automatic) {
-            generateRandomHouseBlocks(map);
+            generateRandomHouseBlocks();
         } else {
             // Implementation for manual placement will be done in the UI
         }
@@ -182,30 +183,19 @@ public class City {
      * </ul>
      * </p>
      *
-     * @param map The map on which the city is placed. Used to determine valid boundaries for block placement.
      */
 
-    public void generateRandomHouseBlocks(Map map) {
+    public void generateRandomHouseBlocks() {
         if (map == null) {
             throw new IllegalArgumentException("Map cannot be null");
         }
 
-        houseBlocksList.clear();
-        Random random = new Random();
+        houseBlocksList = new ArrayList<>();
 
-        for (int i = 0; i < houseBlocks; i++) {
-            Position blockPosition;
-            do {
-                int offsetX = random.nextInt(11) - 5; // -5 to 5
-                int offsetY = random.nextInt(11) - 5;
 
-                int blockX = position.getX() + offsetX;
-                int blockY = position.getY() + offsetY;
-                blockPosition = new Position(blockX, blockY);
-            } while (!isValidBlockPosition(blockPosition, map));
-
-            HouseBlock block = new HouseBlock(blockPosition);
-            houseBlocksList.add(block);
+        for (int i = 0;i<houseBlocks;i++) {
+            HouseBlock houseBlock = new HouseBlock(new Position(this.position.getX() + i, this.position.getY()));
+            houseBlocksList.add(houseBlock);
         }
     }
 
