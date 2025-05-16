@@ -30,6 +30,7 @@ import java.util.Random;
 
 public class City {
 
+    private Map map;
     private String name;
     private Position position;
     private int houseBlocks;
@@ -59,10 +60,14 @@ public class City {
         this.name = name;
         this.position = position;
         this.houseBlocks = houseBlocks;
-        this.houseBlocksList = new ArrayList<>();
+        this.houseBlocksList = houseBlocksList;
     }
 
+    public Map getMap() { return map; }
+
     public String getName() { return name; }
+
+    public Position getPosition() { return position; }
 
     public int getX() { return position.getX(); }
 
@@ -71,6 +76,13 @@ public class City {
     public int getNumberOfHouseBlocks() { return houseBlocks; }
 
     public List<HouseBlock> getHouseBlocksList() { return new ArrayList<>(houseBlocksList); }
+
+    public void setMap(Map map) {
+        if (map == null) {
+            throw new IllegalArgumentException("Map must not be null.");
+        }
+        this.map = map;
+    }
 
     /**
      * Sets the name of the city.
