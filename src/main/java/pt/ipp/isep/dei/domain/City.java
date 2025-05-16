@@ -53,10 +53,6 @@ public class City {
             throw new IllegalArgumentException("City name cannot contain special characters or digits");
         }
 
-        if (houseBlocks <= 0) {// esta a escolher auto
-            Random random = new Random();
-            this.houseBlocks = random.nextInt(10) + 1;
-        }
 
         this.name = name;
         this.position = position;
@@ -189,6 +185,9 @@ public class City {
         if (map == null) {
             throw new IllegalArgumentException("Map cannot be null");
         }
+
+        Random random = new Random();
+        this.houseBlocks = random.nextInt(10) + 1;
 
         houseBlocksList = new ArrayList<>();
 

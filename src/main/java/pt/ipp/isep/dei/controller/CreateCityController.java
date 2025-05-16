@@ -32,11 +32,29 @@ public class CreateCityController {
             throw new IllegalArgumentException("Position is invalid.");
         }
 
+        // Se for entrada manual, verificamos se o valor é positivo
+        // Se for entrada manual (não automática), verificamos se o valor é positivo
+        if (houseblocks != -1) {  // Não é geração automática
+            if (houseblocks <= 0) {
+                throw new IllegalArgumentException("Número de house blocks deve ser positivo.");
+            }
 
-        City city = new City(mapa, name, position, houseblocks);
-        city.generateRandomHouseBlocks();
-        repository.save(city);
-        return city;
+            // Criar cidade com o valor manual
+            City city = new City(mapa, name, position, houseblocks);
+            repository.save(city);
+            return city;
+        } else {
+            // Geração automática
+            // Usar um valor temporário para o construtor
+            City city = new City(mapa, name, position, 1);
+
+            // Gerar house blocks automaticamente
+            city.generateRandomHouseBlocks();
+
+            repository.save(city);
+            return city;
+        }
+
     }
 
     public List<City> getCities() {
