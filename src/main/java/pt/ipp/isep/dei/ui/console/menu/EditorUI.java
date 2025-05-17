@@ -18,10 +18,10 @@ public class EditorUI implements Runnable {
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("Create Task", new CreateTaskUI()));
-        options.add(new MenuItem("Option 2", new CreateMapUI()));
-        options.add(new MenuItem("Option 3", new AddIndustryUI()));
-        options.add(new MenuItem("Option 4", new CreateScenarioUI()));
-        options.add(new MenuItem("Option 5", new CreateCityUI()));
+        options.add(new MenuItem("Create Map", new CreateMapUI()));
+        options.add(new MenuItem("Add Industry", new AddIndustryUI()));
+        options.add(new MenuItem("Create Scenario", new CreateScenarioUI()));
+        options.add(new MenuItem("Create City", new CreateCityUI()));
 
         int option = 0;
         do {

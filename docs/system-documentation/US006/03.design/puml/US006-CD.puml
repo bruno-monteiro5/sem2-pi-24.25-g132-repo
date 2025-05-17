@@ -21,106 +21,61 @@ class UserSession
     + getUserEmail()
 }
 
-class Employee {
+class Company {
+    - designation : String
+
+    + getNetworkByManagerEmail(email)
+}
+
+class Manager {
     - name : String
     - email : String
-    - position : String
-    - phone : String
+
+    + Manager(name, email)
+    + getName()
+    + getEmail()
 }
 
-class Task {
-    - reference :String
-    - description : String
-    - informalDescription : String
-    - technicalDescription : String
-    - duration : int
-    - cost : double
+class Building {
+    - type : String
+    - year : int
 
-    + Task(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, createdBy)
+    + Building(type, year)
+    + getType()
+    + getYear()
 }
 
-class TaskCategory {
-    - description : String
-}
-
-class Organization {
+class Station {
     - name : String
-    - vatNumber : String
-    - website : String
-    - phone : String
-    - email : String
+    - location : String
+    - openingDate : LocalDate
+    - buildings : List<Building>
 
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + anyEmployeeHasEmail(email)
-    + getEmployeeByEmail(email)
-    + createTask(reference, description, informalDesccription, technicalDescription, \nduration, cost, taskCategory, employee)
-    - addTask(task)
-    - validateTask(task)
+    + Station(name, location, openingDate)
+    + addBuilding(building)
+    + getBuildings()
+    + hasBuilding(buildingType)
+    - validateBuilding(building)
 }
 
-class TaskCategoryRepository {
-    + getTaskCategories()
-    + getTaskCategoryByDescription(taskCategoryDescription)
+class RailwayNetwork {
+    - name : String
+    - stations : List<Station>
+    - manager : Manager
+
+    + RailwayNetwork(name, manager)
+    + addStation(station)
+    + getStationByName(stationName)
+    + getStations()
+    + getNetworkManager()
+    + upgradeStation(stationName, buildingType, year)
 }
 
-class OrganizationRepository {
-    + getOrganizationByEmployeeEmail(email)
+class BuildingTypeRepository {
+    + getBuildingTypes()
+    + getBuildingTypeByName(typeName)
 }
 
-class Repositories {
-    - Repositories()
-    + {static} getInstance()
-    + getTaskCategoryRepository()
-    + getOrganizationRepository()
-}
-
-class CreateTaskController {
-    + CreateTaskController()
-    + getTaskCategories()
-    + createTask(reference, description, informalDescription, \n   technicalDescription, duration, cost, taskCategoryDescription)
-    - getTaskCategoryByDescription(taskCategoryDescription)
-    - getEmployeeFromSession()
-}
-
-note right of CreateTaskController
-    categoryDescription is retrieved
-    from selected data
-end note
-
-note bottom of TaskCategoryRepository
-    - used for displaying
-    the task category list
-end note
-
-class CreateTaskUI {
-}
-
-CreateTaskUI .> CreateTaskController
-
-CreateTaskController ..> ApplicationSession
-CreateTaskController ..> UserSession
-CreateTaskController ..> TaskCategory
-CreateTaskController ..> TaskCategoryRepository
-CreateTaskController ..> Organization
-CreateTaskController ..> OrganizationRepository
-CreateTaskController .> Repositories
-
-Repositories -> "1" Repositories : instance
-Repositories --> "1" OrganizationRepository : organizationRepository
-Repositories -> "1" TaskCategoryRepository : taskCategoryRepository
-
-ApplicationSession -> "1" ApplicationSession : instance
-ApplicationSession ..> UserSession
-
-TaskCategoryRepository --> "*" TaskCategory : taskCategories
-
-OrganizationRepository --> "*" Organization : organizations
-
-Organization --> "*" Task : tasks
-Organization --> "*" Employee : employees
-
-Task --> "1" TaskCategory : taskCategory
-Task --> "1" Employee : createdBy
-
-
-@enduml
+class NetworkRepository {
+    + getNetworks()
+    + get
