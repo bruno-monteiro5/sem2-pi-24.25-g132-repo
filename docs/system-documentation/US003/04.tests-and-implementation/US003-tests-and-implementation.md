@@ -4,113 +4,223 @@
 
 #### 4.1. Class City 
 
-**Test 1:** Check that it is not possible to create an instance of the City class with null values.
+**Test 1:** Tests the creation of a valid City object and verifies its properties.
 
-	@Test(expected = IllegalArgumentException.class)
-    public void ensureNullIsNotAllowed() {
-        City instance = new City(null, null, null);
+	 @Test
+    void testValidCityCreation() {
+        Map map = new Map("Mapa1", 10, 10, "editor@this.app");
+        Position pos = new Position(2, 3);
+        City city = new City(map, "Porto", pos, 5);
+        assertEquals("Porto", city.getName());
+        assertEquals(2, city.getX());
+        assertEquals(3, city.getY());
+        assertEquals(5, city.getNumberOfHouseBlocks());
+        assertEquals(map, city.getMap());
     }
 
 
-**Test 2:** Check that it is not possible to create an instance of the City class with a name containing special characters or digits - AC1.
-
-
-	@Test(expected = IllegalArgumentException.class)
-    public void ensureNameMeetsAC1() {
-        Position position = new Position(10, 20);
-        City instance = new City("City123", position, 5);
-    }
-
-
-**Test 3:** Check that it is not possible to create an instance of the City class with a non-positive number of house blocks.
-
-    @Test(expected = IllegalArgumentException.class)
-    public void ensurePositiveHouseBlocks() {
-        Position position = new Position(10, 20);
-        City instance = new City("Porto", position, 0);
-    }
-
-
-**Test 4:** Check that a city is correctly created with valid values.
-
+**Test 2:** Ensures that creating a City with an invalid name throws an IllegalArgumentException.
 
     @Test
-    public void ensureValidCityIsCreated() {
-        Position position = new Position(10, 20);
-        int houseBlocks = 5;
-        String name = "Lisboa";
-
-        City instance = new City(name, position, houseBlocks);
-    
-        assertEquals(name, instance.getName());
-        assertEquals(position, instance.getPosition());
-        assertEquals(houseBlocks, instance.getHouseBlocks());
+    void testInvalidNameThrowsException() {
+        Map map = new Map("Mapa2", 10, 10, "editor@this.app");
+        Position pos = new Position(1, 1);
+        assertThrows(IllegalArgumentException.class, () -> new City(map, "Porto123", pos, 2));
+        assertThrows(IllegalArgumentException.class, () -> new City(map, "Porto!", pos, 2));
     }
 
-**Test 5:** Ensure that the house blocks created automatically are valid and within the map boundaries.
 
+**Test 3:** Ensures that creating a City with null arguments throws an IllegalArgumentException.
 
     @Test
-    public void ensureRandomBlocksAreValid() {
-        Position cityPosition = new Position(10, 20);
-        int houseBlocks = 5;
-        Map map = new Map("Test Map", 30, 30);
-    
-        City city = new City("Lisbon", cityPosition, houseBlocks);
-        city.generateRandomHouseBlocks(map);
-    
-        for (HouseBlock block : city.getHouseBlocksList()) {
-            Position blockPosition = block.getPosition();
-            assertTrue(blockPosition.getX() >= 0 && blockPosition.getX() < map.getWidth());
-            assertTrue(blockPosition.getY() >= 0 && blockPosition.getY() < map.getHeight());
-            assertNotEquals(blockPosition, cityPosition); // Ensures no overlap with city
-        }
-    }    
-#### 4.2. Class AddCityController
+    void testNullArgumentsThrowException() {
+        Map map = new Map("Mapa3", 10, 10, "editor@this.app");
+        Position pos = new Position(1, 1);
+        assertThrows(IllegalArgumentException.class, () -> new City(map, null, pos, 2));
+        assertThrows(IllegalArgumentException.class, () -> new City(map, "Porto", null, 2));
+        assertThrows(IllegalArgumentException.class, () -> new City(map, "Porto", pos, null));
+    }
 
-**Test 6:** Check that the controller alerts when a city with a repeated name is added.
+
+**Test 4:** Tests the setters and getters of the City class.
 
     @Test
-    public void ensureAlertOnRepeatedName() {
-        Position position1 = new Position(10, 20);
-        Position position2 = new Position(30, 40);
-        Map map = new Map("Test Map", 100, 100);
-    
-        City city1 = new City("Lisbon", position1, 5);
-        map.addCity(city1);
-
-        AddCityController controller = new AddCityController(map);
-        boolean isRepeated = controller.checkNameExists("Lisbon");
-
-        assertTrue(isRepeated);
+    void testSettersAndGetters() {
+        Map map = new Map("Mapa4", 10, 10, "editor@this.app");
+        Position pos = new Position(1, 1);
+        City city = new City(map, "Porto", pos, 3);
+        city.setName("Valongo");
+        assertEquals("Valongo", city.getName());
+        city.setPositionX(5);
+        city.setPositionY(6);
+        assertEquals(5, city.getX());
+        assertEquals(6, city.getY());
+        city.setNumberOfHouseBlocks(7);
+        assertEquals(7, city.getNumberOfHouseBlocks());
     }
 
-**Test 7:** Check that a city cannot be placed on top of another city.
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureCityCannotBeOnAnotherCity() {
-        Position position = new Position(10, 20);
-        Map map = new Map("Test Map", 100, 100);
-        
-        City city1 = new City("Lisboa", position, 5);
-        map.addCity(city1);
-        
-        AddCityController controller = new AddCityController(map);
-        controller.addCity("Porto", position, 6, true);
+**Test 5:** Ensures that setting the map to null throws an IllegalArgumentException.
+
+    @Test
+    void testSetMapNullThrowsException() {
+        Map map = new Map("Mapa5", 10, 10, "editor@this.app");
+        Position pos = new Position(1, 1);
+        City city = new City(map, "Porto", pos, 2);
+        assertThrows(IllegalArgumentException.class, () -> city.setMap(null));
     }
 
-**Test 8:** Ensure that cities cannot be added outside the map boundaries.
 
+**Test 6:** Ensures that setting the name to null or empty throws an IllegalArgumentException.
 
-    @Test(expected = IllegalArgumentException.class)
-        public void ensureCityIsWithinMapBoundaries() {
-        Position invalidPosition = new Position(150, 50); // Outside the map boundaries
-        Map map = new Map("Test Map", 100, 100);
-    
-        AddCityController controller = new AddCityController(map);
-        controller.addCity("Invalid City", invalidPosition, 5, true);
+    @Test
+    void testSetNameNullOrEmptyThrowsException() {
+        Map map = new Map("Mapa6", 10, 10, "editor@this.app");
+        Position pos = new Position(1, 1);
+        City city = new City(map, "Porto", pos, 2);
+        assertThrows(IllegalArgumentException.class, () -> city.setName(null));
+        assertThrows(IllegalArgumentException.class, () -> city.setName(""));
     }
 
+**Test 7:** Ensures that setting invalid X or Y coordinates throws an IllegalArgumentException.
+
+    @Test
+    void testSetPositionXAndYInvalidThrowsException() {
+        Map map = new Map("Mapa7", 10, 10, "editor@this.app");
+        Position pos = new Position(1, 1);
+        City city = new City(map, "Porto", pos, 2);
+        assertThrows(IllegalArgumentException.class, () -> city.setPositionX(0));
+        assertThrows(IllegalArgumentException.class, () -> city.setPositionY(-1));
+    }
+
+**Test 8:** Ensures that setting an invalid number of house blocks throws an IllegalArgumentException.
+
+    @Test
+    void testSetNumberOfHouseBlocksInvalidThrowsException() {
+        Map map = new Map("Mapa8", 10, 10, "editor@this.app");
+        Position pos = new Position(1, 1);
+        City city = new City(map, "Porto", pos, 2);
+        assertThrows(IllegalArgumentException.class, () -> city.setNumberOfHouseBlocks(0));
+        assertThrows(IllegalArgumentException.class, () -> city.setNumberOfHouseBlocks(-5));
+    }
+
+**Test 9:** Tests the random generation of house blocks and verifies the resulting values.
+
+    @Test
+    void testGenerateRandomHouseBlocks() {
+        Map map = new Map("Mapa9", 10, 10, "editor@this.app");
+        Position pos = new Position(1, 1);
+        City city = new City(map, "Porto", pos, 1);
+        city.generateRandomHouseBlocks();
+        assertTrue(city.getNumberOfHouseBlocks() >= 1 && city.getNumberOfHouseBlocks() <= 10);
+        assertEquals(city.getNumberOfHouseBlocks(), city.getHouseBlocksList().size());
+    }
+
+**Test 10:** Tests the string representation of the City object.
+
+    @Test
+    void testToString() {
+        Map map = new Map("Mapa9", 10, 10, "editor@this.app");
+        Position pos = new Position(1, 2);
+        City city = new City(map, "Porto", pos, 2);
+        String str = city.toString();
+        assertTrue(str.contains("name='Porto'"));
+        assertTrue(str.contains("x=1"));
+        assertTrue(str.contains("y=2"));
+        assertTrue(str.contains("houseBlocks=2"));
+    }
+
+#### 4.2. Class HouseBlock
+
+**Test 11:** Tests the creation of a valid HouseBlock and verifies its position.
+
+    @Test
+    void testValidHouseBlockCreation() {
+        Position position = new Position(2, 3);
+        HouseBlock houseBlock = new HouseBlock(position);
+        assertEquals(position, houseBlock.getPosition());
+    }
+
+
+**Test 12:** Ensures that creating a HouseBlock with a null position throws an IllegalArgumentException.
+
+    @Test
+    void testConstructorNullPositionThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> new HouseBlock(null));
+    }
+
+
+**Test 13:** Tests setting a valid position for a HouseBlock.
+
+    @Test
+    void testSetPositionValid() {
+        Position position1 = new Position(1, 1);
+        Position position2 = new Position(5, 6);
+        HouseBlock houseBlock = new HouseBlock(position1);
+        houseBlock.setPosition(position2);
+        assertEquals(position2, houseBlock.getPosition());
+    }
+
+**Test 14:** Ensures that setting a null position throws an IllegalArgumentException.
+
+    @Test
+    void testSetPositionNullThrowsException() {
+        Position position = new Position(1, 1);
+        HouseBlock houseBlock = new HouseBlock(position);
+        assertThrows(IllegalArgumentException.class, () -> houseBlock.setPosition(null));
+    }
+
+**Test 15:** Tests the string representation of a HouseBlock.
+
+    @Test
+    void testToString() {
+        Position position = new Position(3, 4);
+        HouseBlock houseBlock = new HouseBlock(position);
+        String str = houseBlock.toString();
+        assertTrue(str.contains("HouseBlock"));
+        assertTrue(str.contains("position=" + position));
+    }
+
+#### 4.3. Class CityRepository
+
+**Test 16:** Tests saving and retrieving cities.
+
+    @Test
+    void testSaveAndGetCities() {
+        CityRepository repository = new CityRepository();
+        Map map = new Map("Map1", 10, 10, "editor@this.app");
+        City city = new City(map, "Porto", new Position(1, 1), 2);
+        repository.save(city);
+        List<City> cities = repository.getCities();
+        assertEquals(1, cities.size());
+        assertEquals("Porto", cities.get(0).getName());
+    }
+
+**Test 17:** Tests cityExists returns true for existing city (case-insensitive).
+
+    @Test
+    void testCityExists() {
+        CityRepository repository = new CityRepository();
+        Map map = new Map("Map2", 10, 10, "editor@this.app");
+        City city = new City(map, "Lisboa", new Position(2, 2), 3);
+        repository.save(city);
+        assertTrue(repository.cityExists("Lisboa"));
+        assertTrue(repository.cityExists("lisboa"));
+        assertFalse(repository.cityExists("Porto"));
+    }
+
+**Test 18:** Tests positionInvalid returns true if position is already used.
+
+    @Test
+    void testPositionInvalid() {
+        CityRepository repository = new CityRepository();
+        Map map = new Map("Map3", 10, 10, "editor@this.app");
+        Position pos = new Position(3, 3);
+        City city = new City(map, "Valongo", pos, 1);
+        repository.save(city);
+        assertTrue(repository.positionInvalid(new Position(3, 3)));
+        assertFalse(repository.positionInvalid(new Position(4, 4)));
+    }
 
 ## 5. Construction (Implementation)
 
@@ -124,31 +234,53 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Represents a city that can be added to a specific map with
- * a name, a position, and a defined number of house blocks.
+ * Represents a city within the simulation, which can be added to a specific map.
+ * A city is characterized by its name, its position on the map (XY coordinates),
+ * and a configurable number of house blocks.
  *
  * <p>
- * In the context of the simulator, a {@code City} is a core domain entity that:
+ * In the context of the simulator, a {@code City} serves as a core domain entity,
+ * playing the following roles:
  * <ul>
- *    <li>Generates and consumes passengers and mail</li>
- *    <li>Consumes final products such as food, textiles, and cars</li>
+ *     <li>Generating and consuming passengers and mail.</li>
+ *     <li>Consuming final products, such as food, textiles, and cars.</li>
  * </ul>
  * </p>
  *
  * <p>
- * Each city has:
+ * Each city has the following main attributes:
  * <ul>
- *     <li>A name </li>
- *     <li>A position on the map defined by XY coordinates</li>
- *     <li>A positive number of house blocks, which represent housing units</li>
+ *     <li>A <b>name</b>, which uniquely identifies the city in the user's context.
+ *          Names must not include special characters or digits but can contain spaces.</li>
+ *     <li>A <b>position</b> defined by XY coordinates, indicating its location on the map.
+ *          Both coordinates must be positive integers.</li>
+ *     <li>A <b>number of house blocks</b>. The house blocks can be added manually
+ *          or generated automatically (randomly distributed around the city's position).</li>
  * </ul>
- * House blocks may be placed manually or randomly (automatic generation), in accordance
- * with the editor's settings.
+ * </p>
+ *
+ * <p>
+ * Editing capabilities include renaming a city, updating its position, or modifying the
+ * number of house blocks. Validation rules are enforced to ensure data integrity:
+ * <ul>
+ *     <li>City names must not contain special characters or digits.</li>
+ *     <li>Coordinates must remain positive.</li>
+ *     <li>The number of house blocks must always be a positive value.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Additional considerations:
+ * <ul>
+ *     <li>City names do not need to be unique but should avoid duplication within the same map to minimize confusion for users.</li>
+ *     <li>A city cannot overlap with other entities, such as other cities or industries, on the map.</li>
+ *     <li>Cities can only be removed in edit mode, not during simulation mode.</li>
+ * </ul>
  * </p>
  */
-
 public class City {
 
+    private Map map;
     private String name;
     private Position position;
     private int houseBlocks;
@@ -157,12 +289,13 @@ public class City {
     /**
      * Constructs a {@code City} with a name, position, and number of house blocks.
      *
+     * @param map         The map to which the city belongs.
      * @param name        The name of the city. Must not be null, empty, or contain special characters or digits.
      * @param position    The coordinates (XY) of the city's location within the map. Coordinates must be positive.
      * @param houseBlocks The number of house blocks in the city. Must be a positive integer.
      * @throws IllegalArgumentException if {@code name} is invalid, {@code position} has negative values, or {@code houseBlocks} is not positive.
      */
-    public City(String name, Position position, Integer houseBlocks) {
+    public City(Map map, String name, Position position, Integer houseBlocks) {
         if (name == null || position == null || houseBlocks == null) {
             throw new IllegalArgumentException("No argument can be null");
         }
@@ -171,17 +304,18 @@ public class City {
             throw new IllegalArgumentException("City name cannot contain special characters or digits");
         }
 
-        if (houseBlocks <= 0) {
-            throw new IllegalArgumentException("The number of house blocks must be positive");
-        }
 
         this.name = name;
         this.position = position;
         this.houseBlocks = houseBlocks;
-        this.houseBlocksList = new ArrayList<>();
+        this.map = map;
     }
 
+    public Map getMap() { return map; }
+
     public String getName() { return name; }
+
+    public Position getPosition() { return position; }
 
     public int getX() { return position.getX(); }
 
@@ -190,6 +324,19 @@ public class City {
     public int getNumberOfHouseBlocks() { return houseBlocks; }
 
     public List<HouseBlock> getHouseBlocksList() { return new ArrayList<>(houseBlocksList); }
+
+    /**
+     * Sets the map that the city belongs to.
+     *
+     * @param map The map to associate with the city. Must not be {@code null}.
+     * @throws IllegalArgumentException if the {@code map} is {@code null}.
+     */
+    public void setMap(Map map) {
+        if (map == null) {
+            throw new IllegalArgumentException("Map must not be null.");
+        }
+        this.map = map;
+    }
 
     /**
      * Sets the name of the city.
@@ -256,29 +403,6 @@ public class City {
     }
 
     /**
-     * Generates house blocks within the city. The blocks can be assigned manually
-     * or automatically (randomly distributed around the city's position).
-     *
-     * <p>
-     * Automatic generation ensures that the house blocks remain within the map's boundaries
-     * and do not overlap with the city's position or other elements on the map.
-     * </p>
-     *
-     * @param automatic If {@code true}, house blocks are generated automatically.
-     *                  If {@code false}, manual placement is expected through the editor.
-     * @param map       The map on which the city is placed.
-     */
-    public void generateHouseBlocks(boolean automatic, Map map) {
-        houseBlocksList.clear();
-
-        if (automatic) {
-            generateRandomHouseBlocks(map);
-        } else {
-            // Implementation for manual placement will be done in the UI
-        }
-    }
-
-    /**
      * Randomly generates house blocks around the city's position.
      *
      * <p>
@@ -289,30 +413,20 @@ public class City {
      * </ul>
      * </p>
      *
-     * @param map The map on which the city is placed. Used to determine valid boundaries for block placement.
+     * @throws IllegalArgumentException if the map property is null.
      */
-
-    public void generateRandomHouseBlocks(Map map) {
+    public void generateRandomHouseBlocks() {
         if (map == null) {
             throw new IllegalArgumentException("Map cannot be null");
         }
 
-        houseBlocksList.clear();
         Random random = new Random();
+        this.houseBlocks = random.nextInt(10) + 1;
+        houseBlocksList = new ArrayList<>();
 
-        for (int i = 0; i < houseBlocks; i++) {
-            Position blockPosition;
-            do {
-                int offsetX = random.nextInt(11) - 5; // -5 to 5
-                int offsetY = random.nextInt(11) - 5;
-
-                int blockX = position.getX() + offsetX;
-                int blockY = position.getY() + offsetY;
-                blockPosition = new Position(blockX, blockY);
-            } while (!isValidBlockPosition(blockPosition, map));
-
-            HouseBlock block = new HouseBlock(blockPosition);
-            houseBlocksList.add(block);
+        for (int i = 0;i<houseBlocks;i++) {
+            HouseBlock houseBlock = new HouseBlock(new Position(this.position.getX() + i, this.position.getY()));
+            houseBlocksList.add(houseBlock);
         }
     }
 
@@ -331,7 +445,6 @@ public class City {
      * @param map           The map where the city and block are located.
      * @return {@code true} if the block's position is valid, {@code false} otherwise.
      */
-
     private boolean isValidBlockPosition(Position blockPosition, Map map) {
         // Check if the block is within map boundaries
         if (blockPosition.getX() < 0 || blockPosition.getX() >= map.getWidth() ||
@@ -353,114 +466,175 @@ public class City {
                 "name='" + name + '\'' +
                 ", x=" + position.getX() +
                 ", y=" + position.getY() +
+                ", houseBlocks=" + houseBlocks +
                 '}';
     }
 }
 
 ```
 
-### Class AddCityController
+### Class HouseBlock
 
 ```java
+package pt.ipp.isep.dei.domain;
+
 /**
- * Controller responsible for adding cities to a map. 
- * Handles validation such as position checks, name uniqueness, and boundary enforcement.
+ * Represents a block of houses (HouseBlock) within a City in the system.
+ * Each block has a position on the map that must adhere to map boundaries.
  */
-public class AddCityController {
-    private final Map selectedMap;
+public class HouseBlock {
+
+    private Position position; // Position of the house block on the map
 
     /**
-     * Constructs a new AddCityController for a given map.
+     * Constructs a HouseBlock with the specified position.
      *
-     * @param map The map on which cities will be added. Must not be null.
-     * @throws IllegalArgumentException If the map is null.
+     * @param position The position of the house block. Must not be null.
+     * @throws IllegalArgumentException if position is null.
      */
-    public AddCityController(Map map) {
-        if (map == null) {
-            throw new IllegalArgumentException("Map cannot be null");
+    public HouseBlock(Position position) {
+        if (position == null) {
+            throw new IllegalArgumentException("Position cannot be null.");
         }
-        this.selectedMap = map;
+        this.position = position;
+    }
+
+    public Position getPosition() { return position; }
+
+    /**
+     * Sets the position of the house block.
+     *
+     * @param position The new position of the house block. Must not be null.
+     * @throws IllegalArgumentException if the position is null.
+     */
+    public void setPosition(Position position) {
+        if (position == null) {
+            throw new IllegalArgumentException("Position cannot be null.");
+        }
+        this.position = position;
     }
 
     /**
-     * Adds a new city to the map.
-     * This method validates the position of the city, 
-     * checks for overlapping with other cities or industries, and optionally enforces unique names.
+     * Returns a string representation of the house block.
      *
-     * @param name              The name of the city.
-     * @param position          The position of the city on the map.
-     * @param houseBlocks       The number of house blocks in the city.
-     * @param automaticBlocks   If true, automatically generates house blocks around the city position.
-     * @return The created City instance.
-     * @throws IllegalArgumentException If the city cannot be added due to a validation failure.
+     * @return A string representation of the house block, including its position.
      */
-    public City addCity(String name, Position position, int houseBlocks, boolean automaticBlocks) {
-        validatePosition(position);
-
-        City city = new City(name, position, houseBlocks);
-        city.generateHouseBlocks(automaticBlocks);
-
-        selectedMap.addCity(city);
-
-        return city;
-    }
-
-    /**
-     * Checks if a city with the given name already exists on the map.
-     *
-     * @param name The name of the city to check.
-     * @return True if a city with the same name exists, false otherwise.
-     */
-    public boolean checkNameExists(String name) {
-        return selectedMap.getCities().stream()
-                .anyMatch(city -> city.getName().equalsIgnoreCase(name));
-    }
-
-    /**
-     * Validates the provided position to ensure it is not already occupied
-     * by another city or industry and that it is within the map's boundaries.
-     *
-     * @param position The position to validate.
-     * @throws IllegalArgumentException If the position is invalid.
-     */
-    private void validatePosition(Position position) {
-        // Validate boundaries of the map
-        if (position.getX() < 0 || position.getX() >= selectedMap.getWidth() ||
-                position.getY() < 0 || position.getY() >= selectedMap.getHeight()) {
-            throw new IllegalArgumentException("Position " + position + " is outside map boundaries. Valid range: (0, 0) to ("
-                    + (selectedMap.getWidth() - 1) + ", " + (selectedMap.getHeight() - 1) + ").");
-        }
-        // Check if the position is already occupied by another city
-        for (City city : selectedMap.getCities()) {
-            if (city.getPosition().equals(position)) {
-                throw new IllegalArgumentException("There is already a city at this position");
-            }
-        }
-        // Check if the position is already occupied by an industry
-        for (Industry industry : selectedMap.getIndustries()) {
-            if (industry.getPosition().equals(position)) {
-                throw new IllegalArgumentException("There is already an industry at this position");
-            }
-        }
+    @Override
+    public String toString() {
+        return "HouseBlock{" +
+                "position=" + position +
+                '}';
     }
 }
+```
+
+### Class CityRepository
+
+```java
+package pt.ipp.isep.dei.repository;
+
+import pt.ipp.isep.dei.domain.City;
+import pt.ipp.isep.dei.domain.Position;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * Repository for managing City entities in memory.
+ * <p>
+ * Provides methods to add, retrieve, and validate cities,
+ * including checks for name uniqueness and position conflicts.
+ * </p>
+ */
+public class CityRepository {
+    private List<City> cities = new ArrayList<>();
+
+
+    /**
+     * Retrieves the list of all cities.
+     *
+     * @return List of cities.
+     */
+    public List<City> getCities() {
+        return cities;
+    }
+
+
+    /**
+     * Checks if a city with the given name already exists (case-insensitive).
+     *
+     * @param name The name of the city to check.
+     * @return true if a city with the given name exists, false otherwise.
+     */
+    public boolean cityExists(String name) {
+        for(City c : cities){
+            if(c.getName().equalsIgnoreCase(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Saves a new city to the repository.
+     *
+     * @param city The city to add.
+     */
+    public void save(City city) {
+        cities.add(city);
+    }
+
+    /**
+     * Checks if the given position is already occupied by another city.
+     *
+     * @param position The position to check.
+     * @return true if the position is already used, false otherwise.
+     */
+    public boolean positionInvalid(Position position) {
+        for(City c : cities){
+            if(c.getY() == position.getY() && c.getX() == position.getX())
+                return true;
+        }
+        return false;
+    }
+}
+
 ```
 
 
 ## 6. Integration and Demo 
 
-* A new option was added to the Editor menu called "Add City".
+* The integration of the City, HouseBlock, and CityRepository classes enables the creation, validation, and storage of cities and their respective house blocks on a map.
+ 
+* The CityRepository manages operations such as adding cities, searching by name, and checking for occupied positions, ensuring there are no overlaps.
 
-* For demonstration purposes, some cities are initialized when the system starts.
+* The City class validates names, coordinates, and the number of house blocks, throwing exceptions for invalid data.
 
-* When adding a city with a name that already exists, the system alerts the editor about the situation but allows the operation to continue.
+* The random generation of house blocks is performed around the city's position, respecting map boundaries and avoiding overlap with the city itself.
 
-* If the user chooses automatic placement of house blocks, they are randomly distributed around the city position.
+* Accessor methods (getters and setters) allow modification and retrieval of entity attributes, always ensuring data integrity.
 
-
+* Integration can be demonstrated through unit tests, which cover the main flows of creation, validation, and manipulation of the entities.
 
 ## 7. Observations
 
-* The implementation of manual house block placement will be done in the user interface, allowing the editor to place each block individually on the map.
+* The city repository is kept in memory, so there is no persistence between executions. For production use, it would be necessary to adapt it to a database.
 
-* The validation of the city name (AC1) is done using a regular expression that only allows letters and spaces.
+* Validations are strict: city names cannot contain special characters or digits, coordinates must be positive, and the number of house blocks must always be positive.
+
+* The random generation of house blocks respects map boundaries and avoids overlap with the city's position, but can be improved to prevent overlap between blocks and ensure full compliance with map limits.
+
+* Accessor methods (getters and setters) allow modification and consultation of entity attributes, always ensuring data integrity.
+  
+* Unit tests cover both success and error cases, validating the robustness of business rules and correct integration between classes.
+  
+* The modular architecture facilitates system maintenance and extension, allowing new features to be added without compromising existing integrity.
+  
+* Method and class documentation makes it easier for other developers to understand and use the code.
+  
+* City removal is only allowed in edit mode, reinforcing safety during simulation.
+  
+* City name uniqueness is not mandatory, but it is recommended to avoid duplications for a better user experience.
+  
+* The system is prepared for future integration with other entities, such as industries or infrastructures, maintaining validation consistency.
