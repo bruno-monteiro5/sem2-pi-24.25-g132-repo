@@ -10,7 +10,7 @@ public class ScenarioTest {
 
     @Test
     public void testScenarioCreation() {
-        Map map = new Map("mapaTeste", 10, 10);
+        Map map = new Map("Map1", 5, 5, "editor@this.app");
         Scenario scenario = new Scenario("cenarioTeste", map);
 
         assertEquals("cenarioTeste", scenario.getName());
@@ -22,7 +22,7 @@ public class ScenarioTest {
 
     @Test
     public void testAddPort() {
-        Scenario scenario = new Scenario("cenario", new Map("m", 5, 5));
+        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"));
         Port port = new Port("porto1");
 
         port.addImport("carvão");
@@ -41,7 +41,7 @@ public class ScenarioTest {
 
     @Test
     public void testAddLocomotiveType() {
-        Scenario scenario = new Scenario("cenario", new Map("m", 5, 5));
+        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"));
         scenario.addLocomotiveType(LocomotiveType.STEAM);
         scenario.addLocomotiveType(LocomotiveType.DIESEL);
 
@@ -52,7 +52,7 @@ public class ScenarioTest {
 
     @Test
     public void testSetIndustryGenerationFactor() {
-        Scenario scenario = new Scenario("cenario", new Map("m", 5, 5));
+        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"));
         scenario.setIndustryGenerationFactor(2.5);
 
         assertEquals(2.5, scenario.getIndustryGenerationFactor());
