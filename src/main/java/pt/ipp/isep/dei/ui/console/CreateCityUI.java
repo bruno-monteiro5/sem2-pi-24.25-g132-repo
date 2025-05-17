@@ -11,14 +11,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
+
+/**
+ * User interface for creating a new city via the console.
+ * <p>
+ * This class handles user input for city creation, including:
+ * <ul>
+ *     <li>City name</li>
+ *     <li>City coordinates (x, y)</li>
+ *     <li>Map selection</li>
+ *     <li>Automatic or manual house block assignment</li>
+ * </ul>
+ * It interacts with the {@link CreateCityController} to perform the creation logic.
+ * </p>
+ */
 public class CreateCityUI implements Runnable {
 
     private final CreateCityController controller;
 
+    /**
+     * Constructs a new CreateCityUI instance.
+     * Initializes the controller responsible for city creation.
+     */
     public CreateCityUI() {
         controller = new CreateCityController();
     }
 
+    /**
+     * Displays the city creation menu and handles user input.
+     * <p>
+     * Prompts the user for city details, including name, coordinates, map selection,
+     * and house block assignment. Validates the input and creates a new city using
+     * the controller.
+     * </p>
+     */
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
