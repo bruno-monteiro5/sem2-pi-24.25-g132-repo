@@ -1,210 +1,111 @@
 package pt.ipp.isep.dei.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 /**
- * Represents a building that can be used to upgrade a station.
- * Each building has a name, price, unlock time, and logical relationships
- * such as mutual exclusivity or replacement of other buildings.
+ * Represents an instance of a building that can be added or upgraded to a station.
  */
 public class Building {
 
-    // Attributes
-    public int id; // Unique identifier for the building
-    public ArrayList<Building> mutuallyExclusiveBuildingList; // Buildings that conflict with this one
-    public boolean isReplaced; // Indicates if this building is replaced by another
-    public int replacedById; // ID of the building replacing this one
-    public int unlockYear; // Year when the building becomes available
-    public float buildingPrice; // Cost to purchase/upgrade the building
-    public String name; // Name of the building
-
-    // Static attributes
-    public static final String[] NAMES = {
-            "Telegraph", "Telephone", "Small Hotel", "Grand Hotel",
-            "Small Cafe", "Large Cafe", "Customs", "Post Office",
-            "Silo", "Liquid Storage"
-    };
-    public static final int DEFAULT_ID = -1;
-    public static final int DEFAULT_UNLOCK_YEAR = 0; // Represents buildings available at the start
-    public static final float DEFAULT_BUILDING_PRICE = 10000f;
+    private final BuildingType type;
+    private final int constructionYear;
+    private boolean replaced;
 
     /**
-     * Returns the name of the building based on its unique identifier (ID).
+     * Creates a new building instance of the specified type.
      *
-     * @return The name of the building as a string.
+     * @param type             The type of the building
+     * @param constructionYear The year the building was constructed
+     * @throws IllegalArgumentException if the building type is not available in the construction year
      */
-    public String getName() {
-        return NAMES[this.id - 1];
-    }
-
-    // === Constructors ===
-
-    /**
-     * Default constructor initializing the building with default parameters.
-     */
-    public Building() {
-        this.id = DEFAULT_ID;
-        this.mutuallyExclusiveBuildingList = new ArrayList<>();
-        this.isReplaced = isReplacedBool();
-        this.replacedById = determineReplacementBuilding();
-        this.unlockYear = calculateUnlockYear();
-        this.buildingPrice = DEFAULT_BUILDING_PRICE;
-        initializeMutuallyExclusiveList();
-    }
-
-    /**
-     * Constructs a building with a specific ID and price.
-     *
-     * @param id           The unique identifier of the building.
-     * @param buildingPrice The cost of the building.
-     */
-    public Building(int id, float buildingPrice) {
-        this.id = id;
-        this.mutuallyExclusiveBuildingList = new ArrayList<>();
-        this.isReplaced = isReplacedBool();
-        this.replacedById = determineReplacementBuilding();
-        this.unlockYear = calculateUnlockYear();
-        this.buildingPrice = buildingPrice;
-        initializeMutuallyExclusiveList();
-    }
-
-    /**
-     * Constructs a building with a specific ID and the ID of a building that replaces it.
-     *
-     * @param id          The unique identifier of the building.
-     * @param replacedById The ID of the building that replaces this one.
-     */
-    public Building(int id, int replacedById) {
-        this.id = id;
-        this.mutuallyExclusiveBuildingList = new ArrayList<>();
-        this.isReplaced = isReplacedBool();
-        this.replacedById = replacedById;
-        this.unlockYear = calculateUnlockYear();
-        this.buildingPrice = DEFAULT_BUILDING_PRICE;
-        initializeMutuallyExclusiveList();
-    }
-
-    // === Private Helper Methods ===
-
-    /**
-     * Initializes the list of mutually exclusive buildings based on the building's ID.
-     */
-    private void initializeMutuallyExclusiveList() {
-        switch (id) {
-            case 3: // Small Hotel
-                mutuallyExclusiveBuildingList.add(new Building(4, false)); // Grand Hotel
-                break;
-            case 4: // Grand Hotel
-                mutuallyExclusiveBuildingList.add(new Building(3, false)); // Small Hotel
-                break;
-            case 5: // Small Cafe
-                mutuallyExclusiveBuildingList.add(new Building(6, false)); // Large Cafe
-                break;
-            case 6: // Large Cafe
-                mutuallyExclusiveBuildingList.add(new Building(5, false)); // Small Cafe
-                break;
+    public Building(BuildingType type, int constructionYear) {
+        if (!type.isAvailableIn(constructionYear)) {
+            throw new IllegalArgumentException(
+                    "Building type " + type.name() + " is not available in the year " + constructionYear);
         }
+        this.type = type;
+        this.constructionYear = constructionYear;
+        this.replaced = false;
+    }
+
+
+    /**
+     * Gets the type of the building.
+     *
+     * @return The building type
+     */
+    public BuildingType getType() {
+        return type;
     }
 
     /**
-     * Private constructor to create dummy buildings during initialization of the conflict list.
+     * Gets the year the building was constructed.
      *
-     * @param id    The unique identifier.
-     * @param dummy A dummy flag to differentiate this constructor.
+     * @return The construction year
      */
-    private Building(int id, boolean dummy) {
-        this.id = id;
-        this.mutuallyExclusiveBuildingList = new ArrayList<>();
-        this.isReplaced = false;
-        this.replacedById = DEFAULT_ID;
-        this.unlockYear = DEFAULT_UNLOCK_YEAR;
-        this.buildingPrice = DEFAULT_BUILDING_PRICE;
+    public int getConstructionYear() {
+        return constructionYear;
     }
 
     /**
-     * Determines if the building is replaced based on its identifier.
+     * Checks if this building has been replaced.
      *
-     * @return True if the building is replaced, false otherwise.
+     * @return true if the building has been replaced, false otherwise
      */
-    private boolean isReplacedBool() {
-        return id == 1 || id == 3 || id == 5; // Telegraph, Small Hotel, Small Cafe
+    public boolean isReplaced() {
+        return replaced;
+    }
+
+
+    /**
+     * Marks this building as replaced by another (usually during an upgrade).
+     */
+    public void markAsReplaced() {
+        this.replaced = true;
     }
 
     /**
-     * Determines the ID of a building replacing the current one.
+     * Checks if this type of building can replace another.
      *
-     * @return The ID of the replacement building, or -1 if none exists.
+     * @param other The building to check against
+     * @return true if this building can replace the other, false otherwise
      */
-    private int determineReplacementBuilding() {
-        switch (id) {
-            case 1: // Telegraph
-                return 2; // Replaced by Telephone
-            case 3: // Small Hotel
-                return 4; // Replaced by Grand Hotel
-            case 5: // Small Cafe
-                return 6; // Replaced by Large Cafe
-            default:
-                return DEFAULT_ID;
-        }
+    public boolean canReplace(Building other) {
+        return this.type.equals(other.getType().getReplaces());
     }
 
-    /**
-     * Calculates the year when a building is unlocked based on its ID.
-     *
-     * @return The unlock year of the building.
-     */
-    private int calculateUnlockYear() {
-        switch (id) {
-            case 2: // Telephone
-                return 1880;
-            case 4: // Grand Hotel
-                return 1900;
-            case 6: // Large Cafe
-                return 1920;
-            default:
-                return DEFAULT_UNLOCK_YEAR;
-        }
-    }
-
-    // === Public Methods ===
 
     /**
-     * Gets the list of mutually exclusive buildings for this building.
+     * Checks if two buildings are equal. Buildings are considered equal if they
+     * have the same type and the same construction year.
      *
-     * @return A list of conflict buildings.
+     * @param obj The object to compare to
+     * @return true if the buildings are equal, false otherwise
      */
-    public ArrayList<Building> getMutuallyExclusiveBuildingList() {
-        return new ArrayList<>(mutuallyExclusiveBuildingList);
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Building)) return false;
+        Building other = (Building) obj;
+        return this.type == other.type && this.constructionYear == other.constructionYear;
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(type, constructionYear);
+    }
+
+
+    /**
+     * Returns a string representation of the building.
+     *
+     * @return A string describing the building
+     */
+    @Override
     public String toString() {
         return String.format(
-                "ID: %d, Name: %s, Unlock Year: %d, Price: %.2f, Replaced By: %d",
-                id, getName(), unlockYear, buildingPrice, replacedById
+                "Building: %s, Year: %d, Cost: %.2f, Replaced: %b",
+                type.name(), constructionYear, type.getCost(), replaced
         );
-    }
-
-    // === Public Getters ===
-
-    public int getId() {
-        return id;
-    }
-
-    public boolean isReplaced() {
-        return isReplaced;
-    }
-
-    public int getReplacedById() {
-        return replacedById;
-    }
-
-    public int getUnlockYear() {
-        return unlockYear;
-    }
-
-    public float getBuildingPrice() {
-        return buildingPrice;
     }
 }

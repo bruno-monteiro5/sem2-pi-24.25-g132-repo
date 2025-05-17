@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,8 +27,38 @@ public class Station {
         this.name = name;
         this.location = location;
         this.type = type;
+        this.buildings = new ArrayList<>();
 
     }
+
+    public String upgradeWithBuilding(Building building, int currentYear) {
+        BuildingType newType = building.getType();
+
+        if (!newType.isAvailableIn(currentYear)) {
+            return "Error: " + newType.name() + " is not available in year " + currentYear + ".";
+        }
+
+        for (Building existingBuilding : buildings) {
+            if (newType.isMutuallyExclusiveWith(existingBuilding.getType())) {
+                return "Error: " + newType.name() + " is mutually exclusive with " + existingBuilding.getType().name() + ".";
+            }
+        }
+
+        for (int i = 0; i < buildings.size(); i++) {
+            Building existingBuilding = buildings.get(i);
+
+            if (newType.canReplace(existingBuilding.getType())) {
+                buildings.set(i, building); // Replace the old building with the new one
+                return newType.name() + " has replaced " + existingBuilding.getType().name() + ".";
+            }
+        }
+
+        buildings.add(building);
+        return newType.name() + " has been added to the station.";
+    }
+
+
+
 
 
     public String getName() {
