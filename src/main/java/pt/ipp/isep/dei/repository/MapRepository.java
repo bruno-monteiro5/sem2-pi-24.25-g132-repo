@@ -9,6 +9,7 @@ import java.util.List;
 public class MapRepository {
     private static MapRepository instance;
     private final List<Map> maps;
+    private Map activeMap;
 
     public MapRepository() {
         this.maps = new ArrayList<>();
@@ -21,31 +22,40 @@ public class MapRepository {
         return instance;
     }
 
-    public void addMap(Map map) {
-        this.maps.add(map);
+
+    public Map getActiveMap(){
+        if(activeMap == null){
+            throw new IllegalStateException("No active map");
+        }
+        return this.activeMap;
     }
+
+    public boolean setActiveMap(Map map) {
+        if(this.activeMap != null){
+            return false;
+        }
+        activeMap = map;
+        return true;
+    }
+
+    public boolean addMap(Map map) {
+        if (map == null) {
+            return false;
+        }
+
+        for (Map existingMap : maps) {
+            if (existingMap.equals(map)) {
+                return false;
+            }
+        }
+
+        return this.maps.add(map);
+    }
+
 
     public List<Map> getMaps() {
         return this.maps;
     }
 
-    public Map getMapByName(String name) {
-        for(Map m : this.maps) {
-            if(m.getName().equalsIgnoreCase(name)) {
-                return m;
-            }
-        }
-        return null;
-    }
-
-    public List<Map> getMapsByPlayer(UserSession userSession) {
-        List<Map> maps = new ArrayList<>();
-        for (Map map : this.maps) {
-            if (map.getEmailEditor().equals(userSession.getUserId().getEmail())) {
-                maps.add(map);
-            }
-        }
-        return maps;
-    }
 
 }

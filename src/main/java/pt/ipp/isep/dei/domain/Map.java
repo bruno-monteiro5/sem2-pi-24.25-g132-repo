@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.domain;
 
 
+import javax.xml.stream.Location;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +104,15 @@ public class Map {
 
 
 
+    public boolean buildStation(StationType type, Position position, String name) {
+        if (!isInsideBounds(position) || hasStationAt(position)) {
+            return false;
+        }
+
+        Station s = new Station(name, position, type);
+        ocupiedPositions.add(position);
+        return addStation(s);
+    }
 
     //ADDERS
 
@@ -110,16 +120,18 @@ public class Map {
      * Places a station on the map if the position is valid and unoccupied.
      * @param s the station to place
      */
-    public void placeStation(Station s) {
-        Position p = s.getLocation();
-        if (!isInsideBounds(p)) {
-            throw new IllegalArgumentException("Station position is outside the map.");
+    public boolean addStation(Station s) {
+        if (s == null){
+            return false;
         }
-        if (hasStationAt(p)) {
-            throw new IllegalArgumentException("There is already a station at this position.");
+
+        for (Station station : stations) {
+            if (station.getName().equals(s.getName())) {
+                return false;
+            }
         }
-        stations.add(s);
-        ocupiedPositions.add(p);
+
+        return stations.add(s);
     }
 
     public void addIndustry(Industry industry) {
@@ -160,6 +172,7 @@ public class Map {
     }
 
 
+
     public List<Industry> getIndustries() {
         return new ArrayList<>(industries);
     }
@@ -179,6 +192,46 @@ public class Map {
     public List<Station> getStations() {
         return new ArrayList<>(stations);
     }
+
+
+
+    public City findClosestCity(Position position) {
+        City closest = null;
+        double minDistance = Double.MAX_VALUE;
+
+        for (City city : cities) {
+            double distance = positionDistance(position, city.getPosition());
+            if (distance < minDistance) {
+                minDistance = distance;
+                closest = city;
+            }
+        }
+
+        return closest;
+    }
+
+    public String getSuggestedName(Position location, StationType type) {
+        String city = findClosestCity(location).getName();
+        return city + " " + type.getName();
+    }
+
+    private double positionDistance(Position p1, Position p2) {
+        int dx = p1.getX() - p2.getX();
+        int dy = p1.getY() - p2.getY();
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public Position createPosition(int x, int y) {
+        return new Position(x, y);
+    }
+
+    public boolean validatePosition(Position position) {
+        if (isPositionValid(position) && isInsideBounds(position) && !isPositionOccupied(position)) {
+            return true;
+        }else
+            return false;
+    }
+
 
     @Override
     public String toString() {

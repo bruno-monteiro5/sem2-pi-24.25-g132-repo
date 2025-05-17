@@ -11,7 +11,10 @@ public class Repositories {
     private final OrganizationRepository organizationRepository;
     private final TaskCategoryRepository taskCategoryRepository;
     private final AuthenticationRepository authenticationRepository;
+    private final StationRepository stationRepository;
     private final MapRepository mapRepository;
+    private final StationTypeRepository stationTypeRepository;
+    private final PlayerRepository playerRepository;
 
     /**
      * The Singleton's constructor should always be private to prevent direct construction calls with the new operator.
@@ -21,6 +24,9 @@ public class Repositories {
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
         mapRepository = new MapRepository();
+        stationRepository = new StationRepository();
+        stationTypeRepository = new StationTypeRepository();
+        playerRepository = new PlayerRepository();
     }
 
     /**
@@ -49,6 +55,10 @@ public class Repositories {
         return mapRepository;
     }
 
+    public StationRepository getStationRepository() {
+        return stationRepository;
+    }
+
     public AuthenticationRepository getAuthenticationRepository() {
         return authenticationRepository;
     }
@@ -63,5 +73,13 @@ public class Repositories {
 
     public IndustryRepository getIndustryRepository() {
         return new IndustryRepository();
+    }
+
+    public StationTypeRepository getStationTypeRepository() {
+        return stationTypeRepository;
+    }
+
+    public PlayerRepository getPlayerRepository() {
+        return playerRepository;
     }
 }
