@@ -5,29 +5,50 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Represents a city that can be added to a specific map with
- * a name, a position, and a defined number of house blocks.
+ * Represents a city within the simulation, which can be added to a specific map.
+ * A city is characterized by its name, its position on the map (XY coordinates),
+ * and a configurable number of house blocks.
  *
  * <p>
- * In the context of the simulator, a {@code City} is a core domain entity that:
+ * In the context of the simulator, a {@code City} serves as a core domain entity,
+ * playing the following roles:
  * <ul>
- *    <li>Generates and consumes passengers and mail</li>
- *    <li>Consumes final products such as food, textiles, and cars</li>
+ *     <li>Generating and consuming passengers and mail.</li>
+ *     <li>Consuming final products, such as food, textiles, and cars.</li>
  * </ul>
  * </p>
  *
  * <p>
- * Each city has:
+ * Each city has the following main attributes:
  * <ul>
- *     <li>A name </li>
- *     <li>A position on the map defined by XY coordinates</li>
- *     <li>A positive number of house blocks, which represent housing units</li>
+ *     <li>A <b>name</b>, which uniquely identifies the city in the user's context.
+ *          Names must not include special characters or digits but can contain spaces.</li>
+ *     <li>A <b>position</b> defined by XY coordinates, indicating its location on the map.
+ *          Both coordinates must be positive integers.</li>
+ *     <li>A <b>number of house blocks</b>. The house blocks can be added manually
+ *          or generated automatically (randomly distributed around the city's position).</li>
  * </ul>
- * House blocks may be placed manually or randomly (automatic generation), in accordance
- * with the editor's settings.
+ * </p>
+ *
+ * <p>
+ * Editing capabilities include renaming a city, updating its position, or modifying the
+ * number of house blocks. Validation rules are enforced to ensure data integrity:
+ * <ul>
+ *     <li>City names must not contain special characters or digits.</li>
+ *     <li>Coordinates must remain positive.</li>
+ *     <li>The number of house blocks must always be a positive value.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Additional considerations:
+ * <ul>
+ *     <li>City names do not need to be unique but should avoid duplication within the same map to minimize confusion for users.</li>
+ *     <li>A city cannot overlap with other entities, such as other cities or industries, on the map.</li>
+ *     <li>Cities can only be removed in edit mode, not during simulation mode.</li>
+ * </ul>
  * </p>
  */
-
 public class City {
 
     private Map map;
@@ -39,12 +60,13 @@ public class City {
     /**
      * Constructs a {@code City} with a name, position, and number of house blocks.
      *
+     * @param map         The map to which the city belongs.
      * @param name        The name of the city. Must not be null, empty, or contain special characters or digits.
      * @param position    The coordinates (XY) of the city's location within the map. Coordinates must be positive.
      * @param houseBlocks The number of house blocks in the city. Must be a positive integer.
      * @throws IllegalArgumentException if {@code name} is invalid, {@code position} has negative values, or {@code houseBlocks} is not positive.
      */
-    public City(String name, Position position, Integer houseBlocks) {
+    public City(Map map, String name, Position position, Integer houseBlocks) {
         if (name == null || position == null || houseBlocks == null) {
             throw new IllegalArgumentException("No argument can be null");
         }
@@ -53,14 +75,11 @@ public class City {
             throw new IllegalArgumentException("City name cannot contain special characters or digits");
         }
 
-        if (houseBlocks <= 0) {
-            throw new IllegalArgumentException("The number of house blocks must be positive");
-        }
 
         this.name = name;
         this.position = position;
         this.houseBlocks = houseBlocks;
-        this.houseBlocksList = houseBlocksList;
+        this.map = map;
     }
 
     public Map getMap() { return map; }
@@ -77,6 +96,12 @@ public class City {
 
     public List<HouseBlock> getHouseBlocksList() { return new ArrayList<>(houseBlocksList); }
 
+    /**
+     * Sets the map that the city belongs to.
+     *
+     * @param map The map to associate with the city. Must not be {@code null}.
+     * @throws IllegalArgumentException if the {@code map} is {@code null}.
+     */
     public void setMap(Map map) {
         if (map == null) {
             throw new IllegalArgumentException("Map must not be null.");
@@ -149,29 +174,6 @@ public class City {
     }
 
     /**
-     * Generates house blocks within the city. The blocks can be assigned manually
-     * or automatically (randomly distributed around the city's position).
-     *
-     * <p>
-     * Automatic generation ensures that the house blocks remain within the map's boundaries
-     * and do not overlap with the city's position or other elements on the map.
-     * </p>
-     *
-     * @param automatic If {@code true}, house blocks are generated automatically.
-     *                  If {@code false}, manual placement is expected through the editor.
-     * @param map       The map on which the city is placed.
-     */
-    public void generateHouseBlocks(boolean automatic, Map map) {
-        houseBlocksList.clear();
-
-        if (automatic) {
-            generateRandomHouseBlocks(map);
-        } else {
-            // Implementation for manual placement will be done in the UI
-        }
-    }
-
-    /**
      * Randomly generates house blocks around the city's position.
      *
      * <p>
@@ -182,30 +184,20 @@ public class City {
      * </ul>
      * </p>
      *
-     * @param map The map on which the city is placed. Used to determine valid boundaries for block placement.
+     * @throws IllegalArgumentException if the map property is null.
      */
-
-    public void generateRandomHouseBlocks(Map map) {
+    public void generateRandomHouseBlocks() {
         if (map == null) {
             throw new IllegalArgumentException("Map cannot be null");
         }
 
-        houseBlocksList.clear();
         Random random = new Random();
+        this.houseBlocks = random.nextInt(10) + 1;
+        houseBlocksList = new ArrayList<>();
 
-        for (int i = 0; i < houseBlocks; i++) {
-            Position blockPosition;
-            do {
-                int offsetX = random.nextInt(11) - 5; // -5 to 5
-                int offsetY = random.nextInt(11) - 5;
-
-                int blockX = position.getX() + offsetX;
-                int blockY = position.getY() + offsetY;
-                blockPosition = new Position(blockX, blockY);
-            } while (!isValidBlockPosition(blockPosition, map));
-
-            HouseBlock block = new HouseBlock(blockPosition);
-            houseBlocksList.add(block);
+        for (int i = 0;i<houseBlocks;i++) {
+            HouseBlock houseBlock = new HouseBlock(new Position(this.position.getX() + i, this.position.getY()));
+            houseBlocksList.add(houseBlock);
         }
     }
 
@@ -224,7 +216,6 @@ public class City {
      * @param map           The map where the city and block are located.
      * @return {@code true} if the block's position is valid, {@code false} otherwise.
      */
-
     private boolean isValidBlockPosition(Position blockPosition, Map map) {
         // Check if the block is within map boundaries
         if (blockPosition.getX() < 0 || blockPosition.getX() >= map.getWidth() ||
@@ -246,6 +237,8 @@ public class City {
                 "name='" + name + '\'' +
                 ", x=" + position.getX() +
                 ", y=" + position.getY() +
+                ", houseBlocks=" + houseBlocks +
                 '}';
     }
+
 }
