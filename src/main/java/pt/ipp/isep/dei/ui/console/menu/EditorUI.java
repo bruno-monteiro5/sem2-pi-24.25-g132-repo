@@ -1,10 +1,9 @@
 package pt.ipp.isep.dei.ui.console.menu;
 
-import pt.ipp.isep.dei.ui.CreateScenarioUI;
 import pt.ipp.isep.dei.ui.console.CreateCityUI;
 import pt.ipp.isep.dei.ui.console.CreateMapUI;
 import pt.ipp.isep.dei.ui.console.CreateTaskUI;
-import pt.ipp.isep.dei.ui.console.ShowTextUI;
+import pt.ipp.isep.dei.ui.console.CreateScenarioUI;
 import pt.ipp.isep.dei.ui.console.utils.Utils;
 import pt.ipp.isep.dei.ui.console.AddIndustryUI;
 
@@ -20,8 +19,8 @@ public class EditorUI implements Runnable {
         options.add(new MenuItem("Create Task", new CreateTaskUI()));
         options.add(new MenuItem("Create Map", new CreateMapUI()));
         options.add(new MenuItem("Add Industry", new AddIndustryUI()));
-        options.add(new MenuItem("Create Scenario", new CreateScenarioUI()));
         options.add(new MenuItem("Create City", new CreateCityUI()));
+        options.add(new MenuItem("Create Scenario", new CreateScenarioUI()));
 
         int option = 0;
         do {

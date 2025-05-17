@@ -1,90 +1,94 @@
 package pt.ipp.isep.dei.domain;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit test class for the Industry class.
- * Tests functionality related to industries.
+ * Unit tests for the Industry class.
  */
 public class IndustryTest {
 
-    private Industry industry;
-    private Position position;
-
     /**
-     * Initial setup for the tests.
-     * Creates an Industry object to be used in the tests.
-     */
-    @BeforeEach
-    public void setUp() {
-        position = new Position(10, 20);
-        industry = new Industry("Test Industry", position, IndustryTypes.IndustryType.PRIMARY);
-    }
-
-    /**
-     * Tests the creation of an Industry object with valid values.
-     * Verifies that getters return the correct values.
+     * Test that a valid Industry can be created successfully.
      */
     @Test
-    public void testCreateIndustry() {
-        assertEquals("Test Industry", industry.getName());
+    public void ensureValidIndustryCanBeCreated() {
+        Position position = new Position(10, 20);
+        IndustryTypes.IndustryType type = IndustryTypes.IndustryType.PRIMARY;
+        Industry industry = new Industry("IndustryName", position, type);
+
+        assertNotNull(industry);
+        assertEquals("IndustryName", industry.getName());
         assertEquals(position, industry.getPosition());
-        assertEquals(IndustryTypes.IndustryType.PRIMARY, industry.getType());
+        assertEquals(type, industry.getType());
     }
 
     /**
-     * Tests the setName method of the Industry class.
-     * Verifies that the name is correctly updated.
+     * Test the isAtPosition method when the positions match.
+     */
+    @Test
+    public void testIsAtPositionTrue() {
+        Position position = new Position(10, 20);
+        Industry industry = new Industry("IndustryName", position, IndustryTypes.IndustryType.PRIMARY);
+
+        assertTrue(industry.isAtPosition(new Position(10, 20)));
+    }
+
+    /**
+     * Test the isAtPosition method when the positions do not match.
+     */
+    @Test
+    public void testIsAtPositionFalse() {
+        Position position = new Position(10, 20);
+        Industry industry = new Industry("IndustryName", position, IndustryTypes.IndustryType.PRIMARY);
+
+        assertFalse(industry.isAtPosition(new Position(5, 5)));
+    }
+
+    /**
+     * Test setting a new name in the Industry.
      */
     @Test
     public void testSetName() {
-        industry.setName("New Name");
-        assertEquals("New Name", industry.getName());
+        Industry industry = new Industry("OldName", new Position(10, 20), IndustryTypes.IndustryType.PRIMARY);
+        industry.setName("NewName");
+
+        assertEquals("NewName", industry.getName());
     }
 
     /**
-     * Tests the setPosition method of the Industry class.
-     * Verifies that the position is correctly updated.
+     * Test setting a new position in the Industry.
      */
     @Test
     public void testSetPosition() {
-        Position newPosition = new Position(30, 40);
+        Industry industry = new Industry("Industry", new Position(10, 20), IndustryTypes.IndustryType.PRIMARY);
+        Position newPosition = new Position(15, 25);
         industry.setPosition(newPosition);
+
         assertEquals(newPosition, industry.getPosition());
     }
 
     /**
-     * Tests the setType method of the Industry class.
-     * Verifies that the type is correctly updated.
+     * Test setting a new industry type in the Industry.
      */
     @Test
     public void testSetType() {
-        industry.setType(IndustryTypes.IndustryType.MIXED);
-        assertEquals(IndustryTypes.IndustryType.MIXED, industry.getType());
+        Industry industry = new Industry("Industry", new Position(10, 20), IndustryTypes.IndustryType.PRIMARY);
+        IndustryTypes.IndustryType newType = IndustryTypes.IndustryType.MIXED;
+        industry.setType(newType);
+
+        assertEquals(newType, industry.getType());
     }
 
     /**
-     * Tests the toString method of the Industry class.
-     * Verifies that the string representation contains all the expected information.
+     * Test the toString method to verify the string representation of an Industry.
      */
     @Test
     public void testToString() {
-        String str = industry.toString();
+        Industry industry = new Industry("Industry", new Position(10, 20), IndustryTypes.IndustryType.PRIMARY);
+        String expected = "Industry{-Name='Industry'-Position=Position{x=10, y=20}-Type=PRIMARY}";
 
-        assertTrue(str.contains("Test Industry"));
-        assertTrue(str.contains(position.toString()));
-        assertTrue(str.contains(IndustryTypes.IndustryType.PRIMARY.toString()));
-    }
-
-    /**
-     * Tests the isAtPosition method of the Industry class.
-     * Verifies that the method returns true for the correct position and false for other positions.
-     */
-    @Test
-    public void testIsAtPosition() {
-        assertTrue(industry.isAtPosition(position));
-        assertFalse(industry.isAtPosition(new Position(30, 40)));
+        assertEquals(expected, industry.toString());
     }
 }

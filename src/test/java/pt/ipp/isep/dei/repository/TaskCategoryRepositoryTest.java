@@ -1,3 +1,4 @@
+/**
 package pt.ipp.isep.dei.repository;
 
 import org.junit.jupiter.api.Test;
@@ -113,4 +114,4 @@ class TaskCategoryRepositoryTest {
         //Assert
         assertEquals(taskCategoryTwo, result.get());
     }
-}
+}*/

@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.ui;
+package pt.ipp.isep.dei.ui.console;
 
 import pt.ipp.isep.dei.controller.CreateScenarioController;
 import pt.ipp.isep.dei.domain.*;
