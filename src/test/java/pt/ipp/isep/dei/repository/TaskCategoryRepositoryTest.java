@@ -1,6 +1,8 @@
+
 package pt.ipp.isep.dei.repository;
 
 import org.junit.jupiter.api.Test;
+import pt.ipp.isep.dei.domain.TaskCategory;
 
 import java.util.Optional;
 
