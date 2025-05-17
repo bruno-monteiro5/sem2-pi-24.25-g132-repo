@@ -1,13 +1,17 @@
 package pt.ipp.isep.dei.domain;
 
+import java.util.List;
+
 /**
  * Represents a station in the railway network.
  * A station is defined by a name and its (x, y) coordinates in the map.
  */
-public abstract class Station {
+public class Station {
     private String name;
     private Position location;
     private StationType type;
+    private List<Building> buildings;
+
 
     /**
      * Constructs a Station object.
@@ -38,6 +42,10 @@ public abstract class Station {
         return type;
     }
 
+    public List<Building> getBuildings() {
+        return buildings;
+    }
+
 
     public void setName(String name) {
         this.name = name;
@@ -48,7 +56,6 @@ public abstract class Station {
     public void setType(StationType type) {
         this.type = type;
     }
-
 
     /**
      * Returns a string representation of the station.
@@ -64,5 +71,15 @@ public abstract class Station {
                 "-Location=" + location +
                 "-Type=" + type +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+        Station station = (Station) o;
+
+        return (name != null ? !name.equals(station.name) : station.name != null);
     }
 }
