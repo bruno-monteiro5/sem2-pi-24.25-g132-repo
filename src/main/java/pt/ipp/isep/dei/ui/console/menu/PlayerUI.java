@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.ui.console.menu;
 
+import pt.ipp.isep.dei.ui.console.BuildStationUI;
 import pt.ipp.isep.dei.ui.console.CreateTaskUI;
 import pt.ipp.isep.dei.ui.console.ShowTextUI;
 import pt.ipp.isep.dei.ui.console.utils.Utils;
@@ -13,7 +14,7 @@ public class PlayerUI implements Runnable {
 
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("Create Task", new CreateTaskUI()));
+        options.add(new MenuItem("Build Station", new BuildStationUI()));
         options.add(new MenuItem("Option 2", new ShowTextUI("You have chosen Option 2.")));
         options.add(new MenuItem("Option 3", new ShowTextUI("You have chosen Option 3.")));
         options.add(new MenuItem("Option 4", new ShowTextUI("You have chosen Option 4.")));
