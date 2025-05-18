@@ -80,18 +80,18 @@ public class Main {
                             break;
 
                         case 0:
-                            System.out.println("A sair...");
+                            System.out.println("Leaving...");
                             break;
 
                         default:
-                            System.out.println("Opção inválida.");
+                            System.out.println("Invalid option");
                             break;
                     }
 
                 } while (opcao != 0);
 
             } catch (Exception e) {
-                System.err.println("Erro: " + e.getMessage());
+                System.err.println("Error: " + e.getMessage());
             }
         }
 }

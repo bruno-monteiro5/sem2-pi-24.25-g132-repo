@@ -15,7 +15,7 @@ public class PlayerUI implements Runnable {
         options.add(new MenuItem("Build Station", new BuildStationUI()));
         options.add(new MenuItem("Upgrade Station", new UpgradeStationUI()));
         options.add(new MenuItem("See the details of a station", new StationDetailsUI()));
-        options.add(new MenuItem("Option 4", new ShowTextUI("You have chosen Option 4.")));
+        options.add(new MenuItem("Buy a locomotive", new ShowTextUI("You have chosen Option 4.")));
 
         int option = 0;
         do {

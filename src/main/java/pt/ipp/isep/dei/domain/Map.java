@@ -31,6 +31,7 @@ public class Map {
     private final List<Station> stations = new ArrayList<>();
     private final List<Industry> industries = new ArrayList<>();
     private final List<Position> ocupiedPositions = new ArrayList<>();
+    private final List<Scenario> scenarios = new ArrayList<>();
 
     private static final int ID_BY_OMISSION = 1;
     private static final String NAME_BY_OMISON = "Without name";
@@ -459,6 +460,10 @@ public class Map {
             return true;
         }else
             return false;
+    }
+
+    public List<Scenario> getScenarios() {
+        return new ArrayList<>(scenarios);
     }
 
 

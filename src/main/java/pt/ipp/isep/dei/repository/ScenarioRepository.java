@@ -9,6 +9,7 @@ public class ScenarioRepository {
 
     private ArrayList<Scenario> scenarios = new ArrayList<>();
     private static final String FILE_NAME = "scenarios.ser";
+    private Scenario scenarioBeingUsed;
 
     public ScenarioRepository() {
         loadFromFile();
@@ -42,5 +43,9 @@ public class ScenarioRepository {
         } catch (IOException | ClassNotFoundException e) {
             scenarios = new ArrayList<>();
         }
+    }
+
+    public void setActiveScenario(Scenario scenario) {
+        scenarioBeingUsed = scenario;
     }
 }

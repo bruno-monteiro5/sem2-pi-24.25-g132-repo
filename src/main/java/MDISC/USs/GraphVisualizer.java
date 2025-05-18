@@ -1,5 +1,6 @@
 package MDISC.USs;
 
+import guru.nidi.graphviz.attribute.Attributes;
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.attribute.Label;
 import guru.nidi.graphviz.engine.Format;
@@ -17,7 +18,7 @@ import static guru.nidi.graphviz.model.Factory.to;
 public class GraphVisualizer {
 
     public static void visualize(RailwayNetwork network, boolean onlyElectrified, String outputFilePath) {
-        Graph g = graph("railway").directed(); // sem RankDir
+        Graph g = graph("railway"); // sem RankDir
 
         for (Line line : network.getLines()) {
             if (onlyElectrified && !line.isElectrified()) continue;
@@ -25,9 +26,15 @@ public class GraphVisualizer {
             String from = line.getStationA().getName();
             String to = line.getStationB().getName();
             String label = line.getDistance() + "km";
-            Color color = line.isElectrified() ? Color.RED : Color.BLACK;
+            Color color = line.isElectrified() ? Color.CYAN3 : Color.GRAY60;
 
-            LinkSource edge = node(from).link(to(node(to)).with(Label.of(label), color));
+            LinkSource edge = node(from).link(
+                    to(node(to)).with(
+                            Label.of(label),
+                            color,
+                            Attributes.attr("penwidth", "5")
+                    )
+            );
             g = g.with(edge);
         }
 
