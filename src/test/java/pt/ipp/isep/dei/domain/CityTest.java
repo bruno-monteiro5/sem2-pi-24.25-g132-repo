@@ -1,4 +1,3 @@
-// src/test/java/pt/ipp/isep/dei/domain/CityTest.java
 package pt.ipp.isep.dei.domain;
 
 import org.junit.jupiter.api.Test;

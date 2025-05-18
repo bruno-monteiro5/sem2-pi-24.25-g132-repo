@@ -605,36 +605,23 @@ public class CityRepository {
 
 ## 6. Integration and Demo 
 
-* The integration of the City, HouseBlock, and CityRepository classes enables the creation, validation, and storage of cities and their respective house blocks on a map.
- 
-* The CityRepository manages operations such as adding cities, searching by name, and checking for occupied positions, ensuring there are no overlaps.
+* The integration of `City`, `HouseBlock`, and `CityRepository` supports the creation, validation, and storage of cities and house blocks on a map.
 
-* The City class validates names, coordinates, and the number of house blocks, throwing exceptions for invalid data.
+* `CityRepository` adds, searches, and verifies positions to avoid city overlap, while `City` ensures valid names, coordinates, and house block numbers.
 
-* The random generation of house blocks is performed around the city's position, respecting map boundaries and avoiding overlap with the city itself.
+* Random house block generation respects map boundaries and prevents overlaps.
 
-* Accessor methods (getters and setters) allow modification and retrieval of entity attributes, always ensuring data integrity.
+* Unit tests demonstrate the creation, validation, and manipulation of cities and house blocks.
 
-* Integration can be demonstrated through unit tests, which cover the main flows of creation, validation, and manipulation of the entities.
 
 ## 7. Observations
 
-* The city repository is kept in memory, so there is no persistence between executions. For production use, it would be necessary to adapt it to a database.
+* The city repository is in-memory with no persistence; a database would be needed for long-term storage.
 
-* Validations are strict: city names cannot contain special characters or digits, coordinates must be positive, and the number of house blocks must always be positive.
+* Validations restrict city names to exclude special characters/digits and enforce positive coordinates and house block counts.
 
-* The random generation of house blocks respects map boundaries and avoids overlap with the city's position, but can be improved to prevent overlap between blocks and ensure full compliance with map limits.
+* Random generation avoids overlaps but could be improved for better boundary compliance.
 
-* Accessor methods (getters and setters) allow modification and consultation of entity attributes, always ensuring data integrity.
-  
-* Unit tests cover both success and error cases, validating the robustness of business rules and correct integration between classes.
-  
-* The modular architecture facilitates system maintenance and extension, allowing new features to be added without compromising existing integrity.
-  
-* Method and class documentation makes it easier for other developers to understand and use the code.
-  
-* City removal is only allowed in edit mode, reinforcing safety during simulation.
-  
-* City name uniqueness is not mandatory, but it is recommended to avoid duplications for a better user experience.
-  
-* The system is prepared for future integration with other entities, such as industries or infrastructures, maintaining validation consistency.
+* The modular architecture simplifies maintenance and future expansions, such as adding industries or infrastructures.
+
+* Unit tests ensure consistency in validations and integration across classes.
