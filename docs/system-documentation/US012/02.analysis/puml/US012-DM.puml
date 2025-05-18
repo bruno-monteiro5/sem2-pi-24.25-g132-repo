@@ -7,25 +7,25 @@ class Player {
 }
 
 class Simulator {
-  currentTime:
-  isRunning:
+  currentTime
+  isRunning
   + start()
   + pause()
   + generateCargo()
 }
 
 class Scenario {
-  startYear:
-  endYear:
+  startYear
+  endYear
 }
 
 class Station {
-  name:
+  name
   + receiveCargo(c: Cargo)
 }
 
 class Cargo {
-  type:
+  type
 }
 
 Player "1" -- "1" Simulator : controls >
