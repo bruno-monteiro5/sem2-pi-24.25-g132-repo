@@ -27,14 +27,4 @@ public class StationDetailsController {
     public List<StationDetails> listStationDetails() {
         return stationDetailsRepository.getAllStationDetails();
     }
-
-    /**
-     * Retrieves the details of a specific station by name.
-     *
-     * @param stationName The name of the station.
-     * @return The StationDetails object, or null if not found.
-     */
-    public StationDetails getStationDetails(String stationName) {
-        return stationDetailsRepository.getStationDetailsByName(stationName);
-    }
 }
