@@ -105,7 +105,12 @@ public class Building {
     public String toString() {
         return String.format(
                 "Building: %s, Year: %d, Cost: %.2f, Replaced: %b",
-                type.name(), constructionYear, type.getCost(), replaced
+                type.name(),
+                constructionYear,
+                type.getCost(),
+                replaced
         );
     }
+
+
 }

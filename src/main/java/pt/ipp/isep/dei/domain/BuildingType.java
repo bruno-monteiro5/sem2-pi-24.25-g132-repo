@@ -7,7 +7,6 @@ import java.util.Set;
  * Represents the types of buildings that can be added to a station.
  */
 public enum BuildingType {
-    // Enum constants with their respective attributes
     TELEGRAPH(100.0, null, 1850),
     TELEPHONE(200.0, TELEGRAPH, 1900, Set.of(TELEGRAPH)),
     CAFE_SMALL(150.0, null, 1850),
@@ -108,13 +107,16 @@ public enum BuildingType {
      */
     @Override
     public String toString() {
+        java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("#0.00");
+
         return String.format(
-                "BuildingType: %s, Cost: %.2f, Replaces: %s, Available Year: %d",
+                "BuildingType: %s, Cost: %s, Replaces: %s, Available Year: %d",
                 this.name(),
-                this.cost,
+                decimalFormat.format(this.cost), // Formata o número com 2 casas decimais
                 (this.replaces != null ? this.replaces.name() : "None"),
                 this.availableYear
         );
     }
+
 }
 

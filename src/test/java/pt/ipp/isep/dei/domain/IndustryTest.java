@@ -88,7 +88,8 @@ public class IndustryTest {
     public void testToString() {
         Industry industry = new Industry("Industry", new Position(10, 20), IndustryTypes.IndustryType.PRIMARY);
         String expected = "Industry{-Name='Industry'-Position=Position{x=10, y=20}-Type=PRIMARY}";
-
         assertEquals(expected, industry.toString());
     }
+
+
 }

@@ -89,10 +89,13 @@ public class Industry {
     public String toString() {
         return "Industry{" +
                 "-Name='" + name + '\'' +
-                "-Position=" + position +
+                "-Position=" + position.toString() +
                 "-Type=" + type +
                 '}';
     }
+
+
+
 
     /**
      * Checks whether the industry is located at a specific position.

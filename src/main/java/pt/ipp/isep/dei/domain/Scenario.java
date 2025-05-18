@@ -16,8 +16,10 @@ public class Scenario implements Serializable {
         this.map = map;
         this.ports = new ArrayList<>();
         this.availableLocomotiveTypes = new ArrayList<>();
-        this.industryGenerationFactor = 1.0; // valor por defeito
+        this.industryGenerationFactor = 1.0;
+
     }
+
 
     public String getName() {
         return name;

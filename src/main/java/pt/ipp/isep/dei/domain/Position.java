@@ -30,8 +30,9 @@ public class Position {
 
     @Override
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return "Position{x=" + x + ", y=" + y + "}";
     }
+
 
     @Override
     public boolean equals(Object o) {

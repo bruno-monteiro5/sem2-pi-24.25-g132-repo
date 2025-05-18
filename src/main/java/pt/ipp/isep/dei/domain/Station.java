@@ -113,4 +113,45 @@ public class Station {
 
         return (name != null ? !name.equals(station.name) : station.name != null);
     }
+
+
+    public boolean addBuilding(BuildingType type) {
+        if (type.getReplaces() != null) {
+            buildings.removeIf(building -> building.getType() == type.getReplaces());
+        }
+
+        // Add the new building
+        return buildings.add(new Building(type,0));
+    }
+
+    public List<BuildingType> getAvailableUpgrades(List<BuildingType> allBuildingTypes) {
+        List<BuildingType> availableUpgrades = new ArrayList<>();
+
+        // Loop through each building type to validate compatibility
+        for (BuildingType buildingType : allBuildingTypes) {
+            boolean canUpgrade = true;
+
+            // Check mutual exclusivity with existing buildings
+            for (Building existingBuilding : this.buildings) {
+                if (buildingType.isMutuallyExclusiveWith(existingBuilding.getType())) {
+                    canUpgrade = false;
+                    break;
+                }
+            }
+
+            // Add to the list if no restrictions were found
+            if (canUpgrade) {
+                availableUpgrades.add(buildingType);
+            }
+        }
+
+        return availableUpgrades;
+    }
+
+    public boolean removeBuilding(BuildingType buildingType) {
+        return buildings.removeIf(building -> building.getType().equals(buildingType));
+    }
 }
+
+
+
