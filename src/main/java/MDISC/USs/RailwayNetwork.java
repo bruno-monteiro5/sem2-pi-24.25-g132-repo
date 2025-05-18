@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class RailwayNetwork {
     private final ArrayList<Station> stations = new ArrayList<>();
@@ -152,7 +153,6 @@ public class RailwayNetwork {
         }
         return true;
     }
-
     public void findEulerianPath(boolean onlyElectrified) {
         ArrayList<Station> subStations = new ArrayList<>();
         ArrayList<Line> subLines = new ArrayList<>();
@@ -178,28 +178,53 @@ public class RailwayNetwork {
         dfs(adj, 0, visited);
         for (boolean v : visited) {
             if (!v) {
-                System.out.println("O grafo não está conectado.");
+                System.out.println("Graph isn't connected.");
                 return;
             }
         }
 
-        int oddCount = 0;
-        int start = 0;
+        ArrayList<Integer> oddVertices = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             int degree = 0;
             for (int j = 0; j < n; j++) degree += adj[i][j];
-            if (degree % 2 != 0) {
-                oddCount++;
-                start = i;
-            }
+            if (degree % 2 != 0) oddVertices.add(i);
         }
 
-        if (oddCount != 0 && oddCount != 2) {
-            System.out.println("O grafo não possui um caminho Euleriano.");
+        if (oddVertices.size() != 0 && oddVertices.size() != 2) {
+            System.out.println("Graph doesn't have an Eulerian path.");
             return;
         }
 
-        System.out.println("Caminho Euleriano possível. Calculando rota com Fleury:");
+        int start;
+
+        if (oddVertices.size() == 2) {
+            Station s1 = subStations.get(oddVertices.get(0));
+            Station s2 = subStations.get(oddVertices.get(1));
+
+            System.out.println("Graph has 2 vertices with odd degree:");
+            System.out.println("1 - " + s1.getName());
+            System.out.println("2 - " + s2.getName());
+            System.out.print("Choose the starting point (1 ou 2): ");
+
+            Scanner scanner = new Scanner(System.in);
+            String opcao = scanner.nextLine().trim();
+
+            if (opcao.equals("1")) {
+                start = oddVertices.get(0);
+            } else if (opcao.equals("2")) {
+                start = oddVertices.get(1);
+            } else {
+                System.out.println("Invalid option. Using 1 as default.");
+                start = oddVertices.get(0);
+            }
+
+        } else {
+            // 0 vértices ímpares → ciclo Euleriano → qualquer vértice
+            start = 0;
+            System.out.println("The graph has an Eulerian cycle. It can start at any station.");
+        }
+
+        System.out.println("Calculating maintenance route with Fleury algorithm:");
         List<String> route = new ArrayList<>();
         fleury(adj, subStations, start, route);
         for (int i = 0; i < route.size(); i++) {
@@ -208,6 +233,7 @@ public class RailwayNetwork {
         }
         System.out.println();
     }
+
 
     private void dfs(int[][] adj, int i, boolean[] visited) {
         visited[i] = true;

@@ -16,48 +16,60 @@ public class Main {
 
                 do {
                     System.out.println("\n--- MENU MDISC ---");
-                    System.out.println("1 - Verificar se um comboio pode viajar entre duas estações");
-                    System.out.println("2 - Verificar Conectividade");
-                    System.out.println("3 - Fazer manutenção das linhas (geral/elétrica)");
-                    System.out.println("4 - Gerar imagem do grafo (Graphviz)");
-                    System.out.println("0 - Sair");
-                    System.out.print("Escolha a opção: ");
+                    System.out.println("1 - Verify if a train can travel between two stations (US13)");
+                    System.out.println("2 - Verify if a train can travel from a station to another of the same type (US13)");
+                    System.out.println("3 - Maintenance of the lines(general/electric) (US14)");
+                    System.out.println("4 - Generate graph (Graphviz)");
+                    System.out.println("0 - Leave");
+                    System.out.print("Choose an option: ");
                     opcao = scanner.nextInt();
                     scanner.nextLine(); // consumir \n
 
                     switch (opcao) {
                         case 1:
-                            System.out.print("Estação origem: ");
+                            System.out.println("Available stations:");
+                            for (Station s : net.getStations()) {
+                                System.out.println("- " + s.getName());
+                            }
+                            System.out.print("Origin Station: ");
                             String from = scanner.nextLine();
-                            System.out.print("Estação destino: ");
+                            System.out.print("Destination Station: ");
                             String to = scanner.nextLine();
-                            System.out.print("Tipo de comboio (steam/diesel/electric): ");
+                            System.out.print("Type of train (steam/diesel/electric): ");
                             String tipo = scanner.nextLine();
 
                             boolean result = net.canTravel(from, to, tipo);
-                            System.out.println("Resultado: " + (result ? "Pode viajar" : "Não pode viajar"));
+                            System.out.println("Result: " + (result ? "Can travel" : "Can't travel"));
                             break;
 
                         case 2:
-                            System.out.print("Tipo de comboio (steam/diesel/electric): ");
+                            System.out.print("Type of train (steam/diesel/electric): ");
                             String trainType = scanner.nextLine();
 
-                            System.out.print("Tipo de estação (Depot/Station/Terminal): ");
+                            System.out.print("Type of station (Depot/Station/Terminal): ");
                             String stationType = scanner.nextLine(); // Ex: "Station"
 
                             boolean connected = net.isTypeFullyConnected(trainType, stationType);
 
                             if (connected) {
-                                System.out.println("Com o comboio " + trainType + ", todas as estações do tipo " + stationType + " estão conectadas entre si!");
+                                System.out.println("With" + trainType + "you CAN travel from a" + stationType + "to another of the same type");
                             } else {
-                                System.out.println("Com o comboio " + trainType + ", nem todas as estações do tipo " + stationType + " estão conectadas entre si.");
+                                System.out.println("with" + trainType + "you CAN'T travel from a " + stationType + "to another of the same type");
                             }
                             break;
 
                         case 3:
-                            System.out.print("Tipo de manutenção? (geral/elétrica): ");
-                            String lineType = scanner.nextLine();
-                            boolean onlyElectrified = lineType.equalsIgnoreCase("elétrica");
+                            System.out.print("Type of maintenance?\n1 - General\n2 - Electric\nOption: ");
+                            boolean onlyElectrified = false;
+                            int lineType = scanner.nextInt();
+                            if (lineType != 1 && lineType != 2) {
+                                System.out.printf("Enter a valid option (1 or 2):");
+                                lineType = scanner.nextInt();
+                            }else if (lineType == 1){
+                                onlyElectrified = false;
+                            }else if (lineType == 2){
+                                onlyElectrified = true;
+                            }
 
                             net.findEulerianPath(onlyElectrified);
                             break;
