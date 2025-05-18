@@ -6,25 +6,52 @@ import pt.ipp.isep.dei.repository.MapRepository;
 import pt.ipp.isep.dei.repository.Repositories;
 import pt.isep.lei.esoft.auth.UserSession;
 
+/**
+ * Controller responsible for creating and managing maps.
+ * <p>
+ * Provides methods for saving maps, validating map dimensions,
+ * and retrieving user information from the current session.
+ */
 public class CreateMapController {
     private  MapRepository mapRepository;
     private AuthenticationRepository authenticationRepository;
 
-
+    /**
+     * Initializes the CreateMapController.
+     * Ensures both the map and authentication repositories are loaded.
+     */
     public CreateMapController() {
         getMapRepository();
         getAuthenticationRepository();
     }
 
+    /**
+     * Validates if a map has valid dimensions (width and height greater than zero).
+     *
+     * @param map The {@link Map} to validate.
+     * @return {@code true} if the map dimensions are valid, {@code false} otherwise.
+     */
     private boolean isDimensionValid(Map map) {
         return map.getWidth() > 0 && map.getHeight() > 0;
     }
 
+    /**
+     * Validates if a map has a valid name (not null or empty).
+     *
+     * @param map The {@link Map} to validate.
+     * @return {@code true} if the name is valid, {@code false} otherwise.
+     */
     private boolean isNameValid(Map map) {
         String name = map.getName();
         return name != null && !name.isEmpty();
     }
 
+    /**
+     * Checks if the name of a map already exists in the repository.
+     *
+     * @param map The {@link Map} to validate.
+     * @return {@code true} if the name exists, {@code false} otherwise.
+     */
     private boolean isNameExists(Map map) {
         for(Map existingMap: mapRepository.getMaps()) {
             if(existingMap.getName().equals(map.getName())) {
@@ -34,6 +61,14 @@ public class CreateMapController {
         return false;
     }
 
+
+    /**
+     * Saves a map after validating its name, dimensions, and uniqueness.
+     *
+     * @param map The {@link Map} object to be saved.
+     * @return The saved {@link Map} instance if the operation is successful,
+     *         or {@code null} if validation fails.
+     */
 
     public Map saveMap(Map map) {
         if (!isNameValid(map)){
@@ -53,6 +88,12 @@ public class CreateMapController {
         return map;
     }
 
+    /**
+     * Retrieves the email of the currently logged-in user if they have the "EDITOR" role.
+     *
+     * @return The email of the current user if logged in with the "EDITOR" role,
+     *         or {@code null} if the user is not logged in or does not have the required role.
+     */
     public String getUserEmailFromSession() {
         UserSession userSession = authenticationRepository.getCurrentUserSession();
 
@@ -62,6 +103,11 @@ public class CreateMapController {
         return null;
     }
 
+    /**
+     * Retrieves the authentication repository, initializing it if necessary.
+     *
+     * @return The {@link AuthenticationRepository} instance.
+     */
     public AuthenticationRepository getAuthenticationRepository() {
         if(authenticationRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -70,6 +116,11 @@ public class CreateMapController {
         return authenticationRepository;
     }
 
+    /**
+     * Retrieves the map repository, initializing it if necessary.
+     *
+     * @return The {@link MapRepository} instance.
+     */
     public MapRepository getMapRepository() {
         if (mapRepository == null) {
             Repositories repositories = Repositories.getInstance();
