@@ -1,4 +1,4 @@
-/**
+
 package pt.ipp.isep.dei.domain;
 
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,8 @@ public class ScenarioTest {
     @Test
     public void testScenarioCreation() {
         Map map = new Map("Map1", 5, 5, "editor@this.app");
-        Scenario scenario = new Scenario("cenarioTeste", map);
+        PeriodTime period = new PeriodTime(1900,1950);
+        Scenario scenario = new Scenario("cenarioTeste", map, period);
 
         assertEquals("cenarioTeste", scenario.getName());
         assertEquals(map, scenario.getMap());
@@ -22,7 +23,8 @@ public class ScenarioTest {
 
     @Test
     public void testAddPort() {
-        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"));
+        PeriodTime period = new PeriodTime(1900,1950);
+        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"), period);
         Port port = new Port("porto1");
 
         port.addImport("carvão");
@@ -41,7 +43,8 @@ public class ScenarioTest {
 
     @Test
     public void testAddLocomotiveType() {
-        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"));
+        PeriodTime period = new PeriodTime(1900,1950);
+        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"), period);
         scenario.addLocomotiveType(LocomotiveType.STEAM);
         scenario.addLocomotiveType(LocomotiveType.DIESEL);
 
@@ -52,9 +55,10 @@ public class ScenarioTest {
 
     @Test
     public void testSetIndustryGenerationFactor() {
-        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"));
+        PeriodTime period = new PeriodTime(1900,1950);
+        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"), period);
         scenario.setIndustryGenerationFactor(2.5);
 
         assertEquals(2.5, scenario.getIndustryGenerationFactor());
     }
-} */
+}
