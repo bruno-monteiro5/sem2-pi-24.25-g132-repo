@@ -12,9 +12,21 @@ public class CreateScenarioController {
         this.scenarioRepository = Repositories.getInstance().getScenarioRepository();
     }
 
-    public Scenario createScenario(String scenarioName, Map map) {
-        return new Scenario(scenarioName, map);
+    public Scenario createScenario(String scenarioName, Map map, PeriodTime periodTime) {
+        return new Scenario(scenarioName, map, periodTime);
     }
+
+    public boolean createScenario(Map map, String scenarioName, int startYear, int endYear) {
+
+        PeriodTime periodTime = new PeriodTime(startYear, endYear);
+        if (!periodTime.isValid()) {
+            return false;
+        }
+
+
+        return new Scenario(scenarioName, map, periodTime).isValid();
+    }
+
 
     public void addPort(Scenario scenario, Port port) {
         scenario.addPort(port);

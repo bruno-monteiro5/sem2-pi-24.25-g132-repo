@@ -12,24 +12,25 @@ import java.util.List;
  * Controller for upgrading stations with buildings.
  */
 public class UpgradeStationController {
-
     private PlayerRepository playerRepo;
     private MapRepository mapRepo;
     private BuildingTypeRepository buildingTypeRepo;
 
     /**
-     * Default constructor initializes repositories.
+     * Creates a new UpgradeStationController.
      */
     public UpgradeStationController() {
-        initializeRepositories();
+        getPlayerRepository();
+        getMapRepository();
+        getBuildingTypeRepository();
     }
 
     /**
-     * Constructor for dependency injection of repositories.
+     * Creates a new UpgradeStationController with the specified repositories.
      *
-     * @param playerRepo        The player repository.
-     * @param mapRepo           The map repository.
-     * @param buildingTypeRepo  The building type repository.
+     * @param playerRepo The player repository
+     * @param mapRepo The map repository
+     * @param buildingTypeRepo The building type repository
      */
     public UpgradeStationController(PlayerRepository playerRepo, MapRepository mapRepo, BuildingTypeRepository buildingTypeRepo) {
         this.playerRepo = playerRepo;
@@ -37,55 +38,71 @@ public class UpgradeStationController {
         this.buildingTypeRepo = buildingTypeRepo;
     }
 
-    private void initializeRepositories() {
-        this.playerRepo = Repositories.getInstance().getPlayerRepository();
-        this.mapRepo = Repositories.getInstance().getMapRepository();
-        this.buildingTypeRepo = Repositories.getInstance().BuildingTypeRepository();
+    private PlayerRepository getPlayerRepository() {
+        if (playerRepo == null) {
+            Repositories repositories = Repositories.getInstance();
+            playerRepo = repositories.getPlayerRepository();
+        }
+        return playerRepo;
+    }
+
+    private MapRepository getMapRepository() {
+        if (mapRepo == null) {
+            Repositories repositories = Repositories.getInstance();
+            mapRepo = repositories.getMapRepository();
+        }
+        return mapRepo;
+    }
+
+    private BuildingTypeRepository getBuildingTypeRepository() {
+        if (buildingTypeRepo == null) {
+            Repositories repositories = Repositories.getInstance();
+            buildingTypeRepo = repositories.getBuildingTypeRepository();
+        }
+        return buildingTypeRepo;
     }
 
     /**
-     * Verifies if an active map exists in the system.
+     * Loads the map and stations.
      *
-     * @return true if an active map exists, false otherwise.
+     * @return A pair containing the current map and list of stations, or null if no active map exists
+     */
+    public Object[] loadMapAndStations() {
+        Map currentMap;
+        try {
+            currentMap = mapRepo.getActiveMap();
+        } catch (IllegalStateException e) {
+            // Handle case when no active map is set
+            return null;
+        }
+
+        if (currentMap == null) {
+            return null;
+        }
+
+        List<Station> stations = currentMap.getStations();
+        return new Object[]{currentMap, stations};
+    }
+
+    /**
+     * Checks if an active map exists.
+     *
+     * @return true if an active map exists, false otherwise
      */
     public boolean hasActiveMap() {
         try {
             mapRepo.getActiveMap();
             return true;
         } catch (IllegalStateException e) {
-            // No active map available
             return false;
         }
     }
 
     /**
-     * Loads the current map and its related stations.
+     * Gets the available upgrades for a station.
      *
-     * @return Object array containing the active map and its associated stations, or null if no active map exists.
-     */
-    public Object[] loadMapAndStations() {
-        Map activeMap;
-
-        try {
-            activeMap = mapRepo.getActiveMap();
-        } catch (IllegalStateException e) {
-            // Handle missing active map
-            return null;
-        }
-
-        if (activeMap == null) {
-            return null;
-        }
-
-        List<Station> stations = activeMap.getStations();
-        return new Object[]{activeMap, stations};
-    }
-
-    /**
-     * Retrieves a list of available upgrades for a station.
-     *
-     * @param station The station to check for possible upgrades.
-     * @return A list of available building types for upgrade.
+     * @param station The station to get upgrades for
+     * @return A list of available building types for upgrade
      */
     public List<BuildingType> getAvailableUpgrades(Station station) {
         List<BuildingType> allBuildingTypes = buildingTypeRepo.getAllBuildingTypes();
@@ -93,46 +110,46 @@ public class UpgradeStationController {
     }
 
     /**
-     * Retrieves full details for a specific building type.
+     * Gets the details of a building type.
      *
-     * @param buildingType The building type for which details are required.
-     * @return The BuildingType object with complete details.
+     * @param buildingType The building type to get details for
+     * @return The building type details
      */
     public BuildingType getUpgradeDetails(BuildingType buildingType) {
         return buildingTypeRepo.getBuildingTypeDetails(buildingType);
     }
 
     /**
-     * Executes an upgrade for a given station.
+     * Executes an upgrade on a station.
      *
-     * @param station      The station to upgrade.
-     * @param buildingType The building type to add.
-     * @return true if the upgrade was successful, false otherwise.
+     * @param station The station to upgrade
+     * @param buildingType The building type to add
+     * @return true if the upgrade was successful, false otherwise
      */
     public boolean executeUpgrade(Station station, BuildingType buildingType) {
         Player currentPlayer = playerRepo.getCurrentPlayer();
 
-        // Verify if the player has sufficient funds
+        // Check if player can afford the upgrade
         if (!currentPlayer.canAfford(buildingType.getCost())) {
             return false;
         }
 
-        // Retrieve the detailed information about the building type
-        BuildingType buildingDetails = buildingTypeRepo.getBuildingTypeDetails(buildingType);
+        // Get the details of the building type
+        BuildingType details = buildingTypeRepo.getBuildingTypeDetails(buildingType);
 
-        // If the building type replaces an old one, it is removed
-        if (buildingDetails.getReplaces() != null) {
-            station.removeBuilding(buildingDetails.getReplaces());
+        // If this building replaces another, remove the old one
+        if (details.getReplaces() != null) {
+            station.removeBuilding(details.getReplaces());
         }
 
-        // Add the new building to the station
-        boolean upgradeSuccess = station.addBuilding(buildingType);
+        // Add the new building
+        boolean success = station.addBuilding(buildingType);
 
-        if (upgradeSuccess) {
-            // Deduct funds from the player
+        // If successful, deduct funds from player
+        if (success) {
             currentPlayer.deductFunds(buildingType.getCost());
         }
 
-        return upgradeSuccess;
+        return success;
     }
 }

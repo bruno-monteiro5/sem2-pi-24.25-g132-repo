@@ -31,35 +31,6 @@ public class Station {
 
     }
 
-    public String upgradeWithBuilding(Building building, int currentYear) {
-        BuildingType newType = building.getType();
-
-        if (!newType.isAvailableIn(currentYear)) {
-            return "Error: " + newType.name() + " is not available in year " + currentYear + ".";
-        }
-
-        for (Building existingBuilding : buildings) {
-            if (newType.isMutuallyExclusiveWith(existingBuilding.getType())) {
-                return "Error: " + newType.name() + " is mutually exclusive with " + existingBuilding.getType().name() + ".";
-            }
-        }
-
-        for (int i = 0; i < buildings.size(); i++) {
-            Building existingBuilding = buildings.get(i);
-
-            if (newType.canReplace(existingBuilding.getType())) {
-                buildings.set(i, building); // Replace the old building with the new one
-                return newType.name() + " has replaced " + existingBuilding.getType().name() + ".";
-            }
-        }
-
-        buildings.add(building);
-        return newType.name() + " has been added to the station.";
-    }
-
-
-
-
 
     public String getName() {
         return name;
@@ -74,8 +45,33 @@ public class Station {
     }
 
     public List<Building> getBuildings() {
-        return buildings;
+        return new ArrayList<>(buildings);
     }
+
+    public List<BuildingType> getAvailableUpgrades(List<BuildingType> allTypes) {
+        List<BuildingType> availableUpgrades = new ArrayList<>(allTypes);
+        List<BuildingType> existingTypes = new ArrayList<>();
+
+        // Get all existing building types
+        for (Building building : buildings) {
+            existingTypes.add(building.getType());
+        }
+
+        // Remove types that are already built and don't have upgrades
+        availableUpgrades.removeIf(type -> {
+            // If this type replaces another type
+            if (type.getReplaces() != null) {
+                // Check if the type it replaces exists
+                return !existingTypes.contains(type.getReplaces());
+            } else {
+                // If it doesn't replace anything, check if it already exists
+                return existingTypes.contains(type);
+            }
+        });
+
+        return availableUpgrades;
+    }
+
 
 
     public void setName(String name) {
@@ -88,13 +84,23 @@ public class Station {
         this.type = type;
     }
 
-    /**
-     * Returns a string representation of the station.
-     * The representation includes detailed attributes of the station, such as:
-     * name, position (coordinates), type of station, associated cost, and its operational radius.
-     * <p>
-     * @return A formatted string with the station's details.
-     */
+
+    public boolean addBuilding(BuildingType type) {
+        // Check if this building type replaces another
+        if (type.getReplaces() != null) {
+            // Remove the building it replaces
+            buildings.removeIf(building -> building.getType() == type.getReplaces());
+        }
+
+        // Add the new building
+        return buildings.add(new Building(type));
+    }
+
+    public boolean removeBuilding(BuildingType type) {
+        return buildings.removeIf(building -> building.getType() == type);
+    }
+
+
     @Override
     public String toString() {
         return "Station{" +
@@ -103,6 +109,7 @@ public class Station {
                 "-Type=" + type +
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -115,42 +122,7 @@ public class Station {
     }
 
 
-    public boolean addBuilding(BuildingType type) {
-        if (type.getReplaces() != null) {
-            buildings.removeIf(building -> building.getType() == type.getReplaces());
-        }
 
-        // Add the new building
-        return buildings.add(new Building(type,0));
-    }
-
-    public List<BuildingType> getAvailableUpgrades(List<BuildingType> allBuildingTypes) {
-        List<BuildingType> availableUpgrades = new ArrayList<>();
-
-        // Loop through each building type to validate compatibility
-        for (BuildingType buildingType : allBuildingTypes) {
-            boolean canUpgrade = true;
-
-            // Check mutual exclusivity with existing buildings
-            for (Building existingBuilding : this.buildings) {
-                if (buildingType.isMutuallyExclusiveWith(existingBuilding.getType())) {
-                    canUpgrade = false;
-                    break;
-                }
-            }
-
-            // Add to the list if no restrictions were found
-            if (canUpgrade) {
-                availableUpgrades.add(buildingType);
-            }
-        }
-
-        return availableUpgrades;
-    }
-
-    public boolean removeBuilding(BuildingType buildingType) {
-        return buildings.removeIf(building -> building.getType().equals(buildingType));
-    }
 }
 
 

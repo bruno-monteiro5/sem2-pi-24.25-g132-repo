@@ -10,13 +10,15 @@ public class Scenario implements Serializable {
     private ArrayList<Port> ports;
     private ArrayList<LocomotiveType> availableLocomotiveTypes;
     private double industryGenerationFactor;
+    private PeriodTime periodTime;
 
-    public Scenario(String name, Map map) {
+    public Scenario(String name, Map map, PeriodTime periodTime) {
         this.name = name;
         this.map = map;
         this.ports = new ArrayList<>();
         this.availableLocomotiveTypes = new ArrayList<>();
         this.industryGenerationFactor = 1.0;
+        this.periodTime = periodTime;
 
     }
 
@@ -27,6 +29,10 @@ public class Scenario implements Serializable {
 
     public Map getMap() {
         return map;
+    }
+
+    public PeriodTime getPeriodTime() {
+        return periodTime;
     }
 
     public ArrayList<Port> getPorts() {
@@ -53,5 +59,10 @@ public class Scenario implements Serializable {
 
     public void setIndustryGenerationFactor(double factor) {
         this.industryGenerationFactor = factor;
+    }
+
+
+    public boolean isValid() {
+        return periodTime != null && periodTime.isValid() && map != null;
     }
 }

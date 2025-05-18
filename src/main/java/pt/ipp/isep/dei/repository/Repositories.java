@@ -15,6 +15,7 @@ public class Repositories {
     private final MapRepository mapRepository;
     private final StationTypeRepository stationTypeRepository;
     private final PlayerRepository playerRepository;
+    private BuildingTypeRepository buildingTypeRepository;
 
     /**
      * The Singleton's constructor should always be private to prevent direct construction calls with the new operator.
@@ -27,6 +28,7 @@ public class Repositories {
         stationRepository = new StationRepository();
         stationTypeRepository = new StationTypeRepository();
         playerRepository = new PlayerRepository();
+        this.buildingTypeRepository = new BuildingTypeRepository();
     }
 
     /**
@@ -41,6 +43,10 @@ public class Repositories {
             }
         }
         return instance;
+    }
+
+    public BuildingTypeRepository getBuildingTypeRepository() {
+        return buildingTypeRepository;
     }
 
     public OrganizationRepository getOrganizationRepository() {

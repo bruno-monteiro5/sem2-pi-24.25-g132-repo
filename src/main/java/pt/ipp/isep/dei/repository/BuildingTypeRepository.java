@@ -2,40 +2,39 @@ package pt.ipp.isep.dei.repository;
 
 import pt.ipp.isep.dei.domain.BuildingType;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * Repository for building types.
+ */
 public class BuildingTypeRepository {
-    private final List<BuildingType> buildingTypeList;
+    private List<BuildingType> buildingTypes;
 
     /**
-     * Initializes the repository with a given list of building types.
-     * @param buildingTypeList A list of all building types in the system.
+     * Creates a new BuildingTypeRepository.
      */
-    public BuildingTypeRepository(List<BuildingType> buildingTypeList) {
-        this.buildingTypeList = buildingTypeList;
+    public BuildingTypeRepository() {
+        buildingTypes = new ArrayList<>(Arrays.asList(BuildingType.values()));
     }
 
     /**
-     * Retrieves the details of a specified building type.
+     * Gets all available building types.
      *
-     * @param buildingType The building type to find details for.
-     * @return The details of the building type if found, null otherwise.
-     */
-    public BuildingType getBuildingTypeDetails(BuildingType buildingType) {
-        Optional<BuildingType> result = buildingTypeList.stream()
-                .filter(bt -> bt.equals(buildingType))
-                .findFirst();
-        return result.orElse(null);
-    }
-
-    /**
-     * Retrieves all building types in the repository.
-     *
-     * @return A list of all building types.
+     * @return A list of all building types
      */
     public List<BuildingType> getAllBuildingTypes() {
-        return buildingTypeList;
+        return new ArrayList<>(buildingTypes);
+    }
+
+    /**
+     * Gets the details of a specific building type.
+     *
+     * @param type The building type to get details for
+     * @return The building type details
+     */
+    public BuildingType getBuildingTypeDetails(BuildingType type) {
+        return type;
     }
 }
-

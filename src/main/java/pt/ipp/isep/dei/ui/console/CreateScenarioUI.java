@@ -8,6 +8,10 @@ import java.util.Scanner;
 public class CreateScenarioUI implements Runnable {
 
     private final CreateScenarioController controller = new CreateScenarioController();
+    private int startYear;
+    private int endYear;
+    PeriodTime periodTime = new PeriodTime(startYear, endYear);
+
 
     public void run(Map map) {
         Scanner sc = new Scanner(System.in);
@@ -15,7 +19,7 @@ public class CreateScenarioUI implements Runnable {
         System.out.print("Nome do cenário: ");
         String name = sc.nextLine();
 
-        Scenario scenario = controller.createScenario(name, map);
+        Scenario scenario = controller.createScenario(name, map, periodTime);
 
         // Locomotivas
         System.out.println("Adicionar tipos de locomotiva disponíveis (STEAM, DIESEL, ELECTRIC). Digite 'fim' para terminar:");
