@@ -145,6 +145,8 @@ public class BuildStationUI implements Runnable {
 
 
     private void submit (){
+        System.out.println("Submitting station creation...");
+
         boolean success=controller.createStation(position,type,name);
 
         if (success){

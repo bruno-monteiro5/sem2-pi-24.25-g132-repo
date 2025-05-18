@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.repository;
 
 import pt.ipp.isep.dei.domain.StationDetails;
+import pt.ipp.isep.dei.domain.Station;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,4 +74,10 @@ public class StationDetailsRepository {
     public boolean removeStationDetailsByName(String stationName) {
         return this.stationDetailsList.removeIf(details -> details.getStationName().equalsIgnoreCase(stationName));
     }
+
+    public void addStationFromStation(Station station) {
+        StationDetails details = new StationDetails(station.getName(), station.getLocation(), station.getType());
+        addStationDetails(details);
+    }
+
 }

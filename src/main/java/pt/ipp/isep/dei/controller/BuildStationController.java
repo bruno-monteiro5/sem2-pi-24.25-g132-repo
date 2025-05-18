@@ -1,9 +1,6 @@
 package pt.ipp.isep.dei.controller;
 
-import pt.ipp.isep.dei.domain.Map;
-import pt.ipp.isep.dei.domain.Player;
-import pt.ipp.isep.dei.domain.Position;
-import pt.ipp.isep.dei.domain.StationType;
+import pt.ipp.isep.dei.domain.*;
 import pt.ipp.isep.dei.repository.*;
 
 import java.util.List;
@@ -85,6 +82,15 @@ public class BuildStationController {
             System.out.println("DEBUG: Player can't afford the station.");
             return false;
         }
+        Station newStation = new Station(name, position, stationType);
+        boolean addedToMap = currentMap.addStation(newStation);
+
+        if (!addedToMap) {
+            System.out.println("Failed to add station to the map.");
+            return false;
+        }
+
+        StationDetailsRepository.getInstance().addStationFromStation(newStation);
 
         return true;
 
