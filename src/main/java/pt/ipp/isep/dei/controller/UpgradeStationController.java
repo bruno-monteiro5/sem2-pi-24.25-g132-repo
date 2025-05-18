@@ -40,7 +40,7 @@ public class UpgradeStationController {
     private void initializeRepositories() {
         this.playerRepo = Repositories.getInstance().getPlayerRepository();
         this.mapRepo = Repositories.getInstance().getMapRepository();
-        this.buildingTypeRepo = Repositories.getInstance().BuildingTypeRepository();
+        this.buildingTypeRepo = Repositories.getInstance().getBuildingTypeRepository();
     }
 
     /**

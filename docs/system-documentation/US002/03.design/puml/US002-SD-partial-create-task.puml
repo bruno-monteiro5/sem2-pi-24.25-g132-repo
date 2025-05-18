@@ -5,14 +5,20 @@ skinparam shadowing false
 
 participant "organization\n:Organization" as ORG
 participant "task\n:Task" as TASK
+participant "PeriodTime" as PERIODTIME
 
 autonumber 16
--> ORG: createTask(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee )
+-> ORG: createTask(reference, description,\ninformalDescription, technicalDescription,\nstartYear, endYear, duration, cost,\ntaskCategory, employee)
 
 autonumber 16.1
 activate ORG
     group Task Creation
-        ORG --> TASK**: create(reference, description, informalDescription, \ntechnicalDescription, duration, cost, taskCategory, employee)
+        ORG --> PERIODTIME: new PeriodTime(startYear, endYear)
+        activate PERIODTIME
+        PERIODTIME --> ORG : periodTime instance
+        deactivate PERIODTIME
+
+        ORG --> TASK: create(reference, description, informalDescription,\ntechnicalDescription, periodTime, duration, cost,\ntaskCategory, employee)
         ORG -> ORG: addTask(task)
 
         activate ORG

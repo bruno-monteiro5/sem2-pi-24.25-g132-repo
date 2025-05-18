@@ -7,6 +7,7 @@ participant "IndustryRepository" as INDUSTRY_REPO
 participant "Scenario" as SCENARIO
 participant "Map" as MAP
 participant "Industry" as INDUSTRY
+participant "PeriodTime" as PERIODTIME
 
 activate EDITOR
 
@@ -28,14 +29,24 @@ deactivate UI
 
 EDITOR -> UI : selects industry and XY position
 activate UI
-    UI -> CTRL : addIndustry(type, x, y)
+    UI -> CTRL : addIndustry(type, x, y, startYear, endYear)
     activate CTRL
         CTRL -> MAP : validatePosition(x, y)
         activate MAP
             MAP --> CTRL : true/false
         deactivate MAP
         alt Valid position
-            CTRL -> MAP : addIndustry(new Industry(type, x, y))
+            CTRL -> PERIODTIME : new PeriodTime(startYear, endYear)
+            activate PERIODTIME
+            PERIODTIME --> CTRL : periodTime instance
+            deactivate PERIODTIME
+
+            CTRL -> INDUSTRY : new Industry(type, x, y, periodTime)
+            activate INDUSTRY
+            INDUSTRY --> CTRL : industry instance
+            deactivate INDUSTRY
+
+            CTRL -> MAP : addIndustry(industry)
             MAP --> CTRL : success
             CTRL --> UI : confirmation
             UI --> EDITOR : "Industry added!"

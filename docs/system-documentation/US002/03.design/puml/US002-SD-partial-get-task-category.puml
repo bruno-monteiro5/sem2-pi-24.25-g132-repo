@@ -12,31 +12,27 @@ autonumber 12
 -> CTRL : getTaskCategoryByDescription(taskCategoryDescription)
 
 autonumber 12.1
-
 activate CTRL
-    ' LIXO - acrescentava Object, coerente com diagrama split
+
     group Get Task Category Object
         CTRL -> REPOS : getInstance()
         activate REPOS
-            REPOS --> CTRL: repositories
+            REPOS --> CTRL : repositories
         deactivate REPOS
 
         CTRL -> REPOS_SINGLETON : getTaskCategoryRepository()
         activate REPOS_SINGLETON
-            REPOS_SINGLETON -> CTRL : taskCategoryRepository
+            REPOS_SINGLETON --> CTRL : taskCategoryRepository
         deactivate REPOS_SINGLETON
 
         CTRL -> TASK_CAT_REPO : getTaskCategoryByDescription(taskCategoryDescription)
         activate TASK_CAT_REPO
             TASK_CAT_REPO --> CTRL : taskCategory
         deactivate TASK_CAT_REPO
+    end
 
-    end group
-
-    autonumber 13
-    <-- CTRL : taskCategory
-
+autonumber 13
+<-- CTRL : taskCategory
 deactivate CTRL
-
 
 @enduml

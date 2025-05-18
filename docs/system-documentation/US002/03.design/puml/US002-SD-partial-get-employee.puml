@@ -3,7 +3,6 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-'hide footbox
 participant ":CreateTaskController" as CTRL
 participant "Repositories" as REPOS
 participant "repositories\n:Repositories" as REPOS_SINGLETON
@@ -47,7 +46,7 @@ activate CTRL
         CTRL -> ORG_REPO: getOrganizationByUserEmail(email)
         activate ORG_REPO
 
-            loop [for each organization
+            loop [for each organization]
                 ORG_REPO -> ORG : anyEmployeeHasEmail(email)
                 activate ORG
                      ORG --> ORG_REPO : true/false

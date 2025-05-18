@@ -5,7 +5,6 @@ skinparam shadowing false
 skinparam linetype polyline
 skinparam classAttributeIconSize 0
 
-'--- Classes Principais ---
 class Editor {
     + name: String
 }
@@ -14,14 +13,15 @@ class Map {
     + name: String
     + width: int
     + height: int
-    + addElement(element: Element)
     + validatePosition(x: int, y: int): boolean
+    + addIndustry(industry: Industry): boolean
 }
 
 class Industry {
     + type: IndustryType
     + x: int
     + y: int
+    + period: PeriodTime
 }
 
 class IndustryType {
@@ -50,8 +50,8 @@ class AddIndustryUI {
 Editor --> AddIndustryUI : uses
 AddIndustryUI .> AddIndustryController : depends on
 AddIndustryController --> IndustryRepository : fetches data
-AddIndustryController --> Map : updates
-AddIndustryController --> Scenario : checks restrictions
+AddIndustryController --> Map : modifies
+AddIndustryController --> Scenario : checks
 Map "1" --> "*" Industry : contains
 Industry --> IndustryType : type
 Scenario --> IndustryType : restricts
