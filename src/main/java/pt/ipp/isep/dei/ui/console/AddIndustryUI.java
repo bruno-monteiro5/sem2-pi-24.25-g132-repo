@@ -31,12 +31,12 @@ public class AddIndustryUI implements Runnable {
 
     /**
      * Runs the user interface for adding a new industry.
-     *
+     * <p>
      * This method prompts the user to:
      * - Input the industry's name.
      * - Input the industry's geographical position in terms of x and y coordinates.
      * - Choose the industry's type from a list of predefined options in {@link IndustryTypes}.
-     *
+     * <p>
      * It handles input validation and communicates with the controller to create the industry.
      */
     @Override

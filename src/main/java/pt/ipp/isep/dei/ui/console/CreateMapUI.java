@@ -7,10 +7,33 @@ import pt.ipp.isep.dei.repository.Repositories;
 import java.util.Scanner;
 
 /**
- * UI for creating a new railway map.
+ * User interface for creating a new railway map.
+ *
+ * <p>This class provides a console-based user interface to create a
+ * new map, collecting data such as name, width, and height. It interacts
+ * with the {@link CreateMapController} for handling the map creation
+ * logic and saving the map to the repository.</p>
+ *
+ * <p>The user must be logged in as an "EDITOR" to create a map. The class
+ * handles input validation, including ensuring dimensions are positive
+ * integers.</p>
  */
 public class CreateMapUI implements Runnable{
     public Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Entry point for the Create Map UI.
+     *
+     * <p>Displays the interface for creating a new map, prompting the user for:
+     * <ul>
+     *     <li>Map name</li>
+     *     <li>Map dimensions (width and height)</li>
+     * </ul>
+     * Validates the input and uses the {@link CreateMapController} to create and save the map.</p>
+     *
+     * <p>If the logged-in user does not have the required "EDITOR" role, the creation
+     * process is aborted.</p>
+     */
     public void run() {
         System.out.println("\n=== Create New Map ===");
 
@@ -47,6 +70,14 @@ public class CreateMapUI implements Runnable{
         }
     }
 
+    /**
+     * Reads a positive integer from the console.
+     *
+     * <p>This method ensures the input is a valid positive integer,
+     * continuously prompting the user until a valid value is provided.</p>
+     *
+     * @return the positive integer entered by the user.
+     */
     private int readPositiveInt() {
         int value;
         while (true) {

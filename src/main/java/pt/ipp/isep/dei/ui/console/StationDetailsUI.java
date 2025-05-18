@@ -37,7 +37,6 @@ public class StationDetailsUI implements Runnable {
     public void run() {
         System.out.println("\n\n--- Station Details ------------------------");
 
-        // Fetch the list of available station details
         List<StationDetails> stationDetailsList = controller.listStationDetails();
 
         if (stationDetailsList.isEmpty()) {
@@ -45,17 +44,14 @@ public class StationDetailsUI implements Runnable {
             return;
         }
 
-        // Show the list of stations to the user and allow selection
         int chosenIndex = Utils.showAndSelectIndex(stationDetailsList, "Select a station to view details:");
         if (chosenIndex == -1) {
             System.out.println("No station selected. Exiting...");
             return;
         }
 
-        // Retrieve the chosen station's details
         StationDetails chosenStationDetails = stationDetailsList.get(chosenIndex);
 
-        // Display the details of the chosen station
         System.out.println("\nStation Details:");
         System.out.println(chosenStationDetails);
     }

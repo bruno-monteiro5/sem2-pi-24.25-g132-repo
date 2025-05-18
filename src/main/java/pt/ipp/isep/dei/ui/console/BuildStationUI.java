@@ -2,13 +2,21 @@ package pt.ipp.isep.dei.ui.console;
 
 import pt.ipp.isep.dei.controller.BuildStationController;
 import pt.ipp.isep.dei.domain.Position;
-
 import pt.ipp.isep.dei.domain.StationType;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * User Interface for building a station.
+ *
+ * <p>This class provides a console interface for the user to create a new station.
+ * It interacts with the user to collect the necessary information (name, position,
+ * and station type) and uses the {@code BuildStationController} to process the
+ * input and build the station.</p>
+ *
+ * <p>The {@code BuildStationUI} class implements {@code Runnable}, meaning it can
+ * be executed in its own thread if needed.</p>
+ */
 public class BuildStationUI implements Runnable {
     private final BuildStationController controller;
     private Position position;
@@ -16,10 +24,19 @@ public class BuildStationUI implements Runnable {
     private String name;
     Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Constructs the BuildStationUI and initializes necessary dependencies.
+     */
     public BuildStationUI() {
         controller = new BuildStationController();
     }
 
+    /**
+     * Entry point for executing the user interface logic.
+     *
+     * <p>This method interacts with the user to gather input and initiate the
+     * station building process. It uses the controller to process the input.</p>
+     */
     public void run() {
         System.out.println("=== Build Station ===");
 
@@ -143,7 +160,12 @@ public class BuildStationUI implements Runnable {
         submit();
     }
 
-
+    /**
+     * Finalizes the station-building process by submitting the collected data.
+     *
+     * <p>This method validates the user input and submits the station details,
+     * delegating the creation process to the controller.</p>
+     */
     private void submit (){
         System.out.println("Submitting station creation...");
 
