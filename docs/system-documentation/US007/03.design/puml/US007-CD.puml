@@ -1,126 +1,122 @@
 @startuml
-'skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam linetype polyline
-'skinparam linetype orto
-
 skinparam classAttributeIconSize 0
 
-'left to right direction
-
-class ApplicationSession
-{
-    - ApplicationSession()
-    + {static} getInstance()
-    + getCurrentSession()
-}
-
-class UserSession
-{
-    + getUserEmail()
-}
-
-class Employee {
+class Player {
     - name : String
-    - email : String
-    - position : String
-    - phone : String
+    - balance : double
+    + Player(name : String, initialBalance : double)
+    + getName() : String
+    + getBalance() : double
+    + selectStation(stations : List<StationDetails>) : StationDetails
 }
 
-class Task {
-    - reference :String
-    - description : String
-    - informalDescription : String
-    - technicalDescription : String
-    - duration : int
+class StationDetailsUI {
+    + run()
+}
+
+class StationDetailsController {
+    - stationDetailsRepository : StationDetailsRepository
+    + StationDetailsController()
+    + listStationDetails() : List<StationDetails>
+}
+
+class StationDetails {
+    - stationName : String
+    - position : Position
+    - stationType : StationType
+    - supplyCargo : List<Cargo>
+    - demandCargo : List<Cargo>
+    - buildings : List<Building>
+    + StationDetails(stationName : String, position : Position, stationType : StationType)
+    + getStationName() : String
+    + getSupplyCargo() : List<Cargo>
+    + getDemandCargo() : List<Cargo>
+    + getBuildings() : List<Building>
+}
+
+class StationDetailsRepository {
+    - stationDetailsList : List<StationDetails>
+    + getInstance() : StationDetailsRepository
+    + addStationDetails(details : StationDetails)
+    + getAllStationDetails() : List<StationDetails>
+    + getStationDetailsByName(name : String) : StationDetails
+}
+
+class Cargo {
+    - type : CargoType
+    - quantity : int
+    - isAvailable : boolean
+    + Cargo(type : CargoType, quantity : int, isAvailable : boolean)
+    + getType() : CargoType
+    + getQuantity() : int
+    + isAvailable() : boolean
+}
+
+class Building {
+    - type : BuildingType
+    + Building(type : BuildingType)
+    + getType() : BuildingType
+}
+
+class Position {
+    - x : int
+    - y : int
+    + Position(x : int, y : int)
+    + getX() : int
+    + getY() : int
+}
+
+enum CargoType {
+    <<enumeration>>
+    PASSENGERS
+    MAIL
+    FOOD
+    COAL
+    STEEL
+    CARS
+    TEXTILES
+    IRON_ORE
+    OTHER
+
+    + toString() : String
+}
+
+enum BuildingType {
+    <<enumeration>>
+    TELEGRAPH : { cost: 100, replaces: null, availableYear: 1850 }
+    TELEPHONE : { cost: 200, replaces: TELEGRAPH, availableYear: 1900 }
+    CAFE_SMALL : { cost: 150, replaces: null, availableYear: 1850 }
+    CAFE_LARGE : { cost: 300, replaces: CAFE_SMALL, availableYear: 1900 }
+    POST_OFFICE : { cost: 250, replaces: null, availableYear: 1850 }
+
     - cost : double
+    - replaces : BuildingType
+    - availableYear : int
 
-    + Task(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, createdBy)
+    + getCost() : double
+    + getReplaces() : BuildingType
+    + isAvailableIn(year : int) : boolean
+    + getBuildingTypeDetails() : BuildingType
 }
 
-class TaskCategory {
-    - description : String
+enum StationType {
+    <<enumeration>>
+    DEPOT : { cost : double = 50000, radius : int = 3 }
+    STATION : { cost : double = 100000, radius : int = 4 }
+    TERMINAL : { cost : double = 200000, radius : int = 5 }
 }
 
-class Organization {
-    - name : String
-    - vatNumber : String
-    - website : String
-    - phone : String
-    - email : String
-
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + anyEmployeeHasEmail(email)
-    + getEmployeeByEmail(email)
-    + createTask(reference, description, informalDesccription, technicalDescription, \nduration, cost, taskCategory, employee)
-    - addTask(task)
-    - validateTask(task)
-}
-
-class TaskCategoryRepository {
-    + getTaskCategories()
-    + getTaskCategoryByDescription(taskCategoryDescription)
-}
-
-class OrganizationRepository {
-    + getOrganizationByEmployeeEmail(email)
-}
-
-class Repositories {
-    - Repositories()
-    + {static} getInstance()
-    + getTaskCategoryRepository()
-    + getOrganizationRepository()
-}
-
-class CreateTaskController {
-    + CreateTaskController()
-    + getTaskCategories()
-    + createTask(reference, description, informalDescription, \n   technicalDescription, duration, cost, taskCategoryDescription)
-    - getTaskCategoryByDescription(taskCategoryDescription)
-    - getEmployeeFromSession()
-}
-
-note right of CreateTaskController
-    categoryDescription is retrieved
-    from selected data
-end note
-
-note bottom of TaskCategoryRepository
-    - used for displaying
-    the task category list
-end note
-
-class CreateTaskUI {
-}
-
-CreateTaskUI .> CreateTaskController
-
-CreateTaskController ..> ApplicationSession
-CreateTaskController ..> UserSession
-CreateTaskController ..> TaskCategory
-CreateTaskController ..> TaskCategoryRepository
-CreateTaskController ..> Organization
-CreateTaskController ..> OrganizationRepository
-CreateTaskController .> Repositories
-
-Repositories -> "1" Repositories : instance
-Repositories --> "1" OrganizationRepository : organizationRepository
-Repositories -> "1" TaskCategoryRepository : taskCategoryRepository
-
-ApplicationSession -> "1" ApplicationSession : instance
-ApplicationSession ..> UserSession
-
-TaskCategoryRepository --> "*" TaskCategory : taskCategories
-
-OrganizationRepository --> "*" Organization : organizations
-
-Organization --> "*" Task : tasks
-Organization --> "*" Employee : employees
-
-Task --> "1" TaskCategory : taskCategory
-Task --> "1" Employee : createdBy
-
+Player --> StationDetailsUI : selectStation()
+StationDetailsUI --> StationDetailsController : listStationDetails()
+StationDetailsController --> StationDetailsRepository : getAllStationDetails()
+StationDetails --> Position
+StationDetails --> StationType
+StationDetails --> Cargo
+StationDetails --> Building
+Cargo --> CargoType
+Building --> BuildingType
 
 @enduml
