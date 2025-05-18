@@ -2,6 +2,8 @@ package pt.ipp.isep.dei.domain;
 
 /**
  * Represents the types of buildings that can be added to a station.
+ * Each building type has an associated cost, an optional type it replaces,
+ * and the year when it becomes available.
  */
 public enum BuildingType {
     TELEGRAPH(100, null, 1850),

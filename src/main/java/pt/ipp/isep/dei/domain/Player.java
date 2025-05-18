@@ -1,8 +1,5 @@
 package pt.ipp.isep.dei.domain;
 
-/**
- * Represents a player who can build stations in the railway system.
- */
 public class Player {
     private String name;
     private double balance;

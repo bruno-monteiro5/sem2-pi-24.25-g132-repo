@@ -5,7 +5,12 @@ import java.util.List;
 
 /**
  * Represents a station in the railway network.
- * A station is defined by a name and its (x, y) coordinates in the map.
+ * A station is defined by a name, its geographical location (coordinates),
+ * a type, and any buildings it contains.
+ *
+ * <p>The {@code Station} class provides methods to manage a station's details,
+ * such as its name, location, type, buildings, and available upgrades.
+ * It also provides functionality for adding or removing buildings.</p>
  */
 public class Station {
     private String name;
@@ -15,11 +20,14 @@ public class Station {
 
 
     /**
-     * Constructs a Station object.
+     * Constructs a {@code Station} object.
      *
-     * @param name The name of the station.
-     * @throws IllegalArgumentException If name is invalid or coordinates are negative.
+     * @param name The name of the station. Cannot be null or empty.
+     * @param location The geographical location of the station.
+     * @param type The type of the station.
+     * @throws IllegalArgumentException If the name is null or empty.
      */
+
     public Station(String name, Position location, StationType type) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Station name cannot be null or empty.");
@@ -31,23 +39,55 @@ public class Station {
 
     }
 
-
+    /**
+     * Retrieves the name of the station.
+     *
+     * @return The name of the station.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Retrieves the geographical location of the station.
+     *
+     * @return The {@code Position} representing the location of the station.
+     */
     public Position getLocation() {
         return location;
     }
 
+    /**
+     * Retrieves the type of the station.
+     *
+     * @return The {@code StationType} of the station.
+     */
     public StationType getType() {
         return type;
     }
 
+    /**
+     * Retrieves the list of buildings currently present in the station.
+     *
+     * @return A list of {@code Building} objects in the station.
+     */
     public List<Building> getBuildings() {
         return new ArrayList<>(buildings);
     }
 
+    /**
+     * Determines the available upgrades for the station's buildings.
+     *
+     * <p>This method checks the list of all potential building types and removes:
+     * <ul>
+     *   <li>Types that are already present in the station.</li>
+     *   <li>Types that require other types to exist and those types are not present.</li>
+     * </ul>
+     * </p>
+     *
+     * @param allTypes A list of all possible {@code BuildingType} objects.
+     * @return A list of {@code BuildingType} objects representing possible upgrades.
+     */
     public List<BuildingType> getAvailableUpgrades(List<BuildingType> allTypes) {
         List<BuildingType> availableUpgrades = new ArrayList<>(allTypes);
         List<BuildingType> existingTypes = new ArrayList<>();
@@ -73,18 +113,44 @@ public class Station {
     }
 
 
-
+    /**
+     * Updates the name of the station.
+     *
+     * @param name The new name of the station.
+     */
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * Updates the geographical location of the station.
+     *
+     * @param location The new {@code Position} of the station.
+     */
     public void setLocation(Position location) {
         this.location = location;
     }
+
+    /**
+     * Updates the type of the station.
+     *
+     * @param type The new {@code StationType}.
+     */
     public void setType(StationType type) {
         this.type = type;
     }
 
 
+    /**
+     * Adds a building to the station.
+     *
+     * <p>If the specified building type replaces another building type,
+     * the old building is removed before the new building is added.</p>
+     *
+     * @param type The {@code BuildingType} of the building to be added.
+     * @return {@code true} if the building was successfully added;
+     * {@code false} otherwise.
+     */
     public boolean addBuilding(BuildingType type) {
         // Check if this building type replaces another
         if (type.getReplaces() != null) {
@@ -96,11 +162,23 @@ public class Station {
         return buildings.add(new Building(type));
     }
 
+    /**
+     * Removes a building of the specified type from the station.
+     *
+     * @param type The {@code BuildingType} of the building to be removed.
+     * @return {@code true} if the building was successfully removed;
+     * {@code false} otherwise.
+     */
     public boolean removeBuilding(BuildingType type) {
         return buildings.removeIf(building -> building.getType() == type);
     }
 
-
+    /**
+     * Provides a string representation of the station, including its name,
+     * location, and type.
+     *
+     * @return A string representation of the station.
+     */
     @Override
     public String toString() {
         return "Station{" +
@@ -110,6 +188,15 @@ public class Station {
                 '}';
     }
 
+
+    /**
+     * Compares this station with another object to determine equality.
+     *
+     * <p>Stations are considered equal if their names match.</p>
+     *
+     * @param o The object to compare with.
+     * @return {@code true} if the stations are equal; {@code false} otherwise.
+     */
 
     @Override
     public boolean equals(Object o) {

@@ -1,9 +1,21 @@
 package pt.ipp.isep.dei.domain;
 
+/**
+ * Represents an editor for managing elements in a {@link Map}.
+ *
+ * <p>This class provides methods to add industries to the map and list all
+ * industries currently present. It acts as an intermediary tool for users
+ * or systems to interact with a map's industries.</p>
+ */
 public class Editor {
 
     private Map map;
 
+    /**
+     * Constructs an {@code Editor} for a specific map.
+     *
+     * @param map The {@link Map} instance that this editor will manage. Must not be {@code null}.
+     */
     public Editor(Map map) {
         this.map = map;
     }

@@ -1,9 +1,11 @@
 package pt.ipp.isep.dei.domain;
 
-    /**
-     * Represents a block of houses (HouseBlock) within a City in the system.
-     * Each block has a position on the map that must adhere to map boundaries.
-     */
+/**
+ * Represents a block of houses within a city on the map.
+ * <p>
+ * Each {@code HouseBlock} has a position on the map, represented as a {@link Position}.
+ * Positions must adhere to map boundaries to ensure proper placement.</p>
+ */
     public class HouseBlock {
 
         private Position position; // Position of the house block on the map
