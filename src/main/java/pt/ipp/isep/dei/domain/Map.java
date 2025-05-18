@@ -211,7 +211,10 @@ public class Map {
     }
 
     public String getSuggestedName(Position location, StationType type) {
-        String city = findClosestCity(location).getName();
+        City city = findClosestCity(location);
+        if (city == null) {
+            return type.getName();
+        }
         return city + " " + type.getName();
     }
 

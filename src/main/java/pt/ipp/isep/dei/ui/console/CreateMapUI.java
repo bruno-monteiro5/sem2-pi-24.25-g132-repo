@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.ui.console;
 
 import pt.ipp.isep.dei.controller.CreateMapController;
 import pt.ipp.isep.dei.domain.Map;
+import pt.ipp.isep.dei.repository.Repositories;
 
 import java.util.Scanner;
 
@@ -36,6 +37,7 @@ public class CreateMapUI implements Runnable{
                 System.out.println("Map created successfully:");
                 System.out.printf("- Name: %s%n- Dimensions: %dx%d%n- Editor: %s%n",
                         savedMap.getName(), savedMap.getWidth(), savedMap.getHeight(), savedMap.getEmailEditor());
+                Repositories.getInstance().getMapRepository().setActiveMap(savedMap);
             } else {
                 System.out.println("Map creation failed.");
             }

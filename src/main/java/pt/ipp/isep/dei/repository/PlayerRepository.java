@@ -11,10 +11,11 @@ public class PlayerRepository {
 
     public PlayerRepository() {
         this.players = new ArrayList<>();
+        createDefaultPlayer();
 
     }
 
-    private void createDefaultPlayers() {
+    private void createDefaultPlayer() {
         Player defaultPlayer = new Player("Default Player", 1000000);
         players.add(defaultPlayer);
         currentPlayer = defaultPlayer;

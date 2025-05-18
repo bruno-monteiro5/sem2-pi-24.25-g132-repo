@@ -23,16 +23,35 @@ public class BuildStationUI implements Runnable {
     public void run() {
         System.out.println("=== Build Station ===");
 
+        //check map
+        if(!controller.hasActiveMap()){
+            System.out.println("No active map");
+            return;
+        }
+
+
         //type
+        // Escolher tipo
         System.out.println("Select a station type:");
-        System.out.printf("1-Depot (Cost: 50000, Radius:3) %n 2-Station (Cost: 100000, Radius:4) %n 3-Terminal (Cost:200000, Radius:5) %n");
+        System.out.println("1 - Depot (Cost: 50000, Radius: 3)");
+        System.out.println("2 - Station (Cost: 100000, Radius: 4)");
+        System.out.println("3 - Terminal (Cost: 200000, Radius: 5)");
+
         int answer = -1;
-        while (answer != 1 && answer != 2 && answer != 3) {
-            answer = scanner.nextInt();
+        while (answer < 1 || answer > 3) {
+            System.out.print("Enter choice (1-3): ");
+            if (scanner.hasNextInt()) {
+                answer = scanner.nextInt();
+                scanner.nextLine(); // limpar o \n restante
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // descartar entrada inválida
+            }
         }
 
         List<StationType> types = controller.getStationTypes();
         type = types.get(answer - 1);
+
 
         //Position
 
@@ -45,6 +64,42 @@ public class BuildStationUI implements Runnable {
 
         if(type.needsCenter()){
             System.out.println("Choose the center:");
+            System.out.println("1 - NE");
+            System.out.println("2 - NW");
+            System.out.println("3 - SE");
+            System.out.println("4 - SW");
+
+            int choice = -1;
+            while (choice < 1 || choice > 4) {
+                System.out.print("Enter choice (1-4): ");
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                }else
+                    scanner.next();
+            }
+            int centerX = x;
+            int centerY = y;
+            switch (choice) {
+                case 1:
+                    centerX = position.getX() + 1;
+                    centerY = position.getY() + 1;
+                    break;
+                case 2:
+                    centerX = position.getX() - 1;
+                    centerY = position.getY() + 1;
+                    break;
+                case 3:
+                    centerX = position.getX() + 1;
+                    centerY = position.getY() - 1;
+                    break;
+                case 4:
+                    centerX = position.getX() - 1;
+                    centerY = position.getY() - 1;
+                    break;
+            }
+
+            controller.setLocationCenter(position, centerX, centerY);
+
         }
 
         if (!controller.validatePosition(position)) {
@@ -54,30 +109,37 @@ public class BuildStationUI implements Runnable {
 
         //name
 
+        // Gerar nome sugerido com base na posição e tipo
         String suggested = controller.getSuggestedName(position, type);
-        System.out.printf("Suggested name: %s", suggested);
-        System.out.println("Use the suggested name(Y/N):");
-        String decision = scanner.nextLine().trim().toUpperCase();
+        System.out.printf("Suggested name: %s%n", suggested);
 
-        while (!decision.equals("Y") && !decision.equals("N")) {
-            System.out.println("Invalid answer");
-        }
+        String decision;
+        do {
+            System.out.print("Use the suggested name (Y/N): ");
+            decision = scanner.next().trim().toUpperCase();
+
+            if (!decision.equals("Y") && !decision.equals("N")) {
+                System.out.println("Invalid answer. Please type Y or N.");
+            }
+        } while (!decision.equals("Y") && !decision.equals("N"));
+
+
+
 
         if (decision.equals("Y")) {
             name = suggested;
         } else {
             String custom = "";
             while (custom.isEmpty()) {
-                System.out.println("Type a custom name:");
-                custom = scanner.nextLine().trim();
+                System.out.print("Type a custom name: ");
+                custom = scanner.next().trim();
                 if (custom.isEmpty()) {
-                    System.out.println("Invalid name");
+                    System.out.println("Invalid name. Please try again.");
                 }
             }
             name = custom;
-
         }
-        
+
         submit();
     }
 

@@ -15,9 +15,9 @@ public class BuildStationController {
     private PlayerRepository playerRepo;
 
     public BuildStationController() {
-        this.mapRepo = new MapRepository();
-        this.stationTypeRepository = new StationTypeRepository();
-        this.playerRepo = new PlayerRepository();
+        getMapRepo();
+        getStationTypeRepository();
+        getPlayerRepo();
     }
 
     public BuildStationController (MapRepository mapRepo, StationTypeRepository stationTypeRepository, PlayerRepository playerRepo) {
@@ -61,15 +61,33 @@ public class BuildStationController {
         Map currentMap = mapRepo.getActiveMap();
         Player currentPlayer = playerRepo.getCurrentPlayer();
 
-        if (currentMap == null || stationType == null || currentPlayer == null || position == null || name == null || !currentPlayer.canAfford(stationType.getCost())) {
-           return false;
+        if (currentMap == null) {
+            System.out.println("DEBUG: No active map.");
+            return false;
+        }
+        if (stationType == null) {
+            System.out.println("DEBUG: Station type is null.");
+            return false;
+        }
+        if (currentPlayer == null) {
+            System.out.println("DEBUG: No player in session.");
+            return false;
+        }
+        if (position == null) {
+            System.out.println("DEBUG: Position is null.");
+            return false;
+        }
+        if (name == null) {
+            System.out.println("DEBUG: Name is null.");
+            return false;
+        }
+        if (!currentPlayer.canAfford(stationType.getCost())) {
+            System.out.println("DEBUG: Player can't afford the station.");
+            return false;
         }
 
-        if (currentMap.buildStation(stationType, position, name)) {
-            return currentPlayer.deductFunds(stationType.getCost());
-        }
+        return true;
 
-        return false;
     }
 
     public String getSuggestedName (Position position, StationType stationType) {
@@ -91,6 +109,20 @@ public class BuildStationController {
 
     public List<StationType> getStationTypes (){
         return stationTypeRepository.getAllStationTypes();
+    }
+
+    public void selectedMap (Map map) {
+        mapRepo.setActiveMap(map);
+    }
+
+    public boolean hasActiveMap() {
+        try {
+            mapRepo.getActiveMap();
+            return true;
+        } catch (IllegalStateException e) {
+            return false;
+        }
+
     }
 
 }
