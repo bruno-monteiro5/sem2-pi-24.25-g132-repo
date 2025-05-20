@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
  * </ul>
  */
 
-public class Map {
+public class Map implements Serializable {
 
     private int id;
     private final String name;

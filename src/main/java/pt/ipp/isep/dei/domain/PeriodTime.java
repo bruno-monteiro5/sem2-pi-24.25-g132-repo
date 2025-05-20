@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
+
 /**
  * Represents a period of time defined by a start year and an end year.
  *
@@ -11,7 +13,7 @@ package pt.ipp.isep.dei.domain;
  * <p>Instances of this class are immutable, meaning their state cannot be changed
  * after instantiation.</p>
  */
-public class PeriodTime {
+public class PeriodTime implements Serializable {
 
     private final int startYear;
     private final int endYear;
