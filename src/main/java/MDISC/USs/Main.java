@@ -8,8 +8,8 @@ public class Main {
         public static void main(String[] args) {
             try {
                 RailwayNetwork net = new RailwayNetwork();
-                net.loadStations("src/main/java/MDISC/USs/CSV/scenario1_stations.csv");
-                net.loadLines("src/main/java/MDISC/USs/CSV/scenario1_lines.csv");
+                net.loadStations("src/main/java/MDISC/USs/CSV/scenario2_stations.csv");
+                net.loadLines("src/main/java/MDISC/USs/CSV/scenario2_lines.csv");
 
                 Scanner scanner = new Scanner(System.in);
                 int opcao;
@@ -52,9 +52,9 @@ public class Main {
                             boolean connected = net.isTypeFullyConnected(trainType, stationType);
 
                             if (connected) {
-                                System.out.println("With" + trainType + "you CAN travel from a" + stationType + "to another of the same type");
+                                System.out.println("With " + trainType + " you CAN travel from a " + stationType + " to another of the same type");
                             } else {
-                                System.out.println("with" + trainType + "you CAN'T travel from a " + stationType + "to another of the same type");
+                                System.out.println("With " + trainType + " you CAN'T travel from a " + stationType + " to another of the same type");
                             }
                             break;
 
