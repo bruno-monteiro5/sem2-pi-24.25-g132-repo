@@ -131,6 +131,12 @@ x
 y
 }
 
+class RailwayNetwork {
+    stations
+    lines
+}
+
+
 
 
 
@@ -206,6 +212,16 @@ TimePeriod "1" -- "1" Date: start/ends at >
 RailwayLine "1" -- "1" Station : start/ends at >
 
 Building "1" -- "1" Building : can replace >
+
+CargoSimulator "1" -- "1" RailwayNetwork : manages >
+
+RailwayNetwork "1" -- "*" RailwayLine : includes >
+
+
+
+
+
+
 
 
 @enduml

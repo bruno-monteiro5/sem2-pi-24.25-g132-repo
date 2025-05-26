@@ -117,19 +117,15 @@ public class UpgradeStationController {
             return false;
         }
 
-        // Retrieve the detailed information about the building type
         BuildingType buildingDetails = buildingTypeRepo.getBuildingTypeDetails(buildingType);
 
-        // If the building type replaces an old one, it is removed
         if (buildingDetails.getReplaces() != null) {
             station.removeBuilding(buildingDetails.getReplaces());
         }
 
-        // Add the new building to the station
         boolean upgradeSuccess = station.addBuilding(buildingType);
 
         if (upgradeSuccess) {
-            // Deduct funds from the player
             currentPlayer.deductFunds(buildingType.getCost());
         }
 

@@ -6,30 +6,85 @@ hide methods
 class Player {
 }
 
-class Simulator {
+class CargoSimulator {
   currentTime
-  isRunning
-  + start()
-  + pause()
-  + generateCargo()
+  status
 }
 
 class Scenario {
-  startYear
-  endYear
+  name
+}
+
+class Map {
+    name
+    width
+    height
+}
+
+class TimePeriod {
+    startYear
+    endYear
 }
 
 class Station {
   name
-  + receiveCargo(c: Cargo)
 }
 
-class Cargo {
-  type
+class StationType {
+  cost
+  economicRadius
 }
 
-Player "1" -- "1" Simulator : controls >
-Simulator "1" -- "1" Scenario : uses >
-Simulator "1" -- "*" Station : serves >
-Station "*" -- "*" Cargo : stores >
+class Event {
+    arrive/departure
+}
+
+class RailwayNetwork {
+    stations
+    lines
+}
+
+class RailwayLine {
+    length
+    cost
+    isEletrical
+}
+
+class Industry {
+}
+
+class PrimaryIndustry {
+}
+
+class TransformingIndustry {
+}
+
+class MixedIndustry {
+}
+
+Player "1" -- "1" CargoSimulator : controls >
+CargoSimulator "1" -- "1" Scenario : uses >
+CargoSimulator "1" -- "*" Station : generated cargo at >
+Station "*" -- "*" StationType : is of type >
+Scenario "1" -- "1" TimePeriod : takes place in >
+Scenario "1" -- "1" Map : is based on >
+CargoSimulator "1" -- "*" Event : displays >
+Event "1" -- "1" Station : occurs at >
+CargoSimulator "1" -- "1" RailwayNetwork : manages >
+RailwayNetwork "1" -- "*" RailwayLine : includes >
+RailwayLine "1" -- "1" Station : start/ends at >
+Map "1" -- "*" Industry : contains >
+Industry *-- PrimaryIndustry
+Industry *-- TransformingIndustry
+Industry *-- MixedIndustry
+
+
+
+
+
+
+
+
+
+
 @enduml
