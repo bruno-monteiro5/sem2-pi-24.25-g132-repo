@@ -62,6 +62,11 @@ class TransformingIndustry {
 class MixedIndustry {
 }
 
+class Cargo {
+type
+quantity
+}
+
 Player "1" -- "1" CargoSimulator : controls >
 CargoSimulator "1" -- "1" Scenario : uses >
 CargoSimulator "1" -- "*" Station : generated cargo at >
@@ -77,6 +82,8 @@ Map "1" -- "*" Industry : contains >
 Industry *-- PrimaryIndustry
 Industry *-- TransformingIndustry
 Industry *-- MixedIndustry
+Industry "1" -- "*" Cargo : Demands >
+Industry "1" -- "*" Cargo : Supplies >
 
 
 

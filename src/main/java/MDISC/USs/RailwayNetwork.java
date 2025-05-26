@@ -116,43 +116,69 @@ public class RailwayNetwork {
     }
 
     public boolean isTypeFullyConnected(String trainType, String stationTypeStr) {
-        char stationType = stationTypeStr.toUpperCase().charAt(0);
-        ArrayList<Station> filtered = new ArrayList<>();
-
+        char stationType = stationTypeStr.toUpperCase().charAt(0); // 'D', 'S', 'T'
+        ArrayList<Station> filteredStations = new ArrayList<>();
         for (Station s : stations) {
-            if (s.getType() == stationType) filtered.add(s);
+            if (s.getType() == stationType) {
+                filteredStations.add(s);
+            }
         }
 
-        int n = filtered.size();
-        if (n <= 1) return true;
-
+        int n = stations.size();
         int[][] adj = new int[n][n];
 
+        // Construir matriz de adjacência com todas as estações e linhas válidas
         for (Line l : lines) {
-            Station a = l.getStationA();
-            Station b = l.getStationB();
-            if (a.getType() != stationType || b.getType() != stationType) continue;
+            boolean useLine = trainType.equalsIgnoreCase("electric") ? l.isElectrified()
+                    : trainType.equalsIgnoreCase("steam") || trainType.equalsIgnoreCase("diesel");
 
-            boolean useLine = trainType.equalsIgnoreCase("electric") ? l.isElectrified() :
-                    trainType.equalsIgnoreCase("diesel") || trainType.equalsIgnoreCase("steam");
             if (!useLine) continue;
 
-            int i = filtered.indexOf(a);
-            int j = filtered.indexOf(b);
+            int i = stations.indexOf(l.getStationA());
+            int j = stations.indexOf(l.getStationB());
             if (i >= 0 && j >= 0) {
                 adj[i][j] = 1;
                 adj[j][i] = 1;
             }
         }
 
-        boolean[] visited = new boolean[n];
-        dfs(adj, 0, visited);
+        // Testar conectividade entre todos os pares do mesmo tipo
+        for (int a = 0; a < filteredStations.size(); a++) {
+            Station start = filteredStations.get(a);
+            int startIndex = stations.indexOf(start);
 
-        for (boolean v : visited) {
-            if (!v) return false;
+            boolean[] visited = new boolean[n];
+            visited[startIndex] = true;
+            boolean changed;
+
+            do {
+                changed = false;
+                for (int i = 0; i < n; i++) {
+                    if (visited[i]) {
+                        for (int j = 0; j < n; j++) {
+                            if (adj[i][j] == 1 && !visited[j]) {
+                                visited[j] = true;
+                                changed = true;
+                            }
+                        }
+                    }
+                }
+            } while (changed);
+
+            // Verificar se todas as outras do mesmo tipo foram visitadas
+            for (int b = 0; b < filteredStations.size(); b++) {
+                if (a == b) continue;
+                Station target = filteredStations.get(b);
+                int targetIndex = stations.indexOf(target);
+                if (!visited[targetIndex]) {
+                    return false;
+                }
+            }
         }
+
         return true;
     }
+
     public void findEulerianPath(boolean onlyElectrified) {
         ArrayList<Station> subStations = new ArrayList<>();
         ArrayList<Line> subLines = new ArrayList<>();

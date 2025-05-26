@@ -8,8 +8,8 @@ public class Main {
         public static void main(String[] args) {
             try {
                 RailwayNetwork net = new RailwayNetwork();
-                net.loadStations("src/main/java/MDISC/USs/CSV/scenario2_stations.csv");
-                net.loadLines("src/main/java/MDISC/USs/CSV/scenario2_lines.csv");
+                net.loadStations("/Users/brunomac/IdeaProjects/sem2-pi-24.25-g132-repo/src/main/java/MDISC/USs/Scenario_stations.csv");
+                net.loadLines("/Users/brunomac/IdeaProjects/sem2-pi-24.25-g132-repo/src/main/java/MDISC/USs/fx_3av1_1.csv");
 
                 Scanner scanner = new Scanner(System.in);
                 int opcao;
