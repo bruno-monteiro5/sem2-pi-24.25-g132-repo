@@ -1,50 +1,45 @@
-/*package pt.ipp.isep.dei.domain;
+package pt.ipp.isep.dei.domain;
 
-import java.util.List;
+import java.io.Serializable;
 
-public class Locomotive {
-    private List<Cargo> cargo;
-    private List<Locomotive> trains;
-    private LocomotiveType type;
+public class Locomotive implements Serializable {
+
     private int id;
+    private LocomotiveType type;
 
     public Locomotive(int id, LocomotiveType type) {
         this.id = id;
         this.type = type;
     }
 
-    public Locomotive() {
-        id = 0;
-        this.type = null;
-    }
-
-    public List<Cargo> getCargo() {
-        return cargo;
-    }
-
-    public List<Locomotive> getTrains() {
-        return trains;
+    public int getId() {
+        return id;
     }
 
     public LocomotiveType getType() {
         return type;
     }
 
-    public int getId() {
+    @Override
+    public String toString() {
+        return "Locomotive {" +
+                "ID=" + id +
+                ", Name='" + type.getName() + '\'' +
+                ", Fuel='" + type.getFuelType() + '\'' +
+                ", Speed=" + type.getTopSpeed() +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Locomotive that = (Locomotive) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
         return id;
     }
-
-    public boolean addLocomotive(int id, LocomotiveType type) {
-        if (type == null) {
-            return false;
-        }
-
-        if (trains.isEmpty()) {
-            id = 1;
-        }else
-
-
-
-    }
 }
-*/
