@@ -11,6 +11,7 @@ public class RailwayNetwork {
     private final ArrayList<Station> stations = new ArrayList<>();
     private final ArrayList<Line> lines = new ArrayList<>();
 
+
     public void loadStations(String filePath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String header = reader.readLine();
@@ -49,7 +50,7 @@ public class RailwayNetwork {
         reader.close();
     }
 
-    private Station findStationByName(String name) {
+    public Station findStationByName(String name) {
         for (Station s : stations) {
             if (s.getName().equalsIgnoreCase(name)) return s;
         }
@@ -278,4 +279,103 @@ public class RailwayNetwork {
         }
         route.add(0, stations.get(u).getName());
     }
+
+
+
+    // -------------------------------------------------
+    // US 28
+
+    private List<Station> shortestPath(Station origin, Station destination) {
+        List<Station> stations = this.stations; // usa o atributo direto da tua classe
+        List<Line> lines = this.lines;
+
+        int n = stations.size();
+        int[] dist = new int[n];
+        boolean[] visited = new boolean[n];
+        int[] prev = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            dist[i] = Integer.MAX_VALUE;
+            visited[i] = false;
+            prev[i] = -1;
+        }
+
+        int startIdx = stations.indexOf(origin);
+        int endIdx = stations.indexOf(destination);
+        if (startIdx == -1 || endIdx == -1) return null;
+
+        dist[startIdx] = 0;
+
+        for (int count = 0; count < n - 1; count++) {
+            int u = -1, minDist = Integer.MAX_VALUE;
+            for (int i = 0; i < n; i++) {
+                if (!visited[i] && dist[i] < minDist) {
+                    minDist = dist[i];
+                    u = i;
+                }
+            }
+
+            if (u == -1) break;
+            visited[u] = true;
+            Station current = stations.get(u);
+
+            for (Line l : lines) {
+                Station neighbor = null;
+                if (l.getStationA().equals(current)) neighbor = l.getStationB();
+                else if (l.getStationB().equals(current)) neighbor = l.getStationA();
+                else continue;
+
+                int v = stations.indexOf(neighbor);
+                if (!visited[v]) {
+                    int weight = l.getLength();
+                    if (dist[u] + weight < dist[v]) {
+                        dist[v] = dist[u] + weight;
+                        prev[v] = u;
+                    }
+                }
+            }
+        }
+
+        if (dist[endIdx] == Integer.MAX_VALUE) return null;
+
+        List<Station> path = new ArrayList<>();
+        for (int at = endIdx; at != -1; at = prev[at]) {
+            path.add(0, stations.get(at));
+        }
+
+        return path;
+    }
+
+
+
+
+    public List<Station> getShortestRouteThrough(Station start, List<Station> checkpoints, Station end) {
+        List<Station> fullPath = new ArrayList<>();
+        List<Station> allPoints = new ArrayList<>();
+
+        allPoints.add(start);
+        allPoints.addAll(checkpoints);
+        allPoints.add(end);
+
+        for (int i = 0; i < allPoints.size() - 1; i++) {
+            Station from = allPoints.get(i);
+            Station to = allPoints.get(i + 1);
+
+            List<Station> segment = shortestPath(from, to);
+            if (segment == null || segment.isEmpty()) return null;
+
+            if (!fullPath.isEmpty()) segment.remove(0); // evitar repetição
+            fullPath.addAll(segment);
+        }
+
+        return fullPath;
+    }
+
+
+
 }
+
+
+
+
+
