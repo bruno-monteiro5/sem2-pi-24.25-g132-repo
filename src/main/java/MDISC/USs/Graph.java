@@ -3,8 +3,8 @@ package MDISC.USs;
 import java.util.ArrayList;
 
 public class Graph {
-    private final ArrayList<Station> vertices = new ArrayList<>();
-    private final ArrayList<Line> edges = new ArrayList<>();
+    private static final ArrayList<Station> vertices = new ArrayList<>();
+    private static final ArrayList<Line> edges = new ArrayList<>();
 
     public void addStation(Station s) {
         if (!vertices.contains(s)) vertices.add(s);
@@ -16,11 +16,11 @@ public class Graph {
         addStation(l.getStationB());
     }
 
-    public ArrayList<Station> getVertices() {
+    public static ArrayList<Station> getVertices() {
         return vertices;
     }
 
-    public ArrayList<Line> getEdges() {
+    public static ArrayList<Line> getEdges() {
         return edges;
     }
 

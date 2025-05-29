@@ -40,4 +40,8 @@ public class Line {
     public String toString() {
         return stationA + " <-> " + stationB + " | " + distance + "km | " + (electrified ? "electrified" : "non-electrified");
     }
+
+    public int getLength() {
+        return distance;
+    }
 }
