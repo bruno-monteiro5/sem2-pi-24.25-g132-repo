@@ -79,3 +79,7 @@ class BuildingTypeRepository {
 class NetworkRepository {
     + getNetworks()
     + get
+}
+
+
+@enduml

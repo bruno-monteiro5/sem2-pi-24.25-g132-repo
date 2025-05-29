@@ -2,7 +2,7 @@ package pt.ipp.isep.dei.ui.console;
 
 import pt.ipp.isep.dei.controller.AddIndustryController;
 import pt.ipp.isep.dei.domain.Industry;
-import pt.ipp.isep.dei.domain.IndustryTypes;
+import pt.ipp.isep.dei.domain.IndustryType;
 import pt.ipp.isep.dei.domain.Position;
 
 import java.util.Scanner;
@@ -35,7 +35,7 @@ public class AddIndustryUI implements Runnable {
      * This method prompts the user to:
      * - Input the industry's name.
      * - Input the industry's geographical position in terms of x and y coordinates.
-     * - Choose the industry's type from a list of predefined options in {@link IndustryTypes}.
+     * - Choose the industry's type from a list of predefined options in {@link IndustryType}.
      * <p>
      * It handles input validation and communicates with the controller to create the industry.
      */
@@ -66,7 +66,7 @@ public class AddIndustryUI implements Runnable {
 
             // Display available industry types
             System.out.println("\nAvailable industry types:");
-            IndustryTypes.IndustryType[] types = IndustryTypes.IndustryType.values();
+            IndustryType[] types = IndustryType.values();
 
             // List the industry types with indexing
             for (int i = 0; i < types.length; i++) {
@@ -82,10 +82,11 @@ public class AddIndustryUI implements Runnable {
                 return;
             }
 
-            IndustryTypes.IndustryType selectedType = types[typeChoice - 1];
+            IndustryType selectedType = types[typeChoice - 1];
 
             // Create the Industry through the controller
             Industry newIndustry = controller.addIndustry(name, position, selectedType);
+
 
             // Success message
             System.out.println("\nIndustry added successfully!");

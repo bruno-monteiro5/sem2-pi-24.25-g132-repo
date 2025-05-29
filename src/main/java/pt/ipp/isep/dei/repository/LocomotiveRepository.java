@@ -1,4 +1,4 @@
-/*package pt.ipp.isep.dei.repository;
+package pt.ipp.isep.dei.repository;
 
 import pt.ipp.isep.dei.domain.Locomotive;
 
@@ -19,4 +19,4 @@ public class LocomotiveRepository {
         return locomotives.add(locomotive);
     }
 }
-*/
+

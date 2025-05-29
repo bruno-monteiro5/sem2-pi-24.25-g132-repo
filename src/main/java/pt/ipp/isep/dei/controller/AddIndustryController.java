@@ -1,8 +1,8 @@
 package pt.ipp.isep.dei.controller;
 
 import pt.ipp.isep.dei.domain.Industry;
+import pt.ipp.isep.dei.domain.IndustryType;
 import pt.ipp.isep.dei.domain.Position;
-import pt.ipp.isep.dei.domain.IndustryTypes;
 import pt.ipp.isep.dei.repository.IndustryRepository;
 import pt.ipp.isep.dei.repository.Repositories;
 
@@ -43,7 +43,7 @@ public class AddIndustryController {
      * </ul>
      */
 
-    public Industry addIndustry(String name, Position position, IndustryTypes.IndustryType type) {
+    public Industry addIndustry(String name, Position position, IndustryType type) {
         if (repository.industryExists(name)) {
             throw new IllegalArgumentException("An industry with that name already exists.");
         }

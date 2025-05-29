@@ -29,6 +29,9 @@ public class CreateScenarioUI implements Runnable {
         Scenario scenario = controller.createScenario(name, map, periodTime);
 
         // Tipos de locomotiva
+        ArrayList<String> tiposEscolhidos = new ArrayList<>();
+
+
         System.out.println("Adicionar tipos de locomotiva (STEAM, DIESEL, ELECTRIC). Digite 'fim' para terminar:");
         String input = "";
         while (!input.equalsIgnoreCase("fim")) {
@@ -36,10 +39,11 @@ public class CreateScenarioUI implements Runnable {
             input = sc.nextLine().toUpperCase();
 
             if (!input.equalsIgnoreCase("FIM")) {
-                try {
-                    LocomotiveType type = LocomotiveType.valueOf(input);
-                    controller.addLocomotiveType(scenario, type);
-                } catch (IllegalArgumentException e) {
+                if (input.equalsIgnoreCase("STEAM") || input.equalsIgnoreCase("DIESEL") || input.equalsIgnoreCase("ELECTRIC")) {
+                    if (!tiposEscolhidos.contains(input.toUpperCase())) {
+                        tiposEscolhidos.add(input.toUpperCase());
+                    }
+                } else {
                     System.out.println("Tipo inválido.");
                 }
             }
@@ -78,6 +82,14 @@ public class CreateScenarioUI implements Runnable {
 
             System.out.print("Deseja adicionar outro porto? (s/n): ");
             opcao = sc.nextLine();
+        }
+
+        // Adicionar apenas locomotivas permitidas
+        for (LocomotiveType tipo : LocomotiveType.values()) {
+            String fuel = tipo.getFuelType().toUpperCase();
+            if (tiposEscolhidos.contains(fuel)) {
+                controller.addLocomotiveType(scenario, tipo);
+            }
         }
 
         // Guardar cenário

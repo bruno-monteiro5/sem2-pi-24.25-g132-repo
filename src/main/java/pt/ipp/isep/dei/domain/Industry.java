@@ -2,23 +2,26 @@ package pt.ipp.isep.dei.domain;
 
 /**
  * Represents an Industry with a specific name, geographical position, and type.
- * This class provides methods to manage and access the industry's attributes.
+ * <p>
+ * This class provides methods to manage and access the attributes of an industry, such as its name,
+ * position, and type. It also includes utility methods for string representation and position comparison.
+ * </p>
  */
 public class Industry {
 
     // Attributes
     private String name; // The name of the industry
     private Position position; // The geographical position of the industry
-    private IndustryTypes.IndustryType type; // The type/category of the industry
+    private IndustryType type; // The type/category of the industry
 
     /**
-     * Constructs an Industry object with the specified name, position, and type.
+     * Constructs an {@code Industry} object with the specified name, position, and type.
      *
-     * @param name The name of the industry (e.g., "TechCorp").
+     * @param name     The name of the industry (e.g., "TechCorp").
      * @param position The geographical position of the industry, represented as a {@link Position} object.
-     * @param type The type of the industry, selected from {@link IndustryTypes.IndustryType}.
+     * @param type     The type of the industry, selected from {@link IndustryType}.
      */
-    public Industry(String name, Position position, IndustryTypes.IndustryType type) {
+    public Industry(String name, Position position, IndustryType type) {
         this.name = name;
         this.position = position;
         this.type = type;
@@ -52,7 +55,7 @@ public class Industry {
     }
 
     /**
-     * Updates the position of the industry.
+     * Updates the geographical position of the industry.
      *
      * @param position A {@link Position} object representing the new location of the industry.
      */
@@ -63,27 +66,28 @@ public class Industry {
     /**
      * Retrieves the type of the industry.
      *
-     * @return An {@link IndustryTypes.IndustryType} representing the industry's type/category.
+     * @return An {@link IndustryType} representing the type or category of the industry.
      */
-    public IndustryTypes.IndustryType getType() {
+    public IndustryType getType() {
         return type;
     }
 
     /**
-     * Updates the type/category of the industry.
+     * Updates the type or category of the industry.
      *
-     * @param type A {@link IndustryTypes.IndustryType} representing the new type of the industry.
+     * @param type An {@link IndustryType} representing the new type of the industry.
      */
-    public void setType(IndustryTypes.IndustryType type) {
+    public void setType(IndustryType type) {
         this.type = type;
     }
 
     /**
      * Provides a {@link String} representation of the industry.
+     * <p>
+     * The string representation includes the name, geographical position, and type of the industry.
+     * </p>
      *
-     * The format includes the name, position, and type of the industry.
-     *
-     * @return A {@link String} containing the industry's name, position, and type.
+     * @return A {@link String} containing the name, position, and type of the industry.
      */
     @Override
     public String toString() {
@@ -94,14 +98,11 @@ public class Industry {
                 '}';
     }
 
-
-
-
     /**
      * Checks whether the industry is located at a specific position.
      *
      * @param position A {@link Position} object to compare with the industry's current position.
-     * @return {@code true} if the industry is at the specified position, otherwise {@code false}.
+     * @return {@code true} if the industry is at the specified position; otherwise, {@code false}.
      */
     public boolean isAtPosition(Position position) {
         return this.position.equals(position);
