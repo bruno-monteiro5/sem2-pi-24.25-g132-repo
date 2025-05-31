@@ -58,7 +58,7 @@ public enum IndustryData {
     AIRPORT_TARMAC("Airport Tarmac", 1800, List.of(), List.of(), 0, 0, IndustryType.MIXED);
 
     private final String name;
-    private final int introductionYear;
+    private final int startYear;
     private final List<String> suppliedCargos;
     private final List<String> demandedCargos;
     private final int cost;
@@ -68,7 +68,7 @@ public enum IndustryData {
     IndustryData(String name, int introductionYear, List<String> suppliedCargos, List<String> demandedCargos,
                  int cost, int profitability, IndustryType type) {
         this.name = name;
-        this.introductionYear = introductionYear;
+        this.startYear = introductionYear;
         this.suppliedCargos = suppliedCargos;
         this.demandedCargos = demandedCargos;
         this.cost = cost;
@@ -80,8 +80,8 @@ public enum IndustryData {
         return name;
     }
 
-    public int getIntroductionYear() {
-        return introductionYear;
+    public int getStartYear() {
+        return startYear;
     }
 
     public List<String> getSuppliedCargos() {
