@@ -10,10 +10,9 @@ public class TrainRepository {
     private final List<Train> trains = new ArrayList<>();
     private int nextId = 1;
 
-    public Train createTrain(Locomotive locomotive) {
-        Train train = new Train(nextId++, locomotive);
-        trains.add(train);
-        return train;
+
+    public int getNextId() {
+        return nextId++;
     }
 
     public void save(Train train) {

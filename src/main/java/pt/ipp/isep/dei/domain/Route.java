@@ -1,4 +1,3 @@
-
 package pt.ipp.isep.dei.domain;
 
 import java.util.ArrayList;
@@ -9,10 +8,12 @@ public class Route {
     private Train assignedTrain;
     private final List<Station> stations = new ArrayList<>();
     private final List<List<Cargo>> cargosPerStation = new ArrayList<>();
+    private final List<CargoMode> cargoModes = new ArrayList<>();
 
-    public void addStationWithCargo(Station station, List<Cargo> cargos) {
+    public void addStationWithCargoAndMode(Station station, List<Cargo> cargos, CargoMode mode) {
         this.stations.add(station);
         this.cargosPerStation.add(new ArrayList<>(cargos));
+        this.cargoModes.add(mode);
     }
 
     public void setAssignedTrain(Train train) {
@@ -43,6 +44,10 @@ public class Route {
         return copy;
     }
 
+    public List<CargoMode> getCargoModes() {
+        return new ArrayList<>(cargoModes);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -50,7 +55,10 @@ public class Route {
         sb.append(assignedTrain != null ? assignedTrain.getId() : "none").append("\n");
 
         for (int i = 0; i < stations.size(); i++) {
-            sb.append("Station: ").append(stations.get(i).getName()).append(" with cargos: ").append(cargosPerStation.get(i)).append("\n");
+            sb.append("Station: ").append(stations.get(i).getName())
+                    .append(" | Cargos: ").append(cargosPerStation.get(i))
+                    .append(" | Mode: ").append(cargoModes.get(i))
+                    .append("\n");
         }
         return sb.toString();
     }
