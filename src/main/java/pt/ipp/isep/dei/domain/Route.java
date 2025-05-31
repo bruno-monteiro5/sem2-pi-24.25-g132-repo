@@ -1,4 +1,4 @@
-/**
+
 package pt.ipp.isep.dei.domain;
 
 import java.util.ArrayList;
@@ -47,11 +47,11 @@ public class Route {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Route '").append(name).append("' assigned to train ID ");
-        sb.append(assignedTrain != null ? assignedTrain.getIde() : "none").append("\n");
+        sb.append(assignedTrain != null ? assignedTrain.getId() : "none").append("\n");
 
         for (int i = 0; i < stations.size(); i++) {
             sb.append("Station: ").append(stations.get(i).getName()).append(" with cargos: ").append(cargosPerStation.get(i)).append("\n");
         }
         return sb.toString();
     }
-} */
+}
