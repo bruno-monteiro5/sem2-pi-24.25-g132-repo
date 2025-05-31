@@ -17,6 +17,7 @@ public class Repositories {
     private final PlayerRepository playerRepository;
     private BuildingTypeRepository buildingTypeRepository;
     private final LocomotiveTypeRepository locomotiveTypeRepository;
+    private final RailwayLineRepository railwayLineRepository;
 
     /**
      * The Singleton's constructor should always be private to prevent direct construction calls with the new operator.
@@ -31,6 +32,7 @@ public class Repositories {
         playerRepository = new PlayerRepository();
         this.buildingTypeRepository = new BuildingTypeRepository();
         this.locomotiveTypeRepository = new LocomotiveTypeRepository();
+        railwayLineRepository = new RailwayLineRepository();
     }
 
     /**
@@ -94,5 +96,7 @@ public class Repositories {
     public LocomotiveTypeRepository getLocomotiveTypeRepository() {
         return locomotiveTypeRepository;
     }
+
+    public RailwayLineRepository getRailwayLineRepository() { return railwayLineRepository; }
 
 }
