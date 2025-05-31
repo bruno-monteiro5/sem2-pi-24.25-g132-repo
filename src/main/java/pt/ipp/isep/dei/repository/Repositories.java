@@ -15,10 +15,12 @@ public class Repositories {
     private final MapRepository mapRepository;
     private final StationTypeRepository stationTypeRepository;
     private final PlayerRepository playerRepository;
-    private BuildingTypeRepository buildingTypeRepository;
+    private final BuildingTypeRepository buildingTypeRepository;
     private final LocomotiveTypeRepository locomotiveTypeRepository;
     private final RailwayLineRepository railwayLineRepository;
     private final LocomotiveRepository locomotiveRepository;
+    private final TrainRepository trainRepository;
+    private final RouteRepository routeRepository;
 
 
     /**
@@ -36,6 +38,8 @@ public class Repositories {
         this.locomotiveTypeRepository = new LocomotiveTypeRepository();
         railwayLineRepository = new RailwayLineRepository();
         this.locomotiveRepository = new LocomotiveRepository();
+        this.trainRepository = new TrainRepository();
+        this.routeRepository = new RouteRepository();
 
     }
 
@@ -103,6 +107,10 @@ public class Repositories {
     public LocomotiveTypeRepository getLocomotiveTypeRepository() {
         return locomotiveTypeRepository;
     }
+
+    public TrainRepository getTrainRepository() { return trainRepository; }
+
+    public RouteRepository getRouteRepository() { return routeRepository; }
 
     public RailwayLineRepository getRailwayLineRepository() { return railwayLineRepository; }
 
