@@ -31,7 +31,7 @@ public class Repositories {
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
         mapRepository = new MapRepository();
-        stationRepository = new StationRepository();
+        stationRepository = StationRepository.getInstance();
         stationTypeRepository = new StationTypeRepository();
         playerRepository = new PlayerRepository();
         this.buildingTypeRepository = new BuildingTypeRepository();

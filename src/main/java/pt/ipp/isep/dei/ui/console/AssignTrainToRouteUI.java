@@ -45,24 +45,47 @@ public class AssignTrainToRouteUI implements Runnable {
         do {
             System.out.println("\n--- Add Point to Route ---");
 
+            List<Station> stations = controller.getAllStations();
+            if (stations.isEmpty()) {
+                System.out.println("No stations available.");
+                return;
+            }
+
+            System.out.println("Available Stations:");
+            for (Station s : stations) {
+                System.out.println("- " + s.getName());
+            }
+
             System.out.print("Enter Station name: ");
             String stationName = scanner.nextLine().trim();
-            Station station = controller.getAllStations().stream()
+            Station station = stations.stream()
                     .filter(s -> s.getName().equalsIgnoreCase(stationName))
-                    .findFirst().orElse(null);
+                    .findFirst()
+                    .orElse(null);
 
             if (station == null) {
                 System.out.println("Station not found.");
                 return;
             }
 
+            System.out.println("Available cargo types:");
+            for (CargoType type : CargoType.values()) {
+                System.out.println("- " + type.name());
+            }
+
             System.out.print("Enter cargo types to pick up (comma-separated): ");
             String input = scanner.nextLine().trim();
             String[] cargoStrings = input.split(",");
             List<String> cargoes = new ArrayList<>();
+
             for (String c : cargoStrings) {
-                if (!c.isBlank()) {
-                    cargoes.add(c.trim());
+                String cleaned = c.trim().toUpperCase();
+                try {
+                    CargoType.valueOf(cleaned); // validação
+                    cargoes.add(cleaned);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid cargo type: " + cleaned);
+                    return;
                 }
             }
 
@@ -71,13 +94,31 @@ public class AssignTrainToRouteUI implements Runnable {
             for (int i = 0; i < modes.length; i++) {
                 System.out.printf("%d. %s\n", i + 1, modes[i]);
             }
-            System.out.print("Choice: ");
-            int modeIndex = Integer.parseInt(scanner.nextLine().trim()) - 1;
-            if (modeIndex < 0 || modeIndex >= modes.length) {
+
+            System.out.print("Choice (number or mode name): ");
+            String modeInput = scanner.nextLine().trim().toUpperCase();
+
+            CargoMode selectedMode = null;
+
+            // Tentar por número
+            try {
+                int modeIndex = Integer.parseInt(modeInput) - 1;
+                if (modeIndex >= 0 && modeIndex < modes.length) {
+                    selectedMode = modes[modeIndex];
+                }
+            } catch (NumberFormatException ignored) {}
+
+            // Tentar por nome
+            if (selectedMode == null) {
+                try {
+                    selectedMode = CargoMode.valueOf(modeInput);
+                } catch (IllegalArgumentException ignored) {}
+            }
+
+            if (selectedMode == null) {
                 System.out.println("Invalid cargo mode.");
                 return;
             }
-            CargoMode selectedMode = modes[modeIndex];
 
             PointOfRoute point = new PointOfRoute(station, cargoes, selectedMode);
             route.addPoint(point);
