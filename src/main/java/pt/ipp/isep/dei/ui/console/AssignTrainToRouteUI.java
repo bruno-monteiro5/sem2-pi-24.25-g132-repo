@@ -2,7 +2,6 @@ package pt.ipp.isep.dei.ui.console;
 
 import pt.ipp.isep.dei.controller.AssignTrainToRouteController;
 import pt.ipp.isep.dei.domain.*;
-import pt.ipp.isep.dei.repository.Repositories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,78 +35,60 @@ public class AssignTrainToRouteUI implements Runnable {
         }
         Train selectedTrain = trains.get(trainIndex);
 
-        List<Route> routes = controller.getAllRoutes();
-        if (routes.isEmpty()) {
-            System.out.println("No routes available.");
-            return;
-        }
+        System.out.print("Enter a name for the new route: ");
+        String routeName = scanner.nextLine().trim();
 
-        System.out.println("Available Routes:");
-        for (int i = 0; i < routes.size(); i++) {
-            System.out.printf("%d. %s\n", i + 1, routes.get(i).getName());
-        }
+        Route route = new Route();
+        route.setName(routeName);
 
-        System.out.print("Select a route by number: ");
-        int routeIndex = Integer.parseInt(scanner.nextLine().trim()) - 1;
-        if (routeIndex < 0 || routeIndex >= routes.size()) {
-            System.out.println("Invalid route selection.");
-            return;
-        }
-        Route selectedRoute = routes.get(routeIndex);
+        boolean addMore;
+        do {
+            System.out.println("\n--- Add Point to Route ---");
 
-        System.out.println("\n--- Add Station and Cargos to Route ---");
+            System.out.print("Enter Station name: ");
+            String stationName = scanner.nextLine().trim();
+            Station station = controller.getAllStations().stream()
+                    .filter(s -> s.getName().equalsIgnoreCase(stationName))
+                    .findFirst().orElse(null);
 
-        System.out.print("Enter Station name: ");
-        String stationName = scanner.nextLine().trim();
-
-
-        Station station = Repositories.getInstance().getStationRepository().getStationByName(stationName);
-        if (station == null) {
-            System.out.println("Station not found.");
-            return;
-        }
-
-        List<Cargo> cargos = new ArrayList<>();
-        System.out.print("Enter number of cargo types to add: ");
-        int numCargos = Integer.parseInt(scanner.nextLine().trim());
-
-        for (int i = 0; i < numCargos; i++) {
-            System.out.print("Enter cargo type: ");
-            String type = scanner.nextLine().trim().toUpperCase();
-
-            System.out.print("Enter quantity: ");
-            int qty = Integer.parseInt(scanner.nextLine().trim());
-
-            try {
-                CargoType cargoType = CargoType.valueOf(type);
-                cargos.add(new Cargo(cargoType, qty, true));
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid cargo type: " + type);
+            if (station == null) {
+                System.out.println("Station not found.");
                 return;
             }
-        }
 
-        System.out.println("Select Cargo Mode:");
-        CargoMode[] modes = CargoMode.values();
-        for (int i = 0; i < modes.length; i++) {
-            System.out.printf("%d. %s\n", i + 1, modes[i]);
-        }
-        System.out.print("Choice: ");
-        int modeIndex = Integer.parseInt(scanner.nextLine().trim()) - 1;
-        if (modeIndex < 0 || modeIndex >= modes.length) {
-            System.out.println("Invalid cargo mode.");
-            return;
-        }
+            System.out.print("Enter cargo types to pick up (comma-separated): ");
+            String input = scanner.nextLine().trim();
+            String[] cargoStrings = input.split(",");
+            List<String> cargoes = new ArrayList<>();
+            for (String c : cargoStrings) {
+                if (!c.isBlank()) {
+                    cargoes.add(c.trim());
+                }
+            }
 
-        CargoMode selectedMode = modes[modeIndex];
-        selectedRoute.addStationWithCargoAndMode(station, cargos, selectedMode);
+            System.out.println("Select Cargo Mode:");
+            CargoMode[] modes = CargoMode.values();
+            for (int i = 0; i < modes.length; i++) {
+                System.out.printf("%d. %s\n", i + 1, modes[i]);
+            }
+            System.out.print("Choice: ");
+            int modeIndex = Integer.parseInt(scanner.nextLine().trim()) - 1;
+            if (modeIndex < 0 || modeIndex >= modes.length) {
+                System.out.println("Invalid cargo mode.");
+                return;
+            }
+            CargoMode selectedMode = modes[modeIndex];
 
-        boolean success = controller.assignTrainToRoute(selectedTrain.getId(), selectedRoute.getName());
+            PointOfRoute point = new PointOfRoute(station, cargoes, selectedMode);
+            route.addPoint(point);
 
-        if (success) {
-            System.out.println("Train successfully assigned to route.");
-        } else {
-            System.out.println("Failed to assign train to route.");
-        }
+            System.out.print("Add another point to the route? (Y/N): ");
+            String choice = scanner.nextLine().trim();
+            addMore = choice.equalsIgnoreCase("Y");
+
+        } while (addMore);
+
+        controller.assignRouteToTrain(selectedTrain, route);
+        System.out.println("Train successfully assigned to route: " + route.getName());
     }
 }

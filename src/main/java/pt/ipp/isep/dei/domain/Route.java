@@ -3,18 +3,11 @@ package pt.ipp.isep.dei.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Route {
     private String name;
     private Train assignedTrain;
-    private final List<Station> stations = new ArrayList<>();
-    private final List<List<Cargo>> cargosPerStation = new ArrayList<>();
-    private final List<CargoMode> cargoModes = new ArrayList<>();
-
-    public void addStationWithCargoAndMode(Station station, List<Cargo> cargos, CargoMode mode) {
-        this.stations.add(station);
-        this.cargosPerStation.add(new ArrayList<>(cargos));
-        this.cargoModes.add(mode);
-    }
+    private final List<PointOfRoute> points = new ArrayList<>();
 
     public void setAssignedTrain(Train train) {
         this.assignedTrain = train;
@@ -32,20 +25,12 @@ public class Route {
         return name;
     }
 
-    public List<Station> getStations() {
-        return new ArrayList<>(stations);
+    public void addPoint(PointOfRoute point) {
+        points.add(point);
     }
 
-    public List<List<Cargo>> getCargosPerStation() {
-        List<List<Cargo>> copy = new ArrayList<>();
-        for (List<Cargo> cargos : cargosPerStation) {
-            copy.add(new ArrayList<>(cargos));
-        }
-        return copy;
-    }
-
-    public List<CargoMode> getCargoModes() {
-        return new ArrayList<>(cargoModes);
+    public List<PointOfRoute> getPoints() {
+        return new ArrayList<>(points);
     }
 
     @Override
@@ -54,12 +39,13 @@ public class Route {
         sb.append("Route '").append(name).append("' assigned to train ID ");
         sb.append(assignedTrain != null ? assignedTrain.getId() : "none").append("\n");
 
-        for (int i = 0; i < stations.size(); i++) {
-            sb.append("Station: ").append(stations.get(i).getName())
-                    .append(" | Cargos: ").append(cargosPerStation.get(i))
-                    .append(" | Mode: ").append(cargoModes.get(i))
+        for (PointOfRoute point : points) {
+            sb.append("Station: ").append(point.getStation().getName())
+                    .append(" | Cargos: ").append(point.getCargoesToPick())
+                    .append(" | Mode: ").append(point.getCargoMode())
                     .append("\n");
         }
+
         return sb.toString();
     }
 }

@@ -7,6 +7,7 @@ public class Train {
     private final int id;
     private Locomotive locomotive;
     private List<Cargo> cargo;
+    private Route assignedRoute; // 🆕 Novo campo
 
     public Train(int id, Locomotive locomotive) {
         this.id = id;
@@ -31,6 +32,17 @@ public class Train {
 
     public void setCargo(List<Cargo> cargo) {
         this.cargo = cargo;
+    }
+
+    public void assignRoute(Route route) {
+        this.assignedRoute = route;
+        if (route != null) {
+            route.setAssignedTrain(this);
+        }
+    }
+
+    public Route getAssignedRoute() {
+        return assignedRoute;
     }
 
     @Override

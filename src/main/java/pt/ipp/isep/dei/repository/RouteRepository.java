@@ -9,8 +9,11 @@ public class RouteRepository {
 
     private final List<Route> routes = new ArrayList<>();
 
+
     public void save(Route route) {
-        routes.add(route);
+        if (!exists(route.getName())) {
+            routes.add(route);
+        }
     }
 
     public List<Route> getAll() {
@@ -27,6 +30,7 @@ public class RouteRepository {
     }
 
     public boolean exists(String name) {
-        return routes.stream().anyMatch(r -> r.getName().equalsIgnoreCase(name));
+        return routes.stream()
+                .anyMatch(route -> route.getName().equalsIgnoreCase(name));
     }
 }
