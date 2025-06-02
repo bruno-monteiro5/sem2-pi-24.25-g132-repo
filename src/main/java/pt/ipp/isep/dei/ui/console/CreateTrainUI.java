@@ -17,44 +17,30 @@ public class CreateTrainUI implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("\n=== Create Train with Multiple Locomotives ===");
+        System.out.println("\n=== Create Train ===");
 
-        List<Locomotive> availableLocos = locomotiveRepository.getLocomotives();
-        if (availableLocos.isEmpty()) {
+        List<Locomotive> locomotives = locomotiveRepository.getLocomotives();
+        if (locomotives.isEmpty()) {
             System.out.println("No locomotives available. Buy one first.");
             return;
         }
 
-        Train train = controller.createEmptyTrain();
-
-        boolean done = false;
-        while (!done) {
-            System.out.println("\nAvailable Locomotives:");
-            for (int i = 0; i < availableLocos.size(); i++) {
-                System.out.printf("%d. %s\n", i + 1, availableLocos.get(i));
-            }
-
-            System.out.print("Select a locomotive to add (or 0 to finish): ");
-            int choice = Integer.parseInt(scanner.nextLine().trim());
-
-            if (choice == 0) {
-                done = true;
-            } else if (choice < 1 || choice > availableLocos.size()) {
-                System.out.println("Invalid choice.");
-            } else {
-                Locomotive selected = availableLocos.get(choice - 1);
-                train.addLocomotive(selected);
-                availableLocos.remove(selected);
-                System.out.println("Locomotive added to train.");
-            }
+        System.out.println("Available Locomotives:");
+        for (int i = 0; i < locomotives.size(); i++) {
+            System.out.printf("%d. %s\n", i + 1, locomotives.get(i));
         }
 
-        if (train.getLocomotives().isEmpty()) {
-            System.out.println("No locomotives added. Train not created.");
+        System.out.print("Select a locomotive to use in a train: ");
+        int choice = Integer.parseInt(scanner.nextLine().trim());
+
+        if (choice < 1 || choice > locomotives.size()) {
+            System.out.println("Invalid choice.");
             return;
         }
 
-        controller.saveTrain(train);
+        Locomotive selectedLoco = locomotives.get(choice - 1);
+        Train train = controller.createTrainFromLocomotive(selectedLoco);
+
         System.out.println("\nTrain created successfully:");
         System.out.println(train);
     }

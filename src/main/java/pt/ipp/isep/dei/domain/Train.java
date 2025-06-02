@@ -1,30 +1,28 @@
 package pt.ipp.isep.dei.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Train {
 
     private final int id;
-    private final List<Locomotive> locomotives = new ArrayList<>();
+    private Locomotive locomotive;
     private List<Cargo> cargo;
 
-    public Train(int id) {
+    public Train(int id, Locomotive locomotive) {
         this.id = id;
+        this.locomotive = locomotive;
     }
 
     public int getId() {
         return id;
     }
 
-    public List<Locomotive> getLocomotives() {
-        return new ArrayList<>(locomotives);
+    public Locomotive getLocomotive() {
+        return locomotive;
     }
 
-    public void addLocomotive(Locomotive locomotive) {
-        if (locomotive != null) {
-            locomotives.add(locomotive);
-        }
+    public void setLocomotive(Locomotive locomotive) {
+        this.locomotive = locomotive;
     }
 
     public List<Cargo> getCargo() {
@@ -37,13 +35,6 @@ public class Train {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Train ID ").append(id).append(" - Locomotives: ");
-        for (Locomotive loco : locomotives) {
-            sb.append(loco.getType().getName()).append(", ");
-        }
-        if (!locomotives.isEmpty()) {
-            sb.setLength(sb.length() - 2); // remove última vírgula
-        }
-        return sb.toString();
+        return String.format("Train ID %d - Locomotive: %s", id, locomotive.getType().getName());
     }
 }
