@@ -24,10 +24,20 @@ public class ScenarioRepository {
         return scenarios;
     }
 
+    public void setActiveScenario(Scenario scenario) {
+        scenarioBeingUsed = scenario;
+        saveToFile();
+    }
+
+    public Scenario getActiveScenario() {
+        return scenarioBeingUsed;
+    }
+
     private void saveToFile() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
             out.writeObject(scenarios);
+            out.writeObject(scenarioBeingUsed); // guardar o cenário ativo
             out.close();
         } catch (IOException e) {
             System.out.println("Erro ao guardar cenários: " + e.getMessage());
@@ -39,13 +49,11 @@ public class ScenarioRepository {
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(FILE_NAME));
             scenarios = (ArrayList<Scenario>) in.readObject();
+            scenarioBeingUsed = (Scenario) in.readObject(); // restaurar o cenário ativo
             in.close();
         } catch (IOException | ClassNotFoundException e) {
             scenarios = new ArrayList<>();
+            scenarioBeingUsed = null;
         }
-    }
-
-    public void setActiveScenario(Scenario scenario) {
-        scenarioBeingUsed = scenario;
     }
 }

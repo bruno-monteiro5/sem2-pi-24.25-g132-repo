@@ -21,11 +21,8 @@ public class Repositories {
     private final LocomotiveRepository locomotiveRepository;
     private final TrainRepository trainRepository;
     private final RouteRepository routeRepository;
+    private final ScenarioRepository scenarioRepository; // ✅ instância única
 
-
-    /**
-     * The Singleton's constructor should always be private to prevent direct construction calls with the new operator.
-     */
     private Repositories() {
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
@@ -34,20 +31,15 @@ public class Repositories {
         stationRepository = StationRepository.getInstance();
         stationTypeRepository = new StationTypeRepository();
         playerRepository = new PlayerRepository();
-        this.buildingTypeRepository = new BuildingTypeRepository();
-        this.locomotiveTypeRepository = new LocomotiveTypeRepository();
+        buildingTypeRepository = new BuildingTypeRepository();
+        locomotiveTypeRepository = new LocomotiveTypeRepository();
         railwayLineRepository = new RailwayLineRepository();
-        this.locomotiveRepository = new LocomotiveRepository();
-        this.trainRepository = new TrainRepository();
-        this.routeRepository = new RouteRepository();
-
+        locomotiveRepository = new LocomotiveRepository();
+        trainRepository = new TrainRepository();
+        routeRepository = new RouteRepository();
+        scenarioRepository = new ScenarioRepository(); // ✅ corrigido
     }
 
-    /**
-     * This is the static method that controls the access to the singleton instance.
-     * On the first run, it creates a singleton object and places it into the static attribute.
-     * On subsequent runs, it returns the existing object stored in the static attribute.
-     */
     public static Repositories getInstance() {
         if (instance == null) {
             synchronized (Repositories.class) {
@@ -82,7 +74,7 @@ public class Repositories {
     }
 
     public ScenarioRepository getScenarioRepository() {
-        return new ScenarioRepository();
+        return scenarioRepository; // ✅ devolve sempre a mesma instância
     }
 
     public CityRepository getCityRepository() {
@@ -101,18 +93,23 @@ public class Repositories {
         return playerRepository;
     }
 
-    public LocomotiveRepository getLocomotiveRepository() {return locomotiveRepository;
+    public LocomotiveRepository getLocomotiveRepository() {
+        return locomotiveRepository;
     }
 
     public LocomotiveTypeRepository getLocomotiveTypeRepository() {
         return locomotiveTypeRepository;
     }
 
-    public TrainRepository getTrainRepository() { return trainRepository; }
+    public TrainRepository getTrainRepository() {
+        return trainRepository;
+    }
 
-    public RouteRepository getRouteRepository() { return routeRepository; }
+    public RouteRepository getRouteRepository() {
+        return routeRepository;
+    }
 
-    public RailwayLineRepository getRailwayLineRepository() { return railwayLineRepository; }
-
-
+    public RailwayLineRepository getRailwayLineRepository() {
+        return railwayLineRepository;
+    }
 }

@@ -94,10 +94,12 @@ public class CreateScenarioUI implements Runnable {
 
         // Guardar cenário
         if (controller.saveScenario(scenario)) {
+            Repositories.getInstance().getScenarioRepository().setActiveScenario(scenario);
             System.out.println("Cenário guardado com sucesso.");
         } else {
             System.out.println("Erro ao guardar o cenário.");
         }
+
     }
 
     @Override
