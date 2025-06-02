@@ -73,7 +73,7 @@ public class AssignTrainToRouteUI implements Runnable {
                 System.out.println("- " + type.name());
             }
 
-            System.out.print("Enter cargo types to pick up (comma-separated): ");
+            System.out.print("Enter cargo types to pick up : ");
             String input = scanner.nextLine().trim();
             String[] cargoStrings = input.split(",");
             List<String> cargoes = new ArrayList<>();
@@ -81,7 +81,7 @@ public class AssignTrainToRouteUI implements Runnable {
             for (String c : cargoStrings) {
                 String cleaned = c.trim().toUpperCase();
                 try {
-                    CargoType.valueOf(cleaned); // validação
+                    CargoType.valueOf(cleaned);
                     cargoes.add(cleaned);
                 } catch (IllegalArgumentException e) {
                     System.out.println("Invalid cargo type: " + cleaned);
@@ -100,7 +100,6 @@ public class AssignTrainToRouteUI implements Runnable {
 
             CargoMode selectedMode = null;
 
-            // Tentar por número
             try {
                 int modeIndex = Integer.parseInt(modeInput) - 1;
                 if (modeIndex >= 0 && modeIndex < modes.length) {
@@ -108,7 +107,6 @@ public class AssignTrainToRouteUI implements Runnable {
                 }
             } catch (NumberFormatException ignored) {}
 
-            // Tentar por nome
             if (selectedMode == null) {
                 try {
                     selectedMode = CargoMode.valueOf(modeInput);
