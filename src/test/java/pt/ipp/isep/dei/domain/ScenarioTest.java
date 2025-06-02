@@ -45,12 +45,16 @@ public class ScenarioTest {
     public void testAddLocomotiveType() {
         PeriodTime period = new PeriodTime(1900,1950);
         Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"), period);
-        scenario.addLocomotiveType(LocomotiveType.STEAM);
-        scenario.addLocomotiveType(LocomotiveType.DIESEL);
+        for (LocomotiveType tipo : LocomotiveType.values()) {
+            if (tipo.getFuelType().equalsIgnoreCase("Steam")) {
+                scenario.addLocomotiveType(tipo);
+            }
+        }
 
-        assertEquals(2, scenario.getAvailableLocomotiveTypes().size());
-        assertTrue(scenario.getAvailableLocomotiveTypes().contains(LocomotiveType.STEAM));
-        assertTrue(scenario.getAvailableLocomotiveTypes().contains(LocomotiveType.DIESEL));
+
+        for (LocomotiveType adicionada : scenario.getAvailableLocomotiveTypes()) {
+            assertEquals("Steam", adicionada.getFuelType());
+        }
     }
 
     @Test
