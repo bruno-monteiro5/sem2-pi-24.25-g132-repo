@@ -37,7 +37,7 @@ public class Repositories {
         locomotiveRepository = new LocomotiveRepository();
         trainRepository = new TrainRepository();
         routeRepository = new RouteRepository();
-        scenarioRepository = new ScenarioRepository(); // ✅ corrigido
+        scenarioRepository = new ScenarioRepository();
     }
 
     public static Repositories getInstance() {
@@ -74,7 +74,7 @@ public class Repositories {
     }
 
     public ScenarioRepository getScenarioRepository() {
-        return scenarioRepository; // ✅ devolve sempre a mesma instância
+        return scenarioRepository;
     }
 
     public CityRepository getCityRepository() {

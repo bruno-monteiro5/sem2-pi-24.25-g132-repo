@@ -20,7 +20,7 @@ public class AssignTrainToRouteController {
     }
 
     public List<Train> getAvailableTrains() {
-        return trainRepository.getAll(); // Ou filtrar os que ainda não têm rota, se quiseres
+        return trainRepository.getAll();
     }
 
     public List<Station> getAllStations() {
@@ -28,6 +28,6 @@ public class AssignTrainToRouteController {
     }
 
     public void assignRouteToTrain(Train train, Route route) {
-        train.assignRoute(route); // método que já criaste na classe Train
+        train.assignRoute(route);
     }
 }
