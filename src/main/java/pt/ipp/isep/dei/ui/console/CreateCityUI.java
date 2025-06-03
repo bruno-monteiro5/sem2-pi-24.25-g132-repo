@@ -15,42 +15,81 @@ import java.util.Scanner;
 
 /**
  * User interface for creating a new city via the console.
- * <p>
- * This class handles user input for city creation, including:
+ *
+ * <p>This class provides an interactive console-based interface for creating a new city.
+ * It manages user input for various details about the city, including:
  * <ul>
  *     <li>City name</li>
- *     <li>City coordinates (x, y)</li>
+ *     <li>Position (coordinates x, y)</li>
  *     <li>Map selection</li>
- *     <li>Automatic or manual house block assignment</li>
+ *     <li>Number of house blocks</li>
+ *     <li>Manual or automatic assignment of house blocks</li>
  * </ul>
- * It interacts with the {@link CreateCityController} to perform the creation logic.
+ * The {@link CreateCityUI} interacts with the {@link CreateCityController} to handle the business logic
+ * of creating and validating a city. Errors are handled gracefully with appropriate feedback to the user.
  * </p>
  */
+
 public class CreateCityUI implements Runnable {
 
     private final CreateCityController controller;
 
     /**
-     * Constructs a new CreateCityUI instance.
-     * Initializes the controller responsible for city creation.
+     * Constructs a new {@code CreateCityUI} instance.
+     *
+     * <p>This constructor initializes the controller, {@link CreateCityController}, which
+     * is responsible for connecting the user interface with the application's business logic
+     * for creating cities.</p>
      */
     public CreateCityUI() {
         controller = new CreateCityController();
     }
 
     /**
-     * Displays the city creation menu and handles user input.
-     * <p>
-     * Prompts the user for city details, including name, coordinates, map selection,
-     * and house block assignment. Validates the input and creates a new city using
-     * the controller.
-     * </p>
+     * Runs the city creation interactive console workflow.
+     *
+     * <p>This method displays a menu-like structure where the user provides details to create a city.
+     * Details requested include:
+     * <ul>
+     *     <li>The name of the city</li>
+     *     <li>The coordinates of the city (x and y)</li>
+     *     <li>The number of house blocks</li>
+     *     <li>A choice of map (selected from the existing maps in the application)</li>
+     *     <li>Whether house blocks should be added manually or automatically</li>
+     * </ul>
+     * The user is guided step-by-step, with validation for invalid inputs where required.
+     * Based on the user's preferences, the city is created (via the {@link CreateCityController})
+     * and the result is displayed back to the user.</p>
+     *
+     * <p>If errors occur during city creation (e.g., invalid name, duplicate city, or invalid positions),
+     * an error message is presented to the user, and the process may continue as needed.</p>
+     *
+     * <strong>Workflow Overview:</strong>
+     * <ol>
+     *     <li>Let the user select a map from a list of available maps</li>
+     *     <li>Ask for the city name</li>
+     *     <li>Request the city position (x, y)</li>
+     *     <li>Ask for the number of house blocks</li>
+     *     <li>Ask if house blocks should be assigned manually</li>
+     *     <li>If manual, request coordinates for each house block</li>
+     *     <li>Create the city and display its summary</li>
+     * </ol>
+     *
+     * <p>This method is the main entry point for this class, as it is triggered
+     * when an instance of {@link CreateCityUI} is executed in a separate thread or as part of the application flow.</p>
      */
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\n\n--- Create City ------------------------");
+
+        List<Map> maps = controller.getMaps();
+        int selectedMapIndex = Utils.showAndSelectIndex(maps, "\nSelect a map:");
+        if (selectedMapIndex == -1) {
+            return;
+        }
+        Map selectedMap = maps.get(selectedMapIndex);
 
         System.out.print("Enter city name: ");
         String name = scanner.nextLine().trim();
@@ -63,15 +102,6 @@ public class CreateCityUI implements Runnable {
 
         System.out.print("Enter the number of house blocks: ");
         int houseBlocks = scanner.nextInt();
-
-        List<Map> maps = controller.getMaps();
-        System.out.println("Select a map:");
-        int selectedMapIndex = Utils.showAndSelectIndex(maps, "\nAvailable Maps:");
-        if (selectedMapIndex == -1) {
-            return;
-        }
-
-        Map selectedMap = maps.get(selectedMapIndex);
 
         boolean manual = Utils.confirm("Do you want to add house blocks manually?(Y-yes/N-no)");
         List<Position> manualPositions = null;
@@ -113,9 +143,7 @@ public class CreateCityUI implements Runnable {
         try {
             City city = controller.createCity(selectedMap, name, new Position(x, y), houseBlocks, manual, manualPositions);
             System.out.println("City created successfully! Details:");
-            System.out.println("Name: " + city.getName());
-            System.out.println("Position: [" + city.getPosition().getX() + ", " + city.getPosition().getY() + "]");
-            System.out.println("House Blocks: " + city.getHouseBlocksList());
+            System.out.println(city);
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
