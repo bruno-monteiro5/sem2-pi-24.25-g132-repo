@@ -16,7 +16,7 @@ public class RailwayNetwork {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String header = reader.readLine();
         if (header == null) throw new IOException("Station CSV file is empty.");
-        String[] stationNames = header.split(";");
+        String[] stationNames = header.split(",");
 
         for (String name : stationNames) {
             Station station = new Station(name.trim());
