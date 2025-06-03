@@ -1,19 +1,13 @@
-/**
 package pt.ipp.isep.dei.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Route {
     private String name;
     private Train assignedTrain;
-    private final List<Station> stations = new ArrayList<>();
-    private final List<List<Cargo>> cargosPerStation = new ArrayList<>();
-
-    public void addStationWithCargo(Station station, List<Cargo> cargos) {
-        this.stations.add(station);
-        this.cargosPerStation.add(new ArrayList<>(cargos));
-    }
+    private final List<PointOfRoute> points = new ArrayList<>();
 
     public void setAssignedTrain(Train train) {
         this.assignedTrain = train;
@@ -31,27 +25,27 @@ public class Route {
         return name;
     }
 
-    public List<Station> getStations() {
-        return new ArrayList<>(stations);
+    public void addPoint(PointOfRoute point) {
+        points.add(point);
     }
 
-    public List<List<Cargo>> getCargosPerStation() {
-        List<List<Cargo>> copy = new ArrayList<>();
-        for (List<Cargo> cargos : cargosPerStation) {
-            copy.add(new ArrayList<>(cargos));
-        }
-        return copy;
+    public List<PointOfRoute> getPoints() {
+        return new ArrayList<>(points);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Route '").append(name).append("' assigned to train ID ");
-        sb.append(assignedTrain != null ? assignedTrain.getIde() : "none").append("\n");
+        sb.append(assignedTrain != null ? assignedTrain.getId() : "none").append("\n");
 
-        for (int i = 0; i < stations.size(); i++) {
-            sb.append("Station: ").append(stations.get(i).getName()).append(" with cargos: ").append(cargosPerStation.get(i)).append("\n");
+        for (PointOfRoute point : points) {
+            sb.append("Station: ").append(point.getStation().getName())
+                    .append(" | Cargos: ").append(point.getCargoesToPick())
+                    .append(" | Mode: ").append(point.getCargoMode())
+                    .append("\n");
         }
+
         return sb.toString();
     }
-} */
+}

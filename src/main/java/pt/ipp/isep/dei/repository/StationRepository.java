@@ -18,14 +18,16 @@ public class StationRepository {
     private final List<Station> stations;
 
     /**
-     * List of all stations managed by the repository.
+     * Constructs an empty station repository.
      */
     public StationRepository() {
         this.stations = new ArrayList<>();
     }
 
     /**
-     * Constructs an empty station repository.
+     * Singleton access to the StationRepository instance.
+     *
+     * @return the singleton instance.
      */
     public static StationRepository getInstance() {
         if (instance == null) {
@@ -48,8 +50,8 @@ public class StationRepository {
      *
      * @return a list of all stations.
      */
-    public List<Station> getStations() {
-        return this.stations;
+    public List<Station> getAll() {
+        return new ArrayList<>(stations); // defensivo
     }
 
     /**
@@ -59,13 +61,11 @@ public class StationRepository {
      * @return the matching station if found, or {@code null} otherwise.
      */
     public Station getStationByName(String name) {
-        for(Station s : this.stations) {
-            if(s.getName().equalsIgnoreCase(name)) {
+        for (Station s : this.stations) {
+            if (s.getName().equalsIgnoreCase(name)) {
                 return s;
             }
         }
         return null;
     }
-
-
 }

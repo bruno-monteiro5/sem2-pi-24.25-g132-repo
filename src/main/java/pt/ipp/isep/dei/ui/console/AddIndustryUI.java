@@ -2,98 +2,88 @@ package pt.ipp.isep.dei.ui.console;
 
 import pt.ipp.isep.dei.controller.AddIndustryController;
 import pt.ipp.isep.dei.domain.Industry;
+import pt.ipp.isep.dei.domain.IndustryData;
 import pt.ipp.isep.dei.domain.IndustryType;
 import pt.ipp.isep.dei.domain.Position;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * User Interface for adding a new Industry to the system.
- *
- * This is a console-based interface that allows the user to input the necessary
- * details for creating a new industry, such as its name, position, and type.
- * The class interacts with the {@link AddIndustryController} to process the inputs
- * and create an instance of {@link Industry}.
  */
 public class AddIndustryUI implements Runnable {
 
-    private AddIndustryController controller; // Controller to handle business logic
-    private Scanner scanner; // Scanner for user input
+    private final AddIndustryController controller;
+    private final Scanner scanner;
 
-    /**
-     * Constructs a new {@link AddIndustryUI} object and initializes
-     * the required components like the controller and scanner.
-     */
     public AddIndustryUI() {
         this.controller = new AddIndustryController();
         this.scanner = new Scanner(System.in);
     }
 
-    /**
-     * Runs the user interface for adding a new industry.
-     * <p>
-     * This method prompts the user to:
-     * - Input the industry's name.
-     * - Input the industry's geographical position in terms of x and y coordinates.
-     * - Choose the industry's type from a list of predefined options in {@link IndustryType}.
-     * <p>
-     * It handles input validation and communicates with the controller to create the industry.
-     */
     @Override
     public void run() {
         System.out.println("\n=== Add New Industry ===");
 
         try {
-            // Prompt for industry name
-            System.out.print("Industry name: ");
-            String name = scanner.nextLine().trim();
-
-            if (name.isEmpty()) {
-                System.out.println("Name cannot be empty.");
-                return;
-            }
-
-            // Input the industry's position
-            System.out.println("\nIndustry position:");
-            System.out.print("X coordinate: ");
-            int x = Integer.parseInt(scanner.nextLine().trim());
-
-            System.out.print("Y coordinate: ");
-            int y = Integer.parseInt(scanner.nextLine().trim());
-
-            // Create a Position object based on user input
-            Position position = new Position(x, y);
-
-            // Display available industry types
-            System.out.println("\nAvailable industry types:");
             IndustryType[] types = IndustryType.values();
-
-            // List the industry types with indexing
+            System.out.println("Select an industry type:");
             for (int i = 0; i < types.length; i++) {
-                System.out.println((i + 1) + ". " + types[i]);
+                System.out.printf("%d. %s\n", i + 1, types[i].getDescription());
             }
 
-            // Select industry type based on user input
-            System.out.print("\nSelect industry type (1-" + types.length + "): ");
+            System.out.print("Enter your choice: ");
             int typeChoice = Integer.parseInt(scanner.nextLine().trim());
 
             if (typeChoice < 1 || typeChoice > types.length) {
-                System.out.println("Invalid option.");
+                System.out.println("Invalid type choice.");
                 return;
             }
 
             IndustryType selectedType = types[typeChoice - 1];
 
-            // Create the Industry through the controller
-            Industry newIndustry = controller.addIndustry(name, position, selectedType);
+            List<IndustryData> filtered = new ArrayList<>();
+            for (IndustryData data : IndustryData.values()) {
+                if (data.getType() == selectedType) {
+                    filtered.add(data);
+                }
+            }
 
+            if (filtered.isEmpty()) {
+                System.out.println("No industries available for this type.");
+                return;
+            }
 
-            // Success message
+            System.out.println("\nAvailable "+ selectedType.getDescription() + ":");
+            for (int i = 0; i < filtered.size(); i++) {
+                System.out.printf("%d. %s\n", i + 1, filtered.get(i).getName());
+            }
+
+            System.out.print("Select an industry: ");
+            int industryChoice = Integer.parseInt(scanner.nextLine().trim());
+
+            if (industryChoice < 1 || industryChoice > filtered.size()) {
+                System.out.println("Invalid industry choice.");
+                return;
+            }
+
+            IndustryData selectedData = filtered.get(industryChoice - 1);
+
+            System.out.print("Enter X coordinate: ");
+            int x = Integer.parseInt(scanner.nextLine().trim());
+            System.out.print("Enter Y coordinate: ");
+            int y = Integer.parseInt(scanner.nextLine().trim());
+
+            Position pos = new Position(x, y);
+            Industry industry = controller.addIndustry(selectedData, pos);
+
             System.out.println("\nIndustry added successfully!");
-            System.out.println(newIndustry);
+            System.out.println(industry);
 
         } catch (NumberFormatException e) {
-            System.out.println("Error: Please enter a valid number for coordinates.");
+            System.out.println("Error: Please enter a valid number.");
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         } catch (Exception e) {

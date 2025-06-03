@@ -6,17 +6,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocomotiveRepository {
+
     private static final List<Locomotive> locomotives = new ArrayList<>();
 
-
     public List<Locomotive> getLocomotives() {
-        return locomotives;
+        return new ArrayList<>(locomotives); // devolve cópia para segurança
     }
 
     public boolean addLocomotive(Locomotive locomotive) {
-        if ( locomotives.contains(locomotive) || locomotive == null)
+        if (locomotive == null || locomotives.contains(locomotive)) {
             return false;
+        }
         return locomotives.add(locomotive);
     }
-}
 
+    public boolean locomotiveExists(int id) {
+        for (Locomotive loco : locomotives) {
+            if (loco.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void save(Locomotive locomotive) {
+        addLocomotive(locomotive);
+    }
+}

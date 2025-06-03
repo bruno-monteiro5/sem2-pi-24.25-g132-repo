@@ -80,7 +80,7 @@ public enum LocomotiveType {
         /**
          * The Gass g 10.
          */
-        GASS_G10("Gass G10",1910,19309,98000,38000,50521,"Steam","Above Average","Average",50),
+        GASS_G10("Gass G10",1910,1930,98000,38000,50521,"Steam","Above Average","Average",50),
         /**
          * The Prairie.
          */
