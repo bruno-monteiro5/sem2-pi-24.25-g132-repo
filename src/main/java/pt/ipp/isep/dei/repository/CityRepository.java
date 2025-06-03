@@ -59,10 +59,12 @@ public class CityRepository {
      * @return true if the position is already used, false otherwise.
      */
     public boolean positionInvalid(Position position) {
-        for(City c : cities){
-            if(c.getY() == position.getY() && c.getX() == position.getX())
-                return true;
+        for (City city : cities) {
+            if (city.getPosition().equals(position)) {
+                return true; // Conflict with an existing city's position
+            }
         }
         return false;
     }
+
 }

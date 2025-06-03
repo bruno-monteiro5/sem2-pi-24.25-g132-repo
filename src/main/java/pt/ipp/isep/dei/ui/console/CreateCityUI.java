@@ -61,38 +61,64 @@ public class CreateCityUI implements Runnable {
         System.out.println("Enter city y-coordinate: ");
         int y = scanner.nextInt();
 
-        int houseblocks = -1;
+        System.out.print("Enter the number of house blocks: ");
+        int houseBlocks = scanner.nextInt();
+
         List<Map> maps = controller.getMaps();
-        System.out.println("Enter the map number");
-        int chosen = Utils.showAndSelectIndex(maps, "\nMaps:");
-        if (chosen == -1) {
+        System.out.println("Select a map:");
+        int selectedMapIndex = Utils.showAndSelectIndex(maps, "\nAvailable Maps:");
+        if (selectedMapIndex == -1) {
             return;
         }
 
-        System.out.println("Debug: " + maps.get(chosen));
+        Map selectedMap = maps.get(selectedMapIndex);
 
-        boolean auto = Utils.confirm("Do you want to add house blocks automatically to this city?");
-        if (!auto) {
-            System.out.println("Enter the number of house blocks to add: ");
-            houseblocks = scanner.nextInt();
+        boolean manual = Utils.confirm("Do you want to add house blocks manually?(Y-yes/N-no)");
+        List<Position> manualPositions = null;
+
+        if (manual) {
+            manualPositions = new ArrayList<>();
+            for (int i = 0; i < houseBlocks; i++) {
+                int blockX = 0;
+                int blockY = 0;
+
+                boolean isValidX = false;
+                while (!isValidX) {
+                    System.out.print("Enter x-coordinate of house block #" + (i + 1) + ": ");
+                    try {
+                        blockX = scanner.nextInt();
+                        isValidX = true;
+                    } catch (Exception e) {
+                        System.out.println("Invalid input. Please enter a valid numeric value.");
+                        scanner.next();
+                    }
+                }
+
+                boolean isValidY = false;
+                while (!isValidY) {
+                    System.out.print("Enter y-coordinate of house block #" + (i + 1) + ": ");
+                    try {
+                        blockY = scanner.nextInt();
+                        isValidY = true;
+                    } catch (Exception e) {
+                        System.out.println("Invalid input. Please enter a valid numeric value.");
+                        scanner.next();
+                    }
+                }
+
+                manualPositions.add(new Position(blockX, blockY));
+            }
         }
 
         try {
-            Position position = new Position(x, y);
-            City city = controller.createCity(maps.get(chosen), name, position, houseblocks);
-            System.out.println("City created successfully!");
+            City city = controller.createCity(selectedMap, name, new Position(x, y), houseBlocks, manual, manualPositions);
+            System.out.println("City created successfully! Details:");
             System.out.println("Name: " + city.getName());
-            System.out.println("Coordinates: " + city.getX() + " ; " + city.getY());
-
-
-            System.out.println("House blocks: " + city.getNumberOfHouseBlocks());
+            System.out.println("Position: [" + city.getPosition().getX() + ", " + city.getPosition().getY() + "]");
+            System.out.println("House Blocks: " + city.getHouseBlocksList());
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
-
-        List<City> cities = controller.getCities();
-        System.out.println("Cities: " + cities);
-
 
     }
 }
