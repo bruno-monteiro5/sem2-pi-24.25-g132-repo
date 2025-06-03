@@ -9,6 +9,7 @@ public class Scenario implements Serializable {
     private Map map;
     private ArrayList<Port> ports;
     private ArrayList<LocomotiveType> availableLocomotiveTypes;
+    private ArrayList<Train> trains = new ArrayList<>();
     private double industryGenerationFactor;
     private PeriodTime periodTime;
 
@@ -45,6 +46,14 @@ public class Scenario implements Serializable {
 
     public ArrayList<LocomotiveType> getAvailableLocomotiveTypes() {
         return availableLocomotiveTypes;
+    }
+
+    public ArrayList<Train> getTrains() {
+        return trains;
+    }
+
+    public void addTrain(Train train) {
+        trains.add(train);
     }
 
     public void addLocomotiveType(LocomotiveType type) {
