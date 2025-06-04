@@ -315,4 +315,5 @@ class CityTest {
         assertTrue(str.contains("houseBlocks=1"));
         assertTrue(str.contains("HouseBlock"));
     }
+
 }
