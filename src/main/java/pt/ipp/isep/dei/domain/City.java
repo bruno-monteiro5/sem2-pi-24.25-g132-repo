@@ -68,7 +68,7 @@ public class City {
      */
     public City(String name, Position position, int houseBlocks) {
         if (!isValidName(name)) {
-            throw new IllegalArgumentException("City name must only contain letters and spaces.");
+            throw new IllegalArgumentException("City name must not be empty or null and it only can contain letters and spaces.");
         }
         if (position == null || position.getX() < 0 || position.getY() < 0) {
             throw new IllegalArgumentException("City position must be valid and positive.");
@@ -80,7 +80,7 @@ public class City {
         this.name = name;
         this.position = position;
         this.houseBlocks = houseBlocks;
-        this.houseBlocksList = new ArrayList<>(); // Initialize an empty list of house blocks.
+        this.houseBlocksList = new ArrayList<>();
     }
 
     public String getName() {
@@ -96,7 +96,7 @@ public class City {
     }
 
     public List<HouseBlock> getHouseBlocksList() {
-        return new ArrayList<>(houseBlocksList); // Return a copy to avoid direct modifications.
+        return new ArrayList<>(houseBlocksList);
     }
 
     /**
@@ -168,12 +168,11 @@ public class City {
      * @return {@code true} if the position is valid and within the map boundaries; {@code false} otherwise.
      */
     private boolean isValidBlockPosition(Position blockPosition, Map map) {
-        if (blockPosition.getX() < 0 || blockPosition.getX() >= map.getWidth() ||
-                blockPosition.getY() < 0 || blockPosition.getY() >= map.getHeight()) {
+        if (blockPosition.getX() < 0 || blockPosition.getX() >= map.getWidth() || blockPosition.getY() < 0 || blockPosition.getY() >= map.getHeight()) {
             return false;
         }
         if (blockPosition.equals(this.position)) {
-            return false; // Block cannot overlap with the city's position.
+            return false;
         }
         return true;
     }
@@ -216,5 +215,6 @@ public class City {
                 ", houseBlocksList=" + houseBlocksList +
                 '}';
     }
+
 
 }

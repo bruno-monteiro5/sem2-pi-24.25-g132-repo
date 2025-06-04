@@ -59,52 +59,154 @@ class CityTest {
     }
 
     /**
-     * Tests the creation of a City using a valid constructor.
+     * Tests the creation of a {@link City} object using a valid constructor.
      *
-     * <p>Asserts that the created {@link City} has the correct name, position,
-     * number of house blocks, and an empty list of house blocks.</p>
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>The city's name is correctly set to the provided value.</li>
+     *     <li>The city's position is correctly set to the provided position.</li>
+     *     <li>The number of house blocks is correctly set to the provided value.</li>
+     *     <li>The list of house blocks is initially empty.</li>
+     * </ul>
+     *
+     * @throws AssertionError if any of the properties of the {@link City} object
+     * do not match the expected values.
      */
+
     @Test
     void testValidConstructor() {
-        City city = new City("Lisboa", position, 3);
-        assertEquals("Lisboa", city.getName());
+        City city = new City("Lisbon", position, 3);
+        assertEquals("Lisbon", city.getName());
         assertEquals(position, city.getPosition());
         assertEquals(3, city.getHouseBlocks());
         assertTrue(city.getHouseBlocksList().isEmpty());
     }
 
     /**
-     * Tests the constructor of {@link City} with an invalid name.
+     * Tests that the {@link City#City(String, Position, int)} constructor throws an
+     * {@link IllegalArgumentException} when the city name contains numbers
+     * or special characters.
      *
-     * <p>Asserts that an {@link IllegalArgumentException} is thrown when the city name
-     * contains invalid characters (e.g., digits or special symbols).</p>
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>An exception is thrown.</li>
+     *     <li>The exception message must match the expected message.</li>
+     * </ul>
+     *
+     * @throws IllegalArgumentException if the city name contains invalid characters.
      */
     @Test
-    void testInvalidNameInConstructor() {
-        assertThrows(IllegalArgumentException.class, () -> new City("Porto123!", position, 2));
+    void testInvalidNameInConstructor_NumbersAndSpecialCharacters() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> new City("Porto123!", position, 2));
+        assertEquals("City name must not be empty or null and it only can contain letters and spaces.", exception.getMessage());
     }
 
     /**
-     * Tests the constructor of {@link City} with an invalid position.
+     * Tests that the {@link City#City(String, Position, int)} constructor throws an
+     * {@link IllegalArgumentException} when the city name is an empty string.
      *
-     * <p>Asserts that an {@link IllegalArgumentException} is thrown when the
-     * position is null or falls outside the valid boundaries.</p>
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>An exception is thrown.</li>
+     *     <li>The exception message must match the expected message.</li>
+     * </ul>
+     *
+     * @throws IllegalArgumentException if the city name is an empty string.
      */
     @Test
-    void testInvalidPositionInConstructor() {
-        assertThrows(IllegalArgumentException.class, () -> new City("Porto", new Position(-1, 3), 2));
-        assertThrows(IllegalArgumentException.class, () -> new City("Porto", null, 2));
+    void testInvalidNameInConstructor_EmptyName() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> new City("", new Position(1, 1), 3));
+        assertEquals("City name must not be empty or null and it only can contain letters and spaces.", exception.getMessage());
     }
 
     /**
-     * Tests the constructor of {@link City} with an invalid number of house blocks.
+     * Tests that the {@link City#City(String, Position, int)} constructor throws an
+     * {@link IllegalArgumentException} when the city name is {@code null}.
      *
-     * <p>Asserts that an {@link IllegalArgumentException} is thrown when
-     * the given number of house blocks is less than or equal to zero.</p>
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>An exception is thrown.</li>
+     *     <li>The exception message must match the expected message.</li>
+     * </ul>
+     *
+     * @throws IllegalArgumentException if the city name is {@code null}.
+     */
+    @Test
+    void testInvalidNameInConstructor_NullName() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> new City(null, new Position(1, 1), 3));
+        assertEquals("City name must not be empty or null and it only can contain letters and spaces.", exception.getMessage());
+    }
+
+    /**
+     * Tests that the {@link City#City(String, Position, int)} constructor throws an
+     * {@link IllegalArgumentException} when the city position has an invalid X coordinate (negative value).
+     *
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>An exception is thrown.</li>
+     *     <li>The exception message must match the expected message.</li>
+     * </ul>
+     *
+     * @throws IllegalArgumentException if the X coordinate of the city position is negative.
+     */
+    @Test
+    void testInvalidPositionXNegativeInConstructor() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> new City("Porto", new Position(-1, 3), 2));
+        assertEquals("City position must be valid and positive.", exception.getMessage());
+    }
+
+    /**
+     * Tests that the {@link City#City(String, Position, int)} constructor throws an
+     * {@link IllegalArgumentException} when the city position has an invalid Y coordinate (negative value).
+     *
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>An exception is thrown.</li>
+     *     <li>The exception message must match the expected message.</li>
+     * </ul>
+     *
+     * @throws IllegalArgumentException if the Y coordinate of the city position is negative.
+     */
+    @Test
+    void testInvalidPositionYNegativeInConstructor() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> new City("Porto", new Position(1, -3), 2));
+        assertEquals("City position must be valid and positive.", exception.getMessage());
+    }
+
+    /**
+     * Tests that the {@link City#City(String, Position, int)} constructor throws an
+     * {@link IllegalArgumentException} when the city position is null.
+     *
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>An exception is thrown.</li>
+     *     <li>The exception message must match the expected message.</li>
+     * </ul>
+     *
+     * @throws IllegalArgumentException if the city position is null.
+     */
+    @Test
+    void testInvalidPositionNullInConstructor() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> new City("Porto", null, 2));
+        assertEquals("City position must be valid and positive.", exception.getMessage());
+    }
+
+    /**
+     * Tests that the {@link City#City(String, Position, int)} constructor throws an
+     * {@link IllegalArgumentException} when the number of house blocks is not positive.
+     *
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>An exception is thrown.</li>
+     *     <li>The exception message must match the expected message.</li>
+     * </ul>
+     *
+     * @throws IllegalArgumentException if the number of house blocks is zero or negative.
      */
     @Test
     void testInvalidHouseBlocksInConstructor() {
-        assertThrows(IllegalArgumentException.class, () -> new City("Valongo", position, 0));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> new City("Valongo", position, 0));
+        assertEquals("Number of house blocks must be positive.", exception.getMessage());
     }
 
     /**
@@ -126,24 +228,58 @@ class CityTest {
     }
 
     /**
-     * Tests adding house blocks manually with an invalid size.
+     * Tests that the {@link City#addHouseBlocksManually(List)} method throws an
+     * {@link IllegalArgumentException} when the size of the provided list of positions
+     * does not match the number of house blocks required by the city.
      *
-     * <p>Asserts that an {@link IllegalArgumentException} is thrown when the size of
-     * the provided list of positions does not match the expected number of house blocks.</p>
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>An exception is thrown.</li>
+     *     <li>The exception message indicates that the number of positions does not match
+     *         the house block count.</li>
+     * </ul>
+     *
+     * @throws IllegalArgumentException if the provided list of positions has an incorrect size.
      */
     @Test
     void testAddHouseBlocksManually_InvalidSize() {
         City city = new City("Coimbra", position, 3);
         List<Position> wrongList = Collections.singletonList(new Position(1, 1));
-        assertThrows(IllegalArgumentException.class, () -> city.addHouseBlocksManually(wrongList));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> city.addHouseBlocksManually(wrongList));
+        assertEquals("The number of house block positions must match the house block count.", exception.getMessage());
     }
 
     /**
-     * Tests generating house blocks automatically.
+     * Tests that the {@link City#addHouseBlocksManually(List)} method throws an
+     * {@link IllegalArgumentException} when the provided list of positions is {@code null}.
      *
-     * <p>Asserts that the method creates the correct number of house blocks at positions
-     * within the map's boundaries and avoids overlapping the city's main position.</p>
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>An exception is thrown.</li>
+     *     <li>The exception message indicates that the number of positions must match
+     *         the house block count, even if the positions are invalid (e.g., null).</li>
+     * </ul>
+     *
+     * @throws IllegalArgumentException if the provided list of positions is {@code null}.
      */
+    @Test
+    void testAddHouseBlocksManually_NullPositions() {
+        City city = new City("Braga", new Position(2, 2), 2);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> city.addHouseBlocksManually(null));
+        assertEquals("The number of house block positions must match the house block count.", exception.getMessage());
+    }
+
+    /**
+     * Tests generating house blocks automatically based on the city's position and the map's boundaries.
+     *
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>The city generates the correct number of house blocks.</li>
+     *     <li>Each house block is placed within the map's boundaries.</li>
+     *     <li>No house block overlaps the city's main position.</li>
+     * </ul>
+     */
+
     @Test
     void testGenerateHouseBlocksAutomatically() {
         City city = new City("New York", position, 5);
@@ -160,10 +296,14 @@ class CityTest {
     }
 
     /**
-     * Tests the string representation of a city.
+     * Tests that the string representation of a {@link City} object contains all relevant details.
      *
-     * <p>Asserts that the {@link City#toString()} includes all relevant city details,
-     * such as the name, position, and house block information.</p>
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>The string includes the city's name.</li>
+     *     <li>The string includes the city's position.</li>
+     *     <li>The string includes the number of house blocks and their details.</li>
+     * </ul>
      */
     @Test
     void testToStringIncludesAllDetails() {
