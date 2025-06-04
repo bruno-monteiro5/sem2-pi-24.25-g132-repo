@@ -6,7 +6,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="pt.ipp.isep.dei.ui.MainMenu"
+            fx:controller="pt.ipp.isep.dei.ui.MainMenuController"
             prefHeight="400.0" prefWidth="600.0">
 
     <VBox alignment="CENTER" spacing="15" layoutX="200" layoutY="100">

@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-public class MainMenu {
+public class MainMenuController {
 
     @FXML
     public void handleBuildStation(ActionEvent event) {
