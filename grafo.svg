@@ -1,0 +1,372 @@
+<svg width="410px" height="1662px"
+ viewBox="0.00 0.00 410.43 1661.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.0 1.0) rotate(0.0) translate(4.0 1657.6)">
+<title>railway</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-1657.6 406.43,-1657.6 406.43,4 -4,4"/>
+<!-- S_Kyle_of_Lochalsh -->
+<g id="node1" class="node">
+<title>S_Kyle_of_Lochalsh</title>
+<ellipse fill="none" stroke="black" cx="257.3" cy="-1635.6" rx="93.2" ry="18"/>
+<text text-anchor="middle" x="257.3" y="-1631.4" font-family="Times,serif" font-size="14.00">S_Kyle_of_Lochalsh</text>
+</g>
+<!-- D_Attadale -->
+<g id="node2" class="node">
+<title>D_Attadale</title>
+<ellipse fill="none" stroke="black" cx="257.3" cy="-1546.8" rx="55.59" ry="18"/>
+<text text-anchor="middle" x="257.3" y="-1542.6" font-family="Times,serif" font-size="14.00">D_Attadale</text>
+</g>
+<!-- S_Kyle_of_Lochalsh&#45;&gt;D_Attadale -->
+<g id="edge1" class="edge">
+<title>S_Kyle_of_Lochalsh&#45;&gt;D_Attadale</title>
+<path fill="none" stroke="black" d="M257.3,-1617.45C257.3,-1605.32 257.3,-1588.82 257.3,-1574.92"/>
+<polygon fill="black" stroke="black" points="260.8,-1574.91 257.3,-1564.91 253.8,-1574.91 260.8,-1574.91"/>
+<text text-anchor="middle" x="273.24" y="-1587" font-family="Times,serif" font-size="14.00">27km</text>
+</g>
+<!-- S_Dingwall -->
+<g id="node3" class="node">
+<title>S_Dingwall</title>
+<ellipse fill="none" stroke="black" cx="257.3" cy="-1458" rx="57.34" ry="18"/>
+<text text-anchor="middle" x="257.3" y="-1453.8" font-family="Times,serif" font-size="14.00">S_Dingwall</text>
+</g>
+<!-- D_Attadale&#45;&gt;S_Dingwall -->
+<g id="edge2" class="edge">
+<title>D_Attadale&#45;&gt;S_Dingwall</title>
+<path fill="none" stroke="black" d="M257.3,-1528.65C257.3,-1516.52 257.3,-1500.02 257.3,-1486.12"/>
+<polygon fill="black" stroke="black" points="260.8,-1486.11 257.3,-1476.11 253.8,-1486.11 260.8,-1486.11"/>
+<text text-anchor="middle" x="276.74" y="-1498.2" font-family="Times,serif" font-size="14.00">109km</text>
+</g>
+<!-- T_Inverness -->
+<g id="node4" class="node">
+<title>T_Inverness</title>
+<ellipse fill="none" stroke="black" cx="194.3" cy="-1369.2" rx="58.53" ry="18"/>
+<text text-anchor="middle" x="194.3" y="-1365" font-family="Times,serif" font-size="14.00">T_Inverness</text>
+</g>
+<!-- S_Dingwall&#45;&gt;T_Inverness -->
+<g id="edge3" class="edge">
+<title>S_Dingwall&#45;&gt;T_Inverness</title>
+<path fill="none" stroke="black" d="M245.15,-1440.26C235.91,-1427.54 223.05,-1409.81 212.57,-1395.37"/>
+<polygon fill="black" stroke="black" points="215.11,-1392.92 206.41,-1386.88 209.45,-1397.03 215.11,-1392.92"/>
+<text text-anchor="middle" x="248.24" y="-1409.4" font-family="Times,serif" font-size="14.00">25km</text>
+</g>
+<!-- S_Ardgay -->
+<g id="node5" class="node">
+<title>S_Ardgay</title>
+<ellipse fill="none" stroke="black" cx="329.3" cy="-1369.2" rx="50.38" ry="18"/>
+<text text-anchor="middle" x="329.3" y="-1365" font-family="Times,serif" font-size="14.00">S_Ardgay</text>
+</g>
+<!-- S_Dingwall&#45;&gt;S_Ardgay -->
+<g id="edge4" class="edge">
+<title>S_Dingwall&#45;&gt;S_Ardgay</title>
+<path fill="none" stroke="black" d="M271.18,-1440.26C281.9,-1427.33 296.91,-1409.25 308.98,-1394.69"/>
+<polygon fill="black" stroke="black" points="312.01,-1396.52 315.7,-1386.59 306.62,-1392.05 312.01,-1396.52"/>
+<text text-anchor="middle" x="316.24" y="-1409.4" font-family="Times,serif" font-size="14.00">42km</text>
+</g>
+<!-- D_Aviemore -->
+<g id="node8" class="node">
+<title>D_Aviemore</title>
+<ellipse fill="none" stroke="black" cx="194.3" cy="-1280.4" rx="61.4" ry="18"/>
+<text text-anchor="middle" x="194.3" y="-1276.2" font-family="Times,serif" font-size="14.00">D_Aviemore</text>
+</g>
+<!-- T_Inverness&#45;&gt;D_Aviemore -->
+<g id="edge7" class="edge">
+<title>T_Inverness&#45;&gt;D_Aviemore</title>
+<path fill="none" stroke="black" d="M194.3,-1351.05C194.3,-1338.92 194.3,-1322.42 194.3,-1308.52"/>
+<polygon fill="black" stroke="black" points="197.8,-1308.51 194.3,-1298.51 190.8,-1308.51 197.8,-1308.51"/>
+<text text-anchor="middle" x="210.24" y="-1320.6" font-family="Times,serif" font-size="14.00">48km</text>
+</g>
+<!-- S_Elgin -->
+<g id="node9" class="node">
+<title>S_Elgin</title>
+<ellipse fill="none" stroke="black" cx="70.3" cy="-1280.4" rx="42.31" ry="18"/>
+<text text-anchor="middle" x="70.3" y="-1276.2" font-family="Times,serif" font-size="14.00">S_Elgin</text>
+</g>
+<!-- T_Inverness&#45;&gt;S_Elgin -->
+<g id="edge8" class="edge">
+<title>T_Inverness&#45;&gt;S_Elgin</title>
+<path fill="none" stroke="red" d="M171.84,-1352.48C151.63,-1338.33 121.8,-1317.45 99.7,-1301.98"/>
+<polygon fill="red" stroke="red" points="101.54,-1299 91.34,-1296.13 97.53,-1304.74 101.54,-1299"/>
+<text text-anchor="middle" x="160.24" y="-1320.6" font-family="Times,serif" font-size="14.00">61km</text>
+</g>
+<!-- D_Helmsdale -->
+<g id="node6" class="node">
+<title>D_Helmsdale</title>
+<ellipse fill="none" stroke="black" cx="338.3" cy="-1280.4" rx="64.26" ry="18"/>
+<text text-anchor="middle" x="338.3" y="-1276.2" font-family="Times,serif" font-size="14.00">D_Helmsdale</text>
+</g>
+<!-- S_Ardgay&#45;&gt;D_Helmsdale -->
+<g id="edge5" class="edge">
+<title>S_Ardgay&#45;&gt;D_Helmsdale</title>
+<path fill="none" stroke="black" d="M331.07,-1351.05C332.33,-1338.92 334.04,-1322.42 335.48,-1308.52"/>
+<polygon fill="black" stroke="black" points="338.97,-1308.82 336.52,-1298.51 332.01,-1308.1 338.97,-1308.82"/>
+<text text-anchor="middle" x="351.24" y="-1320.6" font-family="Times,serif" font-size="14.00">63km</text>
+</g>
+<!-- S_Wick -->
+<g id="node7" class="node">
+<title>S_Wick</title>
+<ellipse fill="none" stroke="black" cx="338.3" cy="-1191.6" rx="42.3" ry="18"/>
+<text text-anchor="middle" x="338.3" y="-1187.4" font-family="Times,serif" font-size="14.00">S_Wick</text>
+</g>
+<!-- D_Helmsdale&#45;&gt;S_Wick -->
+<g id="edge6" class="edge">
+<title>D_Helmsdale&#45;&gt;S_Wick</title>
+<path fill="none" stroke="black" d="M338.3,-1262.25C338.3,-1250.12 338.3,-1233.62 338.3,-1219.72"/>
+<polygon fill="black" stroke="black" points="341.8,-1219.71 338.3,-1209.71 334.8,-1219.71 341.8,-1219.71"/>
+<text text-anchor="middle" x="354.24" y="-1231.8" font-family="Times,serif" font-size="14.00">56km</text>
+</g>
+<!-- S_Kingussie -->
+<g id="node16" class="node">
+<title>S_Kingussie</title>
+<ellipse fill="none" stroke="black" cx="196.3" cy="-1191.6" rx="59.71" ry="18"/>
+<text text-anchor="middle" x="196.3" y="-1187.4" font-family="Times,serif" font-size="14.00">S_Kingussie</text>
+</g>
+<!-- D_Aviemore&#45;&gt;S_Kingussie -->
+<g id="edge15" class="edge">
+<title>D_Aviemore&#45;&gt;S_Kingussie</title>
+<path fill="none" stroke="black" d="M194.69,-1262.25C194.97,-1250.12 195.35,-1233.62 195.67,-1219.72"/>
+<polygon fill="black" stroke="black" points="199.17,-1219.79 195.9,-1209.71 192.17,-1219.63 199.17,-1219.79"/>
+<text text-anchor="middle" x="212.24" y="-1231.8" font-family="Times,serif" font-size="14.00">21km</text>
+</g>
+<!-- T_Aberdeen -->
+<g id="node10" class="node">
+<title>T_Aberdeen</title>
+<ellipse fill="none" stroke="black" cx="59.3" cy="-1191.6" rx="59.09" ry="18"/>
+<text text-anchor="middle" x="59.3" y="-1187.4" font-family="Times,serif" font-size="14.00">T_Aberdeen</text>
+</g>
+<!-- S_Elgin&#45;&gt;T_Aberdeen -->
+<g id="edge9" class="edge">
+<title>S_Elgin&#45;&gt;T_Aberdeen</title>
+<path fill="none" stroke="red" d="M68.12,-1262.25C66.59,-1250.12 64.49,-1233.62 62.73,-1219.72"/>
+<polygon fill="red" stroke="red" points="66.19,-1219.19 61.46,-1209.71 59.25,-1220.07 66.19,-1219.19"/>
+<text text-anchor="middle" x="85.74" y="-1231.8" font-family="Times,serif" font-size="14.00">106km</text>
+</g>
+<!-- S_Arbroath -->
+<g id="node11" class="node">
+<title>S_Arbroath</title>
+<ellipse fill="none" stroke="black" cx="65.3" cy="-1102.8" rx="56.18" ry="18"/>
+<text text-anchor="middle" x="65.3" y="-1098.6" font-family="Times,serif" font-size="14.00">S_Arbroath</text>
+</g>
+<!-- T_Aberdeen&#45;&gt;S_Arbroath -->
+<g id="edge10" class="edge">
+<title>T_Aberdeen&#45;&gt;S_Arbroath</title>
+<path fill="none" stroke="red" d="M60.48,-1173.45C61.32,-1161.32 62.46,-1144.82 63.42,-1130.92"/>
+<polygon fill="red" stroke="red" points="66.92,-1131.13 64.11,-1120.91 59.93,-1130.65 66.92,-1131.13"/>
+<text text-anchor="middle" x="79.24" y="-1143" font-family="Times,serif" font-size="14.00">87km</text>
+</g>
+<!-- T_Dundee -->
+<g id="node12" class="node">
+<title>T_Dundee</title>
+<ellipse fill="none" stroke="black" cx="66.3" cy="-1014" rx="51.59" ry="18"/>
+<text text-anchor="middle" x="66.3" y="-1009.8" font-family="Times,serif" font-size="14.00">T_Dundee</text>
+</g>
+<!-- S_Arbroath&#45;&gt;T_Dundee -->
+<g id="edge11" class="edge">
+<title>S_Arbroath&#45;&gt;T_Dundee</title>
+<path fill="none" stroke="red" d="M65.49,-1084.65C65.63,-1072.52 65.82,-1056.02 65.98,-1042.12"/>
+<polygon fill="red" stroke="red" points="69.48,-1042.15 66.1,-1032.11 62.48,-1042.07 69.48,-1042.15"/>
+<text text-anchor="middle" x="82.24" y="-1054.2" font-family="Times,serif" font-size="14.00">27km</text>
+</g>
+<!-- D_Inverkeithing -->
+<g id="node13" class="node">
+<title>D_Inverkeithing</title>
+<ellipse fill="none" stroke="black" cx="89.3" cy="-871.2" rx="74.72" ry="18"/>
+<text text-anchor="middle" x="89.3" y="-867" font-family="Times,serif" font-size="14.00">D_Inverkeithing</text>
+</g>
+<!-- T_Dundee&#45;&gt;D_Inverkeithing -->
+<g id="edge12" class="edge">
+<title>T_Dundee&#45;&gt;D_Inverkeithing</title>
+<path fill="none" stroke="black" d="M69.07,-996.02C72.99,-972.02 80.19,-927.94 84.86,-899.36"/>
+<polygon fill="black" stroke="black" points="88.35,-899.68 86.51,-889.24 81.45,-898.55 88.35,-899.68"/>
+<text text-anchor="middle" x="91.24" y="-965.4" font-family="Times,serif" font-size="14.00">70km</text>
+</g>
+<!-- T_Edinburgh -->
+<g id="node14" class="node">
+<title>T_Edinburgh</title>
+<ellipse fill="none" stroke="black" cx="93.3" cy="-728.4" rx="62.57" ry="18"/>
+<text text-anchor="middle" x="93.3" y="-724.2" font-family="Times,serif" font-size="14.00">T_Edinburgh</text>
+</g>
+<!-- D_Inverkeithing&#45;&gt;T_Edinburgh -->
+<g id="edge13" class="edge">
+<title>D_Inverkeithing&#45;&gt;T_Edinburgh</title>
+<path fill="none" stroke="black" d="M89.79,-852.94C90.47,-828.97 91.71,-785.38 92.51,-756.9"/>
+<polygon fill="black" stroke="black" points="96.02,-756.9 92.8,-746.81 89.02,-756.7 96.02,-756.9"/>
+<text text-anchor="middle" x="107.24" y="-813" font-family="Times,serif" font-size="14.00">23km</text>
+</g>
+<!-- S_Bathgate -->
+<g id="node15" class="node">
+<title>S_Bathgate</title>
+<ellipse fill="none" stroke="black" cx="93.3" cy="-639.6" rx="55.62" ry="18"/>
+<text text-anchor="middle" x="93.3" y="-635.4" font-family="Times,serif" font-size="14.00">S_Bathgate</text>
+</g>
+<!-- T_Edinburgh&#45;&gt;S_Bathgate -->
+<g id="edge14" class="edge">
+<title>T_Edinburgh&#45;&gt;S_Bathgate</title>
+<path fill="none" stroke="red" d="M93.3,-710.25C93.3,-698.12 93.3,-681.62 93.3,-667.72"/>
+<polygon fill="red" stroke="red" points="96.8,-667.71 93.3,-657.71 89.8,-667.71 96.8,-667.71"/>
+<text text-anchor="middle" x="109.24" y="-679.8" font-family="Times,serif" font-size="14.00">35km</text>
+</g>
+<!-- S_Airdrie -->
+<g id="node23" class="node">
+<title>S_Airdrie</title>
+<ellipse fill="none" stroke="black" cx="104.3" cy="-550.8" rx="49.23" ry="18"/>
+<text text-anchor="middle" x="104.3" y="-546.6" font-family="Times,serif" font-size="14.00">S_Airdrie</text>
+</g>
+<!-- S_Bathgate&#45;&gt;S_Airdrie -->
+<g id="edge24" class="edge">
+<title>S_Bathgate&#45;&gt;S_Airdrie</title>
+<path fill="none" stroke="red" d="M95.47,-621.45C97.01,-609.32 99.1,-592.82 100.86,-578.92"/>
+<polygon fill="red" stroke="red" points="104.34,-579.27 102.13,-568.91 97.4,-578.39 104.34,-579.27"/>
+<text text-anchor="middle" x="116.24" y="-591" font-family="Times,serif" font-size="14.00">26km</text>
+</g>
+<!-- T_Perth -->
+<g id="node17" class="node">
+<title>T_Perth</title>
+<ellipse fill="none" stroke="black" cx="195.3" cy="-1102.8" rx="42.29" ry="18"/>
+<text text-anchor="middle" x="195.3" y="-1098.6" font-family="Times,serif" font-size="14.00">T_Perth</text>
+</g>
+<!-- S_Kingussie&#45;&gt;T_Perth -->
+<g id="edge16" class="edge">
+<title>S_Kingussie&#45;&gt;T_Perth</title>
+<path fill="none" stroke="black" d="M196.1,-1173.45C195.96,-1161.32 195.77,-1144.82 195.61,-1130.92"/>
+<polygon fill="black" stroke="black" points="199.11,-1130.87 195.49,-1120.91 192.11,-1130.95 199.11,-1130.87"/>
+<text text-anchor="middle" x="215.74" y="-1143" font-family="Times,serif" font-size="14.00">115km</text>
+</g>
+<!-- T_Perth&#45;&gt;T_Dundee -->
+<g id="edge18" class="edge">
+<title>T_Perth&#45;&gt;T_Dundee</title>
+<path fill="none" stroke="red" d="M173.7,-1087.27C152.97,-1073.32 121.41,-1052.09 97.86,-1036.24"/>
+<polygon fill="red" stroke="red" points="99.52,-1033.13 89.26,-1030.45 95.61,-1038.94 99.52,-1033.13"/>
+<text text-anchor="middle" x="159.24" y="-1054.2" font-family="Times,serif" font-size="14.00">36km</text>
+</g>
+<!-- S_Dunblane -->
+<g id="node18" class="node">
+<title>S_Dunblane</title>
+<ellipse fill="none" stroke="black" cx="195.3" cy="-1014" rx="58.55" ry="18"/>
+<text text-anchor="middle" x="195.3" y="-1009.8" font-family="Times,serif" font-size="14.00">S_Dunblane</text>
+</g>
+<!-- T_Perth&#45;&gt;S_Dunblane -->
+<g id="edge17" class="edge">
+<title>T_Perth&#45;&gt;S_Dunblane</title>
+<path fill="none" stroke="red" d="M195.3,-1084.65C195.3,-1072.52 195.3,-1056.02 195.3,-1042.12"/>
+<polygon fill="red" stroke="red" points="198.8,-1042.11 195.3,-1032.11 191.8,-1042.11 198.8,-1042.11"/>
+<text text-anchor="middle" x="211.24" y="-1054.2" font-family="Times,serif" font-size="14.00">45km</text>
+</g>
+<!-- T_Stirling -->
+<g id="node19" class="node">
+<title>T_Stirling</title>
+<ellipse fill="none" stroke="black" cx="193.3" cy="-925.2" rx="50.98" ry="18"/>
+<text text-anchor="middle" x="193.3" y="-921" font-family="Times,serif" font-size="14.00">T_Stirling</text>
+</g>
+<!-- S_Dunblane&#45;&gt;T_Stirling -->
+<g id="edge19" class="edge">
+<title>S_Dunblane&#45;&gt;T_Stirling</title>
+<path fill="none" stroke="red" d="M194.9,-995.85C194.62,-983.72 194.24,-967.22 193.92,-953.32"/>
+<polygon fill="red" stroke="red" points="197.42,-953.23 193.69,-943.31 190.42,-953.39 197.42,-953.23"/>
+<text text-anchor="middle" x="207.74" y="-965.4" font-family="Times,serif" font-size="14.00">9km</text>
+</g>
+<!-- D_Croy -->
+<g id="node20" class="node">
+<title>D_Croy</title>
+<ellipse fill="none" stroke="black" cx="185.3" cy="-817.2" rx="42.3" ry="18"/>
+<text text-anchor="middle" x="185.3" y="-813" font-family="Times,serif" font-size="14.00">D_Croy</text>
+</g>
+<!-- T_Stirling&#45;&gt;D_Croy -->
+<g id="edge20" class="edge">
+<title>T_Stirling&#45;&gt;D_Croy</title>
+<path fill="none" stroke="red" d="M192.01,-907.17C190.76,-890.58 188.83,-865.08 187.37,-845.63"/>
+<polygon fill="red" stroke="red" points="190.85,-845.25 186.6,-835.54 183.87,-845.78 190.85,-845.25"/>
+<text text-anchor="middle" x="207.24" y="-867" font-family="Times,serif" font-size="14.00">27km</text>
+</g>
+<!-- D_Croy&#45;&gt;T_Edinburgh -->
+<g id="edge22" class="edge">
+<title>D_Croy&#45;&gt;T_Edinburgh</title>
+<path fill="none" stroke="black" d="M164.06,-801.33C156.05,-795.39 147.05,-788.28 139.41,-781.2 130.35,-772.8 121.14,-762.82 113.37,-753.86"/>
+<polygon fill="black" stroke="black" points="115.82,-751.35 106.67,-746.01 110.49,-755.89 115.82,-751.35"/>
+<text text-anchor="middle" x="156.24" y="-768.6" font-family="Times,serif" font-size="14.00">66km</text>
+</g>
+<!-- T_Glasgow_Queen_Street -->
+<g id="node21" class="node">
+<title>T_Glasgow_Queen_Street</title>
+<ellipse fill="none" stroke="black" cx="146.3" cy="-462" rx="113.45" ry="18"/>
+<text text-anchor="middle" x="146.3" y="-457.8" font-family="Times,serif" font-size="14.00">T_Glasgow_Queen_Street</text>
+</g>
+<!-- D_Croy&#45;&gt;T_Glasgow_Queen_Street -->
+<g id="edge21" class="edge">
+<title>D_Croy&#45;&gt;T_Glasgow_Queen_Street</title>
+<path fill="none" stroke="red" d="M185.3,-798.91C185.3,-781.39 185.3,-753.51 185.3,-729.4 185.3,-729.4 185.3,-729.4 185.3,-549.8 185.3,-527.78 174.72,-505.15 164.58,-488.52"/>
+<polygon fill="red" stroke="red" points="167.42,-486.46 159.07,-479.95 161.53,-490.25 167.42,-486.46"/>
+<text text-anchor="middle" x="201.24" y="-635.4" font-family="Times,serif" font-size="14.00">22km</text>
+</g>
+<!-- S_Dalmuir -->
+<g id="node22" class="node">
+<title>S_Dalmuir</title>
+<ellipse fill="none" stroke="black" cx="146.3" cy="-373.2" rx="53.33" ry="18"/>
+<text text-anchor="middle" x="146.3" y="-369" font-family="Times,serif" font-size="14.00">S_Dalmuir</text>
+</g>
+<!-- T_Glasgow_Queen_Street&#45;&gt;S_Dalmuir -->
+<g id="edge23" class="edge">
+<title>T_Glasgow_Queen_Street&#45;&gt;S_Dalmuir</title>
+<path fill="none" stroke="black" d="M146.3,-443.85C146.3,-431.72 146.3,-415.22 146.3,-401.32"/>
+<polygon fill="black" stroke="black" points="149.8,-401.31 146.3,-391.31 142.8,-401.31 149.8,-401.31"/>
+<text text-anchor="middle" x="162.24" y="-413.4" font-family="Times,serif" font-size="14.00">17km</text>
+</g>
+<!-- D_Crianlarich -->
+<g id="node24" class="node">
+<title>D_Crianlarich</title>
+<ellipse fill="none" stroke="black" cx="146.3" cy="-284.4" rx="66.05" ry="18"/>
+<text text-anchor="middle" x="146.3" y="-280.2" font-family="Times,serif" font-size="14.00">D_Crianlarich</text>
+</g>
+<!-- S_Dalmuir&#45;&gt;D_Crianlarich -->
+<g id="edge26" class="edge">
+<title>S_Dalmuir&#45;&gt;D_Crianlarich</title>
+<path fill="none" stroke="black" d="M146.3,-355.05C146.3,-342.92 146.3,-326.42 146.3,-312.52"/>
+<polygon fill="black" stroke="black" points="149.8,-312.51 146.3,-302.51 142.8,-312.51 149.8,-312.51"/>
+<text text-anchor="middle" x="162.24" y="-324.6" font-family="Times,serif" font-size="14.00">69km</text>
+</g>
+<!-- S_Airdrie&#45;&gt;T_Glasgow_Queen_Street -->
+<g id="edge25" class="edge">
+<title>S_Airdrie&#45;&gt;T_Glasgow_Queen_Street</title>
+<path fill="none" stroke="red" d="M112.59,-532.65C118.58,-520.29 126.76,-503.37 133.57,-489.3"/>
+<polygon fill="red" stroke="red" points="136.81,-490.64 138.02,-480.11 130.51,-487.59 136.81,-490.64"/>
+<text text-anchor="middle" x="145.24" y="-502.2" font-family="Times,serif" font-size="14.00">20km</text>
+</g>
+<!-- D_Tulloch -->
+<g id="node25" class="node">
+<title>D_Tulloch</title>
+<ellipse fill="none" stroke="black" cx="146.3" cy="-195.6" rx="52.75" ry="18"/>
+<text text-anchor="middle" x="146.3" y="-191.4" font-family="Times,serif" font-size="14.00">D_Tulloch</text>
+</g>
+<!-- D_Crianlarich&#45;&gt;D_Tulloch -->
+<g id="edge27" class="edge">
+<title>D_Crianlarich&#45;&gt;D_Tulloch</title>
+<path fill="none" stroke="black" d="M146.3,-266.25C146.3,-254.12 146.3,-237.62 146.3,-223.72"/>
+<polygon fill="black" stroke="black" points="149.8,-223.71 146.3,-213.71 142.8,-223.71 149.8,-223.71"/>
+<text text-anchor="middle" x="162.24" y="-235.8" font-family="Times,serif" font-size="14.00">70km</text>
+</g>
+<!-- S_Fort_William -->
+<g id="node26" class="node">
+<title>S_Fort_William</title>
+<ellipse fill="none" stroke="black" cx="146.3" cy="-106.8" rx="73.61" ry="18"/>
+<text text-anchor="middle" x="146.3" y="-102.6" font-family="Times,serif" font-size="14.00">S_Fort_William</text>
+</g>
+<!-- D_Tulloch&#45;&gt;S_Fort_William -->
+<g id="edge28" class="edge">
+<title>D_Tulloch&#45;&gt;S_Fort_William</title>
+<path fill="none" stroke="black" d="M146.3,-177.45C146.3,-165.32 146.3,-148.82 146.3,-134.92"/>
+<polygon fill="black" stroke="black" points="149.8,-134.91 146.3,-124.91 142.8,-134.91 149.8,-134.91"/>
+<text text-anchor="middle" x="162.24" y="-147" font-family="Times,serif" font-size="14.00">29km</text>
+</g>
+<!-- S_Mallaig -->
+<g id="node27" class="node">
+<title>S_Mallaig</title>
+<ellipse fill="none" stroke="black" cx="146.3" cy="-18" rx="51.04" ry="18"/>
+<text text-anchor="middle" x="146.3" y="-13.8" font-family="Times,serif" font-size="14.00">S_Mallaig</text>
+</g>
+<!-- S_Fort_William&#45;&gt;S_Mallaig -->
+<g id="edge29" class="edge">
+<title>S_Fort_William&#45;&gt;S_Mallaig</title>
+<path fill="none" stroke="black" d="M146.3,-88.65C146.3,-76.52 146.3,-60.02 146.3,-46.12"/>
+<polygon fill="black" stroke="black" points="149.8,-46.11 146.3,-36.11 142.8,-46.11 149.8,-46.11"/>
+<text text-anchor="middle" x="162.24" y="-58.2" font-family="Times,serif" font-size="14.00">68km</text>
+</g>
+</g>
+</svg>
