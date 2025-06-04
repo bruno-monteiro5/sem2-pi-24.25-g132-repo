@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="pt.ipp.isep.dei.ui.MainMenuController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox alignment="CENTER" spacing="15" layoutX="200" layoutY="100">
+        <Button text="Build Station" onAction="#handleBuildStation"/>
+        <Button text="Upgrade Station" onAction="#handleUpgradeStation"/>
+        <Button text="See Station Details" onAction="#handleStationDetails"/>
+        <Button text="Run Simulation" onAction="#handleStartSimulation"/>
+    </VBox>
+
+</AnchorPane>
+

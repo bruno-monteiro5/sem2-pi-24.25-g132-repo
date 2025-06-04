@@ -10,7 +10,13 @@ public enum BuildingType {
     TELEPHONE(200, TELEGRAPH, 1900),
     CAFE_SMALL(150, null, 1850),
     CAFE_LARGE(300, CAFE_SMALL, 1900),
-    POST_OFFICE(250, null, 1850);
+    POST_OFFICE(250, null, 1850),
+    CUSTOMS(350, null, 1850),
+    HOTEL_SMALL(400, null, 1850),
+    HOTEL_LARGE(700, HOTEL_SMALL, 1900),
+    SILO(300, null, 1850),
+    LIQUID_STORAGE(300, null, 1850);
+
 
     private final double cost;
     private final BuildingType replaces;

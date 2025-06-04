@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pt.isep.ipp.dei</groupId>
@@ -9,73 +10,81 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <!-- Java Version Configuration -->
-        <java.version>11</java.version>
-
-        <!-- Maven Version Configuration -->
-        <maven-compiler-plugin>3.14.0</maven-compiler-plugin>
-
-
-        <!-- Project Encoding Configuration -->
+        <java.version>17</java.version>
         <project.sourceEncoding>UTF-8</project.sourceEncoding>
         <project.build.sourceEncoding>${project.sourceEncoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.sourceEncoding}</project.reporting.outputEncoding>
-
-        <!-- Junit Version Configuration -->
         <junit-jupiter>5.12.0</junit-jupiter>
-
-        <!-- Coverage configuration -->
         <jacoco-maven-plugin>0.8.12</jacoco-maven-plugin>
-
-        <!-- Surefire Version Configuration -->
+        <maven-compiler-plugin>3.14.0</maven-compiler-plugin>
         <maven-surefire-plugin>3.5.2</maven-surefire-plugin>
     </properties>
 
     <dependencies>
+        <!-- JavaFX Dependencies for Windows -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>21</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>21</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>21</version>
+            <classifier>win</classifier>
+        </dependency>
+
+        <!-- Outros (já existentes no teu projeto) -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit-jupiter}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit-jupiter}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
         </dependency>
-
         <dependency>
             <groupId>pt.isep.lei.esoft</groupId>
             <artifactId>AuthLib</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>guru.nidi</groupId>
             <artifactId>graphviz-java</artifactId>
             <version>0.18.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
             <version>2.0.7</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.36</version>
         </dependency>
-
     </dependencies>
 
     <repositories>
@@ -88,23 +97,23 @@
 
     <build>
         <plugins>
-            <!-- Required for compiling the project usign maven -->
-            <plugin><!-- Compiler configuration-->
+            <!-- Plugin para compilar -->
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <showWarnings>true</showWarnings>   <!-- Needs this -->
+                    <showWarnings>true</showWarnings>
                     <compilerArgs>
-                        <arg>-Xlint:all</arg>   <!-- recommended -->
+                        <arg>-Xlint:all</arg>
                     </compilerArgs>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
 
-            <!-- Required for running unit tests -->
+            <!-- Plugin para testes -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -123,7 +132,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Required for generating coverage report -->
+            <!-- Plugin JaCoCo (cobertura) -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -149,6 +158,7 @@
                 </executions>
             </plugin>
 
+            <!-- Plugin para empacotar .jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -171,6 +181,16 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- Plugin JavaFX -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>pt.ipp.isep.dei.ui.MainFX</mainClass> <!-- ajusta se necessário -->
+                </configuration>
             </plugin>
         </plugins>
     </build>
