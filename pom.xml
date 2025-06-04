@@ -189,7 +189,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>pt.ipp.isep.dei.MainFX</mainClass> <!-- ajusta se necessário -->
+                    <mainClass>pt.ipp.isep.dei.ui.MainFX</mainClass> <!-- ajusta se necessário -->
                 </configuration>
             </plugin>
         </plugins>

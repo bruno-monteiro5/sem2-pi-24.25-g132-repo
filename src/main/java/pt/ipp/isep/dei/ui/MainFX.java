@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei;
+package pt.ipp.isep.dei.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
