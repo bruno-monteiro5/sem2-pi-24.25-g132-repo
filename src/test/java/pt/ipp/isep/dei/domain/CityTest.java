@@ -66,8 +66,8 @@ class CityTest {
      */
     @Test
     void testValidConstructor() {
-        City city = new City("Lisbon", position, 3);
-        assertEquals("Lisbon", city.getName());
+        City city = new City("Lisboa", position, 3);
+        assertEquals("Lisboa", city.getName());
         assertEquals(position, city.getPosition());
         assertEquals(3, city.getHouseBlocks());
         assertTrue(city.getHouseBlocksList().isEmpty());
@@ -81,7 +81,7 @@ class CityTest {
      */
     @Test
     void testInvalidNameInConstructor() {
-        assertThrows(IllegalArgumentException.class, () -> new City("Lisbon123!", position, 2));
+        assertThrows(IllegalArgumentException.class, () -> new City("Porto123!", position, 2));
     }
 
     /**
@@ -104,7 +104,7 @@ class CityTest {
      */
     @Test
     void testInvalidHouseBlocksInConstructor() {
-        assertThrows(IllegalArgumentException.class, () -> new City("Braga", position, 0));
+        assertThrows(IllegalArgumentException.class, () -> new City("Valongo", position, 0));
     }
 
     /**
@@ -146,7 +146,7 @@ class CityTest {
      */
     @Test
     void testGenerateHouseBlocksAutomatically() {
-        City city = new City("Faro", position, 5);
+        City city = new City("New York", position, 5);
         city.generateHouseBlocksAutomatically(map);
 
         List<HouseBlock> blocks = city.getHouseBlocksList();
@@ -155,7 +155,7 @@ class CityTest {
         for (HouseBlock block : blocks) {
             Position pos = block.getPosition();
             assertTrue(map.isInsideBounds(pos));
-            assertNotEquals(position, pos); // Must not overlap city position
+            assertNotEquals(position, pos);
         }
     }
 
@@ -167,10 +167,10 @@ class CityTest {
      */
     @Test
     void testToStringIncludesAllDetails() {
-        City city = new City("Setubal", position, 1);
+        City city = new City("Los Angeles", position, 1);
         city.addHouseBlocksManually(List.of(new Position(2, 3)));
         String str = city.toString();
-        assertTrue(str.contains("Setubal"));
+        assertTrue(str.contains("Los Angeles"));
         assertTrue(str.contains("position=[5, 5]"));
         assertTrue(str.contains("houseBlocks=1"));
         assertTrue(str.contains("HouseBlock"));
