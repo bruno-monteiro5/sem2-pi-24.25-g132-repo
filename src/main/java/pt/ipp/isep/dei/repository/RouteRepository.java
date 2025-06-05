@@ -11,7 +11,7 @@ public class RouteRepository {
 
 
     public void save(Route route) {
-        if (!exists(route.getName())) {
+        if (!routes.contains(route)) {
             routes.add(route);
         }
     }
@@ -20,17 +20,4 @@ public class RouteRepository {
         return new ArrayList<>(routes);
     }
 
-    public Route findByName(String name) {
-        for (Route route : routes) {
-            if (route.getName().equalsIgnoreCase(name)) {
-                return route;
-            }
-        }
-        return null;
-    }
-
-    public boolean exists(String name) {
-        return routes.stream()
-                .anyMatch(route -> route.getName().equalsIgnoreCase(name));
-    }
 }
