@@ -2,6 +2,9 @@ package pt.ipp.isep.dei.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import pt.ipp.isep.dei.domain.Demand;
+import pt.ipp.isep.dei.domain.Delivery;
+
 
 /**
  * Represents a station in the railway network.
@@ -42,6 +45,15 @@ public class Station {
      * The list of buildings present in the station.
      */
     private List<Building> buildings;
+    private List<Cargo> cargoes = new ArrayList<>();
+    private City city;
+    private List<Industry> industries = new ArrayList<>();
+    private ArrayList<Demand> demandList = new ArrayList<>();
+    private double totalRevenue = 0;
+    private ArrayList<Delivery> deliveries = new ArrayList<>();
+
+
+
 
     /**
      * The list of cargo that this station can supply.
@@ -150,6 +162,44 @@ public class Station {
         this.name = name;
     }
 
+    public void addRevenue(double amount) {
+        totalRevenue += amount;
+    }
+
+    public void registerDelivery(CargoType type) {
+        for (Delivery d : deliveries) {
+            if (d.getType() == type) {
+                d.increment();
+                return;
+            }
+        }
+        deliveries.add(new Delivery(type));
+    }
+
+
+
+    public void updateDemand() {
+        for (Delivery delivery : deliveries) {
+            CargoType cargoType = delivery.getType();
+            int count = delivery.getCount();
+            int value = getDemandFor(cargoType.name());
+
+            for (Demand demand : demandList) {
+                if (demand.getType() == cargoType) {
+                    if (count >= 30 && value > 0) {
+                        demand.setValue(value - 1);
+                    } else if (count <= 10 && value < 9) {
+                        demand.setValue(value + 1);
+                    }
+                }
+            }
+        }
+
+        deliveries.clear();
+    }
+
+
+
     /**
      * Updates the location of the station.
      *
@@ -250,6 +300,92 @@ public class Station {
     public void removeDemandCargo(CargoType type) {
         this.demandCargo.removeIf(cargo -> cargo.getType() == type);
     }
+
+    public class Demand {
+        private CargoType type;
+        private int value;
+
+        public Demand(CargoType type, int value) {
+            this.type = type;
+            this.value = value;
+        }
+
+        public CargoType getType() {
+            return type;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void increase() {
+            if (value < 9) value++;
+        }
+
+        public void decrease() {
+            if (value > 0) value--;
+        }
+
+        public void setValue(int i) {
+        }
+    }
+
+
+    public void generateAnnualCargoes() {
+        if (servesCity()) {
+            addCargo(new Cargo(CargoType.PASSENGERS, 10, true,100));
+            addCargo(new Cargo(CargoType.MAIL, 5, true,60));
+
+        }
+
+        for (Industry industry : industries) {
+            CargoType type = industry.getCargoType();
+            int amount = industry.getYearlyOutput();
+
+
+            double fixedValue = 0;
+
+            switch (type) {
+                case COAL:
+                    fixedValue = 40;
+                    break;
+                case IRON_ORE:
+                    fixedValue = 50;
+                    break;
+                case STEEL:
+                    fixedValue = 70;
+                    break;
+                default:
+                    fixedValue = 30;
+            }
+            addCargo(new Cargo(type, industry.getYearlyOutput(), false, fixedValue));
+
+            addCargo(new Cargo(industry.getCargoType(), industry.getYearlyOutput(), false, fixedValue));
+
+        }
+    }
+
+
+
+    public int getDemandFor(String cargoName) {
+        for (Demand d : demandList) {
+            if (d.getType().name().equalsIgnoreCase(cargoName)) {
+                return d.getValue();
+            }
+        }
+        return 5;
+    }
+
+
+
+    public boolean servesCity() {
+        return this.city != null;
+    }
+
+    public void addCargo(Cargo cargo) {
+        cargoes.add(cargo);
+    }
+
 
     /**
      * Provides a string representation of the station, including its name,

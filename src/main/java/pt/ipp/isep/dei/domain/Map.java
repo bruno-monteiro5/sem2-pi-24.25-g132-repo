@@ -33,6 +33,8 @@ public class Map implements Serializable {
     private final List<Industry> industries = new ArrayList<>();
     private final List<Position> ocupiedPositions = new ArrayList<>();
     private final List<Scenario> scenarios = new ArrayList<>();
+    private List<RailwayLine> railwayLines;
+
 
     private static final int ID_BY_OMISSION = 1;
     private static final String NAME_BY_OMISON = "Without name";
@@ -69,6 +71,16 @@ public class Map implements Serializable {
         this.height = height;
         this.emailEditor = createdBy;
     }
+
+    public RailwayLine getLineBetweenStations(Station a, Station b) {
+        for (RailwayLine line : railwayLines) {
+            if (line.connects(a, b)) {
+                return line;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Constructs a basic map instance with default properties.

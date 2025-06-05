@@ -1,51 +1,46 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+public class Route implements Serializable {
 
-public class Route {
-    private String name;
-    private Train assignedTrain;
-    private final List<PointOfRoute> points = new ArrayList<>();
+    private final List<PointOfRoute> pointsOfRoute;
 
-    public void setAssignedTrain(Train train) {
-        this.assignedTrain = train;
+    public Route() {
+        this.pointsOfRoute = new ArrayList<>();
     }
 
-    public Train getAssignedTrain() {
-        return assignedTrain;
+    public void addPointOfRoute(PointOfRoute point) {
+        pointsOfRoute.add(point);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<PointOfRoute> getPointsOfRoute() {
+        return pointsOfRoute;
     }
 
-    public String getName() {
-        return name;
+    public PointOfRoute getFirstPoint() {
+        if (pointsOfRoute.isEmpty()) return null;
+        return pointsOfRoute.get(0);
     }
 
-    public void addPoint(PointOfRoute point) {
-        points.add(point);
+    public PointOfRoute getLastPoint() {
+        if (pointsOfRoute.isEmpty()) return null;
+        return pointsOfRoute.get(pointsOfRoute.size() - 1);
     }
 
-    public List<PointOfRoute> getPoints() {
-        return new ArrayList<>(points);
+    public Station getNextStation(Station current) {
+        for (int i = 0; i < pointsOfRoute.size() - 1; i++) {
+            if (pointsOfRoute.get(i).station().equals(current)) {
+                return pointsOfRoute.get(i + 1).station();
+            }
+        }
+        return null; // caso seja a última estação ou não encontrada
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Route '").append(name).append("' assigned to train ID ");
-        sb.append(assignedTrain != null ? assignedTrain.getId() : "none").append("\n");
-
-        for (PointOfRoute point : points) {
-            sb.append("Station: ").append(point.getStation().getName())
-                    .append(" | Cargos: ").append(point.getCargoesToPick())
-                    .append(" | Mode: ").append(point.getCargoMode())
-                    .append("\n");
-        }
-
-        return sb.toString();
+        return "Route{" + pointsOfRoute + '}';
     }
 }

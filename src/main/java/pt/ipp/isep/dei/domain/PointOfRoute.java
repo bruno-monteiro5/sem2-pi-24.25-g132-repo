@@ -1,39 +1,31 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PointOfRoute {
-    private Station station;
-    private List<String> cargoesToPick;
-    private CargoMode cargoMode;
+public class PointOfRoute implements Serializable {
 
-    public PointOfRoute(Station station, List<String> cargoesToPick, CargoMode cargoMode) {
-        if (station == null || cargoesToPick == null || cargoMode == null) {
-            throw new IllegalArgumentException("Fields cannot be null.");
-        }
+    private final Station station;
+    private final List<String> cargoTypes;
+
+    public PointOfRoute(Station station, List<String> cargoTypes) {
         this.station = station;
-        this.cargoesToPick = cargoesToPick;
-        this.cargoMode = cargoMode;
+        this.cargoTypes = cargoTypes;
     }
 
-    public Station getStation() {
-        return station;
+    public Station station() {
+        return this.station;
     }
 
-    public List<String> getCargoesToPick() {
-        return cargoesToPick;
-    }
-
-    public CargoMode getCargoMode() {
-        return cargoMode;
+    public List<String> getCargoTypes() {
+        return cargoTypes;
     }
 
     @Override
     public String toString() {
         return "PointOfRoute{" +
-                "station=" + station.getName() +
-                ", cargoesToPick=" + cargoesToPick +
-                ", cargoMode=" + cargoMode +
+                "station=" + station +
+                ", cargoTypes=" + cargoTypes +
                 '}';
     }
 }

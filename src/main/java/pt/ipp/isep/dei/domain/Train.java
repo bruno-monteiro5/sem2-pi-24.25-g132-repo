@@ -1,20 +1,24 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Train {
+public class Train implements Serializable {
 
-    private final int id;
-    private Locomotive locomotive;
-    private List<Cargo> cargo;
-    private Route assignedRoute; // 🆕 Novo campo
+    private final String id;
+    private final Locomotive locomotive;
+    private final List<Cargo> cargos;
+    private Route assignedRoute;
+    private Station currentStation;
 
-    public Train(int id, Locomotive locomotive) {
+    public Train(String id, Locomotive locomotive) {
         this.id = id;
         this.locomotive = locomotive;
+        this.cargos = new ArrayList<>();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -22,31 +26,48 @@ public class Train {
         return locomotive;
     }
 
-    public void setLocomotive(Locomotive locomotive) {
-        this.locomotive = locomotive;
+    public List<Cargo> getCargos() {
+        return cargos;
     }
 
-    public List<Cargo> getCargo() {
-        return cargo;
+    public void addCargo(Cargo cargo) {
+        cargos.add(cargo);
     }
 
-    public void setCargo(List<Cargo> cargo) {
-        this.cargo = cargo;
+    public List<Cargo> unloadCargo() {
+        List<Cargo> delivered = new ArrayList<>(cargos);
+        cargos.clear();
+        return delivered;
     }
 
     public void assignRoute(Route route) {
         this.assignedRoute = route;
-        if (route != null) {
-            route.setAssignedTrain(this);
-        }
     }
 
     public Route getAssignedRoute() {
         return assignedRoute;
     }
 
+    public boolean hasRoute() {
+        return assignedRoute != null;
+    }
+
+    public Station getCurrentStation() {
+        return currentStation;
+    }
+
+    public void setCurrentStation(Station currentStation) {
+        this.currentStation = currentStation;
+    }
+
     @Override
     public String toString() {
-        return String.format("Train ID %d - Locomotive: %s", id, locomotive.getType().getName());
+        return "Train{" +
+                "id='" + id + '\'' +
+                ", locomotive=" + locomotive +
+                ", cargos=" + cargos +
+                ", assignedRoute=" + assignedRoute +
+                ", currentStation=" + currentStation +
+                '}';
     }
 }

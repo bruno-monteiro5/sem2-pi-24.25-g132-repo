@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Scenario implements Serializable {
 
@@ -9,9 +10,19 @@ public class Scenario implements Serializable {
     private Map map;
     private ArrayList<Port> ports;
     private ArrayList<LocomotiveType> availableLocomotiveTypes;
+    private ArrayList<Locomotive> locomotives = new ArrayList<>();
     private ArrayList<Train> trains = new ArrayList<>();
+    public List<Station> getStations() {
+        return map.getStations(); // assumindo que tens um atributo chamado 'station    s'
+    }
+    public List<Train> getTrains() {
+        return trains;
+    }
+
+
     private double industryGenerationFactor;
     private PeriodTime periodTime;
+
 
     public Scenario(String name, Map map, PeriodTime periodTime) {
         this.name = name;
@@ -21,6 +32,10 @@ public class Scenario implements Serializable {
         this.industryGenerationFactor = 1.0;
         this.periodTime = periodTime;
 
+    }
+
+    public List<Locomotive> getLocomotives() {
+        return locomotives;
     }
 
 
@@ -48,9 +63,7 @@ public class Scenario implements Serializable {
         return availableLocomotiveTypes;
     }
 
-    public ArrayList<Train> getTrains() {
-        return trains;
-    }
+
 
     public void addTrain(Train train) {
         trains.add(train);

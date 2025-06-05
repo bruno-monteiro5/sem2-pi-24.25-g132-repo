@@ -6,6 +6,7 @@ public class Locomotive implements Serializable {
 
     private int id;
     private LocomotiveType type;
+    private int startYear;
 
     public Locomotive(int id, LocomotiveType type) {
         this.id = id;
@@ -19,6 +20,11 @@ public class Locomotive implements Serializable {
     public LocomotiveType getType() {
         return type;
     }
+
+    public int getStartYear() {
+        return startYear;
+    }
+
 
     @Override
     public String toString() {

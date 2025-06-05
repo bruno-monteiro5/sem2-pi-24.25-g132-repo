@@ -7,7 +7,8 @@ package pt.ipp.isep.dei.domain;
 public class Cargo {
     private CargoType type;    // The type of the cargo, now using the enum.
     private int quantity;      // Quantity of cargo available (or required).
-    private boolean isSupply;  // True if it's supply cargo, false if it's demand cargo.
+    private boolean isSupply;// True if it's supply cargo, false if it's demand cargo.
+    private double baseValue;
 
     /**
      * Constructor for creating a Cargo object.
@@ -16,10 +17,11 @@ public class Cargo {
      * @param quantity  The quantity of the cargo.
      * @param isSupply  True if the cargo is in supply, false if it's in demand.
      */
-    public Cargo(CargoType type, int quantity, boolean isSupply) {
+    public Cargo(CargoType type, int quantity, boolean isSupply, double baseValue) {
         this.type = type;
         this.quantity = quantity;
         this.isSupply = isSupply;
+        this.baseValue = baseValue;
     }
 
     // Getters
@@ -33,6 +35,10 @@ public class Cargo {
 
     public boolean isSupply() {
         return isSupply;
+    }
+
+    public double getBaseValue() {
+        return this.baseValue;
     }
 
     // Setters

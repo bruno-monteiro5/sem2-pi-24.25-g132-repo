@@ -87,6 +87,10 @@ public class City {
         return name;
     }
 
+    public City getCity() {
+        return this;
+    }
+
     public Position getPosition() {
         return position;
     }
