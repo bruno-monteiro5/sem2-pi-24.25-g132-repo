@@ -68,4 +68,9 @@ public class StationRepository {
         }
         return null;
     }
+
+    public boolean removeStationByName(String name) {
+        return this.stations.removeIf(s -> s.getName().equalsIgnoreCase(name));
+    }
+
 }

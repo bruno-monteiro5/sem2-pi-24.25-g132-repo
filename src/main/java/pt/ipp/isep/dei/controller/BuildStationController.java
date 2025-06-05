@@ -100,10 +100,7 @@ public class BuildStationController {
             return false;
         }
 
-
         Repositories.getInstance().getStationRepository().addStation(newStation);
-
-        StationDetailsRepository.getInstance().addStationFromStation(newStation);
 
         return true;
     }
@@ -232,6 +229,14 @@ public class BuildStationController {
         }
 
         return positions;
+    }
+
+    public List<Station> listAllStations() {
+        return StationRepository.getInstance().getAll();
+    }
+
+    public Station getStationByName(String name) {
+        return StationRepository.getInstance().getStationByName(name);
     }
 
 }

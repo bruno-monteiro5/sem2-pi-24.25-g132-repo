@@ -18,6 +18,9 @@ public class Station {
     private StationType type;
     private List<Building> buildings;
 
+    private final List<Cargo> supplyCargo = new ArrayList<>();
+    private final List<Cargo> demandCargo = new ArrayList<>();
+
 
     /**
      * Constructs a {@code Station} object.
@@ -174,6 +177,60 @@ public class Station {
     }
 
     /**
+     * Retrieves the list of cargo available for collection (supply cargo).
+     *
+     * @return A list of {@code Cargo} representing the supply cargo.
+     */
+    public List<Cargo> getSupplyCargo() {
+        return supplyCargo;
+    }
+
+    /**
+     * Retrieves the list of cargo that needs to be delivered (demand cargo).
+     *
+     * @return A list of {@code Cargo} representing the demand cargo.
+     */
+    public List<Cargo> getDemandCargo() {
+        return demandCargo;
+    }
+
+    /**
+     * Adds a cargo item to the supply cargo list.
+     *
+     * @param cargo The {@code Cargo} to be added to the supply cargo list.
+     */
+    public void addSupplyCargo(Cargo cargo) {
+        this.supplyCargo.add(cargo);
+    }
+
+    /**
+     * Adds a cargo item to the demand cargo list.
+     *
+     * @param cargo The {@code Cargo} to be added to the demand cargo list.
+     */
+    public void addDemandCargo(Cargo cargo) {
+        this.demandCargo.add(cargo);
+    }
+
+    /**
+     * Removes cargo of a specific type from the supply cargo list.
+     *
+     * @param type The {@code CargoType} to be removed from the supply cargo list.
+     */
+    public void removeSupplyCargo(CargoType type) {
+        this.supplyCargo.removeIf(cargo -> cargo.getType() == type);
+    }
+
+    /**
+     * Removes cargo of a specific type from the demand cargo list.
+     *
+     * @param type The {@code CargoType} to be removed from the demand cargo list.
+     */
+    public void removeDemandCargo(CargoType type) {
+        this.demandCargo.removeIf(cargo -> cargo.getType() == type);
+    }
+
+    /**
      * Provides a string representation of the station, including its name,
      * location, and type.
      *
@@ -208,6 +265,42 @@ public class Station {
         return (name != null ? !name.equals(station.name) : station.name != null);
     }
 
+    public String getFullDetails() {
+        StringBuilder details = new StringBuilder();
+        details.append("Station Details:\n");
+        details.append("Name: ").append(name).append("\n");
+        details.append("Type: ").append(type.getName()).append("\n");
+        details.append("Position: ").append(location).append("\n\n");
+
+        details.append("Buildings:\n");
+        if (buildings.isEmpty()) {
+            details.append(" - None\n");
+        } else {
+            for (Building building : buildings) {
+                details.append(" - ").append(building.getType()).append("\n");
+            }
+        }
+
+        details.append("\nSupply Cargo:\n");
+        if (supplyCargo.isEmpty()) {
+            details.append(" - None\n");
+        } else {
+            for (Cargo cargo : supplyCargo) {
+                details.append(" - ").append(cargo.getType()).append(": ").append(cargo.getQuantity()).append("\n");
+            }
+        }
+
+        details.append("\nDemand Cargo:\n");
+        if (demandCargo.isEmpty()) {
+            details.append(" - None\n");
+        } else {
+            for (Cargo cargo : demandCargo) {
+                details.append(" - ").append(cargo.getType()).append(": ").append(cargo.getQuantity()).append("\n");
+            }
+        }
+
+        return details.toString();
+    }
 
 
 }

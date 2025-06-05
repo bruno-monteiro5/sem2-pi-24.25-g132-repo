@@ -1,7 +1,7 @@
 package pt.ipp.isep.dei.ui.console;
 
-import pt.ipp.isep.dei.controller.StationDetailsController;
-import pt.ipp.isep.dei.domain.StationDetails;
+import pt.ipp.isep.dei.controller.BuildStationController;
+import pt.ipp.isep.dei.domain.Station;
 import pt.ipp.isep.dei.ui.console.utils.Utils;
 
 import java.util.List;
@@ -10,20 +10,20 @@ import java.util.List;
  * User interface for displaying station details via console.
  * <p>
  * This class handles user input for listing stations and selecting one
- * to view its details. It interacts with the {@link StationDetailsController}
+ * to view its details. It interacts with the {@link BuildStationController}
  * to retrieve and display information.
  * </p>
  */
 public class StationDetailsUI implements Runnable {
 
-    private final StationDetailsController controller;
+    private final BuildStationController controller;
 
     /**
      * Constructs a new StationDetailsUI instance.
-     * Initializes the controller responsible for fetching station details.
+     * Initializes the controller responsible for fetching station data.
      */
     public StationDetailsUI() {
-        this.controller = new StationDetailsController();
+        this.controller = new BuildStationController();
     }
 
     /**
@@ -37,22 +37,22 @@ public class StationDetailsUI implements Runnable {
     public void run() {
         System.out.println("\n\n--- Station Details ------------------------");
 
-        List<StationDetails> stationDetailsList = controller.listStationDetails();
+        List<Station> stationList = controller.listAllStations();
 
-        if (stationDetailsList.isEmpty()) {
+        if (stationList.isEmpty()) {
             System.out.println("No stations available.");
             return;
         }
 
-        int chosenIndex = Utils.showAndSelectIndex(stationDetailsList, "Select a station to view details:");
+        int chosenIndex = Utils.showAndSelectIndex(stationList, "Select a station to view details:");
         if (chosenIndex == -1) {
             System.out.println("No station selected. Exiting...");
             return;
         }
 
-        StationDetails chosenStationDetails = stationDetailsList.get(chosenIndex);
+        Station chosenStation = stationList.get(chosenIndex);
 
         System.out.println("\nStation Details:");
-        System.out.println(chosenStationDetails);
+        System.out.println(chosenStation.getFullDetails());
     }
 }
