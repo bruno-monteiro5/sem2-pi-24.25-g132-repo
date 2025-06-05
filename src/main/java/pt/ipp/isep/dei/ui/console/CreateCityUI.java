@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.domain.City;
 import pt.ipp.isep.dei.domain.HouseBlock;
 import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.domain.Position;
+import pt.ipp.isep.dei.repository.Repositories;
 import pt.ipp.isep.dei.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -90,6 +91,7 @@ public class CreateCityUI implements Runnable {
             return;
         }
         Map selectedMap = maps.get(selectedMapIndex);
+        Repositories.getInstance().getMapRepository().setActiveMap(selectedMap);
 
         System.out.print("Enter city name: ");
         String name = scanner.nextLine().trim();
@@ -141,7 +143,7 @@ public class CreateCityUI implements Runnable {
         }
 
         try {
-            City city = controller.createCity(selectedMap, name, new Position(x, y), houseBlocks, manual, manualPositions);
+            City city = controller.createCity(name, new Position(x, y), houseBlocks, manual, manualPositions);
             System.out.println("City created successfully! Details:");
             System.out.println(city);
         } catch (IllegalArgumentException e) {

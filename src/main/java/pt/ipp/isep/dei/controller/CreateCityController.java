@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.domain.City;
 import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.domain.Position;
 import pt.ipp.isep.dei.repository.CityRepository;
+import pt.ipp.isep.dei.repository.MapRepository;
 import pt.ipp.isep.dei.repository.Repositories;
 
 import java.util.List;
@@ -32,6 +33,11 @@ public class CreateCityController {
     private final CityRepository cityRepository;
 
     /**
+     * Repository for accessing and managing maps.
+     */
+    private MapRepository mapRepository;
+
+    /**
      * Constructs an instance of {@code CreateCityController}.
      *
      * <p>This constructor initializes the city repository through the singleton instance of
@@ -39,7 +45,11 @@ public class CreateCityController {
      */
     public CreateCityController() {
         this.cityRepository = Repositories.getInstance().getCityRepository();
+        this.mapRepository = Repositories.getInstance().getMapRepository();
     }
+
+
+
 
     /**
      * Retrieves a list of all available maps for city creation.
@@ -68,7 +78,6 @@ public class CreateCityController {
      * Depending on the value of the {@code manual} parameter, either manual or automatic assignment
      * of house blocks is performed.</p>
      *
-     * @param map            The {@link Map} used to assist in house block validation and placement.
      * @param name           The name of the city. It must be unique.
      * @param position       The {@link Position} object representing the location of the city on the map.
      * @param houseBlocks    The total number of house blocks in the city.
@@ -84,7 +93,10 @@ public class CreateCityController {
      *                                      (only when {@code manual} is {@code true}).</li>
      *                                  </ul>
      */
-    public City createCity(Map map, String name, Position position, int houseBlocks, boolean manual, List<Position> manualPositions) {
+    public City createCity(String name, Position position, int houseBlocks, boolean manual, List<Position> manualPositions) {
+
+        Map map = mapRepository.getActiveMap();
+
         if (cityRepository.cityExists(name)) {
             throw new IllegalArgumentException("City with that name already exists.");
         }
@@ -100,7 +112,7 @@ public class CreateCityController {
         } else {
             city.generateHouseBlocksAutomatically(map);
         }
-
+        map.addCity(city);
         cityRepository.save(city);
         return city;
     }
