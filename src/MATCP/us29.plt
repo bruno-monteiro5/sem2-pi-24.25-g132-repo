@@ -5,6 +5,7 @@ set datafile separator ","
 set title "US13 and US14"
 set xlabel "Size (number of stations)"
 set ylabel "Execution time (seconds)"
+set logscale y
 set grid
 set key top left
 

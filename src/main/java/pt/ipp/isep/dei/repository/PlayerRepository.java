@@ -30,7 +30,7 @@ public class PlayerRepository {
      * Creates a default player and sets it as the current active player.
      */
     private void createDefaultPlayer() {
-        Player defaultPlayer = new Player("Default Player", 1000000);
+        Player defaultPlayer = new Player("Default Player", 200001);
         players.add(defaultPlayer);
         currentPlayer = defaultPlayer;
     }
