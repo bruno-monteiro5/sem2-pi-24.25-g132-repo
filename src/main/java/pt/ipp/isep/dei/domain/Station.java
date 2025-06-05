@@ -5,32 +5,62 @@ import java.util.List;
 
 /**
  * Represents a station in the railway network.
- * A station is defined by a name, its geographical location (coordinates),
- * a type, and any buildings it contains.
  *
- * <p>The {@code Station} class provides methods to manage a station's details,
- * such as its name, location, type, buildings, and available upgrades.
- * It also provides functionality for adding or removing buildings.</p>
+ * <p>A station is defined by its name, position on the map, type (e.g., depot, station, terminal),
+ * and the infrastructure built around it. It also manages the cargo it supplies and demands.</p>
+ *
+ * <p>This class provides functionalities to:</p>
+ * <ul>
+ *     <li>Create a station with validated name, location, and type.</li>
+ *     <li>Access and modify the station's basic attributes.</li>
+ *     <li>Add or remove buildings, including handling replacements.</li>
+ *     <li>Query available upgrades based on existing buildings.</li>
+ *     <li>Manage cargo supply and demand lists.</li>
+ * </ul>
+ *
+ * <p>The {@code Station} constructor enforces name validation to ensure data consistency at creation time.</p>
  */
+
 public class Station {
-    private String name;
-    private Position location;
-    private StationType type;
-    private List<Building> buildings;
-
-    private final List<Cargo> supplyCargo = new ArrayList<>();
-    private final List<Cargo> demandCargo = new ArrayList<>();
-
 
     /**
-     * Constructs a {@code Station} object.
-     *
-     * @param name The name of the station. Cannot be null or empty.
-     * @param location The geographical location of the station.
-     * @param type The type of the station.
-     * @throws IllegalArgumentException If the name is null or empty.
+     * The name of the station. Cannot be null or empty.
      */
+    private String name;
 
+    /**
+     * The geographical location of the station represented as a {@link Position}.
+     */
+    private Position location;
+
+    /**
+     * The type of the station, defined as a {@link StationType}.
+     */
+    private StationType type;
+
+    /**
+     * The list of buildings present in the station.
+     */
+    private List<Building> buildings;
+
+    /**
+     * The list of cargo that this station can supply.
+     */
+    private final List<Cargo> supplyCargo = new ArrayList<>();
+
+    /**
+     * The list of cargo that this station demands.
+     */
+    private final List<Cargo> demandCargo = new ArrayList<>();
+
+    /**
+     * Constructs a new {@code Station} with the specified name, location, and type.
+     *
+     * @param name the station name, which must not be null or empty
+     * @param location the location of the station (non-null)
+     * @param type the station type (non-null)
+     * @throws IllegalArgumentException if {@code name} is null or empty
+     */
     public Station(String name, Position location, StationType type) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Station name cannot be null or empty.");
@@ -43,53 +73,48 @@ public class Station {
     }
 
     /**
-     * Retrieves the name of the station.
+     * Returns the name of the station.
      *
-     * @return The name of the station.
+     * @return the station's name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Retrieves the geographical location of the station.
+     * Returns the location of the station.
      *
-     * @return The {@code Position} representing the location of the station.
+     * @return the {@link Position} of the station
      */
     public Position getLocation() {
         return location;
     }
 
     /**
-     * Retrieves the type of the station.
+     * Returns the type of the station.
      *
-     * @return The {@code StationType} of the station.
+     * @return the {@link StationType} of the station
      */
     public StationType getType() {
         return type;
     }
 
     /**
-     * Retrieves the list of buildings currently present in the station.
+     * Returns a list of the buildings in the station.
      *
-     * @return A list of {@code Building} objects in the station.
+     * @return a defensive copy of the buildings list
      */
     public List<Building> getBuildings() {
         return new ArrayList<>(buildings);
     }
 
     /**
-     * Determines the available upgrades for the station's buildings.
+     * Determines which building types can be added to the station.
      *
-     * <p>This method checks the list of all potential building types and removes:
-     * <ul>
-     *   <li>Types that are already present in the station.</li>
-     *   <li>Types that require other types to exist and those types are not present.</li>
-     * </ul>
-     * </p>
+     * <p>Removes types that already exist, or types that replace another building not yet present.</p>
      *
-     * @param allTypes A list of all possible {@code BuildingType} objects.
-     * @return A list of {@code BuildingType} objects representing possible upgrades.
+     * @param allTypes list of all available {@link BuildingType}s
+     * @return list of available {@link BuildingType}s to be added
      */
     public List<BuildingType> getAvailableUpgrades(List<BuildingType> allTypes) {
         List<BuildingType> availableUpgrades = new ArrayList<>(allTypes);
@@ -119,16 +144,16 @@ public class Station {
     /**
      * Updates the name of the station.
      *
-     * @param name The new name of the station.
+     * @param name the new name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Updates the geographical location of the station.
+     * Updates the location of the station.
      *
-     * @param location The new {@code Position} of the station.
+     * @param location the new {@link Position}
      */
     public void setLocation(Position location) {
         this.location = location;
@@ -145,14 +170,11 @@ public class Station {
 
 
     /**
-     * Adds a building to the station.
+     * Adds a new building to the station. If the building type replaces another,
+     * the old one is removed.
      *
-     * <p>If the specified building type replaces another building type,
-     * the old building is removed before the new building is added.</p>
-     *
-     * @param type The {@code BuildingType} of the building to be added.
-     * @return {@code true} if the building was successfully added;
-     * {@code false} otherwise.
+     * @param type the {@link BuildingType} to add
+     * @return true if the building was added successfully
      */
     public boolean addBuilding(BuildingType type) {
         // Check if this building type replaces another
@@ -168,9 +190,8 @@ public class Station {
     /**
      * Removes a building of the specified type from the station.
      *
-     * @param type The {@code BuildingType} of the building to be removed.
-     * @return {@code true} if the building was successfully removed;
-     * {@code false} otherwise.
+     * @param type the {@link BuildingType} to remove
+     * @return true if removed successfully, false if not found
      */
     public boolean removeBuilding(BuildingType type) {
         return buildings.removeIf(building -> building.getType() == type);
@@ -247,14 +268,11 @@ public class Station {
 
 
     /**
-     * Compares this station with another object to determine equality.
+     * Compares this station to another object for equality based on name.
      *
-     * <p>Stations are considered equal if their names match.</p>
-     *
-     * @param o The object to compare with.
-     * @return {@code true} if the stations are equal; {@code false} otherwise.
+     * @param o the object to compare
+     * @return true if same name, false otherwise
      */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -265,6 +283,11 @@ public class Station {
         return (name != null ? !name.equals(station.name) : station.name != null);
     }
 
+    /**
+     * Returns full details of the station in a formatted string.
+     *
+     * @return string with buildings, supply and demand cargo
+     */
     public String getFullDetails() {
         StringBuilder details = new StringBuilder();
         details.append("Station Details:\n");
