@@ -11,6 +11,7 @@ public class TrainRepository {
     private int nextId = 1;
 
     public Train createTrain(Locomotive locomotive) {
+        String name = "Train " + nextId;
         Train train = new Train(nextId++, locomotive);
         trains.add(train);
         return train;

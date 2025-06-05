@@ -6,19 +6,19 @@ import java.util.List;
 
 public class Train implements Serializable {
 
-    private final String id;
+    private final int id;
     private final Locomotive locomotive;
     private final List<Cargo> cargos;
     private Route assignedRoute;
     private Station currentStation;
 
-    public Train(String id, Locomotive locomotive) {
+    public Train(int id, Locomotive locomotive) {
         this.id = id;
         this.locomotive = locomotive;
         this.cargos = new ArrayList<>();
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
