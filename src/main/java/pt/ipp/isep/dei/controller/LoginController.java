@@ -35,7 +35,7 @@ public class LoginController {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
                 Parent root = loader.load();
-                MainFX.setRootScene(root, "Railroad Simulator - Main Menu", 800, 600);
+                MainFX.setRootScene(root, "Railroad Simulator - Main Menu", 400, 300);
             } catch (Exception e) {
                 showAlert("Error", "It was not possible to open the main menu.");
             }
