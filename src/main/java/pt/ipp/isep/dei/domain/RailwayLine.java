@@ -1,9 +1,10 @@
 package pt.ipp.isep.dei.domain;
 
 import javax.sound.sampled.Line;
+import java.io.Serializable;
 
 // A railway line connects two stations from the map. Each line has a type.
-public class RailwayLine {
+public class RailwayLine implements Serializable {
     private Scenario scenario;
     private Station station1, station2;
     private LineType type;

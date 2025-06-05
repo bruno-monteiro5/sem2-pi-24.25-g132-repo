@@ -4,6 +4,8 @@ import pt.ipp.isep.dei.domain.LineType;
 import pt.ipp.isep.dei.domain.RailwayLine;
 import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.domain.Station;
+import pt.ipp.isep.dei.domain.Map;
+
 
 import java.util.ArrayList;
 
@@ -28,7 +30,12 @@ public class RailwayLineRepository {
     }
 
     public void addRailwayLine(Scenario scenario, Station station1, Station station2, LineType type) {
-        railwayLines.add(new RailwayLine(scenario, station1, station2, type));
+        int dx = Math.abs(station1.getLocation().getX() - station2.getLocation().getX());
+        int dy = Math.abs(station1.getLocation().getY() - station2.getLocation().getY());
+        int length = dx + dy;
+
+        railwayLines.add(new RailwayLine(scenario, station1, station2, type, length));
+
     }
 
     public boolean connectionExists(Scenario scenario, Station station1, Station station2) {
