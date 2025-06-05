@@ -7,10 +7,12 @@ public class PointOfRoute implements Serializable {
 
     private final Station station;
     private final List<String> cargoTypes;
+    private final CargoMode mode;
 
-    public PointOfRoute(Station station, List<String> cargoTypes) {
+    public PointOfRoute(Station station, List<String> cargoTypes, CargoMode mode) {
         this.station = station;
         this.cargoTypes = cargoTypes;
+        this.mode = mode;
     }
 
     public Station station() {

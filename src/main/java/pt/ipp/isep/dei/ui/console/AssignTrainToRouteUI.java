@@ -118,8 +118,10 @@ public class AssignTrainToRouteUI implements Runnable {
                 return;
             }
 
+
+
             PointOfRoute point = new PointOfRoute(station, cargoes, selectedMode);
-            route.addPoint(point);
+            route.addPointOfRoute(point);
 
             System.out.print("Add another point to the route? (Y/N): ");
             String choice = scanner.nextLine().trim();
