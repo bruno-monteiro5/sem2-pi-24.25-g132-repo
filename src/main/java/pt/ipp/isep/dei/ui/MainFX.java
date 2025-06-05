@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 public class MainFX extends Application {
 
     private static Stage primaryStage;
+    private static final int DEFAULT_WIDTH = 400;
+    private static final int DEFAULT_HEIGHT = 300;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -16,11 +18,12 @@ public class MainFX extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
         Parent root = loader.load();
 
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
         stage.setTitle("Login - Railroad Simulator");
         stage.setScene(scene);
         stage.show();
     }
+
 
     public static void setRootScene(Parent root, String title, int width, int height) {
         primaryStage.setScene(new Scene(root, width, height));

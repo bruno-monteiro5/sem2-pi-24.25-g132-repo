@@ -25,7 +25,7 @@ public class Main {
         System.out.println("Choose the interface:");
         System.out.println("1 - Console");
         System.out.println("2 - JavaFX");
-        System.out.print("Optiion: ");
+        System.out.print("Option: ");
 
         String input = scanner.nextLine().trim();
         return input.equals("1");

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+
 
 <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="15.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.controller.LoginController">
 
@@ -17,22 +14,18 @@
 
    <children>
 
-      <!-- Título -->
       <Label text="Member Login" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="41.0" />
          </font>
       </Label>
 
-      <!-- Campo Email -->
       <Label prefHeight="21.0" prefWidth="551.0" text="Email" />
       <TextField fx:id="emailField" promptText="railroad@this.app" />
 
-      <!-- Campo Password -->
       <Label prefHeight="21.0" prefWidth="549.0" text="Password" />
       <PasswordField fx:id="passwordField" promptText="........." />
 
-      <!-- Botão Login -->
       <Button fx:id="loginButton" onAction="#handleLogin" prefWidth="200.0" style="-fx-background-color: #0097A7;" text="Login" textFill="#f5f5f5" />
 
    </children>

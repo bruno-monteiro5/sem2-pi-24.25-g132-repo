@@ -1,24 +1,45 @@
 package pt.ipp.isep.dei.domain;
 
 /**
- * Represents an Industry with a specific name, geographical position, and type.
+ * Represents an industry with a specific name, geographical position, and type.
  * <p>
- * This class provides methods to manage and access the attributes of an industry, such as its name,
- * position, and type. It also includes utility methods for string representation and position comparison.
+ * The Industry class provides methods to manage and access the attributes of an industry,
+ * including its name, position, and type. It also includes utility methods for string
+ * representation and position comparison.
+ * </p>
+ *
+ * <p>
+ * Example of usage:
+ * <pre>
+ *     Position position = new Position(10, 20);
+ *     IndustryType type = IndustryType.TECHNOLOGY;
+ *     Industry industry = new Industry("TechCorp", position, type);
+ * </pre>
  * </p>
  */
 public class Industry {
 
+    /**
+     * The name of the industry (e.g., "TechCorp").
+     */
     private String name;
+
+    /**
+     * The geographical position of the industry.
+     */
     private Position position;
+
+    /**
+     * The type or category of the industry (e.g., Technology, Automotive, etc.).
+     */
     private IndustryType type;
 
     /**
-     * Constructs an Industry with a custom name, position, and type.
+     * Constructs a new instance of the Industry class with a specified name, position, and type.
      *
      * @param name     The name of the industry (e.g., "TechCorp").
      * @param position The geographical position of the industry.
-     * @param type     The type/category of the industry.
+     * @param type     The type or category of the industry.
      */
     public Industry(String name, Position position, IndustryType type) {
         this.name = name;
@@ -27,9 +48,9 @@ public class Industry {
     }
 
     /**
-     * Constructs an Industry using a predefined IndustryData and a position.
+     * Constructs a new instance of the Industry class using predefined industry data and a position.
      *
-     * @param data     The predefined data for the industry.
+     * @param data     The predefined data about the industry, containing name and type.
      * @param position The geographical position of the industry.
      */
     public Industry(IndustryData data, Position position) {
@@ -38,30 +59,14 @@ public class Industry {
         this.position = position;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public IndustryType getType() {
-        return type;
-    }
-
-    public void setType(IndustryType type) {
-        this.type = type;
-    }
-
+    /**
+     * Returns a string representation of the Industry instance.
+     * <p>
+     * The returned string includes the name, position, and type of the industry.
+     * </p>
+     *
+     * @return A string representing the attributes of the Industry instance.
+     */
     @Override
     public String toString() {
         return "Industry{" +
@@ -71,6 +76,15 @@ public class Industry {
                 '}';
     }
 
+    /**
+     * Checks if the current industry's location matches a given position.
+     * <p>
+     * This method compares the current position of the industry with the position passed as an argument.
+     * </p>
+     *
+     * @param position The position to compare with the industry's current position.
+     * @return {@code true} if the positions are equal, {@code false} otherwise.
+     */
     public boolean isAtPosition(Position position) {
         return this.position.equals(position);
     }
