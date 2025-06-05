@@ -60,6 +60,60 @@ public class Industry {
     }
 
     /**
+     * Gets the name of the industry.
+     *
+     * @return The name of the industry.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the name of the industry.
+     *
+     * @param name The name to set.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Gets the geographical position of the industry.
+     *
+     * @return The position of the industry.
+     */
+    public Position getPosition() {
+        return position;
+    }
+
+    /**
+     * Sets the geographical position of the industry.
+     *
+     * @param position The position to set.
+     */
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    /**
+     * Gets the type or category of the industry.
+     *
+     * @return The type of the industry.
+     */
+    public IndustryType getType() {
+        return type;
+    }
+
+    /**
+     * Sets the type or category of the industry.
+     *
+     * @param type The type to set.
+     */
+    public void setType(IndustryType type) {
+        this.type = type;
+    }
+
+    /**
      * Returns a string representation of the Industry instance.
      * <p>
      * The returned string includes the name, position, and type of the industry.
