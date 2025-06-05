@@ -22,6 +22,7 @@ public class BuildStationUI implements Runnable {
     private Position position;
     private StationType type;
     private String name;
+    private String center;
     Scanner scanner = new Scanner(System.in);
 
     /**
@@ -94,29 +95,23 @@ public class BuildStationUI implements Runnable {
                 }else
                     scanner.next();
             }
-            int centerX = x;
-            int centerY = y;
+
             switch (choice) {
                 case 1:
-                    centerX = position.getX() + 1;
-                    centerY = position.getY() + 1;
+                    center = "NE";
                     break;
                 case 2:
-                    centerX = position.getX() - 1;
-                    centerY = position.getY() + 1;
+                    center = "NW";
                     break;
                 case 3:
-                    centerX = position.getX() + 1;
-                    centerY = position.getY() - 1;
+                    center = "SE";
                     break;
                 case 4:
-                    centerX = position.getX() - 1;
-                    centerY = position.getY() - 1;
+                    center = "SW";
                     break;
             }
-
-            controller.setLocationCenter(position, centerX, centerY);
-
+        }else{
+            center = null;
         }
 
         if (!controller.validatePosition(position)) {
@@ -169,7 +164,7 @@ public class BuildStationUI implements Runnable {
     private void submit (){
         System.out.println("Submitting station creation...");
 
-        boolean success=controller.createStation(position,type,name);
+        boolean success=controller.createStation(position,type,name, center);
 
         if (success){
             System.out.println("Station created successfully!");
