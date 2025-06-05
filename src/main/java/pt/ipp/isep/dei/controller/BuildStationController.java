@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.controller;
 import pt.ipp.isep.dei.domain.*;
 import pt.ipp.isep.dei.repository.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class BuildStationController {
         return map.validatePosition(position);
     }
 
-    public boolean createStation(Position position, StationType stationType, String name) {
+    public boolean createStation(Position position, StationType stationType, String name, String center) {
         Map currentMap = mapRepo.getActiveMap();
         Player currentPlayer = playerRepo.getCurrentPlayer();
 
@@ -84,19 +85,24 @@ public class BuildStationController {
             System.out.println("DEBUG: Player can't afford the station.");
             return false;
         }
+        if (isInsideOtherStationRadius(position, stationType, center)) {
+            System.out.println("Error: you can't build a station inside another station radius.");
+            return false;
+        }
+
 
         Station newStation = new Station(name, position, stationType);
         boolean addedToMap = currentMap.addStation(newStation);
+        currentPlayer.deductFunds(newStation.getType().getCost());
 
         if (!addedToMap) {
             System.out.println("Failed to add station to the map.");
             return false;
         }
 
-        // 🟢 ESSENCIAL: adicionar a estação ao repositório global!
+
         Repositories.getInstance().getStationRepository().addStation(newStation);
 
-        // (opcional: se estiveres a usar este em outras UIs)
         StationDetailsRepository.getInstance().addStationFromStation(newStation);
 
         return true;
@@ -133,4 +139,99 @@ public class BuildStationController {
             return false;
         }
     }
+
+
+    // Verify if the station is inside the radius of another
+
+    private boolean isInsideOtherStationRadius(Position newPos, StationType newType, String newDirection) {
+        List<Position> areaNew;
+
+        if (newType == StationType.STATION) {
+            areaNew = getCornerSquare(newPos, newDirection);
+        } else {
+            int size = newType.getRadius() * 2 + 1; // ex: 3 → 7 (3x3), 5 → 11 (5x5)
+            areaNew = getCenteredSquare(newPos, size);
+        }
+
+        for (Station existing : StationRepository.getInstance().getAll()) {
+            Position existingPos = existing.getLocation();
+            StationType existingType = existing.getType();
+            List<Position> areaExisting;
+
+            if (existingType == StationType.STATION) {
+                // Se tiveres guardada a direção da station, usa-a aqui; se não tiveres, assume uma (ex: NW)
+                areaExisting = getCornerSquare(existingPos, "NW");
+            } else {
+                int size = existingType.getRadius() * 2 + 1;
+                areaExisting = getCenteredSquare(existingPos, size);
+            }
+
+            // Comparar áreas
+            for (Position p1 : areaNew) {
+                for (Position p2 : areaExisting) {
+                    if (p1.equals(p2)) {
+                        return true; // Conflito encontrado
+                    }
+                }
+            }
+        }
+
+        return false; // Nenhuma sobreposição
+    }
+
+
+
+
+    private List<Position> getCenteredSquare(Position center, int size) {
+        List<Position> positions = new ArrayList<>();
+
+        int half = size / 2;
+        int startX = center.getX() - half;
+        int startY = center.getY() - half;
+
+        for (int dx = 0; dx < size; dx++) {
+            for (int dy = 0; dy < size; dy++) {
+                positions.add(new Position(startX + dx, startY + dy));
+            }
+        }
+
+        return positions;
+    }
+
+
+    private List<Position> getCornerSquare(Position corner, String direction) {
+        List<Position> positions = new ArrayList<>();
+        int size = 4;
+
+        int startX = corner.getX();
+        int startY = corner.getY();
+
+        // Ajustar origem consoante o canto escolhido
+        switch (direction.toUpperCase()) {
+            case "NW":
+                // já está no canto superior esquerdo
+                break;
+            case "NE":
+                startX = startX - (size - 1);
+                break;
+            case "SW":
+                startY = startY - (size - 1);
+                break;
+            case "SE":
+                startX = startX - (size - 1);
+                startY = startY - (size - 1);
+                break;
+            default:
+                throw new IllegalArgumentException("Direção inválida: " + direction);
+        }
+
+        for (int dx = 0; dx < size; dx++) {
+            for (int dy = 0; dy < size; dy++) {
+                positions.add(new Position(startX + dx, startY + dy));
+            }
+        }
+
+        return positions;
+    }
+
 }
