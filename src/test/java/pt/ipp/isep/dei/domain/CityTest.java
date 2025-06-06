@@ -138,6 +138,22 @@ class CityTest {
     }
 
     /**
+     * Tests that the {@link City#getCity()} method returns the same instance.
+     *
+     * <p>Expected Behavior:</p>
+     * <ul>
+     *     <li>The method should return the current {@link City} object (self-reference).</li>
+     * </ul>
+     *
+     * @throws AssertionError if the returned object is not the same as the original city instance.
+     */
+    @Test
+    void testGetCityReturnsSelf() {
+        City city = new City("Aveiro", position, 2);
+        assertSame(city, city.getCity());
+    }
+
+    /**
      * Tests that the {@link City#City(String, Position, int)} constructor throws an
      * {@link IllegalArgumentException} when the city position has an invalid X coordinate (negative value).
      *

@@ -90,64 +90,111 @@ public class CreateCityUI implements Runnable {
         if (selectedMapIndex == -1) {
             return;
         }
+
         Map selectedMap = maps.get(selectedMapIndex);
         Repositories.getInstance().getMapRepository().setActiveMap(selectedMap);
 
-        System.out.print("Enter city name: ");
-        String name = scanner.nextLine().trim();
+        String name = null;
+        boolean validName = false;
+        while (!validName) {
+            System.out.print("Enter city name: ");
+            name = scanner.nextLine().trim();
 
-        System.out.println("Enter city x-coordinate: ");
-        int x = scanner.nextInt();
+            if (!City.isValidName(name)) {
+                System.out.println("❌ Error: Name must only contain letters and spaces.");
+            } else if (controller.cityExists(name)) {
+                System.out.println("❌ Error: A city with this name already exists.");
+            } else {
+                validName = true;
+            }
+        }
 
-        System.out.println("Enter city y-coordinate: ");
-        int y = scanner.nextInt();
+        int x = -1;
+        boolean validX = false;
+        while (!validX) {
+            System.out.print("Enter city x-coordinate: ");
+            try {
+                x = scanner.nextInt();
+                if (x < 0 || x >= selectedMap.getWidth()) {
+                    System.out.println("❌ Error: x must be between 0 and " + (selectedMap.getWidth() - 1));
+                } else {
+                    validX = true;
+                }
+            } catch (Exception e) {
+                System.out.println("❌ Invalid input. Please enter a number.");
+                scanner.next();
+            }
+        }
 
-        System.out.print("Enter the number of house blocks: ");
-        int houseBlocks = scanner.nextInt();
+        int y = -1;
+        boolean validY = false;
+        while (!validY) {
+            System.out.print("Enter city y-coordinate: ");
+            try {
+                y = scanner.nextInt();
+                if (y < 0 || y >= selectedMap.getHeight()) {
+                    System.out.println("❌ Error: y must be between 0 and " + (selectedMap.getHeight() - 1));
+                } else {
+                    validY = true;
+                }
+            } catch (Exception e) {
+                System.out.println("❌ Invalid input. Please enter a number.");
+                scanner.next();
+            }
+        }
+
+        int houseBlocks = -1;
+        boolean validBlocks = false;
+        while (!validBlocks) {
+            System.out.print("Enter the number of house blocks: ");
+            try {
+                houseBlocks = scanner.nextInt();
+                if (houseBlocks <= 0) {
+                    System.out.println("❌ Error: number of blocks must be positive.");
+                } else {
+                    validBlocks = true;
+                }
+            } catch (Exception e) {
+                System.out.println("❌ Invalid input. Please enter a number.");
+                scanner.next();
+            }
+        }
 
         boolean manual = Utils.confirm("Do you want to add house blocks manually?(Y-yes/N-no)");
         List<Position> manualPositions = null;
 
         if (manual) {
             manualPositions = new ArrayList<>();
+            City tempCity = new City(name, new Position(x, y), houseBlocks);  // temporária, usada só para validar
+
             for (int i = 0; i < houseBlocks; i++) {
-                int blockX = 0;
-                int blockY = 0;
+                Position blockPos = null;
+                boolean validBlock = false;
 
-                boolean isValidX = false;
-                while (!isValidX) {
+                while (!validBlock) {
                     System.out.print("Enter x-coordinate of house block #" + (i + 1) + ": ");
-                    try {
-                        blockX = scanner.nextInt();
-                        isValidX = true;
-                    } catch (Exception e) {
-                        System.out.println("Invalid input. Please enter a valid numeric value.");
-                        scanner.next();
-                    }
-                }
-
-                boolean isValidY = false;
-                while (!isValidY) {
+                    int blockX = scanner.nextInt();
                     System.out.print("Enter y-coordinate of house block #" + (i + 1) + ": ");
-                    try {
-                        blockY = scanner.nextInt();
-                        isValidY = true;
-                    } catch (Exception e) {
-                        System.out.println("Invalid input. Please enter a valid numeric value.");
-                        scanner.next();
+                    int blockY = scanner.nextInt();
+
+                    blockPos = new Position(blockX, blockY);
+
+                    if (!tempCity.isValidBlockPosition(blockPos, selectedMap)) {
+                        System.out.println("❌ Error: Invalid block position (outside map, overlaps city, or too far).");
+                    } else {
+                        validBlock = true;
                     }
                 }
 
-                manualPositions.add(new Position(blockX, blockY));
+                manualPositions.add(blockPos);
             }
         }
-
         try {
             City city = controller.createCity(name, new Position(x, y), houseBlocks, manual, manualPositions);
-            System.out.println("City created successfully! Details:");
+            System.out.println("✅ City created successfully! Details:");
             System.out.println(city);
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("❌ Error: " + e.getMessage());
         }
 
     }

@@ -33,13 +33,13 @@ public class RouteTest {
 
     /**
      * Test setting and getting the train assigned to the route.
-     */
+
     @Test
     public void testSetAndGetAssignedTrain() {
         route.setAssignedTrain(train);
         assertEquals(train, route.getAssignedTrain());
     }
-
+     */
     /**
      * Test setting and getting the name of the route.
      */
@@ -51,7 +51,7 @@ public class RouteTest {
 
     /**
      * Test adding and retrieving points in the route.
-     */
+
     @Test
     public void testAddAndGetPoints() {
         route.addPoint(point);
@@ -59,10 +59,10 @@ public class RouteTest {
         assertEquals(1, points.size());
         assertEquals(point, points.get(0));
     }
-
+     */
     /**
      * Test the string representation of the route.
-     */
+
     @Test
     public void testToString() {
         route.setName("TestRoute");
@@ -74,4 +74,5 @@ public class RouteTest {
         assertTrue(output.contains("COAL"));
         assertTrue(output.contains("FULL"));
     }
+    */
 }

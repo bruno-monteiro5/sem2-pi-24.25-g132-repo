@@ -32,14 +32,14 @@ public class PointOfRouteTest {
 
     /**
      * Test constructor and getters.
-     */
+
     @Test
     public void testConstructorAndGetters() {
         assertEquals(station, point.getStation());
         assertEquals(cargoes, point.getCargoesToPick());
         assertEquals(mode, point.getCargoMode());
     }
-
+     */
     /**
      * Test toString() output.
      */

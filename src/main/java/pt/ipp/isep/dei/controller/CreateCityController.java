@@ -97,6 +97,10 @@ public class CreateCityController {
 
         Map map = mapRepository.getActiveMap();
 
+        if (position.getX() >= map.getWidth() || position.getY() >= map.getHeight()) {
+            throw new IllegalArgumentException("City position is outside the map boundaries.");
+        }
+
         if (cityRepository.cityExists(name)) {
             throw new IllegalArgumentException("City with that name already exists.");
         }
@@ -108,7 +112,7 @@ public class CreateCityController {
         City city = new City(name, position, houseBlocks);
 
         if (manual) {
-            city.addHouseBlocksManually(manualPositions);
+            city.addHouseBlocksManually(manualPositions, map);
         } else {
             city.generateHouseBlocksAutomatically(map);
         }
@@ -128,4 +132,9 @@ public class CreateCityController {
     public List<City> getCities() {
         return cityRepository.getCities();
     }
+
+    public boolean cityExists(String name) {
+        return cityRepository.cityExists(name);
+    }
+
 }

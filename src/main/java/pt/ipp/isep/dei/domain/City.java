@@ -118,7 +118,7 @@ public class City {
      *                                      <li>Any of the positions are invalid or conflict with existing house blocks.</li>
      *                                  </ul>
      */
-    public void addHouseBlocksManually(List<Position> positions) {
+    public void addHouseBlocksManually(List<Position> positions, Map map) {
         if (positions == null || positions.size() != houseBlocks) {
             throw new IllegalArgumentException("The number of house block positions must match the house block count.");
         }
@@ -126,6 +126,9 @@ public class City {
         this.houseBlocksList.clear();
 
         for (Position pos : positions) {
+            if (!isValidBlockPosition(pos, map)) {
+                throw new IllegalArgumentException("Invalid house block position: " + pos);
+            }
             this.houseBlocksList.add(new HouseBlock(pos));
         }
     }
@@ -171,15 +174,23 @@ public class City {
      * @param map           The {@link Map} defining the boundaries and constraints for validation.
      * @return {@code true} if the position is valid and within the map boundaries; {@code false} otherwise.
      */
-    private boolean isValidBlockPosition(Position blockPosition, Map map) {
-        if (blockPosition.getX() < 0 || blockPosition.getX() >= map.getWidth() || blockPosition.getY() < 0 || blockPosition.getY() >= map.getHeight()) {
+    public boolean isValidBlockPosition(Position blockPosition, Map map) {
+        if (blockPosition.getX() < 0 || blockPosition.getX() >= map.getWidth() ||
+                blockPosition.getY() < 0 || blockPosition.getY() >= map.getHeight()) {
             return false;
         }
+
         if (blockPosition.equals(this.position)) {
             return false;
         }
-        return true;
+
+        int dx = Math.abs(blockPosition.getX() - this.position.getX());
+        int dy = Math.abs(blockPosition.getY() - this.position.getY());
+        int maxDistance = 20;
+
+        return dx <= maxDistance && dy <= maxDistance;
     }
+
 
     /**
      * Validates whether the city's name contains only allowed characters.
@@ -191,7 +202,7 @@ public class City {
      * @param name The name to validate.
      * @return {@code true} if the name is valid; {@code false} otherwise.
      */
-    private boolean isValidName(String name) {
+     public static boolean isValidName(String name) {
         return name != null && !name.isEmpty() && name.matches("^[a-zA-Z\\s]+$");
     }
 
