@@ -44,6 +44,8 @@ public class AuthenticationUI implements Runnable {
         rolesUI.add(new MenuItem(AuthenticationController.ROLE_EDITOR, new EditorUI()));
         rolesUI.add(new MenuItem(AuthenticationController.ROLE_PLAYER, new PlayerUI()));
 
+
+
         //TODO: Complete with other user roles and related RoleUI
         return rolesUI;
     }

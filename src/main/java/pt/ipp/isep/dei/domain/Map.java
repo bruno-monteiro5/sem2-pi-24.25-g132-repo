@@ -217,13 +217,13 @@ public class Map implements Serializable {
      */
     public void addIndustry(Industry industry) {
         if (industry == null || industry.getPosition() == null) {
-            throw new IllegalArgumentException("A indústria ou sua posição não pode ser nula.");
+            throw new IllegalArgumentException("The industry or its position cannot be null.");
         }
         if (!isPositionValid(industry.getPosition())) {
-            throw new IllegalArgumentException("A posição da indústria está fora dos limites do mapa.");
+            throw new IllegalArgumentException("The position of the industry is invalid or outside the map's boundaries.");
         }
         if (isPositionOccupied(industry.getPosition())) {
-            throw new IllegalArgumentException("Já existe uma indústria nesta posição.");
+            throw new IllegalArgumentException("There is an indsutry already at the specified position. Please try again with a different position.");
         }
         industries.add(industry);
         ocupiedPositions.add(industry.getPosition());
@@ -363,7 +363,7 @@ public class Map implements Serializable {
      *     City closestCity = map.findClosestCity(userPosition);
      * </pre>
      */
-    public City findClosestCity(Position position) {
+    public String findClosestCity(Position position) {
         City closest = null;
         double minDistance = Double.MAX_VALUE;
 
@@ -375,7 +375,7 @@ public class Map implements Serializable {
             }
         }
 
-        return closest;
+        return closest.getName();
     }
 
     /**
@@ -398,7 +398,7 @@ public class Map implements Serializable {
      * </pre>
      */
     public String getSuggestedName(Position location, StationType type) {
-        City city = findClosestCity(location);
+        String city = findClosestCity(location);
         if (city == null) {
             return type.getName();
         }

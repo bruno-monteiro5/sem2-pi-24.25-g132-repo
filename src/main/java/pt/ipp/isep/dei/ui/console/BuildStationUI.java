@@ -121,7 +121,6 @@ public class BuildStationUI implements Runnable {
 
         //name
 
-        // Gerar nome sugerido com base na posição e tipo
         String suggested = controller.getSuggestedName(position, type);
         System.out.printf("Suggested name: %s%n", suggested);
 

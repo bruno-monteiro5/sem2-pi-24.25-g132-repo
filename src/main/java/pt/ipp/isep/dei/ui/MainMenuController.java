@@ -19,7 +19,7 @@ public class MainMenuController {
 
     @FXML
     public void handleStationDetails(ActionEvent event) {
-        showMessage("Ver Detalhes", "Aqui será aberta a interface para a US07.");
+        showMessage("See details", "Aqui será aberta a interface para a US07.");
     }
 
     @FXML
