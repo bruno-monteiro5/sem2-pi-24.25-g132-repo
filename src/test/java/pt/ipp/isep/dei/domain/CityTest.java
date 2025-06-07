@@ -54,8 +54,8 @@ class CityTest {
      */
     @BeforeEach
     void setUp() {
-        position = new Position(5, 5);
-        map = new Map("testmap", 20, 20, "test@example.com");
+        position = new Position(25, 25);
+        map = new Map("testmap", 50, 50, "editor@this.app");
     }
 
     /**
@@ -234,17 +234,17 @@ class CityTest {
     @Test
     void testAddHouseBlocksManually_Valid() {
         City city = new City("Porto", position, 2);
-        List<Position> positions = Arrays.asList(new Position(1, 1), new Position(2, 2));
-        city.addHouseBlocksManually(positions);
+        List<Position> positions = Arrays.asList(new Position(28, 28), new Position(20, 21));
+        city.addHouseBlocksManually(positions, map);
 
         List<HouseBlock> blocks = city.getHouseBlocksList();
         assertEquals(2, blocks.size());
-        assertEquals(1, blocks.get(0).getPosition().getX());
-        assertEquals(2, blocks.get(1).getPosition().getX());
+        assertEquals(28, blocks.get(0).getPosition().getX());
+        assertEquals(20, blocks.get(1).getPosition().getX());
     }
 
     /**
-     * Tests that the {@link City#addHouseBlocksManually(List)} method throws an
+     * Tests that the {@link City#addHouseBlocksManually(List, Map)} method throws an
      * {@link IllegalArgumentException} when the size of the provided list of positions
      * does not match the number of house blocks required by the city.
      *
@@ -261,12 +261,12 @@ class CityTest {
     void testAddHouseBlocksManually_InvalidSize() {
         City city = new City("Coimbra", position, 3);
         List<Position> wrongList = Collections.singletonList(new Position(1, 1));
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> city.addHouseBlocksManually(wrongList));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> city.addHouseBlocksManually(wrongList, map));
         assertEquals("The number of house block positions must match the house block count.", exception.getMessage());
     }
 
     /**
-     * Tests that the {@link City#addHouseBlocksManually(List)} method throws an
+     * Tests that the {@link City#addHouseBlocksManually(List, Map )} method throws an
      * {@link IllegalArgumentException} when the provided list of positions is {@code null}.
      *
      * <p>Expected Behavior:</p>
@@ -281,7 +281,7 @@ class CityTest {
     @Test
     void testAddHouseBlocksManually_NullPositions() {
         City city = new City("Braga", new Position(2, 2), 2);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> city.addHouseBlocksManually(null));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> city.addHouseBlocksManually(null, map));
         assertEquals("The number of house block positions must match the house block count.", exception.getMessage());
     }
 
@@ -324,12 +324,51 @@ class CityTest {
     @Test
     void testToStringIncludesAllDetails() {
         City city = new City("Los Angeles", position, 1);
-        city.addHouseBlocksManually(List.of(new Position(2, 3)));
+        city.addHouseBlocksManually(List.of(new Position(26, 27)), map);
         String str = city.toString();
         assertTrue(str.contains("Los Angeles"));
-        assertTrue(str.contains("position=[5, 5]"));
+        assertTrue(str.contains("position=[25, 25]"));
         assertTrue(str.contains("houseBlocks=1"));
         assertTrue(str.contains("HouseBlock"));
     }
+
+
+    // Testa quando o X está fora dos limites superiores do mapa
+    @Test
+    void testIsValidBlockPosition_XMaiorOuIgualQueWidth() {
+        City city = new City("Test", position, 1);
+        Position pos = new Position(map.getWidth(), position.getY()); // X igual ao width
+        assertFalse(city.isValidBlockPosition(pos, map));
+    }
+
+    // Testa quando o Y está fora dos limites superiores do mapa
+    @Test
+    void testIsValidBlockPosition_YMaiorOuIgualQueHeight() {
+        City city = new City("Test", position, 1);
+        Position pos = new Position(position.getX(), map.getHeight()); // Y igual ao height
+        assertFalse(city.isValidBlockPosition(pos, map));
+    }
+
+    // Testa quando a posição do bloco é igual à posição da cidade
+    @Test
+    void testIsValidBlockPosition_IgualPosicaoDaCidade() {
+        City city = new City("Test", position, 1);
+        assertFalse(city.isValidBlockPosition(position, map));
+    }
+
+    /**
+     * Testa que o método addHouseBlocksManually lança exceção ao receber uma posição inválida.
+     *
+     * <p>Deve lançar IllegalArgumentException quando uma das posições está fora dos limites do mapa.</p>
+     */
+    @Test
+    void testAddHouseBlocksManually_PosicaoInvalida() {
+        City city = new City("Test", position, 1);
+        // Posição inválida: fora dos limites do mapa
+        List<Position> invalidPositions = List.of(new Position(map.getWidth(), map.getHeight()));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> city.addHouseBlocksManually(invalidPositions, map));
+        assertTrue(exception.getMessage().contains("Invalid house block position"));
+    }
+
 
 }
