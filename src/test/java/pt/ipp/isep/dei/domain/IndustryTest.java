@@ -99,12 +99,12 @@ public class IndustryTest {
         Industry i4 = new Industry("Iron Mine", new Position(1, 1), IndustryType.PRIMARY);
         Industry i5 = new Industry("Iron Mine", pos, IndustryType.MIXED);
 
-        assertEquals(i1, i2);                  // same name (case-insensitive), same pos/type
-        assertNotEquals(i1, i3);               // different name
-        assertNotEquals(i1, i4);               // different position
-        assertNotEquals(i1, i5);               // different type
-        assertNotEquals(i1, null);             // null
-        assertNotEquals(i1, "not an industry"); // wrong class
+        assertEquals(i1, i2);
+        assertNotEquals(i1, i3);
+        assertNotEquals(i1, i4);
+        assertNotEquals(i1, i5);
+        assertNotEquals(i1, null);
+        assertNotEquals(i1, "not an industry");
     }
 }
 
