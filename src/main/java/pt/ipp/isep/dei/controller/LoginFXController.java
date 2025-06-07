@@ -35,15 +35,15 @@ public class LoginFXController {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
                 Parent root = loader.load();
-                MainFX.setRootScene(root, "Railroad Simulator - Main Menu", 400, 300);
+                MainFX.setRootScene(root, "Railroad Simulator - Main Menu", 800, 600);
             } catch (Exception e) {
+                e.printStackTrace();
                 showAlert("Error", "It was not possible to open the main menu.");
             }
         } else if ("EDITOR".equals(role)) {
             showAlert("Login Ok", "Editor authenticated but interface not implemented yet.");
         }
     }
-
 
     private void showAlert(String titulo, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
