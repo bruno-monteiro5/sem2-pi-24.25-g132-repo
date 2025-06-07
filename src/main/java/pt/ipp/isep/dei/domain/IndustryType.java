@@ -45,21 +45,4 @@ public enum IndustryType {
     public String getDescription() {
         return description;
     }
-
-    /**
-     * Retrieves the names of all defined industry types as an array of strings.
-     *
-     * This method iterates through all the values in the {@link IndustryType} enum
-     * and returns their names as an array of strings.
-     *
-     * @return An array of strings containing the names of all industry types.
-     */
-    public static String[] getAllTypes() {
-        IndustryType[] types = IndustryType.values(); // All available industry types
-        String[] typeNames = new String[types.length]; // Array to store names
-        for (int i = 0; i < types.length; i++) {
-            typeNames[i] = types[i].name(); // Store the name of each industry type
-        }
-        return typeNames;
-    }
 }
