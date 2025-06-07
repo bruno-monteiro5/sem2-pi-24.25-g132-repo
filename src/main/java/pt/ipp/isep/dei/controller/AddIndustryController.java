@@ -2,32 +2,18 @@ package pt.ipp.isep.dei.controller;
 
 import pt.ipp.isep.dei.domain.Industry;
 import pt.ipp.isep.dei.domain.IndustryData;
-import pt.ipp.isep.dei.domain.IndustryType;
 import pt.ipp.isep.dei.domain.Position;
 import pt.ipp.isep.dei.repository.IndustryRepository;
 import pt.ipp.isep.dei.repository.Repositories;
 
+import java.util.List;
 
 public class AddIndustryController {
 
-    private IndustryRepository repository;
+    private final IndustryRepository repository;
 
     public AddIndustryController() {
         this.repository = Repositories.getInstance().getIndustryRepository();
-    }
-
-    public Industry addIndustry(String name, Position position, IndustryType type) {
-        if (repository.industryExists(name)) {
-            throw new IllegalArgumentException("An industry with that name already exists.");
-        }
-
-        if (repository.isPositionInvalid(position)) {
-            throw new IllegalArgumentException("Position is already occupied by another industry.");
-        }
-
-        Industry industry = new Industry(name, position, type);
-        repository.save(industry);
-        return industry;
     }
 
     /**
@@ -39,21 +25,22 @@ public class AddIndustryController {
      *
      * @throws IllegalArgumentException if:
      * <ul>
-     *   <li>An industry with the same name already exists.</li>
-     *   <li>The position is already occupied.</li>
+     *   <li>An identical industry already exists (same name, type and position).</li>
      * </ul>
      */
     public Industry addIndustry(IndustryData data, Position position) {
-        if (repository.industryExists(data.getName())) {
-            throw new IllegalArgumentException("An industry with that name already exists.");
+        Industry newIndustry = new Industry(data, position);
+
+        if (repository.contains(newIndustry)) {
+            throw new IllegalArgumentException("This industry already exists at that position.");
         }
 
-        if (repository.isPositionInvalid(position)) {
-            throw new IllegalArgumentException("Position is already occupied by another industry.");
-        }
-
-        Industry industry = new Industry(data, position);
-        repository.save(industry);
-        return industry;
+        repository.save(newIndustry);
+        return newIndustry;
     }
+
+    public List<Industry> getAllIndustries() {
+        return repository.findAll();
+    }
+
 }

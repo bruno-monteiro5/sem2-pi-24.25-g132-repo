@@ -92,4 +92,17 @@ public class Industry {
     public boolean isAtPosition(Position position) {
         return this.position.equals(position);
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Industry industry = (Industry) o;
+
+        return name.equalsIgnoreCase(industry.name)
+                && position.equals(industry.position)
+                && type == industry.type;
+    }
 }

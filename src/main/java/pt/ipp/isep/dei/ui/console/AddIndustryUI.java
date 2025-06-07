@@ -56,7 +56,7 @@ public class AddIndustryUI implements Runnable {
                 return;
             }
 
-            System.out.println("\nAvailable "+ selectedType.getDescription() + ":");
+            System.out.println("\nAvailable " + selectedType.getDescription() + ":");
             for (int i = 0; i < filtered.size(); i++) {
                 System.out.printf("%d. %s\n", i + 1, filtered.get(i).getName());
             }
@@ -81,6 +81,16 @@ public class AddIndustryUI implements Runnable {
 
             System.out.println("\nIndustry added successfully!");
             System.out.println(industry);
+
+            System.out.println("\nCurrent industries in the system:");
+            List<Industry> allIndustries = controller.getAllIndustries();
+            if (allIndustries.isEmpty()) {
+                System.out.println("No industries have been added yet.");
+            } else {
+                for (Industry i : allIndustries) {
+                    System.out.println("- " + i);
+                }
+            }
 
         } catch (NumberFormatException e) {
             System.out.println("Error: Please enter a valid number.");
