@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import pt.ipp.isep.dei.ui.MainFX;
 
-public class LoginController {
+public class LoginFXController {
 
     @FXML
     private TextField emailField;

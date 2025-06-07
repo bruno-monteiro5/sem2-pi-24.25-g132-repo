@@ -1,36 +1,50 @@
 package pt.ipp.isep.dei.ui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import pt.ipp.isep.dei.domain.Map;
+import pt.ipp.isep.dei.domain.Scenario;
 
 public class MainMenuController {
 
+    @FXML private Label mapLabel;
+    @FXML private Label scenarioLabel;
+    @FXML private Label yearLabel;
+    @FXML private Label budgetLabel;
+    @FXML private Pane mapArea;
+
     @FXML
-    public void handleBuildStation(ActionEvent event) {
-        showMessage("Criar Estação", "Aqui será aberta a interface para a US05.");
+    public void initialize() {
+        Map map = ApplicationSession.getInstance().getCurrentMap();
+        Scenario scenario = ApplicationSession.getInstance().getCurrentScenario();
+
+        if (map != null) {
+            mapLabel.setText("Map: " + map.getName());
+        }
+
+        if (scenario != null && scenario.getPeriodTime() != null) {
+            scenarioLabel.setText("Scenario: " + scenario.getName());
+            yearLabel.setText("Year: " + scenario.getPeriodTime().getStartYear());
+
+            // ⚠️ Budget is not yet implemented
+            // budgetLabel.setText("Budget: $" + scenario.getPeriodTime().getInitialBudget());
+        }
     }
 
     @FXML
-    public void handleUpgradeStation(ActionEvent event) {
-        showMessage("Fazer Upgrade", "Aqui será aberta a interface para a US06.");
+    public void handleBuildStation() {
     }
 
     @FXML
-    public void handleStationDetails(ActionEvent event) {
-        showMessage("See details", "Aqui será aberta a interface para a US07.");
+    public void handleUpgradeStation() {
     }
 
     @FXML
-    public void handleStartSimulation(ActionEvent event) {
-        showMessage("Simulação", "A simulação será iniciada.");
+    public void handleStationDetails() {
     }
 
-    private void showMessage(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.showAndWait();
+    @FXML
+    public void handleStartSimulation() {
     }
 }
