@@ -1,10 +1,15 @@
 package pt.ipp.isep.dei.ui;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.domain.Scenario;
+
+import java.io.IOException;
 
 public class MainMenuController {
 
@@ -34,17 +39,36 @@ public class MainMenuController {
 
     @FXML
     public void handleBuildStation() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BuildStation.fxml"));
+            Parent root = loader.load();
+            MainFX.setRootScene(root, "Build Station", 600, 400); // ajusta o tamanho conforme necessário
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Failed to load Build Station screen.");
+        }
     }
 
     @FXML
     public void handleUpgradeStation() {
+        // Ainda por implementar
     }
 
     @FXML
     public void handleStationDetails() {
+        // Ainda por implementar
     }
 
     @FXML
     public void handleStartSimulation() {
+        // Ainda por implementar
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
