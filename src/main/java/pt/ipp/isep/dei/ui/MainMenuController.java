@@ -32,7 +32,7 @@ public class MainMenuController {
             scenarioLabel.setText("Scenario: " + scenario.getName());
             yearLabel.setText("Year: " + scenario.getPeriodTime().getStartYear());
 
-            // ⚠️ Budget is not yet implemented
+            //  Budget is not yet implemented
             // budgetLabel.setText("Budget: $" + scenario.getPeriodTime().getInitialBudget());
         }
     }
@@ -42,7 +42,7 @@ public class MainMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BuildStation.fxml"));
             Parent root = loader.load();
-            MainFX.setRootScene(root, "Build Station", 600, 400); // ajusta o tamanho conforme necessário
+            MainFX.setRootScene(root, "Build Station", 600, 400);
         } catch (IOException e) {
             e.printStackTrace();
             showError("Failed to load Build Station screen.");
@@ -51,17 +51,25 @@ public class MainMenuController {
 
     @FXML
     public void handleUpgradeStation() {
-        // Ainda por implementar
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UpgradeStation.fxml"));
+            Parent root = loader.load();
+            MainFX.setRootScene(root, "Upgrade Station", 600, 400);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Failed to load Upgrade Station screen.");
+        }
     }
+
 
     @FXML
     public void handleStationDetails() {
-        // Ainda por implementar
+
     }
 
     @FXML
     public void handleStartSimulation() {
-        // Ainda por implementar
+
     }
 
     private void showError(String message) {

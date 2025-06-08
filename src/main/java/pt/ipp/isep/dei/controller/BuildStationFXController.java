@@ -40,7 +40,7 @@ public class BuildStationFXController {
 
         try {
             StationType type = typeComboBox.getValue();
-            if (type == null) throw new IllegalArgumentException("Please select a station type.");
+            if (type == null) throw new IllegalArgumentException("Select a station type.");
 
             int x = Integer.parseInt(xField.getText().trim());
             int y = Integer.parseInt(yField.getText().trim());
@@ -51,7 +51,7 @@ public class BuildStationFXController {
 
             String dir = directionComboBox.getValue();
             if (type == StationType.STATION && dir == null) {
-                throw new IllegalArgumentException("Please select a direction for STATION.");
+                throw new IllegalArgumentException("Select a direction for STATION.");
             }
 
             boolean created = controller.createStation(pos, type, name, dir);
