@@ -37,7 +37,7 @@ As an Editor, I want to create a map with a size and a name.
 
 * **AC1:** The maps dimensions are positive integers.
 * **AC2:** Map name should be a valid file name.
-
+* **AC3:**  The maps should have a scale that states the size of cell map in kms
 
 ### 1.4. Found out Dependencies
 
