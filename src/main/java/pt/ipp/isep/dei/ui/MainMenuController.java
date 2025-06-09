@@ -72,6 +72,20 @@ public class MainMenuController {
 
     }
 
+    @FXML
+    public void handleLogout() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
+            Parent root = loader.load();
+            MainFX.setRootScene(root, "Login - Railroad Simulator", 400, 300);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error loading Login screen.");
+            alert.showAndWait();
+        }
+    }
+
+
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

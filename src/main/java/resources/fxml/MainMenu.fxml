@@ -40,6 +40,7 @@
                 <Button text="Upgrade Station" onAction="#handleUpgradeStation"/>
                 <Button text="See Station Details" onAction="#handleStationDetails"/>
                 <Button text="Run Simulation" onAction="#handleStartSimulation"/>
+                <Button text="Back to Login" onAction="#handleLogout" />
             </children>
         </VBox>
     </right>
