@@ -106,5 +106,21 @@ public class IndustryTest {
         assertNotEquals(i1, null);
         assertNotEquals(i1, "not an industry");
     }
+
+    @Test
+    void testGetCargoType() {
+        Industry industry = new Industry("Factory", new Position(1, 2), IndustryType.TRANSFORMING);
+        // O valor padrão deve ser null
+        assertNull(industry.getCargoType());
+    }
+
+    @Test
+    void testGetYearlyOutput() {
+        Industry industry = new Industry("Factory", new Position(1, 2), IndustryType.TRANSFORMING);
+        // O valor padrão deve ser 0
+        assertEquals(0, industry.getYearlyOutput());
+    }
+
+
 }
 
