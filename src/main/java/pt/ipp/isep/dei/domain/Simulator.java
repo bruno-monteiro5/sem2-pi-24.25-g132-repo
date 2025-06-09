@@ -3,29 +3,35 @@ package pt.ipp.isep.dei.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import pt.ipp.isep.dei.domain.LineType;
 
-public class Simulator implements Serializable {
+public class Simulator implements Runnable, Serializable {
 
     private final Scenario scenario;
     private int currentYear;
+    private final int endYear;
     private boolean running;
-    private ArrayList<Train> trains;
-    private ArrayList<Station> stations;
-    private ArrayList<Locomotive> locomotives;
+    private Thread simulationThread;
 
-    public Simulator(ArrayList<Train> trains, ArrayList<Station> stations, ArrayList<Locomotive> locomotives, Scenario scenario, int startYear) {
+    private final ArrayList<Train> trains;
+    private final ArrayList<Station> stations;
+    private final ArrayList<Locomotive> locomotives;
+
+    public Simulator(ArrayList<Train> trains, ArrayList<Station> stations, ArrayList<Locomotive> locomotives, Scenario scenario) {
         this.trains = trains;
         this.stations = stations;
         this.locomotives = locomotives;
         this.scenario = scenario;
-        this.currentYear = startYear;
+        this.currentYear = scenario.getPeriodTime().getStartYear();
+        this.endYear = scenario.getPeriodTime().getEndYear();
         this.running = false;
     }
 
-
     public void start() {
-        running = true;
+        if (simulationThread == null || !simulationThread.isAlive()) {
+            running = true;
+            simulationThread = new Thread(this);
+            simulationThread.start();
+        }
     }
 
     public void pause() {
@@ -40,13 +46,26 @@ public class Simulator implements Serializable {
         return currentYear;
     }
 
-    public void nextYear() {
-        if (!running) return;
+    @Override
+    public void run() {
+        System.out.println("Simulation started.");
 
+        while (running && currentYear <= endYear) {
+            simulateStep();
+            currentYear++;
+        }
+
+        running = false;
+        System.out.println("Simulation ended at year " + currentYear + ".");
+    }
+
+    private void simulateStep() {
+        // Generate cargoes
         for (Station station : scenario.getStations()) {
             station.generateAnnualCargoes();
         }
 
+        // Move trains and deliver cargo
         for (Train train : scenario.getTrains()) {
             if (!train.hasRoute()) continue;
 
@@ -60,9 +79,11 @@ public class Simulator implements Serializable {
             if (line == null) continue;
 
             double distance = line.getLength();
-            boolean isDoubleTrack = line.getLineType() == LineType.DOUBLE_NOT_ELECTRICITY;
+            LineType type = line.getLineType();
+            boolean isDoubleTrack = type == line.getLineType().DOUBLE_ELECTRIFIED || type == LineType.DOUBLE_NOT_ELECTRICITY;
 
             double speed = calculateEffectiveSpeed(train, isDoubleTrack);
+            double travelTime = distance / speed; // not used in timing here, only logic
 
             train.setCurrentStation(next);
 
@@ -72,21 +93,22 @@ public class Simulator implements Serializable {
                 double revenue = calculateRevenue(cargo.getBaseValue(), demand, distance);
                 next.addRevenue(revenue);
                 next.registerDelivery(cargo.getType());
-
             }
         }
 
+        // Update station demand
         for (Station station : scenario.getStations()) {
             station.updateDemand();
         }
 
+        // Notify about new locomotives
         for (Locomotive loco : scenario.getLocomotives()) {
             if (loco.getStartYear() == currentYear) {
                 System.out.println("New locomotive available: " + loco.getType().name());
             }
         }
 
-        currentYear++;
+        System.out.println("Year " + currentYear + " simulated.");
     }
 
     private double calculateEffectiveSpeed(Train train, boolean isDoubleTrack) {
