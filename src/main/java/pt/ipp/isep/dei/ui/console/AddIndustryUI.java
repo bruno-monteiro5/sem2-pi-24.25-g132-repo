@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.domain.Industry;
 import pt.ipp.isep.dei.domain.IndustryData;
 import pt.ipp.isep.dei.domain.IndustryType;
 import pt.ipp.isep.dei.domain.Position;
+import pt.ipp.isep.dei.ui.console.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +112,16 @@ public class AddIndustryUI implements Runnable {
             } catch (NumberFormatException e) {
                 System.out.println("❌ Invalid input. Please enter a valid number.");
             }
+        }
+
+        System.out.println("\nPlease confirm the industry details:");
+        System.out.println("Name: " + selectedData.getName());
+        System.out.println("Type: " + selectedType.getDescription());
+        System.out.println("Position: [" + x + ", " + y + "]");
+
+        if (!Utils.confirm("Confirm industry creation? (Y-yes/N-no):")) {
+            System.out.println("❌ Industry creation cancelled.");
+            return;
         }
 
         try {

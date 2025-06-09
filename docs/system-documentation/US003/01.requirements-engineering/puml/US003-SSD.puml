@@ -44,7 +44,7 @@ activate Editor
         System --> Editor : validates positive integer
     deactivate System
 
-    Editor -> System : confirms manual house block placement? (Y/N)
+    Editor -> System : confirms manual house block placement? (Y-yes/N-no)
     activate System
     deactivate System
 
@@ -59,13 +59,13 @@ activate Editor
 
     end
 
-    Editor -> System : confirms creation (Y/N)
+    Editor -> System : confirms creation (Y-yes/N-no)
     activate System
 
-        alt User confirms
-            System --> Editor : creates city and shows success
-        else User cancels
-            System --> Editor : shows cancellation message
+        alt User confirms (Y)
+            System --> Editor : adds city and displays operation success
+        else User cancels (N)
+            System --> Editor : displays cancellation message
         end
 
     deactivate System

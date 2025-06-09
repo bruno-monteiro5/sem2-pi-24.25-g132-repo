@@ -5,32 +5,44 @@ skinparam shadowing false
 
 autonumber
 
-actor "Editor" as Employee
+actor "Editor" as Editor
 participant ":System" as System
 
-activate Employee
+activate Editor
 
-    Employee -> System : asks to add an industry
+    Editor -> System : asks to add an industry
     activate System
 
-        System --> Employee : show an industries list and asks to select one
+        System --> Editor : shows industry types list
     deactivate System
 
-    Employee -> System :selects an industry
+    Editor -> System : selects an industry type
     activate System
 
-        System --> Employee : requests data (i.e. type, name, cost, XY position of the current map)
+        System --> Editor : shows industries of selected type
     deactivate System
 
-    Employee -> System : types requested data
+    Editor -> System : selects an industry
     activate System
 
-        System --> Employee : shows all data and requests confirmation
+        System --> Editor : asks for coordinates (X and Y)
     deactivate System
 
-    Employee -> System : confirms data
+    Editor -> System : types coordinates
     activate System
 
-        System --> Employee : displays operation success
+        System --> Editor : displays industry data
+        System --> Editor : asks for confirmation (Y-yes/N-no)
+    deactivate System
+
+    Editor -> System : confirms creation (Y/N)
+    activate System
+
+    alt User confirms (Y)
+        System --> Editor : adds industry and displays operation success
+    else User cancels (N)
+        System --> Editor : displays cancellation message
+    end
+
     deactivate System
 @enduml

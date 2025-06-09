@@ -13,25 +13,36 @@ activate Editor
     Editor -> System : asks to create a new map
     activate System
 
-        System --> Editor : requests data (i.e. name, width, height)
+        System --> Editor : asks for map name
     deactivate System
 
-    Editor -> System : provides map data
+    Editor -> System : inputs name
     activate System
 
-        System --> Editor : displays map data
-        System --> Editor : asks for confirmation (Y/N)
+        System --> Editor : validates name
     deactivate System
 
-    Editor -> System : confirms or cancels
+    Editor -> System : inputs map width
+    activate System
+        System --> Editor : validates width
+    deactivate System
+
+    Editor -> System : inputs map height
+    activate System
+        System --> Editor : validates height
+    deactivate System
+
+    System --> Editor : displays map data
+    System --> Editor : asks for confirmation (Y-yes/N-no)
+
+    Editor -> System : confirms creation (Y/N)
     activate System
 
     alt User confirms (Y)
-        System --> Editor : displays operation success
+        System --> Editor : creates map and displays operation success
     else User cancels (N)
         System --> Editor : displays cancellation message
     end
 
     deactivate System
 @enduml
-
