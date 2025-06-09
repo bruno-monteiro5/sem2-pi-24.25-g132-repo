@@ -1,9 +1,7 @@
 package pt.ipp.isep.dei.controller;
 
-
 import pt.ipp.isep.dei.repository.SimulatorRepository;
 import pt.ipp.isep.dei.domain.Simulator;
-
 
 public class SimulatorController {
 
@@ -14,8 +12,7 @@ public class SimulatorController {
                 repository.getTrains(),
                 repository.getStations(),
                 repository.getAllLocomotives(),
-                repository.getScenario(),
-                repository.getStartYear()
+                repository.getScenario()
         );
     }
 
@@ -27,11 +24,7 @@ public class SimulatorController {
         simulator.pause();
     }
 
-    public void nextYear() {
-        simulator.nextYear();
-    }
-
-    public boolean isRunning() {
+    public boolean isSimulationRunning() {
         return simulator.isRunning();
     }
 
