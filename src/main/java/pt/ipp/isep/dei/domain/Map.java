@@ -58,7 +58,7 @@ public class Map implements Serializable {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException("Map must have positive width and height");
         }
-        if (!isValidFileName(name)) {
+        if (!isValidMapName(name)) {
             throw new IllegalArgumentException("Map must have a valid name");
         }
         this.name = name;
@@ -66,34 +66,10 @@ public class Map implements Serializable {
         this.height = height;
     }
 
-    public RailwayLine getLineBetweenStations(Station a, Station b) {
-        for (RailwayLine line : railwayLines) {
-            if (line.connects(a, b)) {
-                return line;
-            }
-        }
-        return null;
-    }
 
 
-    /**
-     * Constructs a basic map instance with default properties.
-     *
-     * <p>The default map includes:</p>
-     * <ul>
-     *     <li>Name: {@code "Without name"}.</li>
-     *     <li>Dimensions: 1x1 (width = 1; height = 1).</li>
-     *     <li>No entities (stations, cities, etc.).</li>
-     * </ul>
-     *
-     * <p>Primarily used for testing or as a placeholder instance.</p>
-     */
-    public Map() {
-        this(NAME_BY_OMISON, WIDTH_BY_OMISSION, HEIGHT_BY_OMISSION);
-    }
-
-    private boolean isValidFileName(String name) {
-        return name.matches("[a-zA-Z0-9_-]+") && !name.isEmpty();
+    public static boolean isValidMapName(String name) {
+        return name.matches("[a-zA-Z0-9_-]+") && !name.isEmpty() && name != null;
     }
 
     public String getName() {
@@ -129,6 +105,83 @@ public class Map implements Serializable {
             }
         }
         return false;
+    }
+
+    /**
+     * Verifies whether a position is valid within the map's boundaries.
+     *
+     * <p>A position is considered valid if it is between 0 and the map's width (for X-axis)
+     * and between 0 and the map's height (for Y-axis).</p>
+     *
+     * @param position The position to verify. Cannot be null.
+     * @return {@code true} if the position is valid, {@code false} otherwise.
+     *
+     * <p>Example:</p>
+     * <pre>
+     *     Position position = new Position(2, 3);
+     *     boolean isValid = map.isPositionValid(position);
+     *     System.out.println(isValid); // Output: true or false
+     * </pre>
+     */
+    private boolean isInsideBounds(Position position) {
+        return position.getX() >= 0 && position.getX() < width &&
+                position.getY() >= 0 && position.getY() < height;
+    }
+
+
+
+    /**
+     * Verifies whether a given position is already occupied on the map.
+     *
+     * <p>A position is considered occupied if it matches any of the positions stored in
+     * the list of occupied positions ({@code ocupiedPositions}).</p>
+     *
+     * <p>If the position is outside the map's boundaries, it will be considered not occupied.</p>
+     *
+     * @param position The position to check. Cannot be null.
+     * @return {@code true} if the position is occupied, {@code false} otherwise.
+     *
+     * <p>Example:</p>
+     * <pre>
+     *     Position position = new Position(6, 7);
+     *     boolean isOccupied = map.isPositionOccupied(position);
+     *     System.out.println(isOccupied); // Output: true or false
+     * </pre>
+     */
+    private boolean isPositionOccupied(Position position) {
+        for (Position occupiedPosition : ocupiedPositions) {
+            if (occupiedPosition.equals(position)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Validates whether a given position can be used on the map.
+     *
+     * <p>The position is considered valid if:</p>
+     * <ul>
+     *     <li>The position itself is valid (determined by {@code isPositionValid}).</li>
+     *     <li>The position is within the map's boundaries (checked by {@code isInsideBounds}).</li>
+     *     <li>The position is not already occupied by another entity (checked by {@code isPositionOccupied}).</li>
+     * </ul>
+     *
+     * @param position The position to validate. Cannot be null.
+     * @return {@code true} if the position is valid, {@code false} otherwise.
+     *
+     * <p>Example:</p>
+     * <pre>
+     *     Position position = new Position(5, 7);
+     *     boolean isValid = map.validatePosition(position);
+     *     System.out.println(isValid); // Output: true or false
+     * </pre>
+     */
+    public boolean validatePosition(Position position) {
+        if (isInsideBounds(position) && !isPositionOccupied(position)) {
+            return true;
+        }else
+            return false;
     }
 
 
@@ -184,12 +237,10 @@ public class Map implements Serializable {
         if (industry == null || industry.getPosition() == null) {
             throw new IllegalArgumentException("The industry or its position cannot be null.");
         }
-        if (!isPositionValid(industry.getPosition())) {
+        if (!validatePosition(industry.getPosition())) {
             throw new IllegalArgumentException("The position of the industry is invalid or outside the map's boundaries.");
         }
-        if (isPositionOccupied(industry.getPosition())) {
-            throw new IllegalArgumentException("There is an indsutry already at the specified position. Please try again with a different position.");
-        }
+
         industries.add(industry);
         ocupiedPositions.add(industry.getPosition());
     }
@@ -277,99 +328,20 @@ public class Map implements Serializable {
         return new Position(x, y);
     }
 
-    /**
-     * Checks if a given position is within the map boundaries.
-     * @param p the position to check
-     * @return true if inside bounds, false otherwise
-     */
-    public boolean isInsideBounds(Position p) {
-        return p.getX() >= 0 && p.getX() < width && p.getY() >= 0 && p.getY() < height;
-    }
 
-
-    /**
-     * Verifies whether a position is valid within the map's boundaries.
-     *
-     * <p>A position is considered valid if it is between 0 and the map's width (for X-axis)
-     * and between 0 and the map's height (for Y-axis).</p>
-     *
-     * @param position The position to verify. Cannot be null.
-     * @return {@code true} if the position is valid, {@code false} otherwise.
-     *
-     * <p>Example:</p>
-     * <pre>
-     *     Position position = new Position(2, 3);
-     *     boolean isValid = map.isPositionValid(position);
-     *     System.out.println(isValid); // Output: true or false
-     * </pre>
-     */
-    private boolean isPositionValid(Position position) {
-        return position.getX() >= 0 && position.getX() < width &&
-                position.getY() >= 0 && position.getY() < height;
-    }
-
-
-    /**
-     * Verifies whether a given position is already occupied on the map.
-     *
-     * <p>A position is considered occupied if it matches any of the positions stored in
-     * the list of occupied positions ({@code ocupiedPositions}).</p>
-     *
-     * <p>If the position is outside the map's boundaries, it will be considered not occupied.</p>
-     *
-     * @param position The position to check. Cannot be null.
-     * @return {@code true} if the position is occupied, {@code false} otherwise.
-     *
-     * <p>Example:</p>
-     * <pre>
-     *     Position position = new Position(6, 7);
-     *     boolean isOccupied = map.isPositionOccupied(position);
-     *     System.out.println(isOccupied); // Output: true or false
-     * </pre>
-     */
-    private boolean isPositionOccupied(Position position) {
-        if (position.getX() > width || position.getY() > height) {
-            return false;
-        }
-        for (Position occupiedPosition : ocupiedPositions) {
-            if (occupiedPosition.equals(position)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Validates whether a given position can be used on the map.
-     *
-     * <p>The position is considered valid if:</p>
-     * <ul>
-     *     <li>The position itself is valid (determined by {@code isPositionValid}).</li>
-     *     <li>The position is within the map's boundaries (checked by {@code isInsideBounds}).</li>
-     *     <li>The position is not already occupied by another entity (checked by {@code isPositionOccupied}).</li>
-     * </ul>
-     *
-     * @param position The position to validate. Cannot be null.
-     * @return {@code true} if the position is valid, {@code false} otherwise.
-     *
-     * <p>Example:</p>
-     * <pre>
-     *     Position position = new Position(5, 7);
-     *     boolean isValid = map.validatePosition(position);
-     *     System.out.println(isValid); // Output: true or false
-     * </pre>
-     */
-    public boolean validatePosition(Position position) {
-        if (isPositionValid(position) && isInsideBounds(position) && !isPositionOccupied(position)) {
-            return true;
-        }else
-            return false;
-    }
 
     public List<Scenario> getScenarios() {
         return new ArrayList<>(scenarios);
     }
 
+    public RailwayLine getLineBetweenStations(Station a, Station b) {
+        for (RailwayLine line : railwayLines) {
+            if (line.connects(a, b)) {
+                return line;
+            }
+        }
+        return null;
+    }
 
     /**
      * Provides a human-readable representation of the map.

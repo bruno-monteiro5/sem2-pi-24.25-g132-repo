@@ -56,6 +56,7 @@ public class SimulatorUI implements Runnable {
                     System.out.println("Simulation paused.");
                     break;
                 case 3:
+
                     if (controller.isRunning()) {
                         controller.nextYear();
                         System.out.println("Advanced one year.");

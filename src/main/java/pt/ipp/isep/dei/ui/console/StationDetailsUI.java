@@ -40,7 +40,7 @@ public class StationDetailsUI implements Runnable {
         List<Station> stationList = controller.listAllStations();
 
         if (stationList.isEmpty()) {
-            System.out.println("No stations available.");
+            System.out.println(" No stations available.");
             return;
         }
 
@@ -54,5 +54,17 @@ public class StationDetailsUI implements Runnable {
 
         System.out.println("\nStation Details:");
         System.out.println(chosenStation.getFullDetails());
+
+        if (chosenStation.getBuildings().isEmpty()) {
+            System.out.println("⚠️ This station has no buildings.");
+        }
+
+        if (chosenStation.getSupplyCargo().isEmpty()) {
+            System.out.println("⚠️ No supply cargo available at this station.");
+        }
+
+        if (chosenStation.getDemandCargo().isEmpty()) {
+            System.out.println("⚠️ No demand cargo required at this station.");
+        }
     }
 }

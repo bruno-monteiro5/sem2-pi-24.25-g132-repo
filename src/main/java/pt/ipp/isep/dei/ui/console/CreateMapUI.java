@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.ui.console;
 import pt.ipp.isep.dei.controller.CreateMapController;
 import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.repository.Repositories;
+import pt.ipp.isep.dei.ui.console.utils.Utils;
 
 import java.util.Scanner;
 
@@ -34,21 +35,59 @@ public class CreateMapUI implements Runnable{
      * <p>If the logged-in user does not have the required "EDITOR" role, the creation
      * process is aborted.</p>
      */
+    @Override
     public void run() {
         System.out.println("\n=== Create New Map ===");
 
-        System.out.print("Enter map name: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Enter map width: ");
-        int width = readPositiveInt();
-
-        System.out.print("Enter map height: ");
-        int height = readPositiveInt();
         CreateMapController controller = new CreateMapController();
+
+        String name = null;
+        boolean validName = false;
+
+        while (!validName) {
+            name = Utils.readLineFromConsole("Enter map name: ");
+
+            if (!Map.isValidMapName(name)) {
+                System.out.println("❌ Error: Map name must contain only letters, numbers, underscores or hyphens.");
+            } else {
+                validName = true;
+            }
+        }
+
+        int width = -1;
+        boolean validWidth = false;
+        while (!validWidth) {
+            try {
+                width = Utils.readIntegerFromConsole("Enter map width: ");
+                if (width <= 0) {
+                    System.out.println("❌ Error: Width must be a positive number.");
+                } else {
+                    validWidth = true;
+                }
+            } catch (Exception e) {
+                System.out.println("❌ Invalid input. Please enter a valid number.");
+            }
+        }
+
+        int height = -1;
+        boolean validHeight = false;
+        while (!validHeight) {
+            try {
+                height = Utils.readIntegerFromConsole("Enter map height: ");
+                if (height <= 0) {
+                    System.out.println("❌ Error: Height must be a positive number.");
+                } else {
+                    validHeight = true;
+                }
+            } catch (Exception e) {
+                System.out.println("❌ Invalid input. Please enter a valid number.");
+            }
+        }
+
         String email = controller.getUserEmailFromSession();
+
         if (email == null) {
-            System.out.println("You must be logged in as an EDITOR to create a map.");
+            System.out.println("⚠️  Warning: You must be logged in as an EDITOR to create a map.");
             return;
         }
 
@@ -57,37 +96,17 @@ public class CreateMapUI implements Runnable{
             Map savedMap = controller.saveMap(map);
 
             if (savedMap != null) {
-                System.out.println("Map created successfully:");
+                System.out.println("✅ Map created successfully:");
                 System.out.printf("- Name: %s%n- Dimensions: %dx%d%n",
                         savedMap.getName(), savedMap.getWidth(), savedMap.getHeight());
                 Repositories.getInstance().getMapRepository().setActiveMap(savedMap);
             } else {
-                System.out.println("Map creation failed.");
+                System.out.println("❌ Map creation failed.");
             }
 
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("❌ Error: " + e.getMessage());
         }
     }
 
-    /**
-     * Reads a positive integer from the console.
-     *
-     * <p>This method ensures the input is a valid positive integer,
-     * continuously prompting the user until a valid value is provided.</p>
-     *
-     * @return the positive integer entered by the user.
-     */
-    private int readPositiveInt() {
-        int value;
-        while (true) {
-            try {
-                value = Integer.parseInt(scanner.nextLine());
-                if (value > 0) return value;
-                System.out.print("Value must be positive. Try again: ");
-            } catch (NumberFormatException e) {
-                System.out.print("Invalid number. Try again: ");
-            }
-        }
-    }
 }

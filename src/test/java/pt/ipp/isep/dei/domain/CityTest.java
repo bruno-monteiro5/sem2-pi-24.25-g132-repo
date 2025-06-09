@@ -306,7 +306,7 @@ class CityTest {
 
         for (HouseBlock block : blocks) {
             Position pos = block.getPosition();
-            assertTrue(map.isInsideBounds(pos));
+            assertTrue(map.validatePosition(pos));
             assertNotEquals(position, pos);
         }
     }

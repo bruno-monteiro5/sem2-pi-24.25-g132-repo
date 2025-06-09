@@ -112,9 +112,8 @@ public class CreateCityUI implements Runnable {
         int x = -1;
         boolean validX = false;
         while (!validX) {
-            System.out.print("Enter city x-coordinate: ");
             try {
-                x = scanner.nextInt();
+                x = Utils.readIntegerFromConsole("Enter city x-coordinate: ");
                 if (x < 0 || x >= selectedMap.getWidth()) {
                     System.out.println("❌ Error: x must be between 0 and " + (selectedMap.getWidth() - 1));
                 } else {
@@ -122,16 +121,14 @@ public class CreateCityUI implements Runnable {
                 }
             } catch (Exception e) {
                 System.out.println("❌ Invalid input. Please enter a number.");
-                scanner.next();
             }
         }
 
         int y = -1;
         boolean validY = false;
         while (!validY) {
-            System.out.print("Enter city y-coordinate: ");
             try {
-                y = scanner.nextInt();
+                y = Utils.readIntegerFromConsole("Enter city y-coordinate: ");
                 if (y < 0 || y >= selectedMap.getHeight()) {
                     System.out.println("❌ Error: y must be between 0 and " + (selectedMap.getHeight() - 1));
                 } else {
@@ -139,16 +136,15 @@ public class CreateCityUI implements Runnable {
                 }
             } catch (Exception e) {
                 System.out.println("❌ Invalid input. Please enter a number.");
-                scanner.next();
             }
         }
+
 
         int houseBlocks = -1;
         boolean validBlocks = false;
         while (!validBlocks) {
-            System.out.print("Enter the number of house blocks: ");
             try {
-                houseBlocks = scanner.nextInt();
+                houseBlocks = Utils.readIntegerFromConsole("Enter the number of house blocks: ");
                 if (houseBlocks <= 0) {
                     System.out.println("❌ Error: number of blocks must be positive.");
                 } else {
@@ -156,7 +152,6 @@ public class CreateCityUI implements Runnable {
                 }
             } catch (Exception e) {
                 System.out.println("❌ Invalid input. Please enter a number.");
-                scanner.next();
             }
         }
 
@@ -172,10 +167,8 @@ public class CreateCityUI implements Runnable {
                 boolean validBlock = false;
 
                 while (!validBlock) {
-                    System.out.print("Enter x-coordinate of house block #" + (i + 1) + ": ");
-                    int blockX = scanner.nextInt();
-                    System.out.print("Enter y-coordinate of house block #" + (i + 1) + ": ");
-                    int blockY = scanner.nextInt();
+                    int blockX = Utils.readIntegerFromConsole("Enter x-coordinate of house block #" + (i + 1) + ": ");
+                    int blockY = Utils.readIntegerFromConsole("Enter y-coordinate of house block #" + (i + 1) + ": ");
 
                     blockPos = new Position(blockX, blockY);
 
@@ -189,6 +182,8 @@ public class CreateCityUI implements Runnable {
                 manualPositions.add(blockPos);
             }
         }
+
+
         try {
             City city = controller.createCity(name, new Position(x, y), houseBlocks, manual, manualPositions);
             System.out.println("✅ City created successfully! Details:");
@@ -196,6 +191,5 @@ public class CreateCityUI implements Runnable {
         } catch (IllegalArgumentException e) {
             System.out.println("❌ Error: " + e.getMessage());
         }
-
     }
 }
