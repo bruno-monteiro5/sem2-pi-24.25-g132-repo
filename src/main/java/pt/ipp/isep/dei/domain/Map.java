@@ -25,6 +25,7 @@ public class Map implements Serializable {
     private final String name;
     private final int width;
     private final int height;
+    private final int scale;
 
     private final List<City> cities = new ArrayList<>();
     private final List<Station> stations = new ArrayList<>();
@@ -54,7 +55,7 @@ public class Map implements Serializable {
      * </pre>
      */
 
-    public Map(String name, int width, int height) {
+    public Map(String name, int width, int height, int scale) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException("Map must have positive width and height");
         }
@@ -64,6 +65,7 @@ public class Map implements Serializable {
         this.name = name;
         this.width = width;
         this.height = height;
+        this.scale = scale;
     }
 
 
@@ -178,10 +180,7 @@ public class Map implements Serializable {
      * </pre>
      */
     public boolean validatePosition(Position position) {
-        if (isInsideBounds(position) && !isPositionOccupied(position)) {
-            return true;
-        }else
-            return false;
+        return isInsideBounds(position) && !isPositionOccupied(position);
     }
 
 
