@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class MainFX extends Application {
 
     private static Stage primaryStage;
@@ -37,5 +39,15 @@ public class MainFX extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static void goToEditorMenu() {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainFX.class.getResource("/fxml/EditorMainMenu.fxml"));
+            Parent root = loader.load();
+            setRootScene(root, "Editor Main Menu", 800, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
