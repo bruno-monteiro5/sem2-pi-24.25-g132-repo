@@ -31,19 +31,27 @@ public class LoginFXController {
     }
 
     private void openMainMenu(String role) {
-        if ("PLAYER".equals(role)) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-                Parent root = loader.load();
+        try {
+            FXMLLoader loader;
+            Parent root;
+
+            if ("PLAYER".equals(role)) {
+                loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+                root = loader.load();
                 MainFX.setRootScene(root, "Railroad Simulator - Main Menu", 800, 600);
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert("Error", "It was not possible to open the main menu.");
+
+            } else if ("EDITOR".equals(role)) {
+                loader = new FXMLLoader(getClass().getResource("/fxml/EditorMainMenu.fxml"));
+                root = loader.load();
+                MainFX.setRootScene(root, "Editor - Railroad Editor Menu", 800, 600);
             }
-        } else if ("EDITOR".equals(role)) {
-            showAlert("Login Ok", "Editor authenticated but interface not implemented yet.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "It was not possible to open the interface for role: " + role);
         }
     }
+
 
     private void showAlert(String titulo, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
