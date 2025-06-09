@@ -13,20 +13,25 @@ activate Editor
     Editor -> System : asks to create a new map
     activate System
 
-
-
-        System --> Editor : requests data (i.e. size and name)
+        System --> Editor : requests data (i.e. name, width, height)
     deactivate System
 
-    Editor -> System : types requested data
+    Editor -> System : provides map data
     activate System
 
-        System --> Editor : shows all data and requests confirmation
+        System --> Editor : displays map data
+        System --> Editor : asks for confirmation (Y/N)
     deactivate System
 
-    Editor -> System : confirms data
+    Editor -> System : confirms or cancels
     activate System
 
+    alt User confirms (Y)
         System --> Editor : displays operation success
+    else User cancels (N)
+        System --> Editor : displays cancellation message
+    end
+
     deactivate System
 @enduml
+

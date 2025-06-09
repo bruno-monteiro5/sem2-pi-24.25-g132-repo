@@ -91,14 +91,23 @@ public class CreateMapUI implements Runnable{
             return;
         }
 
+        Map map = new Map(name, width, height);
+
+        System.out.println("\nPlease confirm the map details:");
+        System.out.println(map.toString());
+
+        String confirm = Utils.readLineFromConsole("Confirm? (Y-yes/N-no): ");
+        if (!confirm.equalsIgnoreCase("Y")) {
+            System.out.println("❌ Map creation cancelled.");
+            return;
+        }
+
         try {
-            Map map = new Map(name, width, height);
             Map savedMap = controller.saveMap(map);
 
             if (savedMap != null) {
                 System.out.println("✅ Map created successfully:");
-                System.out.printf("- Name: %s%n- Dimensions: %dx%d%n",
-                        savedMap.getName(), savedMap.getWidth(), savedMap.getHeight());
+                System.out.println(savedMap.toString());
                 Repositories.getInstance().getMapRepository().setActiveMap(savedMap);
             } else {
                 System.out.println("❌ Map creation failed.");
