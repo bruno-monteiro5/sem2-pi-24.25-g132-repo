@@ -56,4 +56,9 @@ public class ScenarioRepository {
             scenarioBeingUsed = null;
         }
     }
+
+    public Scenario getLastCreated() {
+        if (scenarios.isEmpty()) return null;
+        return scenarios.get(scenarios.size() - 1);
+    }
 }

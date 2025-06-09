@@ -94,4 +94,17 @@ public class MapRepository {
     public List<Map> getMaps() {
         return this.maps;
     }
+
+
+    /**
+     * Retrieves the most recently added map.
+     *
+     * @return The last {@code Map} in the repository, or {@code null} if no maps exist.
+     */
+    public Map getLastCreated() {
+        if (maps.isEmpty()) {
+            return null;
+        }
+        return maps.get(maps.size() - 1);
+    }
 }
