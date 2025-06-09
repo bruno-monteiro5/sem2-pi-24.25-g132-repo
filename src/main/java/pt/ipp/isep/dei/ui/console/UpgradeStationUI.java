@@ -10,20 +10,13 @@ import java.util.Scanner;
 
 /**
  * User interface for upgrading railway stations with buildings.
- *
- * <p>This class provides a console-based user interface to facilitate the
- * process of upgrading railway stations on a given map. The user can:
- * <ul>
- *     <li>Load the current map and its stations</li>
- *     <li>Select a station to upgrade</li>
- *     <li>Choose an available building type as an upgrade</li>
- *     <li>Confirm and execute the selected upgrade</li>
- * </ul>
- * It relies on the {@link UpgradeStationController} to handle the upgrade logic and
- * ensure consistency with the business rules.</p>
+ * <p>
+ * Allows the player to select a station and apply an upgrade
+ * if available, showing its cost and effects.
+ * </p>
  */
-
 public class UpgradeStationUI implements Runnable {
+
     private final UpgradeStationController controller;
     private Map currentMap;
     private List<Station> stations;
@@ -32,31 +25,19 @@ public class UpgradeStationUI implements Runnable {
 
     /**
      * Constructs a new UpgradeStationUI.
-     * <p>
-     * Initializes the necessary controller and prepares the UI for interaction.
-     * </p>
      */
     public UpgradeStationUI() {
         controller = new UpgradeStationController();
     }
 
-    private UpgradeStationController getController() {
-        return controller;
-    }
-
     /**
-     * Entry point for the Upgrade Station UI.
-     *
-     * <p>This method displays the main menu for station upgrades, guiding the user
-     * through the steps of selecting a station and an upgrade, confirming the
-     * operation, and executing it. Ensures that the appropriate upgrade logic is
-     * delegated to the {@link UpgradeStationController}.</p>
+     * Main entry point for the upgrade UI.
+     * Loads stations, allows selection, and executes upgrade.
      */
     @Override
     public void run() {
         System.out.println("\n\n--- Upgrade Station ------------------------");
 
-        // Check if an active map exists
         if (!controller.hasActiveMap()) {
             System.out.println("No active map selected. Please create a map first.");
             return;
@@ -75,7 +56,14 @@ public class UpgradeStationUI implements Runnable {
             return;
         }
 
-        List<BuildingType> availableUpgrades = controller.getAvailableUpgrades(selectedStation);
+        List<BuildingType> availableUpgrades;
+        try {
+            availableUpgrades = controller.getAvailableUpgrades(selectedStation);
+        } catch (IllegalStateException e) {
+            System.out.println("ERROR: " + e.getMessage());
+            return;
+        }
+
         if (availableUpgrades.isEmpty()) {
             System.out.println("No upgrades available for this station.");
             return;
@@ -98,10 +86,7 @@ public class UpgradeStationUI implements Runnable {
     }
 
     /**
-     * Loads the current map and its stations.
-     *
-     * <p>This method retrieves the active map and the list of stations from
-     * the controller. This data is necessary for the upgrade process.</p>
+     * Loads the current map and the list of stations from the controller.
      */
     private void loadMapAndStations() {
         Object[] result = controller.loadMapAndStations();
@@ -114,9 +99,9 @@ public class UpgradeStationUI implements Runnable {
     }
 
     /**
-     * Displays a list of stations on the current map and allows the user to select one.
+     * Displays a list of stations and prompts the user to select one.
      *
-     * @return the selected station, or {@code null} if the user cancels the selection.
+     * @return the selected Station, or null if cancelled
      */
     private Station displayAndSelectStation() {
         int listSize = stations.size();
@@ -138,7 +123,7 @@ public class UpgradeStationUI implements Runnable {
     }
 
     /**
-     * Displays options for the selected station, showing its details and available upgrades.
+     * Prints the list of stations for selection.
      */
     private void displayStationOptions() {
         int i = 1;
@@ -149,10 +134,10 @@ public class UpgradeStationUI implements Runnable {
     }
 
     /**
-     * Displays a list of available upgrades and allows the user to select one.
+     * Displays available upgrades and allows the user to choose one.
      *
-     * @param availableUpgrades the list of available building types for the upgrade.
-     * @return the selected building type, or {@code null} if the user cancels the selection.
+     * @param availableUpgrades list of building types available
+     * @return the selected BuildingType, or null if cancelled
      */
     private BuildingType displayAndSelectUpgrade(List<BuildingType> availableUpgrades) {
         int listSize = availableUpgrades.size();
@@ -174,9 +159,9 @@ public class UpgradeStationUI implements Runnable {
     }
 
     /**
-     * Displays detailed upgrade options for the user.
+     * Prints the upgrade options with cost.
      *
-     * @param availableUpgrades the list of upgrades available for the selected station.
+     * @param availableUpgrades list of building types to show
      */
     private void displayUpgradeOptions(List<BuildingType> availableUpgrades) {
         int i = 1;
@@ -187,11 +172,11 @@ public class UpgradeStationUI implements Runnable {
     }
 
     /**
-     * Asks the user to confirm the upgrade based on building details and the associated cost.
+     * Shows detailed information about the selected upgrade and asks for confirmation.
      *
-     * @param details the building type details for the upgrade.
-     * @param cost the cost of applying the upgrade.
-     * @return {@code true} if the user confirms the upgrade, {@code false} otherwise.
+     * @param details building type selected
+     * @param cost    cost of the upgrade
+     * @return true if the user confirms the upgrade
      */
     private boolean confirmUpgrade(BuildingType details, double cost) {
         Scanner input = new Scanner(System.in);
@@ -203,6 +188,11 @@ public class UpgradeStationUI implements Runnable {
             System.out.printf("Replaces: %s%n", details.getReplaces().name());
         }
 
+        // Show upgrade effects
+        System.out.printf("Efficiency Bonus: +%.0f%%%n", details.getEfficiencyBonus() * 100);
+        System.out.printf("Revenue Multiplier: x%.2f%n", details.getRevenueMultiplier());
+        System.out.printf("Extra Storage: +%d units%n", details.getExtraStorageCapacity());
+
         System.out.print("Confirm upgrade? (Y/N): ");
         String response = input.nextLine().trim().toUpperCase();
 
@@ -210,21 +200,15 @@ public class UpgradeStationUI implements Runnable {
     }
 
     /**
-     * Executes the upgrade process.
-     *
-     * <p>This method applies the selected upgrade to the station, delegating the logic to
-     * the controller and displaying the result to the user.</p>
+     * Executes the upgrade through the controller and displays the result.
      */
     private void executeUpgrade() {
         boolean success = controller.executeUpgrade(selectedStation, selectedUpgrade);
 
         if (success) {
             System.out.println("\nStation successfully upgraded!");
-
         } else {
             System.out.println("\nFailed to upgrade station. Please check your funds and try again.");
         }
     }
-
-
 }

@@ -121,33 +121,38 @@ public class Station {
     }
 
     /**
-     * Determines which building types can be added to the station.
+     * Determines which building types can be added to the station for a given year.
      *
-     * <p>Removes types that already exist, or types that replace another building not yet present.</p>
+     * <p>Removes types that already exist, types that replace other buildings not yet present,
+     * or types not yet available in the specified year.</p>
      *
      * @param allTypes list of all available {@link BuildingType}s
+     * @param currentYear current year of the scenario
      * @return list of available {@link BuildingType}s to be added
      */
-    public List<BuildingType> getAvailableUpgrades(List<BuildingType> allTypes) {
-        List<BuildingType> availableUpgrades = new ArrayList<>(allTypes);
+    public List<BuildingType> getAvailableUpgrades(List<BuildingType> allTypes, int currentYear) {
+        List<BuildingType> availableUpgrades = new ArrayList<>();
         List<BuildingType> existingTypes = new ArrayList<>();
 
-        // Get all existing building types
-        for (Building building : buildings) {
-            existingTypes.add(building.getType());
+        for (Building b : buildings) {
+            existingTypes.add(b.getType());
         }
 
-        // Remove types that are already built and don't have upgrades
-        availableUpgrades.removeIf(type -> {
-            // If this type replaces another type
+        for (BuildingType type : allTypes) {
+            if (!type.isAvailableIn(currentYear)) continue;
+
             if (type.getReplaces() != null) {
-                // Check if the type it replaces exists
-                return !existingTypes.contains(type.getReplaces());
+
+                if (existingTypes.contains(type.getReplaces())) {
+                    availableUpgrades.add(type);
+                }
             } else {
-                // If it doesn't replace anything, check if it already exists
-                return existingTypes.contains(type);
+
+                if (!existingTypes.contains(type)) {
+                    availableUpgrades.add(type);
+                }
             }
-        });
+        }
 
         return availableUpgrades;
     }
@@ -220,16 +225,24 @@ public class Station {
 
 
     /**
-     * Adds a new building to the station. If the building type replaces another,
-     * the old one is removed.
+     * Adds a new building to the station.
+     * <p>
+     * This method prevents duplicate buildings from being added. If the building type already
+     * exists and is not a replacement, it will not be added again. If the new building type
+     * replaces an existing one, the old building will be removed before adding the new one.
+     * </p>
      *
-     * @param type the {@link BuildingType} to add
-     * @return true if the building was added successfully
+     * @param type the {@link BuildingType} to be added
+     * @return true if the building was successfully added, false otherwise
      */
     public boolean addBuilding(BuildingType type) {
-        // Check if this building type replaces another
+        // Prevent adding duplicate building if it already exists
+        if (buildings.stream().anyMatch(b -> b.getType() == type)) {
+            return false;
+        }
+
+        // If this building type replaces another, remove the old one
         if (type.getReplaces() != null) {
-            // Remove the building it replaces
             buildings.removeIf(building -> building.getType() == type.getReplaces());
         }
 
@@ -461,6 +474,49 @@ public class Station {
         return details.toString();
     }
 
+
+    /**
+     * Calculates the total efficiency bonus from all buildings in this station.
+     *
+     * @return total efficiency bonus (e.g., 0.25 = +25%)
+     */
+    public double getTotalEfficiencyBonus() {
+        double totalBonus = 0.0;
+
+        for (Building b : buildings) {
+            totalBonus += b.getType().getEfficiencyBonus();
+        }
+
+        return totalBonus;
+    }
+    /**
+     * Calculates the total revenue multiplier from all buildings.
+     *
+     * @return multiplier to apply to revenue (e.g., 1.3 = +30%)
+     */
+    public double getTotalRevenueMultiplier() {
+        double totalMultiplier = 1.0;
+
+        for (Building b : buildings) {
+            totalMultiplier *= b.getType().getRevenueMultiplier();
+        }
+
+        return totalMultiplier;
+    }
+    /**
+     * Calculates the total extra storage capacity granted by all buildings.
+     *
+     * @return total additional capacity
+     */
+    public int getExtraStorageCapacity() {
+        int totalExtraCapacity = 0;
+
+        for (Building b : buildings) {
+            totalExtraCapacity += b.getType().getExtraStorageCapacity();
+        }
+
+        return totalExtraCapacity;
+    }
 
 }
 

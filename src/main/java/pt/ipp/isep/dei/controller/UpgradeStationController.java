@@ -1,10 +1,7 @@
 package pt.ipp.isep.dei.controller;
 
 import pt.ipp.isep.dei.domain.*;
-import pt.ipp.isep.dei.repository.BuildingTypeRepository;
-import pt.ipp.isep.dei.repository.MapRepository;
-import pt.ipp.isep.dei.repository.PlayerRepository;
-import pt.ipp.isep.dei.repository.Repositories;
+import pt.ipp.isep.dei.repository.*;
 
 import java.util.List;
 
@@ -16,6 +13,7 @@ public class UpgradeStationController {
     private PlayerRepository playerRepo;
     private MapRepository mapRepo;
     private BuildingTypeRepository buildingTypeRepo;
+    private ScenarioRepository scenarioRepo;
 
     /**
      * Default constructor initializes repositories.
@@ -26,50 +24,36 @@ public class UpgradeStationController {
 
     /**
      * Constructor for dependency injection of repositories.
-     *
-     * @param playerRepo        The player repository.
-     * @param mapRepo           The map repository.
-     * @param buildingTypeRepo  The building type repository.
      */
-    public UpgradeStationController(PlayerRepository playerRepo, MapRepository mapRepo, BuildingTypeRepository buildingTypeRepo) {
+    public UpgradeStationController(PlayerRepository playerRepo, MapRepository mapRepo, BuildingTypeRepository buildingTypeRepo, ScenarioRepository scenarioRepo) {
         this.playerRepo = playerRepo;
         this.mapRepo = mapRepo;
         this.buildingTypeRepo = buildingTypeRepo;
+        this.scenarioRepo = scenarioRepo;
     }
 
     private void initializeRepositories() {
         this.playerRepo = Repositories.getInstance().getPlayerRepository();
         this.mapRepo = Repositories.getInstance().getMapRepository();
         this.buildingTypeRepo = Repositories.getInstance().getBuildingTypeRepository();
+        this.scenarioRepo = Repositories.getInstance().getScenarioRepository();
     }
 
-    /**
-     * Verifies if an active map exists in the system.
-     *
-     * @return true if an active map exists, false otherwise.
-     */
     public boolean hasActiveMap() {
         try {
             mapRepo.getActiveMap();
             return true;
         } catch (IllegalStateException e) {
-            // No active map available
             return false;
         }
     }
 
-    /**
-     * Loads the current map and its related stations.
-     *
-     * @return Object array containing the active map and its associated stations, or null if no active map exists.
-     */
     public Object[] loadMapAndStations() {
         Map activeMap;
 
         try {
             activeMap = mapRepo.getActiveMap();
         } catch (IllegalStateException e) {
-            // Handle missing active map
             return null;
         }
 
@@ -81,38 +65,19 @@ public class UpgradeStationController {
         return new Object[]{activeMap, stations};
     }
 
-    /**
-     * Retrieves a list of available upgrades for a station.
-     *
-     * @param station The station to check for possible upgrades.
-     * @return A list of available building types for upgrade.
-     */
     public List<BuildingType> getAvailableUpgrades(Station station) {
         List<BuildingType> allBuildingTypes = buildingTypeRepo.getAllBuildingTypes();
-        return station.getAvailableUpgrades(allBuildingTypes);
+        int currentYear = getCurrentYear();
+        return station.getAvailableUpgrades(allBuildingTypes, currentYear);
     }
 
-    /**
-     * Retrieves full details for a specific building type.
-     *
-     * @param buildingType The building type for which details are required.
-     * @return The BuildingType object with complete details.
-     */
     public BuildingType getUpgradeDetails(BuildingType buildingType) {
         return buildingTypeRepo.getBuildingTypeDetails(buildingType);
     }
 
-    /**
-     * Executes an upgrade for a given station.
-     *
-     * @param station      The station to upgrade.
-     * @param buildingType The building type to add.
-     * @return true if the upgrade was successful, false otherwise.
-     */
     public boolean executeUpgrade(Station station, BuildingType buildingType) {
         Player currentPlayer = playerRepo.getCurrentPlayer();
 
-        // Verify if the player has sufficient funds
         if (!currentPlayer.canAfford(buildingType.getCost())) {
             return false;
         }
@@ -131,4 +96,14 @@ public class UpgradeStationController {
 
         return upgradeSuccess;
     }
+
+    private int getCurrentYear() {
+        Scenario scenario = scenarioRepo.getActiveScenario();
+        if (scenario == null || scenario.getPeriodTime() == null) {
+            throw new IllegalStateException("No active scenario is defined.");
+        }
+        return scenario.getPeriodTime().getStartYear();
+    }
+
+
 }
