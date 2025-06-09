@@ -159,8 +159,46 @@ public class BuildStationController {
      * Suggests a name for a station based on the closest city to a given position.
      */
     public String getSuggestedName(Position position, StationType stationType) {
-        Map currentMap = mapRepo.getActiveMap();
-        return currentMap.getSuggestedName(position, stationType);
+        return suggestedName(position, stationType);
+    }
+
+    /**
+     * Suggests a name for a new station based on the closest city and station type.
+     */
+    private String suggestedName(Position position, StationType type) {
+        Map map = mapRepo.getActiveMap();
+        City closest = findClosestCity(map.getCities(), position);
+        if (closest == null) {
+            return type.getName();
+        }
+        return closest.getName() + " " + type.getName();
+    }
+
+    /**
+     * Finds the closest city to the given position.
+     */
+    private City findClosestCity(List<City> cities, Position position) {
+        City closest = null;
+        double minDistance = Double.MAX_VALUE;
+
+        for (City city : cities) {
+            double distance = euclidean(position, city.getPosition());
+            if (distance < minDistance) {
+                minDistance = distance;
+                closest = city;
+            }
+        }
+
+        return closest;
+    }
+
+    /**
+     * Computes Euclidean distance between two positions.
+     */
+    private double euclidean(Position p1, Position p2) {
+        int dx = p1.getX() - p2.getX();
+        int dy = p1.getY() - p2.getY();
+        return Math.sqrt(dx * dx + dy * dy);
     }
 
     /**
@@ -307,11 +345,7 @@ public class BuildStationController {
         return StationRepository.getInstance().getAll();
     }
 
-    /**
-     * Retrieves a station by name from the repository.
-     */
-    public Station getStationByName(String name) {
-        return StationRepository.getInstance().getStationByName(name);
-    }
+
+
 
 }

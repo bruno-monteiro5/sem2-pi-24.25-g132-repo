@@ -53,13 +53,13 @@ public class CreateMapUI implements Runnable{
         }
 
         try {
-            Map map = new Map(name, width, height, email);
+            Map map = new Map(name, width, height);
             Map savedMap = controller.saveMap(map);
 
             if (savedMap != null) {
                 System.out.println("Map created successfully:");
-                System.out.printf("- Name: %s%n- Dimensions: %dx%d%n- Editor: %s%n",
-                        savedMap.getName(), savedMap.getWidth(), savedMap.getHeight(), savedMap.getEmailEditor());
+                System.out.printf("- Name: %s%n- Dimensions: %dx%d%n",
+                        savedMap.getName(), savedMap.getWidth(), savedMap.getHeight());
                 Repositories.getInstance().getMapRepository().setActiveMap(savedMap);
             } else {
                 System.out.println("Map creation failed.");

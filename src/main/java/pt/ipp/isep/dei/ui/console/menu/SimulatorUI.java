@@ -21,7 +21,7 @@ public class SimulatorUI implements Runnable {
         ArrayList<Station> stations = new ArrayList<>();
         ArrayList<Locomotive> locomotives = new ArrayList<>();
 
-        Map map = new Map("MapaTeste", 10, 10, "1"); // scale como String
+        Map map = new Map("MapaTeste", 10, 10); // scale como String
         PeriodTime period = new PeriodTime(2024, 2030);
         Scenario scenario = new Scenario("CenárioTeste", map, period);
         int startYear = 2024;

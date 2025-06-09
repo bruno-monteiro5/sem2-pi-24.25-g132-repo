@@ -22,11 +22,9 @@ import java.util.List;
 
 public class Map implements Serializable {
 
-    private int id;
     private final String name;
     private final int width;
     private final int height;
-    private String emailEditor;
 
     private final List<City> cities = new ArrayList<>();
     private final List<Station> stations = new ArrayList<>();
@@ -35,12 +33,10 @@ public class Map implements Serializable {
     private final List<Scenario> scenarios = new ArrayList<>();
     private List<RailwayLine> railwayLines;
 
-
-    private static final int ID_BY_OMISSION = 1;
     private static final String NAME_BY_OMISON = "Without name";
     private static final int WIDTH_BY_OMISSION = 1;
     private static final int HEIGHT_BY_OMISSION = 1;
-    private static final String EMAIL_EDITOR_BY_OMISSION = null;
+
 
 
     /**
@@ -49,7 +45,6 @@ public class Map implements Serializable {
      * @param name The name of the map (must be a valid file name). Cannot be null or empty.
      * @param width The width (number of columns) of the map. Must be greater than zero.
      * @param height The height (number of rows) of the map. Must be greater than zero.
-     * @param createdBy The email of the user who created the map.
      *
      * @throws IllegalArgumentException if {@code name} is invalid, or if {@code width/height} are less than or equal to zero.
      *
@@ -59,7 +54,7 @@ public class Map implements Serializable {
      * </pre>
      */
 
-    public Map(String name, int width, int height, String createdBy) {
+    public Map(String name, int width, int height) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException("Map must have positive width and height");
         }
@@ -69,7 +64,6 @@ public class Map implements Serializable {
         this.name = name;
         this.width = width;
         this.height = height;
-        this.emailEditor = createdBy;
     }
 
     public RailwayLine getLineBetweenStations(Station a, Station b) {
@@ -95,12 +89,7 @@ public class Map implements Serializable {
      * <p>Primarily used for testing or as a placeholder instance.</p>
      */
     public Map() {
-        this(NAME_BY_OMISON, WIDTH_BY_OMISSION, HEIGHT_BY_OMISSION, EMAIL_EDITOR_BY_OMISSION);
-        this.id = ID_BY_OMISSION;
-    }
-
-    public int getId() {
-        return id;
+        this(NAME_BY_OMISON, WIDTH_BY_OMISSION, HEIGHT_BY_OMISSION);
     }
 
     private boolean isValidFileName(String name) {
@@ -119,20 +108,7 @@ public class Map implements Serializable {
         return height;
     }
 
-    public String getEmailEditor() {
-        return emailEditor;
-    }
 
-
-
-    /**
-     * Checks if a given position is within the map boundaries.
-     * @param p the position to check
-     * @return true if inside bounds, false otherwise
-     */
-    public boolean isInsideBounds(Position p) {
-        return p.getX() >= 0 && p.getX() < width && p.getY() >= 0 && p.getY() < height;
-    }
 
     /**
      * Checks if a given position is within the map's boundaries.
@@ -155,17 +131,6 @@ public class Map implements Serializable {
         return false;
     }
 
-
-
-    public boolean buildStation(StationType type, Position position, String name) {
-        if (!isInsideBounds(position) || hasStationAt(position)) {
-            return false;
-        }
-
-        Station s = new Station(name, position, type);
-        ocupiedPositions.add(position);
-        return addStation(s);
-    }
 
     //ADDERS
 
@@ -249,56 +214,6 @@ public class Map implements Serializable {
         ocupiedPositions.add(city.getPosition());
     }
 
-    /**
-     * Verifies whether a position is valid within the map's boundaries.
-     *
-     * <p>A position is considered valid if it is between 0 and the map's width (for X-axis)
-     * and between 0 and the map's height (for Y-axis).</p>
-     *
-     * @param position The position to verify. Cannot be null.
-     * @return {@code true} if the position is valid, {@code false} otherwise.
-     *
-     * <p>Example:</p>
-     * <pre>
-     *     Position position = new Position(2, 3);
-     *     boolean isValid = map.isPositionValid(position);
-     *     System.out.println(isValid); // Output: true or false
-     * </pre>
-     */
-    private boolean isPositionValid(Position position) {
-        return position.getX() >= 0 && position.getX() < width &&
-                position.getY() >= 0 && position.getY() < height;
-    }
-
-    /**
-     * Verifies whether a given position is already occupied on the map.
-     *
-     * <p>A position is considered occupied if it matches any of the positions stored in
-     * the list of occupied positions ({@code ocupiedPositions}).</p>
-     *
-     * <p>If the position is outside the map's boundaries, it will be considered not occupied.</p>
-     *
-     * @param position The position to check. Cannot be null.
-     * @return {@code true} if the position is occupied, {@code false} otherwise.
-     *
-     * <p>Example:</p>
-     * <pre>
-     *     Position position = new Position(6, 7);
-     *     boolean isOccupied = map.isPositionOccupied(position);
-     *     System.out.println(isOccupied); // Output: true or false
-     * </pre>
-     */
-    private boolean isPositionOccupied(Position position) {
-        if (position.getX() > width || position.getY() > height) {
-            return false;
-        }
-        for (Position occupiedPosition : ocupiedPositions) {
-            if (occupiedPosition.equals(position)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
 
     /**
@@ -347,90 +262,6 @@ public class Map implements Serializable {
     }
 
 
-
-    /**
-     * Finds the closest city to the specified position.
-     *
-     * <p>The method calculates the distance to each city on the map and
-     * determines the city with the shortest distance to the provided position.</p>
-     *
-     * @param position The position to search from. Cannot be null.
-     * @return The {@link City} closest to the given position, or {@code null} if no cities are present.
-     *
-     * <p>Example:</p>
-     * <pre>
-     *     Position userPosition = new Position(10, 15);
-     *     City closestCity = map.findClosestCity(userPosition);
-     * </pre>
-     */
-    public String findClosestCity(Position position) {
-        City closest = null;
-        double minDistance = Double.MAX_VALUE;
-
-        for (City city : cities) {
-            double distance = positionDistance(position, city.getPosition());
-            if (distance < minDistance) {
-                minDistance = distance;
-                closest = city;
-            }
-        }
-
-        return closest.getName();
-    }
-
-    /**
-     * Suggests a name for a station at a given location and of a specific type.
-     *
-     * <p>If there is a city near the provided location, the suggested name will be a
-     * combination of the city's name and the station type. Otherwise, the name
-     * will default to the station type's name.</p>
-     *
-     * @param location The geographical position where the station is located. Cannot be null.
-     * @param type The type of the station, represented as a {@link StationType}. Cannot be null.
-     * @return A {@link String} suggesting the name for the station.
-     *
-     * <p>Example:</p>
-     * <pre>
-     *     Position position = new Position(10, 15);
-     *     StationType stationType = StationType.METRO;
-     *     String suggestedName = map.getSuggestedName(position, stationType);
-     *     System.out.println(suggestedName); // Output: "{CityName} Metro" or "Metro"
-     * </pre>
-     */
-    public String getSuggestedName(Position location, StationType type) {
-        String city = findClosestCity(location);
-        if (city == null) {
-            return type.getName();
-        }
-        return city + " " + type.getName();
-    }
-
-    /**
-     * Calculates the Euclidean distance between two positions on the map.
-     *
-     * <p>The Euclidean distance is determined using the formula:</p>
-     * <pre>
-     *     distance = sqrt((x2 - x1)² + (y2 - y1)²)
-     * </pre>
-     *
-     * @param p1 The first position. Cannot be null.
-     * @param p2 The second position. Cannot be null.
-     * @return A {@code double} representing the Euclidean distance between the two positions.
-     *
-     * <p>Example:</p>
-     * <pre>
-     *     Position position1 = new Position(2, 3);
-     *     Position position2 = new Position(5, 7);
-     *     double distance = map.positionDistance(position1, position2);
-     *     System.out.println(distance); // Output: 5.0
-     * </pre>
-     */
-    private double positionDistance(Position p1, Position p2) {
-        int dx = p1.getX() - p2.getX();
-        int dy = p1.getY() - p2.getY();
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-
     /**
      * Creates a new {@link Position} object with the specified x and y coordinates.
      *
@@ -446,6 +277,68 @@ public class Map implements Serializable {
      */
     public Position createPosition(int x, int y) {
         return new Position(x, y);
+    }
+
+    /**
+     * Checks if a given position is within the map boundaries.
+     * @param p the position to check
+     * @return true if inside bounds, false otherwise
+     */
+    public boolean isInsideBounds(Position p) {
+        return p.getX() >= 0 && p.getX() < width && p.getY() >= 0 && p.getY() < height;
+    }
+
+
+    /**
+     * Verifies whether a position is valid within the map's boundaries.
+     *
+     * <p>A position is considered valid if it is between 0 and the map's width (for X-axis)
+     * and between 0 and the map's height (for Y-axis).</p>
+     *
+     * @param position The position to verify. Cannot be null.
+     * @return {@code true} if the position is valid, {@code false} otherwise.
+     *
+     * <p>Example:</p>
+     * <pre>
+     *     Position position = new Position(2, 3);
+     *     boolean isValid = map.isPositionValid(position);
+     *     System.out.println(isValid); // Output: true or false
+     * </pre>
+     */
+    private boolean isPositionValid(Position position) {
+        return position.getX() >= 0 && position.getX() < width &&
+                position.getY() >= 0 && position.getY() < height;
+    }
+
+
+    /**
+     * Verifies whether a given position is already occupied on the map.
+     *
+     * <p>A position is considered occupied if it matches any of the positions stored in
+     * the list of occupied positions ({@code ocupiedPositions}).</p>
+     *
+     * <p>If the position is outside the map's boundaries, it will be considered not occupied.</p>
+     *
+     * @param position The position to check. Cannot be null.
+     * @return {@code true} if the position is occupied, {@code false} otherwise.
+     *
+     * <p>Example:</p>
+     * <pre>
+     *     Position position = new Position(6, 7);
+     *     boolean isOccupied = map.isPositionOccupied(position);
+     *     System.out.println(isOccupied); // Output: true or false
+     * </pre>
+     */
+    private boolean isPositionOccupied(Position position) {
+        if (position.getX() > width || position.getY() > height) {
+            return false;
+        }
+        for (Position occupiedPosition : ocupiedPositions) {
+            if (occupiedPosition.equals(position)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -491,7 +384,6 @@ public class Map implements Serializable {
     @Override
     public String toString() {
         return "Map{" +
-                "id=" + id +
                 "name='" + name + '\'' +
                 "width=" + width +
                 "height=" + height +
