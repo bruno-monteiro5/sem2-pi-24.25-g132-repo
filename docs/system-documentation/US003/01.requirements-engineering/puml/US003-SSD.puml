@@ -5,34 +5,69 @@ skinparam shadowing false
 
 autonumber
 
-actor "Editor" as Employee
+actor "Editor" as Editor
 participant ":System" as System
 
-activate Employee
+activate Editor
 
-    Employee -> System : asks to creat a city
+    Editor -> System : asks to create a city
     activate System
 
-        System --> Employee : shows a maps list and asks to select one
+        System --> Editor : shows list of maps
+        System --> Editor : asks to select one
     deactivate System
 
-    Employee -> System : selects a map
+    Editor -> System : selects map
     activate System
 
-        System --> Employee : requests data (i.e. name, house blocks, XY coordinates)
+        System --> Editor : asks for city name
     deactivate System
 
-    Employee -> System : types requested data
+    Editor -> System : inputs name
     activate System
 
-        System --> Employee : validates name and position
-        System --> Employee : shows all data and requests confirmation
+        System --> Editor : validates name (format and duplication)
     deactivate System
 
-    Employee -> System : confirms data
+    Editor -> System : inputs x coordinate
+    activate System
+        System --> Editor : validates x (within map bounds)
+    deactivate System
+
+    Editor -> System : inputs y coordinate
+    activate System
+        System --> Editor : validates y (within map bounds)
+    deactivate System
+
+    Editor -> System : inputs number of house blocks
+    activate System
+        System --> Editor : validates positive integer
+    deactivate System
+
+    Editor -> System : confirms manual house block placement? (Y/N)
+    activate System
+    deactivate System
+
+    alt Manual house block placement
+
+        loop For each house block
+            Editor -> System : inputs x and y of house block
+            activate System
+                System --> Editor : validates block position
+            deactivate System
+        end
+
+    end
+
+    Editor -> System : confirms creation (Y/N)
     activate System
 
-        System --> Employee : displays operation success
+        alt User confirms
+            System --> Editor : creates city and shows success
+        else User cancels
+            System --> Editor : shows cancellation message
+        end
+
     deactivate System
 
 @enduml

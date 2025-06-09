@@ -56,7 +56,12 @@ As an Editor, I want to create a map with a size and a name.
 
 **Output Data:**
 
-* (In)Success of the operation
+* Feedback textual:
+  * Confirmation prompt (Y/N)
+  * If confirmed:
+    * Success message with map details
+  * If cancelled:
+    * Operation aborted message
 
 ### 1.6. System Sequence Diagram (SSD)
 
@@ -65,4 +70,4 @@ As an Editor, I want to create a map with a size and a name.
 
 ### 1.7 Other Relevant Remarks
 
-* N/A
+* A confirmation step was added to display the map details and require explicit confirmation before saving.

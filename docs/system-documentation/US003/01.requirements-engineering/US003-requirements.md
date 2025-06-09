@@ -58,15 +58,19 @@ simulation mode.
 
 * Typed data:
     * City name
-    * XY coordinates
+    * X coordinate
+    * Y coordinate
     * Number of house blocks
+    * House block positions (if manual)
 	
 * Selected data:
-    * Manual or automatic (random) house block placement
+    * Map selection
+    * Manual or automatic house blocks placement
 
 **Output Data:**
 
-* (In)Success of the operation
+* Success or error message 
+* Visual summary of the city before confirmation (name, position, blocks)
 
 ### 1.6. System Sequence Diagram (SSD)
 
