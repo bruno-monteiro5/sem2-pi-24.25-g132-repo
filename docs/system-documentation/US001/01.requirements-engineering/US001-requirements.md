@@ -10,9 +10,11 @@ As an Editor, I want to create a map with a size and a name.
 
 **From the specifications document:**
 
->	The map must be rectangular.
+> The map must be **rectangular**, with defined width and height, forming a grid of cells.
 
->   Static elements can be placed on the map. Elements can be cities or industries.
+> Static elements such as **cities and industries** can be placed on the map later.
+
+> The map will be the base for simulation scenarios, where elements are placed and events occur.
 
 
 **From the client clarifications:**
@@ -48,20 +50,23 @@ As an Editor, I want to create a map with a size and a name.
 **Input Data:**
 
 * Typed data:
-    * a name
-    * a size
-  
-* Selected data:
-    * none
+  * Map name (validated against naming rules)
+  * Map width (positive integer, validated individually)
+  * Map height (positive integer, validated individually)
 
 **Output Data:**
 
-* Feedback textual:
-  * Confirmation prompt (Y/N)
-  * If confirmed:
-    * Success message with map details
-  * If cancelled:
-    * Operation aborted message
+* System feedback during input:
+  * Error messages if name is invalid
+  * Error messages if width/height are invalid
+
+* Before final creation:
+  * System displays entered map details (name, width, height)
+  * System asks for confirmation (Y-yes/N-no)
+
+* After confirmation:
+  * If confirmed: success message with map details
+  * If cancelled: operation aborted message
 
 ### 1.6. System Sequence Diagram (SSD)
 

@@ -14,28 +14,36 @@ activate Editor
     activate System
 
         System --> Editor : shows industry types list
+        System --> Editor : asks to select a type
     deactivate System
 
     Editor -> System : selects an industry type
     activate System
 
         System --> Editor : shows industries of selected type
+        System --> Editor : asks to select an industry
     deactivate System
 
     Editor -> System : selects an industry
     activate System
 
-        System --> Editor : asks for coordinates (X and Y)
+        System --> Editor : asks for X coordinate
     deactivate System
 
-    Editor -> System : types coordinates
+    Editor -> System : inputs X
     activate System
+        System --> Editor : validates X
+        System --> Editor : asks for Y coordinate
+    deactivate System
 
-        System --> Editor : displays industry data
+    Editor -> System : inputs Y
+    activate System
+        System --> Editor : validates Y
+        System --> Editor : displays industry name, type, and position
         System --> Editor : asks for confirmation (Y-yes/N-no)
     deactivate System
 
-    Editor -> System : confirms creation (Y/N)
+    Editor -> System : confirms (Y) or cancels (N)
     activate System
 
     alt User confirms (Y)

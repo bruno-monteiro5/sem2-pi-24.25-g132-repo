@@ -99,8 +99,7 @@ public class CreateMapUI implements Runnable{
         System.out.println("Height: " + map.getHeight());
 
 
-        String confirm = Utils.readLineFromConsole("Confirm? (Y-yes/N-no): ");
-        if (!confirm.equalsIgnoreCase("Y")) {
+        if (!Utils.confirm("Confirm map creation? (Y-yes/N-no):")) {
             System.out.println("❌ Map creation cancelled.");
             return;
         }

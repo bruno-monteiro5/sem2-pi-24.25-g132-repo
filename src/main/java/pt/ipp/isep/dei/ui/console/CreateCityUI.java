@@ -196,8 +196,7 @@ public class CreateCityUI implements Runnable {
             }
         }
 
-        String confirm = Utils.readLineFromConsole("Confirm city creation? (Y-yes/N-no): ");
-        if (!confirm.equalsIgnoreCase("Y")) {
+        if (!Utils.confirm("Confirm city creation? (Y-yes/N-no):")) {
             System.out.println("❌ City creation cancelled.");
             return;
         }

@@ -18,22 +18,22 @@ activate Editor
 
     Editor -> System : inputs name
     activate System
-
         System --> Editor : validates name
+        System --> Editor : asks for map width
     deactivate System
 
     Editor -> System : inputs map width
     activate System
         System --> Editor : validates width
+        System --> Editor : asks for map height
     deactivate System
 
     Editor -> System : inputs map height
     activate System
         System --> Editor : validates height
+        System --> Editor : displays map data
+        System --> Editor : asks for confirmation (Y-yes/N-no)
     deactivate System
-
-    System --> Editor : displays map data
-    System --> Editor : asks for confirmation (Y-yes/N-no)
 
     Editor -> System : confirms creation (Y/N)
     activate System
