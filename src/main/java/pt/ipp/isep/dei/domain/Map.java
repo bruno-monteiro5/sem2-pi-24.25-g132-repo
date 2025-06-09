@@ -86,6 +86,7 @@ public class Map implements Serializable {
         return height;
     }
 
+    public int getScale() { return scale;}
 
 
     /**
