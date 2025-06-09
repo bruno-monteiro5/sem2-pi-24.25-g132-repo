@@ -214,8 +214,6 @@ public class Map implements Serializable {
         ocupiedPositions.add(city.getPosition());
     }
 
-
-
     /**
      * Retrieves a list of all industries placed on the map.
      *
