@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
+
 /**
  * Represents a block of houses within a city on the map.
  *
@@ -16,7 +18,7 @@ package pt.ipp.isep.dei.domain;
  * </ul>
  * </p>
  */
-public class HouseBlock {
+public class HouseBlock implements Serializable {
 
     /**
      * The position of the house block on the map.
