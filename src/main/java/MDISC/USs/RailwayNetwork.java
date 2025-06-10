@@ -283,7 +283,7 @@ public class RailwayNetwork {
 
 
     // -------------------------------------------------
-    // US 28
+    // US 27
 
     private List<Station> shortestPath(Station origin, Station destination) {
         List<Station> stations = this.stations; // usa o atributo direto da tua classe
