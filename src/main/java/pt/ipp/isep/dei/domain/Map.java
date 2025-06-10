@@ -27,7 +27,7 @@ public class Map implements Serializable {
     private final int height;
     private final int scale;
 
-    private final List<City> cities = new ArrayList<>();
+    private List<City> cities = new ArrayList<>();
     private final List<Station> stations = new ArrayList<>();
     private final List<Industry> industries = new ArrayList<>();
     private final List<Position> ocupiedPositions = new ArrayList<>();
@@ -66,6 +66,8 @@ public class Map implements Serializable {
         this.width = width;
         this.height = height;
         this.scale = scale;
+
+        cities = new ArrayList<>();
     }
 
 
