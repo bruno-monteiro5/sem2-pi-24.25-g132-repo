@@ -355,8 +355,9 @@ public class Map implements Serializable {
     public String toString() {
         return "Map{" +
                 "name='" + name + '\'' +
-                ", width=" + width +
-                ", height=" + height +
+                "width=" + width +
+                "height=" + height +
+                "scale=" + scale +
                 '}';
     }
 }

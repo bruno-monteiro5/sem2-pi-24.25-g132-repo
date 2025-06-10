@@ -88,8 +88,8 @@ public class CreateMapUI implements Runnable{
         boolean validScale = false;
         while (!validScale) {
             try {
-                height = Utils.readIntegerFromConsole("Enter map scale: ");
-                if (height <= 0) {
+                scale = Utils.readIntegerFromConsole("Enter map scale: ");
+                if (scale <= 0) {
                     System.out.println("❌ Error: Scale must be a positive number.");
                 } else {
                     validScale = true;
