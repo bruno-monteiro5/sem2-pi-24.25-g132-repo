@@ -21,9 +21,9 @@
         <VBox alignment="CENTER" spacing="15" style="-fx-padding: 20;">
             <children>
                 <Button onAction="#handleCreateMap" text="Create Map" prefWidth="200"/>
-                <Button onAction="#handleCreateScenario" text="Create Scenario" prefWidth="200"/>
-                <Button onAction="#handleAddCity" text="Add City" prefWidth="200"/>
                 <Button onAction="#handleAddIndustry" text="Add Industry" prefWidth="200"/>
+                <Button onAction="#handleCreateCity" text="Create City" prefWidth="200"/>
+                <Button onAction="#handleCreateScenario" text="Create Scenario" prefWidth="200"/>
                 <Button onAction="#handleBack" text="Back to Login" prefWidth="200"
                         style="-fx-background-color: #b0bec5; -fx-text-fill: #263238;"/>
             </children>

@@ -19,8 +19,8 @@ public class EditorMainMenuController {
     }
 
     @FXML
-    public void handleAddCity() {
-        loadScene("/fxml/AddCity.fxml", "Add City");
+    public void handleCreateCity() {
+        loadScene("/fxml/CreateCity.fxml", "Create City");
     }
 
     @FXML
