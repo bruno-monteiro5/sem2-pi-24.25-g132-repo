@@ -7,63 +7,77 @@ import pt.ipp.isep.dei.domain.*;
 import pt.ipp.isep.dei.ui.ApplicationSession;
 import pt.ipp.isep.dei.ui.MainFX;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class AddIndustryFXController {
 
     @FXML
+    private ComboBox<IndustryType> typeComboBox;
+    @FXML
     private ComboBox<IndustryData> industryComboBox;
-
     @FXML
     private TextField xField;
-
     @FXML
     private TextField yField;
-
+    @FXML
+    private Label summaryLabel;
     @FXML
     private Label feedbackLabel;
 
-    private final AddIndustryController controller = new AddIndustryController();
+    private final AddIndustryController ctrl = new AddIndustryController();
 
     @FXML
     public void initialize() {
-        industryComboBox.setItems(FXCollections.observableArrayList(IndustryData.values()));
+        typeComboBox.setItems(FXCollections.observableArrayList(IndustryType.values()));
+        typeComboBox.setOnAction(e -> updateIndustryOptions());
+        industryComboBox.setOnAction(e -> updateSummary());
+    }
+
+    private void updateIndustryOptions() {
+        IndustryType selectedType = typeComboBox.getValue();
+        if (selectedType != null) {
+            List<IndustryData> filtered = Arrays.stream(IndustryData.values())
+                    .filter(data -> data.getType() == selectedType)
+                    .collect(Collectors.toList());
+            industryComboBox.setItems(FXCollections.observableArrayList(filtered));
+            industryComboBox.getSelectionModel().clearSelection();
+            summaryLabel.setText("");
+        }
+    }
+
+    private void updateSummary() {
+        IndustryData selected = industryComboBox.getValue();
+        if (selected != null) {
+            summaryLabel.setText("Name: " + selected.getName() +
+                    " | Type: " + selected.getType().name() +
+                    " | Year: " + selected.getStartYear());
+        } else {
+            summaryLabel.setText("");
+        }
     }
 
     @FXML
     public void handleAddIndustry() {
-        IndustryData selected = industryComboBox.getValue();
-        String xStr = xField.getText().trim();
-        String yStr = yField.getText().trim();
-
-        if (selected == null || xStr.isEmpty() || yStr.isEmpty()) {
-            setFeedback("Please fill all fields.", false);
-            return;
-        }
-
         try {
-            int x = Integer.parseInt(xStr);
-            int y = Integer.parseInt(yStr);
-
-            Map currentMap = ApplicationSession.getInstance().getCurrentMap();
-            if (currentMap == null) {
-                setFeedback("No map loaded in session.", false);
-                return;
-            }
-
+            IndustryData data = industryComboBox.getValue();
+            int x = Integer.parseInt(xField.getText().trim());
+            int y = Integer.parseInt(yField.getText().trim());
             Position pos = new Position(x, y);
 
-            if (!currentMap.validatePosition(pos)) {
-                setFeedback("Invalid or occupied position.", false);
-                return;
-            }
+            Industry added = ctrl.addIndustry(data, pos);
+            ApplicationSession.getInstance().getCurrentMap().addIndustry(added);
 
-            Industry industry = controller.addIndustry(selected, pos);
-            currentMap.addIndustry(industry);
+            feedbackLabel.setText("\u2705 Industry added successfully!");
+            feedbackLabel.setStyle("-fx-text-fill: green;");
 
-            setFeedback("Industry added successfully!", true);
         } catch (NumberFormatException e) {
-            setFeedback("X and Y must be integers.", false);
+            feedbackLabel.setText("Coordinates must be integers.");
+            feedbackLabel.setStyle("-fx-text-fill: red;");
         } catch (IllegalArgumentException e) {
-            setFeedback(e.getMessage(), false);
+            feedbackLabel.setText(e.getMessage());
+            feedbackLabel.setStyle("-fx-text-fill: red;");
         }
     }
 
@@ -71,10 +85,4 @@ public class AddIndustryFXController {
     public void handleBack() {
         MainFX.goToEditorMenu();
     }
-
-    private void setFeedback(String message, boolean success) {
-        feedbackLabel.setText(message);
-        feedbackLabel.setStyle(success ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
-    }
 }
-
