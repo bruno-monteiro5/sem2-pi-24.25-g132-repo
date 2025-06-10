@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,35 +20,35 @@ import java.util.Random;
  * </ul>
  * The City class is a key entity that integrates with maps for structure creation and placement.</p>
  */
-public class City {
+public class City implements Serializable {
 
     /**
      * The name of the city.
      *
      * <p>The name must be a valid string without special characters or digits. This is used to uniquely identify the city and associate it with map operations or user interactions.
      */
-    private String name;
+    private final String name;
 
     /**
      * The position of the city on the map.
      *
      * <p>The position represents the geographical coordinates or placement of the city within the map. It ensures integration with other map-based structures.</p>
      */
-    private Position position;
+    private final Position position;
 
     /**
      * The total number of house blocks assigned to the city.
      *
      * <p>This value determines the number of {@link HouseBlock} objects managed by this city.
      */
-    private int houseBlocks;
+    private final int houseBlocks;
 
     /**
      * A list containing all house blocks associated with the city.
      *
      * <p>This list stores {@link HouseBlock} objects assigned to or generated for the city. It allows querying and manipulating house block positions.</p>
      */
-    private List<HouseBlock> houseBlocksList;
+    private final List<HouseBlock> houseBlocksList;
 
     /**
      * Constructs a new City instance with the specified name, position, and number of house blocks.
