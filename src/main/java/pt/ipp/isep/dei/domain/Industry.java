@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
+
 /**
  * Represents an industry with a specific name, geographical position, and type.
  * <p>
@@ -13,7 +15,7 @@ package pt.ipp.isep.dei.domain;
  * position, and type. It also includes utility methods for string representation and position comparison.
  * </p>
  */
-public class Industry {
+public class Industry implements Serializable {
 
     private String name;
     private Position position;
