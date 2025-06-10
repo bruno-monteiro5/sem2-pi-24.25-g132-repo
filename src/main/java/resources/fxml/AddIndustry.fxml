@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pt.ipp.isep.dei.controller.AddIndustryFXController"
-            prefWidth="600.0" prefHeight="400.0"
+            prefWidth="600.0" prefHeight="450.0"
             style="-fx-background-color: linear-gradient(to bottom, #f0f8ff, #d9ecf2);">
 
     <top>
@@ -27,25 +27,34 @@
 
                 <HBox spacing="10" alignment="CENTER">
                     <Label text="Industry Type:" style="-fx-font-weight: bold;"/>
-                    <ComboBox fx:id="industryComboBox" prefWidth="250"/>
+                    <ComboBox fx:id="typeComboBox" prefWidth="200"/>
                 </HBox>
 
                 <HBox spacing="10" alignment="CENTER">
-                    <Label text="X:" style="-fx-font-weight: bold;"/>
-                    <TextField fx:id="xField" promptText="X" prefWidth="80"/>
-                    <Label text="Y:" style="-fx-font-weight: bold;"/>
-                    <TextField fx:id="yField" promptText="Y" prefWidth="80"/>
+                    <Label text="Industry:" style="-fx-font-weight: bold;"/>
+                    <ComboBox fx:id="industryComboBox" prefWidth="200"/>
                 </HBox>
 
-                <Label fx:id="feedbackLabel" text=""
-                       style="-fx-text-fill: red;"/>
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="X Position:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="xField" prefWidth="80"/>
+                    <Label text="Y Position:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="yField" prefWidth="80"/>
+                </HBox>
+
+                <Label fx:id="summaryLabel"
+                       text=""
+                       style="-fx-font-size: 13px; -fx-text-fill: #263238;"
+                       wrapText="true"
+                       maxWidth="500"/>
+
+                <Label fx:id="feedbackLabel" text="" style="-fx-text-fill: red;"/>
 
                 <HBox spacing="15" alignment="CENTER">
                     <Button text="Add Industry"
                             onAction="#handleAddIndustry"
                             style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
                             prefWidth="150"/>
-
                     <Button text="Back to Menu"
                             onAction="#handleBack"
                             style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" />
@@ -55,4 +64,3 @@
         </VBox>
     </center>
 </BorderPane>
-
