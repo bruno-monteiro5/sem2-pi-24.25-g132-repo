@@ -19,6 +19,7 @@ public class LoadMapUI implements Runnable {
         try {
             Map loadedMap = MapFileHandler.loadMapFromFile(filename);
             controller.getMapRepository().setActiveMap(loadedMap);
+            controller.getMapRepository().addMap(loadedMap);
             System.out.println("Map loaded successfully: " + loadedMap.getName());
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error loading the map: " + e.getMessage());
