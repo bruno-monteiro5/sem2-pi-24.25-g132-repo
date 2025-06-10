@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.domain.Industry;
 import pt.ipp.isep.dei.domain.IndustryData;
 import pt.ipp.isep.dei.domain.IndustryType;
 import pt.ipp.isep.dei.domain.Position;
+import pt.ipp.isep.dei.ui.console.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,59 +28,107 @@ public class AddIndustryUI implements Runnable {
     public void run() {
         System.out.println("\n=== Add New Industry ===");
 
-        try {
-            IndustryType[] types = IndustryType.values();
+        IndustryType[] types = IndustryType.values();
+        IndustryType selectedType = null;
+
+        while (selectedType == null) {
             System.out.println("Select an industry type:");
             for (int i = 0; i < types.length; i++) {
                 System.out.printf("%d. %s\n", i + 1, types[i].getDescription());
             }
 
-            System.out.print("Enter your choice: ");
-            int typeChoice = Integer.parseInt(scanner.nextLine().trim());
+            try {
+                System.out.print("Enter your choice: ");
+                int typeChoice = Integer.parseInt(scanner.nextLine().trim());
 
-            if (typeChoice < 1 || typeChoice > types.length) {
-                System.out.println("Invalid type choice.");
-                return;
-            }
-
-            IndustryType selectedType = types[typeChoice - 1];
-
-            List<IndustryData> filtered = new ArrayList<>();
-            for (IndustryData data : IndustryData.values()) {
-                if (data.getType() == selectedType) {
-                    filtered.add(data);
+                if (typeChoice < 1 || typeChoice > types.length) {
+                    System.out.println("❌ Invalid type choice. Please select a valid option.");
+                } else {
+                    selectedType = types[typeChoice - 1];
                 }
-            }
 
-            if (filtered.isEmpty()) {
-                System.out.println("No industries available for this type.");
-                return;
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Invalid input. Please enter a number.");
             }
+        }
 
+        List<IndustryData> filtered = new ArrayList<>();
+        for (IndustryData data : IndustryData.values()) {
+            if (data.getType() == selectedType) {
+                filtered.add(data);
+            }
+        }
+
+        if (filtered.isEmpty()) {
+            System.out.println("ℹ️ No industries available for this type.");
+            return;
+        }
+
+        IndustryData selectedData = null;
+        while (selectedData == null) {
             System.out.println("\nAvailable " + selectedType.getDescription() + ":");
             for (int i = 0; i < filtered.size(); i++) {
                 System.out.printf("%d. %s\n", i + 1, filtered.get(i).getName());
             }
 
-            System.out.print("Select an industry: ");
-            int industryChoice = Integer.parseInt(scanner.nextLine().trim());
+            try {
+                System.out.print("Select an industry: ");
+                int industryChoice = Integer.parseInt(scanner.nextLine().trim());
 
-            if (industryChoice < 1 || industryChoice > filtered.size()) {
-                System.out.println("Invalid industry choice.");
-                return;
+                if (industryChoice < 1 || industryChoice > filtered.size()) {
+                    System.out.println("❌ Invalid industry choice. Please select a valid option.");
+                } else {
+                    selectedData = filtered.get(industryChoice - 1);
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Invalid input. Please enter a number.");
             }
+        }
 
-            IndustryData selectedData = filtered.get(industryChoice - 1);
+        Integer x = null;
+        while (x == null) {
+            try {
+                System.out.print("Enter X coordinate: ");
+                x = Integer.parseInt(scanner.nextLine().trim());
+                if (x < 0) {
+                    System.out.println("❌ X must be zero or positive.");
+                    x = null;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Invalid input. Please enter a valid number.");
+            }
+        }
 
-            System.out.print("Enter X coordinate: ");
-            int x = Integer.parseInt(scanner.nextLine().trim());
-            System.out.print("Enter Y coordinate: ");
-            int y = Integer.parseInt(scanner.nextLine().trim());
+        Integer y = null;
+        while (y == null) {
+            try {
+                System.out.print("Enter Y coordinate: ");
+                y = Integer.parseInt(scanner.nextLine().trim());
+                if (y < 0) {
+                    System.out.println("❌ Y must be zero or positive.");
+                    y = null;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Invalid input. Please enter a valid number.");
+            }
+        }
 
+        System.out.println("\nPlease confirm the industry details:");
+        System.out.println("Name: " + selectedData.getName());
+        System.out.println("Type: " + selectedType.getDescription());
+        System.out.println("Position: [" + x + ", " + y + "]");
+
+        if (!Utils.confirm("Confirm industry creation? (Y-yes/N-no):")) {
+            System.out.println("❌ Industry creation cancelled.");
+            return;
+        }
+
+        try {
             Position pos = new Position(x, y);
             Industry industry = controller.addIndustry(selectedData, pos);
 
-            System.out.println("\nIndustry added successfully!");
+            System.out.println("\n✅ Industry added successfully!");
             System.out.println(industry);
 
             System.out.println("\nCurrent industries in the system:");
@@ -92,12 +141,11 @@ public class AddIndustryUI implements Runnable {
                 }
             }
 
-        } catch (NumberFormatException e) {
-            System.out.println("Error: Please enter a valid number.");
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("❌ Error: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("An error occurred while adding the industry: " + e.getMessage());
+            System.out.println("❌ Unexpected error: " + e.getMessage());
         }
     }
+
 }

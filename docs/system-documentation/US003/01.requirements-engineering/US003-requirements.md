@@ -11,11 +11,17 @@ map, with a name and a positive number of house blocks.
 
 **From the specifications document:**
 
->	A city bears a name, a location (with XY coordinates on the map), 
-and a set of blocks that represent housing. 
+> A city bears a name, a location (with XY coordinates on the map), and a set of blocks that represent housing.
 
->In the simulator’s context, cities generate and consume passengers 
-and mail, but they also consume final products (e.g., food, textiles, cars).
+> Cities generate and consume passengers and mail, and also consume final products (e.g., food, textiles, cars).
+
+> House blocks can be assigned manually or automatically around the city center.
+
+> There is no maximum number of house blocks, but the number must be positive.
+
+> Cities must be placed within map boundaries and cannot overlap with existing cities or industries.
+
+> Automatically generated house blocks must also respect map boundaries and be positioned near the city center.
 
 **From the client clarifications:**
 
@@ -57,16 +63,31 @@ simulation mode.
 **Input Data:**
 
 * Typed data:
-    * City name
-    * XY coordinates
-    * Number of house blocks
-	
+  * City name (validated to contain only letters and spaces)
+  * X coordinate (positive integer, within map width)
+  * Y coordinate (positive integer, within map height)
+  * Number of house blocks (positive integer)
+  * House block positions (if manual placement is chosen)
+
 * Selected data:
-    * Manual or automatic (random) house block placement
+  * A map (must already exist and be selected)
+  * Manual or automatic placement of house blocks
 
 **Output Data:**
 
-* (In)Success of the operation
+* System feedback during input:
+  * Error messages if city name is invalid or already exists
+  * Error messages if coordinates are out of map bounds
+  * Error if block position is invalid (e.g., overlaps city, too far, outside map)
+
+* Before final creation:
+  * System displays city name, position and block list (if manual)
+  * System asks for confirmation (Y/N)
+
+* After confirmation:
+  * If confirmed: success message with city details
+  * If cancelled: operation aborted message
+
 
 ### 1.6. System Sequence Diagram (SSD)
 

@@ -84,21 +84,6 @@ public class CreateMapUI implements Runnable{
             }
         }
 
-        int scale = -1;
-        boolean validScale = false;
-        while (!validScale) {
-            try {
-                scale = Utils.readIntegerFromConsole("Enter the map scale(e.g. 10 -> 1 cell = 10Km" );
-                if (scale <= 0) {
-                    System.out.println("❌ Error: Scale must be a positive number.");
-                } else {
-                    validScale = true;
-                }
-            } catch (Exception e) {
-                System.out.println("❌ Invalid input. Please enter a valid number.");
-            }
-        }
-
         String email = controller.getUserEmailFromSession();
 
         if (email == null) {
@@ -106,10 +91,10 @@ public class CreateMapUI implements Runnable{
             return;
         }
 
-        Map map = new Map(name, width, height, scale);
+        Map map = new Map(name, width, height);
 
         System.out.println("\nPlease confirm the map details:");
-        System.out.println(map);
+        System.out.println(map.toString());
 
         String confirm = Utils.readLineFromConsole("Confirm? (Y-yes/N-no): ");
         if (!confirm.equalsIgnoreCase("Y")) {
@@ -122,7 +107,7 @@ public class CreateMapUI implements Runnable{
 
             if (savedMap != null) {
                 System.out.println("✅ Map created successfully:");
-                System.out.println(savedMap);
+                System.out.println(savedMap.toString());
                 Repositories.getInstance().getMapRepository().setActiveMap(savedMap);
             } else {
                 System.out.println("❌ Map creation failed.");

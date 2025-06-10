@@ -15,6 +15,11 @@ As an Editor, I want to add an industry (selected from the available industries)
 >* Transforming industries (Transform resources provided by the Primary Sector into new products)
 >* Mixed industries (Ports pottencially have the capacity, depending on what is defined in the scneario, to import or export any cargo)
 
+> Industries must be placed inside the map boundaries.
+
+> It is not allowed to place an industry over an existing city or another industry (overbuilding is forbidden).
+
+> The type and behavior of the industry affect how it interacts with cargo in the simulation.
 
 **From the client clarifications:**
 
@@ -39,16 +44,29 @@ As an Editor, I want to add an industry (selected from the available industries)
 **Input Data:**
 
 * Typed data:
-    * an industry type
-    * an industry name
-    * an XY position
+  * X coordinate (positive integer, validated individually)
+  * Y coordinate (positive integer, validated individually)
 
 * Selected data:
-    * a map
+  * A map (must already exist and be selected)
+  * An industry type (Primary, Transforming, or Mixed)
+  * An industry name (filtered by the selected type)
 
 **Output Data:**
 
-* (In)Success of the operation
+* System feedback during input:
+  * Error messages if type or name is invalid
+  * Error messages if coordinates are invalid or outside map bounds
+  * Error message if the position overlaps another city or industry
+
+* Before final creation:
+  * System displays industry type, name, and position
+  * System asks for confirmation (Y-yes/N-no)
+
+* After confirmation:
+  * If confirmed: success message with industry details
+  * If cancelled: operation aborted message
+
 
 ### 1.6. System Sequence Diagram (SSD)
 
@@ -57,4 +75,5 @@ As an Editor, I want to add an industry (selected from the available industries)
 
 ### 1.7 Other Relevant Remarks
 
-* N/A
+* Industries are placed directly on the map and affect cargo generation/processing.
+* Industry behavior (e.g., cargo input/output) depends on its type and scenario rules.

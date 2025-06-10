@@ -2,7 +2,6 @@ package pt.ipp.isep.dei.ui.console;
 
 import pt.ipp.isep.dei.controller.CreateCityController;
 import pt.ipp.isep.dei.domain.City;
-import pt.ipp.isep.dei.domain.HouseBlock;
 import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.domain.Position;
 import pt.ipp.isep.dei.repository.Repositories;
@@ -183,6 +182,24 @@ public class CreateCityUI implements Runnable {
             }
         }
 
+
+        System.out.println("\nPlease confirm the city details:");
+        System.out.println("Name: " + name);
+        System.out.println("Position: [" + x + ", " + y + "]");
+        System.out.println("House blocks: " + houseBlocks);
+
+        if (manual) {
+            System.out.println("Manual house block positions:");
+            for (int i = 0; i < manualPositions.size(); i++) {
+                Position pos = manualPositions.get(i);
+                System.out.println(" - Block #" + (i + 1) + ": [" + pos.getX() + ", " + pos.getY() + "]");
+            }
+        }
+
+        if (!Utils.confirm("Confirm city creation? (Y-yes/N-no):")) {
+            System.out.println("❌ City creation cancelled.");
+            return;
+        }
 
         try {
             City city = controller.createCity(name, new Position(x, y), houseBlocks, manual, manualPositions);
