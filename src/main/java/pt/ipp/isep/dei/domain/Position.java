@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
+
 /**
  * Represents a position in a two-dimensional space with X and Y coordinates.
  *
@@ -8,7 +10,7 @@ package pt.ipp.isep.dei.domain;
  * the X and Y coordinates, as well as overridden methods for {@code toString}
  * and {@code equals} for better representation and comparison.</p>
  */
-public class Position {
+public class Position implements Serializable {
 
     private int x;
     private int y;
