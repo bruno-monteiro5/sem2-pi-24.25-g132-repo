@@ -35,7 +35,7 @@ public class CreateCityController {
     /**
      * Repository for accessing and managing maps.
      */
-    private MapRepository mapRepository;
+    private final MapRepository mapRepository;
 
     /**
      * Constructs an instance of {@code CreateCityController}.
@@ -105,7 +105,7 @@ public class CreateCityController {
             throw new IllegalArgumentException("City with that name already exists.");
         }
 
-        if (cityRepository.positionInvalid(position)) {
+        if (cityRepository.positionInvalid(position) || !map.validatePosition(position)) {
             throw new IllegalArgumentException("Position is already taken by another city.");
         }
 
