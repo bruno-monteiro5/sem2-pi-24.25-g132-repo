@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import pt.ipp.isep.dei.domain.Map;
+import pt.ipp.isep.dei.ui.ApplicationSession;
 import pt.ipp.isep.dei.ui.MainFX;
 
 public class CreateMapFXController {
@@ -31,10 +32,12 @@ public class CreateMapFXController {
             Map saved = ctrl.saveMap(newMap);
 
             if (saved != null) {
-                feedbackLabel.setText("Map created successfully!");
+                ApplicationSession.getInstance().setCurrentMap(saved);
+
+                feedbackLabel.setText(" Map created successfully!");
                 feedbackLabel.setStyle("-fx-text-fill: green;");
             } else {
-                feedbackLabel.setText("Failed to create map.");
+                feedbackLabel.setText(" Failed to create map.");
                 feedbackLabel.setStyle("-fx-text-fill: red;");
             }
         } catch (NumberFormatException e) {

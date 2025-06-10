@@ -80,7 +80,7 @@ public class CreateScenarioFXController {
 
             if (ctrl.saveScenario(scenario)) {
                 ApplicationSession.getInstance().setCurrentScenario(scenario);
-                feedbackLabel.setText("✅ Scenario created successfully!");
+                feedbackLabel.setText(" Scenario created successfully!");
                 feedbackLabel.setStyle("-fx-text-fill: green;");
             } else {
                 feedbackLabel.setText("Failed to save scenario.");
