@@ -17,6 +17,7 @@ public class MainMenuController {
     @FXML private Label scenarioLabel;
     @FXML private Label yearLabel;
     @FXML private Label budgetLabel;
+    @FXML private Label scaleLabel;
     @FXML private Pane mapArea;
 
     @FXML
@@ -26,13 +27,12 @@ public class MainMenuController {
 
         if (map != null) {
             mapLabel.setText("Map: " + map.getName());
+            scaleLabel.setText("Scale: " + map.getScale());
         }
 
         if (scenario != null && scenario.getPeriodTime() != null) {
             scenarioLabel.setText("Scenario: " + scenario.getName());
             yearLabel.setText("Year: " + scenario.getPeriodTime().getStartYear());
-
-            //  Budget is not yet implemented
             // budgetLabel.setText("Budget: $" + scenario.getPeriodTime().getInitialBudget());
         }
     }
@@ -61,15 +61,14 @@ public class MainMenuController {
         }
     }
 
-
     @FXML
     public void handleStationDetails() {
-
+        // TODO
     }
 
     @FXML
     public void handleStartSimulation() {
-
+        // TODO
     }
 
     @FXML
@@ -84,7 +83,6 @@ public class MainMenuController {
             alert.showAndWait();
         }
     }
-
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

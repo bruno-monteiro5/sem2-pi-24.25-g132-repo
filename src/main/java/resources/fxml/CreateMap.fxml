@@ -27,7 +27,7 @@
 
                 <HBox spacing="10" alignment="CENTER">
                     <Label text="Map Name:" style="-fx-font-weight: bold;"/>
-                    <TextField fx:id="nameField" promptText="Enter map name..." prefWidth="200"/>
+                    <TextField fx:id="mapNameField" promptText="Enter map name..." prefWidth="200"/>
                 </HBox>
 
                 <HBox spacing="10" alignment="CENTER">
@@ -35,6 +35,11 @@
                     <TextField fx:id="widthField" prefWidth="80"/>
                     <Label text="Height:" style="-fx-font-weight: bold;"/>
                     <TextField fx:id="heightField" prefWidth="80"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Scale:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="scaleField" prefWidth="80"/>
                 </HBox>
 
                 <Label fx:id="feedbackLabel" text=""
