@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import pt.ipp.isep.dei.controller.UpgradeStationController;
 import pt.ipp.isep.dei.domain.*;
 import pt.ipp.isep.dei.ui.MainFX;
 
@@ -54,7 +53,7 @@ public class UpgradeStationFXController {
         if (success) {
             feedbackLabel.setStyle("-fx-text-fill: green;");
             feedbackLabel.setText("Upgrade applied successfully.");
-            loadUpgrades(); // refresh options
+            loadUpgrades();
         } else {
             feedbackLabel.setStyle("-fx-text-fill: red;");
             feedbackLabel.setText("Upgrade failed. Not enough funds or conflict.");
@@ -71,4 +70,3 @@ public class UpgradeStationFXController {
         }
     }
 }
-

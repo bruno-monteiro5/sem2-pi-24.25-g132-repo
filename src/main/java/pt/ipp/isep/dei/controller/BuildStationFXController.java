@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import pt.ipp.isep.dei.controller.BuildStationController;
 import pt.ipp.isep.dei.domain.Position;
 import pt.ipp.isep.dei.domain.StationType;
 import pt.ipp.isep.dei.ui.MainFX;

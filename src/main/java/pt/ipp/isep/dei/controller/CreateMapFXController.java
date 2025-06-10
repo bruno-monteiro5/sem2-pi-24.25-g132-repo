@@ -1,3 +1,4 @@
+/**
 package pt.ipp.isep.dei.controller;
 
 import javafx.fxml.FXML;
@@ -45,3 +46,4 @@ public class CreateMapFXController {
         MainFX.goToEditorMenu();
     }
 }
+*/
