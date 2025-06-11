@@ -1,3 +1,4 @@
+/**
 package pt.ipp.isep.dei.domain;
 
 import java.io.Serializable;
@@ -133,3 +134,4 @@ public class Simulator implements Runnable, Serializable {
         return baseValue * multiplier * distance;
     }
 }
+*/

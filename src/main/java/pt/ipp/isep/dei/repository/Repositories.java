@@ -1,6 +1,6 @@
 package pt.ipp.isep.dei.repository;
 
-import pt.ipp.isep.dei.controller.SimulatorController;
+//import pt.ipp.isep.dei.controller.SimulatorController;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class Repositories {
     private final TrainRepository trainRepository;
     private final RouteRepository routeRepository;
     private final ScenarioRepository scenarioRepository;
-    private final SimulatorController simulatorController;
+    //private final SimulatorController simulatorController;
 
 
     private Repositories() {
@@ -44,14 +44,14 @@ public class Repositories {
         trainRepository = new TrainRepository();
         routeRepository = new RouteRepository();
         scenarioRepository = new ScenarioRepository();
-        simulatorController = new SimulatorController(
-                new SimulatorRepository(
-                        new ArrayList<>(trainRepository.getAll()),
-                        new ArrayList<>(stationRepository.getAll()),
-                        new ArrayList<>(locomotiveRepository.getLocomotives()),
-                        scenarioRepository.getActiveScenario()
-                )
-        );
+        //simulatorController = new SimulatorController(
+                //new SimulatorRepository(
+                        //new ArrayList<>(trainRepository.getAll()),
+                       // new ArrayList<>(stationRepository.getAll()),
+                        //new ArrayList<>(locomotiveRepository.getLocomotives()),
+                        //scenarioRepository.getActiveScenario()
+               // )
+        //);
 
     }
 
@@ -128,6 +128,6 @@ public class Repositories {
         return railwayLineRepository;
     }
 
-    public SimulatorController getSimulatorController() {return simulatorController;}
+    //public SimulatorController getSimulatorController() {return simulatorController;}
 
 }

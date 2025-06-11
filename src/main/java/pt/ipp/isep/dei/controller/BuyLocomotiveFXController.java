@@ -1,17 +1,13 @@
 package pt.ipp.isep.dei.controller;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import pt.ipp.isep.dei.domain.Locomotive;
 import pt.ipp.isep.dei.domain.LocomotiveType;
-import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.domain.fuelType;
-import pt.ipp.isep.dei.repository.Repositories;
-import pt.ipp.isep.dei.repository.ScenarioRepository;
 import pt.ipp.isep.dei.ui.ApplicationSession;
+import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.ui.MainFX;
 
 import java.util.Arrays;
@@ -25,71 +21,60 @@ public class BuyLocomotiveFXController {
     @FXML private TextArea locomotiveDetailsArea;
     @FXML private Label feedbackLabel;
 
-    private final ScenarioRepository scenarioRepository = Repositories.getInstance().getScenarioRepository();
-
     @FXML
     public void initialize() {
-        fuelTypeComboBox.setItems(FXCollections.observableArrayList(fuelType.values()));
+        fuelTypeComboBox.getItems().setAll(fuelType.values());
         fuelTypeComboBox.setOnAction(e -> updateLocomotiveOptions());
         locomotiveComboBox.setOnAction(e -> showLocomotiveDetails());
     }
 
     private void updateLocomotiveOptions() {
         fuelType selectedFuel = fuelTypeComboBox.getValue();
-        Scenario scenario = scenarioRepository.getActiveScenario();
+        if (selectedFuel == null) return;
 
-        if (selectedFuel != null && scenario != null) {
-            int currentYear = scenario.getPeriodTime().getStartYear();
-
-            List<LocomotiveType> filtered = Arrays.stream(LocomotiveType.values())
-                    .filter(type -> type.getFuelType().equalsIgnoreCase(selectedFuel.name()))
-                    .filter(type -> currentYear >= type.getStartYear() && currentYear <= type.getEndYear())
-                    .collect(Collectors.toList());
-
-            locomotiveComboBox.setItems(FXCollections.observableArrayList(filtered));
-            locomotiveDetailsArea.clear();
-            feedbackLabel.setText("");
+        Scenario currentScenario = ApplicationSession.getInstance().getCurrentScenario();
+        if (currentScenario == null) {
+            feedbackLabel.setText("No active scenario.");
+            return;
         }
+        int currentYear = currentScenario.getPeriodTime().getStartYear();
+
+        List<LocomotiveType> filtered = Arrays.stream(LocomotiveType.values())
+                .filter(l -> l.getFuelType().equalsIgnoreCase(selectedFuel.name()) &&
+                        l.getStartYear() <= currentYear &&
+                        l.getEndYear() >= currentYear)
+                .collect(Collectors.toList());
+
+        locomotiveComboBox.getItems().setAll(filtered);
+        locomotiveDetailsArea.clear();
+        feedbackLabel.setText("");
     }
 
     private void showLocomotiveDetails() {
-        LocomotiveType selected = locomotiveComboBox.getValue();
-        if (selected != null) {
-            StringBuilder details = new StringBuilder();
-            details.append("Name: ").append(selected.getName()).append("\n")
-                    .append("Start Year: ").append(selected.getStartYear()).append("\n")
-                    .append("End Year: ").append(selected.getEndYear()).append("\n")
-                    .append("Fuel Type: ").append(selected.getFuelType()).append("\n")
-                    .append("Speed: ").append(selected.getTopSpeed()).append(" km/h\n")
-                    .append("Price: $").append((int) selected.getPrice()).append("\n")
-                    .append("Acceleration: ").append(selected.getAcceleration()).append("\n")
-                    .append("Reliability: ").append(selected.getReliability());
+        LocomotiveType loco = locomotiveComboBox.getValue();
+        if (loco == null) return;
 
-            locomotiveDetailsArea.setText(details.toString());
-        }
+        StringBuilder details = new StringBuilder();
+        details.append("Name: ").append(loco.getName()).append("\n")
+                .append("Price: $").append(loco.getPrice()).append("\n")
+                .append("Maintenance: $").append(loco.getMaintenance()).append("\n")
+                .append("Fuel Cost: $").append(loco.getFuelCost()).append("\n")
+                .append("Top Speed: ").append(loco.getTopSpeed()).append(" km/h\n")
+                .append("Acceleration: ").append(loco.getAcceleration()).append("\n")
+                .append("Reliability: ").append(loco.getReliability());
+
+        locomotiveDetailsArea.setText(details.toString());
     }
 
     @FXML
-    public void handleBuy() {
+    public void handleBuyLocomotive() {
         LocomotiveType selected = locomotiveComboBox.getValue();
         if (selected == null) {
             feedbackLabel.setText("Please select a locomotive.");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
             return;
         }
-
-        Scenario scenario = ApplicationSession.getInstance().getCurrentScenario();
-        if (scenario == null) {
-            feedbackLabel.setText("No active scenario.");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
-            return;
-        }
-
-        Locomotive loco = new Locomotive(scenario.getLocomotives().size() + 1, selected);
-        scenario.getLocomotives().add(loco);
-
-        feedbackLabel.setText("Locomotive purchased successfully!");
         feedbackLabel.setStyle("-fx-text-fill: green;");
+        feedbackLabel.setText("Locomotive '" + selected.getName() + "' bought successfully!");
     }
 
     @FXML
@@ -102,4 +87,3 @@ public class BuyLocomotiveFXController {
         }
     }
 }
-
