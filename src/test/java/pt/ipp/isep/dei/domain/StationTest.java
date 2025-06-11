@@ -89,7 +89,7 @@ class StationTest {
                 BuildingType.POST_OFFICE
         );
 
-        List<BuildingType> available = station.getAvailableUpgrades(allTypes);
+        //List<BuildingType> available = station.getAvailableUpgrades(allTypes);
         assertTrue(available.contains(BuildingType.TELEGRAPH));
         assertTrue(available.contains(BuildingType.CAFE_SMALL));
         assertTrue(available.contains(BuildingType.POST_OFFICE));

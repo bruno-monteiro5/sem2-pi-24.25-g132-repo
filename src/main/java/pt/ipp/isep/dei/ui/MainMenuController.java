@@ -63,12 +63,35 @@ public class MainMenuController {
 
     @FXML
     public void handleStationDetails() {
-        // TODO
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/StationDetails.fxml"));
+            Parent root = loader.load();
+            MainFX.setRootScene(root, "Station Details", 600, 400);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Failed to load Station Details screen.");
+        }
+    }
+
+
+    @FXML
+    public void handleBuildRailwayLine() {
+    }
+
+    @FXML
+    public void handleBuyLocomotive() {
+    }
+
+    @FXML
+    public void handleAssignTrainToARoute() {
+    }
+
+    @FXML
+    public void handleListAllTrains() {
     }
 
     @FXML
     public void handleStartSimulation() {
-        // TODO
     }
 
     @FXML

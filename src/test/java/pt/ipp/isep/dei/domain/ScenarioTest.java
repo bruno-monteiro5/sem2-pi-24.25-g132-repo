@@ -10,7 +10,7 @@ public class ScenarioTest {
 
     @Test
     public void testScenarioCreation() {
-        Map map = new Map("Map1", 5, 5, "editor@this.app");
+        Map map = new Map("Map1", 5, 5, 1);
         PeriodTime period = new PeriodTime(1900,1950);
         Scenario scenario = new Scenario("cenarioTeste", map, period);
 
@@ -24,7 +24,7 @@ public class ScenarioTest {
     @Test
     public void testAddPort() {
         PeriodTime period = new PeriodTime(1900,1950);
-        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"), period);
+        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, 1), period);
         Port port = new Port("porto1");
 
         port.addImport("carvão");
@@ -44,7 +44,7 @@ public class ScenarioTest {
     @Test
     public void testAddLocomotiveType() {
         PeriodTime period = new PeriodTime(1900,1950);
-        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"), period);
+        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, 1), period);
         for (LocomotiveType tipo : LocomotiveType.values()) {
             if (tipo.getFuelType().equalsIgnoreCase("Steam")) {
                 scenario.addLocomotiveType(tipo);
@@ -60,7 +60,7 @@ public class ScenarioTest {
     @Test
     public void testSetIndustryGenerationFactor() {
         PeriodTime period = new PeriodTime(1900,1950);
-        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, "editor@this.app"), period);
+        Scenario scenario = new Scenario("cenario", new Map("Map1", 5, 5, 1), period);
         scenario.setIndustryGenerationFactor(2.5);
 
         assertEquals(2.5, scenario.getIndustryGenerationFactor());
