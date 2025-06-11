@@ -55,7 +55,7 @@ class CityTest {
     @BeforeEach
     void setUp() {
         position = new Position(25, 25);
-        map = new Map("testmap", 50, 50);
+        map = new Map("testmap", 50, 50,1);
     }
 
     /**
