@@ -1,4 +1,3 @@
-/**
 package pt.ipp.isep.dei.ui.console.menu;
 
 import pt.ipp.isep.dei.controller.SimulatorController;
@@ -10,8 +9,8 @@ public class SimulatorUI implements Runnable {
 
     private final SimulatorController controller;
 
-    public SimulatorUI(SimulatorRepository repository) {
-        this.controller = new SimulatorController(repository);
+    public SimulatorUI() {
+        controller = new SimulatorController();
     }
 
     @Override
@@ -47,4 +46,3 @@ public class SimulatorUI implements Runnable {
         }
     }
 }
-*/
