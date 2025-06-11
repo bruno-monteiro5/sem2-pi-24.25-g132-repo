@@ -1,3 +1,4 @@
+/**
 package pt.ipp.isep.dei.ui.console.menu;
 
 import pt.ipp.isep.dei.controller.SimulatorController;
@@ -46,3 +47,4 @@ public class SimulatorUI implements Runnable {
         }
     }
 }
+*/

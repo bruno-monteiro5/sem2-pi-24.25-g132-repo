@@ -1,3 +1,4 @@
+/**
 package pt.ipp.isep.dei.controller;
 
 import pt.ipp.isep.dei.repository.SimulatorRepository;
@@ -32,3 +33,4 @@ public class SimulatorController {
         return simulator.getCurrentYear();
     }
 }
+*/

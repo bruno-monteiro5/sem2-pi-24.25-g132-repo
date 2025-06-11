@@ -80,6 +80,14 @@ public class MainMenuController {
 
     @FXML
     public void handleBuyLocomotive() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BuyLocomotive.fxml"));
+            Parent root = loader.load();
+            MainFX.setRootScene(root, "Buy Locomotive", 600, 400);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Failed to load Buy Locomotive screen.");
+        }
     }
 
     @FXML
