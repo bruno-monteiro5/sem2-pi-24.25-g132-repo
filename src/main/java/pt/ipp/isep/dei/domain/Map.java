@@ -34,12 +34,6 @@ public class Map implements Serializable {
     private final List<Scenario> scenarios = new ArrayList<>();
     private List<RailwayLine> railwayLines;
 
-    private static final String NAME_BY_OMISON = "Without name";
-    private static final int WIDTH_BY_OMISSION = 1;
-    private static final int HEIGHT_BY_OMISSION = 1;
-
-
-
     /**
      * Constructs a {@code Map} instance with the specified name, dimensions, and creator.
      *

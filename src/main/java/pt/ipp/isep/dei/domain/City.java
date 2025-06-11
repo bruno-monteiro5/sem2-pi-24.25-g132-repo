@@ -231,5 +231,4 @@ public class City implements Serializable {
                 ", houseBlocksList=" + houseBlocksList +
                 '}';
     }
-
 }
