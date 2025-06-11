@@ -63,12 +63,26 @@ public class MainMenuController {
 
     @FXML
     public void handleStationDetails() {
-        // TODO
+    }
+
+    @FXML
+    public void handleBuildRailwayLine() {
+    }
+
+    @FXML
+    public void handleBuyLocomotive() {
+    }
+
+    @FXML
+    public void handleAssignTrainToARoute() {
+    }
+
+    @FXML
+    public void handleListAllTrains() {
     }
 
     @FXML
     public void handleStartSimulation() {
-        // TODO
     }
 
     @FXML

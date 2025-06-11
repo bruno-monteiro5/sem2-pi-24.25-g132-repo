@@ -40,6 +40,10 @@
                 <Button text="Build Station" onAction="#handleBuildStation"/>
                 <Button text="Upgrade Station" onAction="#handleUpgradeStation"/>
                 <Button text="See Station Details" onAction="#handleStationDetails"/>
+                <Button text="Build a Railway Line" onAction="#handleBuildRailwayLine"/>
+                <Button text="Buy a Locomotive" onAction="#handleBuyLocomotive"/>
+                <Button text="Assign train to a route" onAction="#handleAssignTrainToARoute"/>
+                <Button text="List all trains" onAction="#handleListAllTrains"/>
                 <Button text="Run Simulation" onAction="#handleStartSimulation"/>
                 <Button text="Back to Login" onAction="#handleLogout" />
             </children>
