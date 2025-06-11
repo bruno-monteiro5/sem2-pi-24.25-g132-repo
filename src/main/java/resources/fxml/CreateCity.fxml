@@ -7,7 +7,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pt.ipp.isep.dei.controller.CreateCityFXController"
-            prefWidth="600.0" prefHeight="450.0"
+            prefWidth="600.0" prefHeight="500.0"
             style="-fx-background-color: linear-gradient(to bottom, #f0f8ff, #d9ecf2);">
 
     <top>
@@ -47,6 +47,11 @@
                     <RadioButton fx:id="autoRadio" text="Automatic" selected="true"/>
                     <RadioButton fx:id="manualRadio" text="Manual"/>
                 </HBox>
+
+                <VBox spacing="5" alignment="CENTER">
+                    <Label text="Manual Block Positions (format: x1,y1;x2,y2;...)" style="-fx-font-weight: bold;"/>
+                    <TextArea fx:id="manualTextArea" prefWidth="300" prefRowCount="3" promptText="e.g. 10,10;11,11"/>
+                </VBox>
 
                 <Label fx:id="feedbackLabel" text="" style="-fx-text-fill: red;"/>
 
