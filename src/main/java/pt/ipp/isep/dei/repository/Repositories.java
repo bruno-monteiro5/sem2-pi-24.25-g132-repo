@@ -26,7 +26,7 @@ public class Repositories {
     private final TrainRepository trainRepository;
     private final RouteRepository routeRepository;
     private final ScenarioRepository scenarioRepository;
-    private  SimulatorController simulatorController;
+    private final SimulatorController simulatorController;
 
 
     private Repositories() {
@@ -44,6 +44,14 @@ public class Repositories {
         trainRepository = new TrainRepository();
         routeRepository = new RouteRepository();
         scenarioRepository = new ScenarioRepository();
+        simulatorController = new SimulatorController(
+                new SimulatorRepository(
+                        new ArrayList<>(trainRepository.getAll()),
+                        new ArrayList<>(stationRepository.getAll()),
+                        new ArrayList<>(locomotiveRepository.getLocomotives()),
+                        scenarioRepository.getActiveScenario()
+                )
+        );
 
     }
 

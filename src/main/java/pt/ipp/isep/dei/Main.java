@@ -39,12 +39,29 @@ public class Main {
     private static void runConsoleMode() {
         new Bootstrap().run();
 
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("1 - Main Menu");
+            System.out.println("2 - Simulator");
+            System.out.print("Option: ");
+            String input = sc.nextLine().trim();
 
+            if (input.equals("2")) {
+                SimulatorRepository simulatorRepository = new SimulatorRepository(
+                        new ArrayList<>(Repositories.getInstance().getTrainRepository().getAll()),
+                        new ArrayList<>(Repositories.getInstance().getStationRepository().getAll()),
+                        new ArrayList<>(Repositories.getInstance().getLocomotiveRepository().getLocomotives()),
+                        Repositories.getInstance().getScenarioRepository().getActiveScenario()
+                );
 
-
+                new SimulatorUI(simulatorRepository).run();
+            } else {
                 new MainMenuUI().run();
-
-
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while running the application.");
+            e.printStackTrace();
+        }
     }
 
     private static void runGuiMode(String[] args) {

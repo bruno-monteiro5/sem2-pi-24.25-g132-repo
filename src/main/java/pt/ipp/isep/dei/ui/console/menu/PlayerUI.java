@@ -1,8 +1,5 @@
 package pt.ipp.isep.dei.ui.console.menu;
 
-import pt.ipp.isep.dei.domain.Scenario;
-import pt.ipp.isep.dei.repository.Repositories;
-import pt.ipp.isep.dei.repository.SimulatorRepository;
 import pt.ipp.isep.dei.ui.console.*;
 import pt.ipp.isep.dei.ui.console.utils.Utils;
 
@@ -21,22 +18,7 @@ public class PlayerUI implements Runnable {
         options.add(new MenuItem("Buy a locomotive", new BuyLocomotiveUI()));
         options.add(new MenuItem("Create a train", new CreateTrainUI()));
         options.add(new MenuItem("Assign a train to a route", new AssignTrainToRouteUI()));
-        options.add(new MenuItem("Start Simulation", () -> {
-            Scenario activeScenario = Repositories.getInstance().getScenarioRepository().getActiveScenario();
-            if (activeScenario == null) {
-                System.out.println("No active scenario selected. Please load or create a scenario first.");
-                return;
-            }
 
-            SimulatorRepository simulatorRepository = new SimulatorRepository(
-                    new ArrayList<>(Repositories.getInstance().getTrainRepository().getAll()),
-                    new ArrayList<>(Repositories.getInstance().getStationRepository().getAll()),
-                    new ArrayList<>(Repositories.getInstance().getLocomotiveRepository().getLocomotives()),
-                    activeScenario
-            );
-
-            new SimulatorUI(simulatorRepository).run();
-        }));
         int option = 0;
         do {
             option = Utils.showAndSelectIndex(options, "\n\n--- ADMIN MENU -------------------------");
