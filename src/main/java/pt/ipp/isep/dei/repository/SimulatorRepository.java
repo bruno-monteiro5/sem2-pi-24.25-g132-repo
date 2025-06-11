@@ -12,18 +12,15 @@ public class SimulatorRepository {
     private ArrayList<Station> stations;
     private ArrayList<Locomotive> allLocomotives;
     private Scenario scenario;
-    private int startYear;
 
     public SimulatorRepository(ArrayList<Train> trains,
                                ArrayList<Station> stations,
                                ArrayList<Locomotive> allLocomotives,
-                               Scenario scenario,
-                               int startYear) {
+                               Scenario scenario) {
         this.trains = trains;
         this.stations = stations;
         this.allLocomotives = allLocomotives;
         this.scenario = scenario;
-        this.startYear = startYear;
     }
 
     public ArrayList<Train> getTrains() {
@@ -42,7 +39,4 @@ public class SimulatorRepository {
         return scenario;
     }
 
-    public int getStartYear() {
-        return startYear;
-    }
 }

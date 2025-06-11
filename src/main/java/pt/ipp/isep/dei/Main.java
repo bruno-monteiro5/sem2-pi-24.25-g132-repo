@@ -1,7 +1,12 @@
 package pt.ipp.isep.dei;
 
+import pt.ipp.isep.dei.repository.Repositories;
+import pt.ipp.isep.dei.repository.SimulatorRepository;
 import pt.ipp.isep.dei.ui.MainFX;
 import pt.ipp.isep.dei.ui.console.menu.MainMenuUI;
+import pt.ipp.isep.dei.ui.console.menu.SimulatorUI;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -35,9 +40,26 @@ public class Main {
         new Bootstrap().run();
 
         try {
-            new MainMenuUI().run();
+            Scanner sc = new Scanner(System.in);
+            System.out.println("1 - Main Menu");
+            System.out.println("2 - Simulator");
+            System.out.print("Option: ");
+            String input = sc.nextLine().trim();
+
+            if (input.equals("2")) {
+                SimulatorRepository simulatorRepository = new SimulatorRepository(
+                        new ArrayList<>(Repositories.getInstance().getTrainRepository().getAll()),
+                        new ArrayList<>(Repositories.getInstance().getStationRepository().getAll()),
+                        new ArrayList<>(Repositories.getInstance().getLocomotiveRepository().getLocomotives()),
+                        Repositories.getInstance().getScenarioRepository().getActiveScenario()
+                );
+
+                new SimulatorUI(simulatorRepository).run();
+            } else {
+                new MainMenuUI().run();
+            }
         } catch (Exception e) {
-            System.err.println("Error running console menu:");
+            System.out.println("An error occurred while running the application.");
             e.printStackTrace();
         }
     }

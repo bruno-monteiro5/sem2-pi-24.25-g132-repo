@@ -69,7 +69,7 @@ public class AddIndustryFXController {
             Industry added = ctrl.addIndustry(data, pos);
             ApplicationSession.getInstance().getCurrentMap().addIndustry(added);
 
-            feedbackLabel.setText("\u2705 Industry added successfully!");
+            feedbackLabel.setText(" Industry added successfully!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
 
         } catch (NumberFormatException e) {

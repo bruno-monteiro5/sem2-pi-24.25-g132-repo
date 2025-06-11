@@ -13,6 +13,7 @@ public class UpgradeStationFXController {
 
     @FXML private ComboBox<Station> stationComboBox;
     @FXML private ComboBox<BuildingType> upgradeComboBox;
+    @FXML private TextArea upgradeDetailsArea;
     @FXML private Label feedbackLabel;
 
     private final UpgradeStationController controller = new UpgradeStationController();
@@ -21,6 +22,7 @@ public class UpgradeStationFXController {
     public void initialize() {
         loadStations();
         stationComboBox.setOnAction(e -> loadUpgrades());
+        upgradeComboBox.setOnAction(e -> showUpgradeDetails());
     }
 
     private void loadStations() {
@@ -33,9 +35,29 @@ public class UpgradeStationFXController {
 
     private void loadUpgrades() {
         Station selected = stationComboBox.getValue();
+        upgradeComboBox.getItems().clear();
+        upgradeDetailsArea.clear();
+
         if (selected != null) {
             List<BuildingType> upgrades = controller.getAvailableUpgrades(selected);
             upgradeComboBox.getItems().setAll(upgrades);
+        }
+    }
+
+    private void showUpgradeDetails() {
+        BuildingType upgrade = upgradeComboBox.getValue();
+        if (upgrade != null) {
+            String details = String.format(
+                    "Upgrade: %s\nCost: %.2f\nEfficiency Bonus: +%.0f%%\nRevenue Multiplier: x%.2f\nExtra Storage: +%d units",
+                    upgrade.name(),
+                    upgrade.getCost(),
+                    upgrade.getEfficiencyBonus() * 100,
+                    upgrade.getRevenueMultiplier(),
+                    upgrade.getExtraStorageCapacity()
+            );
+            upgradeDetailsArea.setText(details);
+        } else {
+            upgradeDetailsArea.clear();
         }
     }
 
@@ -46,6 +68,7 @@ public class UpgradeStationFXController {
 
         if (station == null || upgrade == null) {
             feedbackLabel.setText("Please select both a station and an upgrade.");
+            feedbackLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
@@ -53,7 +76,7 @@ public class UpgradeStationFXController {
         if (success) {
             feedbackLabel.setStyle("-fx-text-fill: green;");
             feedbackLabel.setText("Upgrade applied successfully.");
-            loadUpgrades();
+            loadUpgrades();  // refresh upgrade list
         } else {
             feedbackLabel.setStyle("-fx-text-fill: red;");
             feedbackLabel.setText("Upgrade failed. Not enough funds or conflict.");
