@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import pt.ipp.isep.dei.domain.Demand;
@@ -24,7 +25,7 @@ import pt.ipp.isep.dei.domain.Delivery;
  * <p>The {@code Station} constructor enforces name validation to ensure data consistency at creation time.</p>
  */
 
-public class Station {
+public class Station implements Serializable {
 
     /**
      * The name of the station. Cannot be null or empty.
