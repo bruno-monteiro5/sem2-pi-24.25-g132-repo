@@ -3,6 +3,8 @@ package pt.ipp.isep.dei.ui.console;
 import pt.ipp.isep.dei.controller.BuildStationController;
 import pt.ipp.isep.dei.domain.Position;
 import pt.ipp.isep.dei.domain.StationType;
+import pt.ipp.isep.dei.repository.Repositories;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,6 +42,10 @@ public class BuildStationUI implements Runnable {
      */
     public void run() {
         System.out.println("=== Build Station ===");
+
+        if (Repositories.getInstance().getSimulatorController().isSimulationRunning()) {
+            Repositories.getInstance().getSimulatorController().pauseSimulation();
+        }
 
         //check map
         if(!controller.hasActiveMap()){

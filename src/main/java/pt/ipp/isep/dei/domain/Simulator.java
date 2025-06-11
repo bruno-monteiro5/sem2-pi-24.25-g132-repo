@@ -53,10 +53,16 @@ public class Simulator implements Runnable, Serializable {
         while (running && currentYear <= endYear) {
             simulateStep();
             currentYear++;
+            try {
+                Thread.sleep(3000); // espera 3 segundos entre anos (ou mais se quiseres)
+            } catch (InterruptedException e) {
+                System.out.println("Simulation interrupted.");
+                break;
+            }
         }
 
         running = false;
-        System.out.println("Simulation ended at year " + currentYear + ".");
+        System.out.println("Simulation ended at year " + (currentYear-1) + ".");
     }
 
     private void simulateStep() {
