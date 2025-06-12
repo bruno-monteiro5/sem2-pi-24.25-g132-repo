@@ -28,12 +28,11 @@
     <center>
         <Pane fx:id="mapArea">
             <children>
-                <ImageView fx:id="mapImageView" fitWidth="650.0" fitHeight="640.0" >
+                <ImageView fx:id="mapImageView" fitWidth="650.0" fitHeight="640.0" preserveRatio="true">
                     <image>
                         <Image url="@/images/map.png" />
                     </image>
                 </ImageView>
-                <Pane fx:id="overlayPane" pickOnBounds="false" />
             </children>
         </Pane>
     </center>

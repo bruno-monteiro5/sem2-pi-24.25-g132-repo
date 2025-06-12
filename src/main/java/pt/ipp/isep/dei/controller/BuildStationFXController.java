@@ -86,16 +86,10 @@ public class BuildStationFXController {
     @FXML
     public void handleBack() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-            Parent root = loader.load();
-            MainFX.setRootScene(root, "Railroad Simulator - Main Menu", 800, 600);
-        } catch (IOException e) {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
+            MainFX.setRootScene(root, "Main Menu", 800, 600);
+        } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Navigation Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Could not return to Main Menu.");
-            alert.showAndWait();
         }
     }
 }
