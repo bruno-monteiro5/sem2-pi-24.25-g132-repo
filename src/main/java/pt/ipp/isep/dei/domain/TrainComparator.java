@@ -8,8 +8,7 @@ public class TrainComparator implements Comparator<Train> {
 
         //Group the locomotives by type (steam -> diesel -> electric)
 
-        int typeComparison = t1.getLocomotive().getType().getFuelType()
-                .compareTo(t2.getLocomotive().getType().getFuelType());
+        int typeComparison = t1.getLocomotive().getType().getFuelType().compareTo(t2.getLocomotive().getType().getFuelType());
 
         if (typeComparison != 0) return typeComparison;
 
