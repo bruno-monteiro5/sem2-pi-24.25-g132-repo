@@ -30,6 +30,12 @@ public class LoginFXController {
         }
     }
 
+    @FXML
+    public void initialize() {
+        passwordField.setOnAction(event -> handleLogin());
+    }
+
+
     private void openMainMenu(String role) {
         try {
             FXMLLoader loader;
