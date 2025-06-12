@@ -12,6 +12,17 @@ public class RailwayLine implements Serializable {
 
     // Constructor of the railway line class.
     public RailwayLine(Scenario scenario, Station station1, Station station2, LineType type, int length) {
+
+        if (scenario == null || station1 == null || station2 == null || type == null) {
+            throw new IllegalArgumentException("Parameters cannot be null");
+        }
+        if (station1.equals(station2)) {
+            throw new IllegalArgumentException("Cannot connect a station to itself");
+        }
+        if (length <= 0) {
+            throw new IllegalArgumentException("Length must be positive");
+        }
+
         this.scenario = scenario;
         this.station1 = station1;
         this.station2 = station2;

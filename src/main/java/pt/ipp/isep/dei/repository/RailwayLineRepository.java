@@ -1,74 +1,32 @@
 package pt.ipp.isep.dei.repository;
 
-import pt.ipp.isep.dei.domain.LineType;
 import pt.ipp.isep.dei.domain.RailwayLine;
-import pt.ipp.isep.dei.domain.Scenario;
-import pt.ipp.isep.dei.domain.Station;
-import pt.ipp.isep.dei.domain.Map;
-
-
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class RailwayLineRepository {
-    ArrayList<RailwayLine> railwayLines;
+    private final List<RailwayLine> railwayLines;
 
     public RailwayLineRepository() {
-        railwayLines = new ArrayList<>();
+        this.railwayLines = new ArrayList<>();
     }
 
-    public ArrayList<RailwayLine> getRailwayLines(Scenario scenario) {
-        ArrayList<RailwayLine> lines = new ArrayList<>();
-
-        for (int i = 0; i < railwayLines.size(); ++i) {
-            if (railwayLines.get(i).getScenario() == scenario) {
-                lines.add(railwayLines.get(i));
-            }
+    public boolean addRailwayLine(RailwayLine line) {
+        if (line == null || railwayLines.contains(line)) {
+            return false;
         }
-
-        return lines;
+        return railwayLines.add(line);
     }
 
-    public void addRailwayLine(Scenario scenario, Station station1, Station station2, LineType type) {
-        int dx = Math.abs(station1.getLocation().getX() - station2.getLocation().getX());
-        int dy = Math.abs(station1.getLocation().getY() - station2.getLocation().getY());
-        int length = dx + dy;
-
-        railwayLines.add(new RailwayLine(scenario, station1, station2, type, length));
-
+    public List<RailwayLine> getAll() {
+        return new ArrayList<>(railwayLines);
     }
 
-    public boolean connectionExists(Scenario scenario, Station station1, Station station2) {
-        boolean exists = false;
-
-        for (int i = 0; i < railwayLines.size(); ++i) {
-            if (railwayLines.get(i).getScenario() == scenario) {
-                Station s1 = railwayLines.get(i).getStation1(),
-                        s2 = railwayLines.get(i).getStation2();
-
-                if ((s1 == station1 && s2 == station2) || (s1 == station2 && s2 == station1)) {
-                    exists = true;
-                }
-            }
-        }
-
-        return exists;
+    public boolean removeRailwayLine(RailwayLine line) {
+        return railwayLines.remove(line);
     }
 
-    public RailwayLine getConnection(Scenario scenario, Station station1, Station station2) {
-        RailwayLine connection = null;
-
-        for (int i = 0; i < railwayLines.size(); ++i) {
-            if (railwayLines.get(i).getScenario() == scenario) {
-                Station s1 = railwayLines.get(i).getStation1(),
-                        s2 = railwayLines.get(i).getStation2();
-
-                if ((s1 == station1 && s2 == station2) || (s1 == station2 && s2 == station1)) {
-                    connection = railwayLines.get(i);
-                }
-            }
-        }
-
-        return connection;
+    public void clear() {
+        railwayLines.clear();
     }
 }
