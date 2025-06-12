@@ -65,6 +65,7 @@ public class Map implements Serializable {
         this.scale = scale;
 
         cities = new ArrayList<>();
+        railwayLines = new ArrayList<>();
     }
 
 
