@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Scenario implements Serializable {
 
-    private String name;
-    private Map map;
-    private ArrayList<Port> ports;
-    private ArrayList<LocomotiveType> availableLocomotiveTypes;
-    private ArrayList<Locomotive> locomotives = new ArrayList<>();
-    private ArrayList<Train> trains = new ArrayList<>();
+    private final String name;
+    private final Map map;
+    private final ArrayList<Port> ports;
+    private final ArrayList<LocomotiveType> availableLocomotiveTypes;
+    private final ArrayList<Locomotive> locomotives = new ArrayList<>();
+    private final ArrayList<Train> trains = new ArrayList<>();
     public List<Station> getStations() {
         return map.getStations();
     }
@@ -20,8 +20,9 @@ public class Scenario implements Serializable {
     }
 
 
+
     private double industryGenerationFactor;
-    private PeriodTime periodTime;
+    private final PeriodTime periodTime;
 
 
     public Scenario(String name, Map map, PeriodTime periodTime) {
