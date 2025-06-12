@@ -32,7 +32,7 @@ public class Map implements Serializable {
     private final List<Industry> industries = new ArrayList<>();
     private final List<Position> ocupiedPositions = new ArrayList<>();
     private final List<Scenario> scenarios = new ArrayList<>();
-    private List<RailwayLine> railwayLines;
+    private List<RailwayLine> railwayLines = new ArrayList<>();
 
     private static final int MIN_WIDTH = 50;
     private static final int MIN_HEIGHT = 50;
@@ -65,7 +65,6 @@ public class Map implements Serializable {
         this.scale = scale;
 
         cities = new ArrayList<>();
-        railwayLines = new ArrayList<>();
     }
 
 

@@ -23,44 +23,41 @@ public class BuyLocomotiveUI implements Runnable {
         Scenario scenario = scenarioRepository.getActiveScenario();
 
         if (scenario == null) {
-            System.out.println("Nenhum cenário ativo. Por favor, crie ou ative um cenário.");
+            System.out.println("No scenario loaded. Please create one first");
             return;
         }
 
         ArrayList<LocomotiveType> tiposDisponiveis = scenario.getAvailableLocomotiveTypes();
 
         if (tiposDisponiveis.isEmpty()) {
-            System.out.println("Este cenário não tem locomotivas disponíveis.");
+            System.out.println("This scenario does not have any locomotives available.");
             return;
         }
 
-        ArrayList<LocomotiveType> locomotivasPermitidas = new ArrayList<>();
+        ArrayList<LocomotiveType> permitedLocomotives = new ArrayList<>();
         for (LocomotiveType tipo : LocomotiveType.values()) {
             if (tiposDisponiveis.contains(tipo)) {
-                locomotivasPermitidas.add(tipo);
+                permitedLocomotives.add(tipo);
             }
         }
 
-        for (int i = 0; i < locomotivasPermitidas.size(); i++) {
-            LocomotiveType tipo = locomotivasPermitidas.get(i);
+        for (int i = 0; i < permitedLocomotives.size(); i++) {
+            LocomotiveType tipo = permitedLocomotives.get(i);
             System.out.printf("%d. %s (%s) - Speed: %.0f km/h, Price: %.0f$\n",
                     i + 1, tipo.getName(), tipo.getFuelType(), tipo.getTopSpeed(), tipo.getPrice());
         }
 
         try {
-            System.out.print("Enter a unique locomotive ID: ");
-            int id = Integer.parseInt(scanner.nextLine().trim());
-
-            System.out.print("Select a locomotive type: ");
+            System.out.print("Select a locomotive: ");
             int choice = Integer.parseInt(scanner.nextLine().trim());
 
-            if (choice < 1 || choice > locomotivasPermitidas.size()) {
+            if (choice < 1 || choice > permitedLocomotives.size()) {
                 System.out.println("Invalid choice.");
                 return;
             }
 
-            LocomotiveType selected = locomotivasPermitidas.get(choice - 1);
-            Locomotive loco = controller.buyLocomotive(id, selected);
+            LocomotiveType selected = permitedLocomotives.get(choice - 1);
+            Locomotive loco = controller.buyLocomotive(selected);
 
             System.out.println("\nLocomotive bought successfully!");
             System.out.println(loco);

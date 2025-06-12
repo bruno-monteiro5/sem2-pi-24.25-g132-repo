@@ -31,7 +31,6 @@ public class CreateCityFXController {
         manualRadio.setToggleGroup(group);
         autoRadio.setSelected(true);
 
-        // Mostrar ou esconder a área manual consoante a escolha
         manualTextArea.setVisible(false);
 
         manualRadio.setOnAction(e -> manualTextArea.setVisible(true));

@@ -62,7 +62,8 @@ public class BuildRailwayLineUI implements Runnable {
         }
 
         // Build the line
-        boolean success = controller.createRailwayLine(station1, station2, lineType);
+        Scenario scenario = Repositories.getInstance().getScenarioRepository().getActiveScenario();
+        boolean success = controller.createRailwayLine(scenario, station1, station2, lineType);
         if (success) {
             System.out.println("\nRailway line successfully built between:");
             System.out.println("- " + station1.getName());
