@@ -34,6 +34,9 @@ public class Map implements Serializable {
     private final List<Scenario> scenarios = new ArrayList<>();
     private List<RailwayLine> railwayLines;
 
+    private static final int MIN_WIDTH = 50;
+    private static final int MIN_HEIGHT = 50;
+
     /**
      * Constructs a {@code Map} instance with the specified name, dimensions, and creator.
      *
@@ -50,8 +53,8 @@ public class Map implements Serializable {
      */
 
     public Map(String name, int width, int height, int scale) {
-        if (width <= 0 || height <= 0) {
-            throw new IllegalArgumentException("Map must have positive width and height");
+        if (!isDimensionValid(width, height)) {
+            throw new IllegalArgumentException("Map must be at least 50x50 in size.");
         }
         if (!isValidMapName(name)) {
             throw new IllegalArgumentException("Map must have a valid name");
@@ -68,6 +71,10 @@ public class Map implements Serializable {
 
     public static boolean isValidMapName(String name) {
         return name.matches("[a-zA-Z0-9_-]+") && !name.isEmpty() && name != null;
+    }
+
+    public static boolean isDimensionValid(int width, int height) {
+        return width >= MIN_WIDTH && height >= MIN_HEIGHT;
     }
 
     public String getName() {

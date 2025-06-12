@@ -26,27 +26,6 @@ public class CreateMapController {
     }
 
     /**
-     * Validates if a map has valid dimensions (width and height greater than zero).
-     *
-     * @param map The {@link Map} to validate.
-     * @return {@code true} if the map dimensions are valid, {@code false} otherwise.
-     */
-    private boolean isDimensionValid(Map map) {
-        return map.getWidth() > 0 && map.getHeight() > 0;
-    }
-
-    /**
-     * Validates if a map has a valid name (not null or empty).
-     *
-     * @param map The {@link Map} to validate.
-     * @return {@code true} if the name is valid, {@code false} otherwise.
-     */
-    private boolean isNameValid(Map map) {
-        String name = map.getName();
-        return name != null && !name.isEmpty();
-    }
-
-    /**
      * Checks if the name of a map already exists in the repository.
      *
      * @param map The {@link Map} to validate.
@@ -71,14 +50,15 @@ public class CreateMapController {
      */
 
     public Map saveMap(Map map) {
-        if (!isNameValid(map)){
+        if (!Map.isValidMapName(map.getName())){
             System.out.println("Invalid name");
             return null;
         }
-        if (!isDimensionValid(map)){
+        if (!Map.isDimensionValid(map.getWidth(), map.getHeight())) {
             System.out.println("Invalid dimension");
             return null;
         }
+
         if (isNameExists(map)){
             System.out.println("Name already exists");
             return null;
