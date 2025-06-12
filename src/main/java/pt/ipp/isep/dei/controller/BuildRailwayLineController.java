@@ -35,7 +35,8 @@ public class BuildRailwayLineController {
         return List.of(LineType.values());
     }
 
-    public boolean createRailwayLine(Station station1, Station station2, LineType lineType) {
+    public boolean createRailwayLine(Scenario scenario, Station station1, Station station2, LineType lineType){
+
         if (station1 == null || station2 == null || lineType == null) {
             return false;
         }
@@ -63,8 +64,8 @@ public class BuildRailwayLineController {
                 Math.pow(pos1.getY() - pos2.getY(), 2));
 
         // Create the railway line
-        RailwayLine newLine = new RailwayLine(currentMap.getScenarios().get(0), // Assuming first scenario
-                station1, station2, lineType, length);
+        RailwayLine newLine = new RailwayLine(scenario, station1, station2, lineType, length);
+
 
         // Check if player can afford it
         int cost = calculateLineCost(newLine);
