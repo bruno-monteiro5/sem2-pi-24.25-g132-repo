@@ -4,8 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import pt.ipp.isep.dei.domain.FuelType;
 import pt.ipp.isep.dei.domain.LocomotiveType;
-import pt.ipp.isep.dei.domain.fuelType;
 import pt.ipp.isep.dei.ui.ApplicationSession;
 import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.ui.MainFX;
@@ -16,20 +16,20 @@ import java.util.stream.Collectors;
 
 public class BuyLocomotiveFXController {
 
-    @FXML private ComboBox<fuelType> fuelTypeComboBox;
+    @FXML private ComboBox<FuelType> fuelTypeComboBox;
     @FXML private ComboBox<LocomotiveType> locomotiveComboBox;
     @FXML private TextArea locomotiveDetailsArea;
     @FXML private Label feedbackLabel;
 
     @FXML
     public void initialize() {
-        fuelTypeComboBox.getItems().setAll(fuelType.values());
+        fuelTypeComboBox.getItems().setAll(FuelType.availableFuelTypes());
         fuelTypeComboBox.setOnAction(e -> updateLocomotiveOptions());
         locomotiveComboBox.setOnAction(e -> showLocomotiveDetails());
     }
 
     private void updateLocomotiveOptions() {
-        fuelType selectedFuel = fuelTypeComboBox.getValue();
+        FuelType selectedFuel = fuelTypeComboBox.getValue();
         if (selectedFuel == null) return;
 
         Scenario currentScenario = ApplicationSession.getInstance().getCurrentScenario();
@@ -40,7 +40,7 @@ public class BuyLocomotiveFXController {
         int currentYear = currentScenario.getPeriodTime().getStartYear();
 
         List<LocomotiveType> filtered = Arrays.stream(LocomotiveType.values())
-                .filter(l -> l.getFuelType().equalsIgnoreCase(selectedFuel.name()) &&
+                .filter(l -> l.getFuelType().getClass().equals(selectedFuel.getClass()) &&
                         l.getStartYear() <= currentYear &&
                         l.getEndYear() >= currentYear)
                 .collect(Collectors.toList());
