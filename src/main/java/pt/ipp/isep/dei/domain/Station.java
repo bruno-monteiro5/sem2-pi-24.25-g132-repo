@@ -426,12 +426,14 @@ public class Station implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-
         if (o == null || getClass() != o.getClass()) return false;
         Station station = (Station) o;
 
-        return (name != null ? !name.equals(station.name) : station.name != null);
+        return name.equals(station.name)
+                && location.equals(station.location)
+                && type == station.type;
     }
+
 
     /**
      * Returns full details of the station in a formatted string.
