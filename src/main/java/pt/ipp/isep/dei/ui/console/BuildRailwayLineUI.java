@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.controller.BuildRailwayLineController;
 import pt.ipp.isep.dei.domain.*;
 import pt.ipp.isep.dei.repository.Repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -80,33 +81,39 @@ public class BuildRailwayLineUI implements Runnable {
     }
 
     private Station selectStation(List<Station> stations, Station exclude) {
-        for (int i = 0; i < stations.size(); i++) {
-            Station s = stations.get(i);
+        List<Station> options = new ArrayList<>();
+        for (Station s : stations) {
             if (exclude == null || !s.equals(exclude)) {
-                System.out.printf("%d - %s (at %d,%d)\n",
-                        i+1, s.getName(),
-                        s.getLocation().getX(),
-                        s.getLocation().getY());
+                options.add(s);
             }
         }
+
+        if (options.isEmpty()) {
+            System.out.println("No stations available for selection.");
+            return null;
+        }
+
+        for (int i = 0; i < options.size(); i++) {
+            Station s = options.get(i);
+            System.out.printf("%d - %s (at %d,%d)%n",
+                    i + 1, s.getName(),
+                    s.getLocation().getX(),
+                    s.getLocation().getY());
+        }
+
         System.out.print("Select station (0 to cancel): ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // limpa o buffer
 
-        try {
-            int choice = scanner.nextInt();
-            if (choice == 0) return null;
-            if (choice > 0 && choice <= stations.size()) {
-                Station selected = stations.get(choice-1);
-                if (exclude == null || !selected.equals(exclude)) {
-                    return selected;
-                }
-            }
-        } catch (Exception e) {
-            scanner.next(); // Clear invalid input
+        if (choice == 0) return null;
+        if (choice < 1 || choice > options.size()) {
+            System.out.println("Invalid selection.");
+            return null;
         }
 
-        System.out.println("Invalid selection.");
-        return null;
+        return options.get(choice - 1);
     }
+
 
     private LineType selectLineType() {
         List<LineType> types = controller.getAllLineTypes();
