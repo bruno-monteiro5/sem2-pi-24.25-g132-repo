@@ -74,4 +74,9 @@ public enum StationType {
         return needsCenter;
     }
 
+    @Override
+    public String toString() {
+        return name() + " (" + (cost / 1000) + "k)";
+    }
+
 }
