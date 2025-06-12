@@ -18,11 +18,13 @@ public class EditorUI implements Runnable {
         options.add(new MenuItem("Create Scenario", new CreateScenarioUI()));
         options.add(new MenuItem("Save a map", new SaveMapUI()));
         options.add(new MenuItem("Load a map", new LoadMapUI()));
+        options.add(new MenuItem("Save a Scenario", new SaveScenarioUI()));
+        options.add(new MenuItem("Load a Scenario", new LoadScenarioUI()));
 
 
         int option = 0;
         do {
-            option = Utils.showAndSelectIndex(options, "\n\n--- ADMIN MENU -------------------------");
+            option = Utils.showAndSelectIndex(options, "\n\n--- Editor MENU -------------------------");
 
             if ((option >= 0) && (option < options.size())) {
                 options.get(option).run();
