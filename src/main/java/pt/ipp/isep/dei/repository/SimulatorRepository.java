@@ -1,42 +1,44 @@
 package pt.ipp.isep.dei.repository;
 
 import java.util.ArrayList;
-import pt.ipp.isep.dei.domain.Scenario;
-import pt.ipp.isep.dei.domain.Train;
-import pt.ipp.isep.dei.domain.Station;
-import pt.ipp.isep.dei.domain.Locomotive;
+import java.util.Optional;
+
+import pt.ipp.isep.dei.domain.*;
 
 public class SimulatorRepository {
+    private final ArrayList<Simulator> simulators;
+    private Simulator lastSimulator;
 
-    private ArrayList<Train> trains;
-    private ArrayList<Station> stations;
-    private ArrayList<Locomotive> allLocomotives;
-    private Scenario scenario;
-
-    public SimulatorRepository(ArrayList<Train> trains,
-                               ArrayList<Station> stations,
-                               ArrayList<Locomotive> allLocomotives,
-                               Scenario scenario) {
-        this.trains = trains;
-        this.stations = stations;
-        this.allLocomotives = allLocomotives;
-        this.scenario = scenario;
+    public SimulatorRepository() {
+        simulators = new ArrayList<>();
     }
 
-    public ArrayList<Train> getTrains() {
-        return trains;
+    public Optional<Simulator> createSimulator(ArrayList<Train> trains, ArrayList<Station> stations, ArrayList<Locomotive> locomotives, Scenario scenario) {
+        Simulator simulator = new Simulator(trains, stations, locomotives, scenario);
+        if (addSimulator(simulator)) {
+            lastSimulator = simulator;
+            return Optional.of(simulator);
+        }
+        return Optional.empty();
     }
 
-    public ArrayList<Station> getStations() {
-        return stations;
+    private boolean addSimulator(Simulator simulator) {
+        return simulators.add(simulator);
     }
 
-    public ArrayList<Locomotive> getAllLocomotives() {
-        return allLocomotives;
+    public Optional<Simulator> getLastSimulator() {
+        return Optional.ofNullable(lastSimulator);
     }
 
-    public Scenario getScenario() {
-        return scenario;
+    public boolean hasSimulator() {
+        return lastSimulator != null;
     }
 
+    public Simulator getActiveSimulator() {
+        if (lastSimulator == null) {
+            throw new IllegalStateException("No active simulator found.");
+        }
+        return lastSimulator;
+    }
 }
+

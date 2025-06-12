@@ -13,7 +13,7 @@ public class Scenario implements Serializable {
     private ArrayList<Locomotive> locomotives = new ArrayList<>();
     private ArrayList<Train> trains = new ArrayList<>();
     public List<Station> getStations() {
-        return map.getStations(); // assumindo que tens um atributo chamado 'station    s'
+        return map.getStations();
     }
     public List<Train> getTrains() {
         return trains;

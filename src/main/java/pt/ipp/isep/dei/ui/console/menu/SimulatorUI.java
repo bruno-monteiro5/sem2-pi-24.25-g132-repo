@@ -9,8 +9,8 @@ public class SimulatorUI implements Runnable {
 
     private final SimulatorController controller;
 
-    public SimulatorUI(SimulatorRepository repository) {
-        this.controller = new SimulatorController(repository);
+    public SimulatorUI() {
+        controller = new SimulatorController();
     }
 
     @Override

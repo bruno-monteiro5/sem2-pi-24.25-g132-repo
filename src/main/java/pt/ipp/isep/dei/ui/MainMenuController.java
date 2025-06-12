@@ -1,13 +1,18 @@
 package pt.ipp.isep.dei.ui;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import pt.ipp.isep.dei.domain.Map;
+import pt.ipp.isep.dei.domain.Player;
 import pt.ipp.isep.dei.domain.Scenario;
+import pt.ipp.isep.dei.repository.Repositories;
 
 import java.io.IOException;
 
@@ -19,6 +24,8 @@ public class MainMenuController {
     @FXML private Label budgetLabel;
     @FXML private Label scaleLabel;
     @FXML private Pane mapArea;
+
+    private Timeline budgetUpdater;
 
     @FXML
     public void initialize() {
@@ -33,53 +40,50 @@ public class MainMenuController {
         if (scenario != null && scenario.getPeriodTime() != null) {
             scenarioLabel.setText("Scenario: " + scenario.getName());
             yearLabel.setText("Year: " + scenario.getPeriodTime().getStartYear());
-            // budgetLabel.setText("Budget: $" + scenario.getPeriodTime().getInitialBudget());
         }
+
+        updateBudget(); // Show budget immediately
+        startBudgetAutoUpdate(); // Start periodic update
+    }
+
+    private void updateBudget() {
+        Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
+        if (player != null) {
+            double balance = player.getBalance();
+            budgetLabel.setText("Budget: $" + String.format("%.2f", balance));
+        } else {
+            budgetLabel.setText("Budget: -");
+        }
+    }
+
+    private void startBudgetAutoUpdate() {
+        budgetUpdater = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateBudget()));
+        budgetUpdater.setCycleCount(Timeline.INDEFINITE);
+        budgetUpdater.play();
     }
 
     @FXML
     public void handleBuildStation() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BuildStation.fxml"));
-            Parent root = loader.load();
-            MainFX.setRootScene(root, "Build Station", 600, 400);
-        } catch (IOException e) {
-            e.printStackTrace();
-            showError("Failed to load Build Station screen.");
-        }
+        loadFXML("/fxml/BuildStation.fxml", "Build Station", 600, 400);
     }
 
     @FXML
     public void handleUpgradeStation() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UpgradeStation.fxml"));
-            Parent root = loader.load();
-            MainFX.setRootScene(root, "Upgrade Station", 600, 400);
-        } catch (IOException e) {
-            e.printStackTrace();
-            showError("Failed to load Upgrade Station screen.");
-        }
+        loadFXML("/fxml/UpgradeStation.fxml", "Upgrade Station", 600, 400);
     }
 
     @FXML
     public void handleStationDetails() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/StationDetails.fxml"));
-            Parent root = loader.load();
-            MainFX.setRootScene(root, "Station Details", 600, 400);
-        } catch (IOException e) {
-            e.printStackTrace();
-            showError("Failed to load Station Details screen.");
-        }
-    }
-
-
-    @FXML
-    public void handleBuildRailwayLine() {
+        loadFXML("/fxml/StationDetails.fxml", "Station Details", 600, 400);
     }
 
     @FXML
     public void handleBuyLocomotive() {
+        loadFXML("/fxml/BuyLocomotive.fxml", "Buy Locomotive", 600, 400);
+    }
+
+    @FXML
+    public void handleBuildRailwayLine() {
     }
 
     @FXML
@@ -101,9 +105,17 @@ public class MainMenuController {
             Parent root = loader.load();
             MainFX.setRootScene(root, "Login - Railroad Simulator", 400, 300);
         } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Error loading Login screen.");
-            alert.showAndWait();
+            showError("Error loading Login screen.");
+        }
+    }
+
+    private void loadFXML(String path, String title, int width, int height) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            Parent root = loader.load();
+            MainFX.setRootScene(root, title, width, height);
+        } catch (IOException e) {
+            showError("Failed to load " + title + " screen.");
         }
     }
 

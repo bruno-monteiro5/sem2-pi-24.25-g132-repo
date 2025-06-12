@@ -43,9 +43,11 @@ public class BuildStationUI implements Runnable {
     public void run() {
         System.out.println("=== Build Station ===");
 
+        /*
         if (Repositories.getInstance().getSimulatorController().isSimulationRunning()) {
             Repositories.getInstance().getSimulatorController().pauseSimulation();
         }
+         */
 
         //check map
         if(!controller.hasActiveMap()){
