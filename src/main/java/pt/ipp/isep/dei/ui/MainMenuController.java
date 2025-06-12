@@ -13,6 +13,8 @@ import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.domain.Player;
 import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.repository.Repositories;
+import java.util.Locale;
+import java.text.NumberFormat;
 
 import java.io.IOException;
 
@@ -50,7 +52,9 @@ public class MainMenuController {
         Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
         if (player != null) {
             double balance = player.getBalance();
-            budgetLabel.setText("Budget: $" + String.format("%.2f", balance));
+            NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+            String formattedBudget = formatter.format(balance);
+            budgetLabel.setText("Budget: " + formattedBudget);
         } else {
             budgetLabel.setText("Budget: -");
         }
