@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pt.ipp.isep.dei.ui.MainMenuController"
-            prefWidth="800.0" prefHeight="600.0">
+            prefWidth="980.0" prefHeight="700.0">
 
     <top>
-        <HBox spacing="20.0">
+        <HBox spacing="20.0" alignment="CENTER_LEFT">
             <padding>
-                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0" />
             </padding>
             <children>
                 <Label fx:id="mapLabel" text="Map: -" />
@@ -28,23 +26,32 @@
     </top>
 
     <center>
-        <Pane fx:id="mapArea" style="-fx-background-color: lightgray;" />
+        <Pane fx:id="mapArea">
+            <children>
+                <ImageView fx:id="mapImageView" fitWidth="650.0" fitHeight="640.0" >
+                    <image>
+                        <Image url="@/images/map.png" />
+                    </image>
+                </ImageView>
+                <Pane fx:id="overlayPane" pickOnBounds="false" />
+            </children>
+        </Pane>
     </center>
 
     <right>
-        <VBox spacing="10.0" alignment="TOP_CENTER">
+        <VBox spacing="10.0" alignment="TOP_CENTER" prefHeight="700.0">
             <padding>
-                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                <Insets top="40.0" right="10.0" bottom="10.0" left="10.0" />
             </padding>
             <children>
-                <Button text="Build Station" onAction="#handleBuildStation"/>
-                <Button text="Upgrade Station" onAction="#handleUpgradeStation"/>
-                <Button text="See Station Details" onAction="#handleStationDetails"/>
-                <Button text="Build a Railway Line" onAction="#handleBuildRailwayLine"/>
-                <Button text="Buy a Locomotive" onAction="#handleBuyLocomotive"/>
-                <Button text="Assign train to a route" onAction="#handleAssignTrainToARoute"/>
-                <Button text="List all trains" onAction="#handleListAllTrains"/>
-                <Button text="Run Simulation" onAction="#handleStartSimulation"/>
+                <Button text="Build Station" onAction="#handleBuildStation" />
+                <Button text="Upgrade Station" onAction="#handleUpgradeStation" />
+                <Button text="See Station Details" onAction="#handleStationDetails" />
+                <Button text="Build a Railway Line" onAction="#handleBuildRailwayLine" />
+                <Button text="Buy a Locomotive" onAction="#handleBuyLocomotive" />
+                <Button text="Assign train to a route" onAction="#handleAssignTrainToARoute" />
+                <Button text="List all trains" onAction="#handleListAllTrains" />
+                <Button text="Run Simulation" onAction="#handleStartSimulation" />
                 <Button text="Back to Login" onAction="#handleLogout" />
             </children>
         </VBox>

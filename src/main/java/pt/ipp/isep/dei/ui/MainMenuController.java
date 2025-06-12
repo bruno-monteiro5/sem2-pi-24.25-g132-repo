@@ -7,16 +7,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.domain.Player;
+import pt.ipp.isep.dei.domain.Position;
 import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.repository.Repositories;
-import java.util.Locale;
-import java.text.NumberFormat;
 
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class MainMenuController {
 
@@ -26,8 +32,11 @@ public class MainMenuController {
     @FXML private Label budgetLabel;
     @FXML private Label scaleLabel;
     @FXML private Pane mapArea;
+    @FXML private ImageView mapImageView;
+    @FXML private Pane overlayPane;
 
     private Timeline budgetUpdater;
+    private final int cellSize = 30;
 
     @FXML
     public void initialize() {
@@ -37,6 +46,13 @@ public class MainMenuController {
         if (map != null) {
             mapLabel.setText("Map: " + map.getName());
             scaleLabel.setText("Scale: " + map.getScale());
+            mapImageView.setFitWidth(map.getWidth() * cellSize);
+            mapImageView.setFitHeight(map.getHeight() * cellSize);
+            mapArea.setPrefSize(map.getWidth() * cellSize, map.getHeight() * cellSize);
+            overlayPane.setPrefSize(map.getWidth() * cellSize, map.getHeight() * cellSize);
+
+            Image background = new Image("/images/map.png");
+            mapImageView.setImage(background);
         }
 
         if (scenario != null && scenario.getPeriodTime() != null) {
@@ -44,8 +60,8 @@ public class MainMenuController {
             yearLabel.setText("Year: " + scenario.getPeriodTime().getStartYear());
         }
 
-        updateBudget(); // Show budget immediately
-        startBudgetAutoUpdate(); // Start periodic update
+        updateBudget();
+        startBudgetAutoUpdate();
     }
 
     private void updateBudget() {
@@ -64,6 +80,15 @@ public class MainMenuController {
         budgetUpdater = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateBudget()));
         budgetUpdater.setCycleCount(Timeline.INDEFINITE);
         budgetUpdater.play();
+    }
+
+    public void addStationVisual(Position pos, String name) {
+        double x = pos.getX() * cellSize;
+        double y = pos.getY() * cellSize;
+
+        Circle stationMarker = new Circle(x, y, 7, Color.DARKRED);
+        Tooltip.install(stationMarker, new Tooltip(name));
+        overlayPane.getChildren().add(stationMarker);
     }
 
     @FXML
