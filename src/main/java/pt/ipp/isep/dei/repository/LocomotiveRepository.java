@@ -20,15 +20,6 @@ public class LocomotiveRepository {
         return locomotives.add(locomotive);
     }
 
-    public boolean locomotiveExists(int id) {
-        for (Locomotive loco : locomotives) {
-            if (loco.getId() == id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void save(Locomotive locomotive) {
         addLocomotive(locomotive);
     }

@@ -32,7 +32,6 @@ public class CreateScenarioUI implements Runnable {
         // Tipos de locomotiva
         ArrayList<String> tiposEscolhidos = new ArrayList<>();
 
-
         System.out.println("Adicionar tipos de locomotiva (STEAM, DIESEL, ELECTRIC). Digite 'fim' para terminar:");
         String input = "";
         while (!input.equalsIgnoreCase("fim")) {
@@ -40,9 +39,9 @@ public class CreateScenarioUI implements Runnable {
             input = sc.nextLine().toUpperCase();
 
             if (!input.equalsIgnoreCase("FIM")) {
-                if (input.equalsIgnoreCase("STEAM") || input.equalsIgnoreCase("DIESEL") || input.equalsIgnoreCase("ELECTRIC")) {
-                    if (!tiposEscolhidos.contains(input.toUpperCase())) {
-                        tiposEscolhidos.add(input.toUpperCase());
+                if (input.equals("STEAM") || input.equals("DIESEL") || input.equals("ELECTRIC")) {
+                    if (!tiposEscolhidos.contains(input)) {
+                        tiposEscolhidos.add(input);
                     }
                 } else {
                     System.out.println("Tipo inválido.");
@@ -85,11 +84,15 @@ public class CreateScenarioUI implements Runnable {
             opcao = sc.nextLine();
         }
 
-        // Adicionar apenas locomotivas permitidas
         for (LocomotiveType tipo : LocomotiveType.values()) {
-            String fuel = tipo.getFuelType().toUpperCase();
-            if (tiposEscolhidos.contains(fuel)) {
-                controller.addLocomotiveType(scenario, tipo);
+            FuelType fuel = tipo.getFuelType();
+            for (String escolhido : tiposEscolhidos) {
+                if ((escolhido.equals("STEAM") && fuel instanceof Steam) ||
+                        (escolhido.equals("DIESEL") && fuel instanceof Diesel) ||
+                        (escolhido.equals("ELECTRIC") && fuel instanceof Electric)) {
+                    controller.addLocomotiveType(scenario, tipo);
+                    break;
+                }
             }
         }
 
@@ -100,7 +103,6 @@ public class CreateScenarioUI implements Runnable {
         } else {
             System.out.println("Erro ao guardar o cenário.");
         }
-
     }
 
     @Override
@@ -129,6 +131,6 @@ public class CreateScenarioUI implements Runnable {
 
         Map mapaEscolhido = maps.get(escolha - 1);
         Repositories.getInstance().getMapRepository().setActiveMap(mapaEscolhido); // ← adiciona aqui
-        run(mapaEscolhido); // chama o método principal
+        run(mapaEscolhido);
     }
 }

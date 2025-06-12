@@ -73,9 +73,9 @@ public class CreateScenarioFXController {
             Scenario scenario = ctrl.createScenario(name, map, period);
             ctrl.setIndustryGenerationFactor(scenario, factor);
 
-            if (steamCheckBox.isSelected()) addAllMatching(scenario, "Steam");
-            if (dieselCheckBox.isSelected()) addAllMatching(scenario, "Diesel");
-            if (electricCheckBox.isSelected()) addAllMatching(scenario, "Electric");
+            if (steamCheckBox.isSelected()) addAllMatching(scenario, Steam.class);
+            if (dieselCheckBox.isSelected()) addAllMatching(scenario, Diesel.class);
+            if (electricCheckBox.isSelected()) addAllMatching(scenario, Electric.class);
 
             ports.forEach(p -> ctrl.addPort(scenario, p));
 
@@ -95,9 +95,9 @@ public class CreateScenarioFXController {
         }
     }
 
-    private void addAllMatching(Scenario scenario, String fuel) {
+    private void addAllMatching(Scenario scenario, Class<? extends FuelType> clazz) {
         Arrays.stream(LocomotiveType.values())
-                .filter(l -> l.getFuelType().equalsIgnoreCase(fuel))
+                .filter(l -> l.getFuelType().getClass().equals(clazz))
                 .forEach(l -> ctrl.addLocomotiveType(scenario, l));
     }
 
