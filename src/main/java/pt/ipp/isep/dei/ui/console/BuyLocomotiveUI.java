@@ -42,9 +42,9 @@ public class BuyLocomotiveUI implements Runnable {
         }
 
         for (int i = 0; i < permitedLocomotives.size(); i++) {
-            LocomotiveType tipo = permitedLocomotives.get(i);
+            LocomotiveType type = permitedLocomotives.get(i);
             System.out.printf("%d. %s (%s) - Speed: %.0f km/h, Price: %.0f$\n",
-                    i + 1, tipo.getName(), tipo.getFuelType(), tipo.getTopSpeed(), tipo.getPrice());
+                    i + 1, type.getName(), type.getFuelType(), type.getTopSpeed(), type.getPrice());
         }
 
         try {
