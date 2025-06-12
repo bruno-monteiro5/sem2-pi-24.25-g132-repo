@@ -63,7 +63,6 @@ public class Train implements Serializable {
     @Override
     public String toString() {
         return "Train{" +
-                "id='" + id + '\'' +
                 ", locomotive=" + locomotive +
                 ", cargos=" + cargos +
                 ", assignedRoute=" + assignedRoute +

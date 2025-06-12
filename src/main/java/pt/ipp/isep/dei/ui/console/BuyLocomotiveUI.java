@@ -27,16 +27,16 @@ public class BuyLocomotiveUI implements Runnable {
             return;
         }
 
-        ArrayList<LocomotiveType> tiposDisponiveis = scenario.getAvailableLocomotiveTypes();
+        ArrayList<LocomotiveType> availableTypes = scenario.getAvailableLocomotiveTypes();
 
-        if (tiposDisponiveis.isEmpty()) {
+        if (availableTypes.isEmpty()) {
             System.out.println("This scenario does not have any locomotives available.");
             return;
         }
 
         ArrayList<LocomotiveType> permitedLocomotives = new ArrayList<>();
         for (LocomotiveType tipo : LocomotiveType.values()) {
-            if (tiposDisponiveis.contains(tipo)) {
+            if (availableTypes.contains(tipo)) {
                 permitedLocomotives.add(tipo);
             }
         }

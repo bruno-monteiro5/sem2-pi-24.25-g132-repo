@@ -23,8 +23,8 @@ public class Locomotive implements Serializable {
 
     @Override
     public String toString() {
-        return "Locomotive {" +
-                ", Name='" + type.getName() + '\'' +
+        return "{" +
+                "Name='" + type.getName() + '\'' +
                 ", Fuel='" + type.getFuelType() + '\'' +
                 ", Speed=" + type.getTopSpeed() +
                 '}';
