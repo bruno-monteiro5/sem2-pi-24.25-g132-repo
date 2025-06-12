@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import pt.ipp.isep.dei.domain.*;
+import pt.ipp.isep.dei.repository.Repositories;
 import pt.ipp.isep.dei.ui.ApplicationSession;
 import pt.ipp.isep.dei.ui.MainFX;
 
@@ -80,6 +81,7 @@ public class CreateScenarioFXController {
 
             if (ctrl.saveScenario(scenario)) {
                 ApplicationSession.getInstance().setCurrentScenario(scenario);
+                Repositories.getInstance().getScenarioRepository().setActiveScenario(scenario);
                 feedbackLabel.setText(" Scenario created successfully!");
                 feedbackLabel.setStyle("-fx-text-fill: green;");
             } else {

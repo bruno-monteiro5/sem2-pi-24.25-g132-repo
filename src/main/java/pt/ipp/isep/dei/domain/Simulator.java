@@ -12,6 +12,7 @@ public class Simulator implements Runnable, Serializable {
     private boolean running;
     private Thread simulationThread;
 
+
     private final ArrayList<Train> trains;
     private final ArrayList<Station> stations;
     private final ArrayList<Locomotive> locomotives;
@@ -86,7 +87,7 @@ public class Simulator implements Runnable, Serializable {
 
             double distance = line.getLength();
             LineType type = line.getLineType();
-            boolean isDoubleTrack = type == line.getLineType().DOUBLE_ELECTRIFIED || type == LineType.DOUBLE_NOT_ELECTRICITY;
+            boolean isDoubleTrack = type == LineType.DOUBLE_ELECTRIFIED || type == LineType.DOUBLE_NOT_ELECTRICITY;
 
             double speed = calculateEffectiveSpeed(train, isDoubleTrack);
             double travelTime = distance / speed; // not used in timing here, only logic

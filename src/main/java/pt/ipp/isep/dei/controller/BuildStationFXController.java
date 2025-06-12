@@ -7,6 +7,9 @@ import javafx.scene.control.*;
 import pt.ipp.isep.dei.domain.Position;
 import pt.ipp.isep.dei.domain.StationType;
 import pt.ipp.isep.dei.ui.MainFX;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+
 
 import java.io.IOException;
 
@@ -55,7 +58,18 @@ public class BuildStationFXController {
 
             boolean created = controller.createStation(pos, type, name, dir);
             messageLabel.setStyle("-fx-text-fill: green;");
-            messageLabel.setText(created ? "Station created!" : "Failed to create station.");
+            if (created) {
+                messageLabel.setText("Station created!");
+
+                PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                pause.setOnFinished(event -> handleBack());
+                pause.play();
+
+            } else {
+                messageLabel.setText("Failed to create station.");
+            }
+
+
 
         } catch (NumberFormatException e) {
             messageLabel.setStyle("-fx-text-fill: red;");

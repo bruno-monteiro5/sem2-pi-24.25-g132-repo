@@ -6,16 +6,16 @@ package pt.ipp.isep.dei.domain;
  * the year when it becomes available, and performance effects.
  */
 public enum BuildingType {
-    TELEGRAPH(100, null, 1850, 0.05, 1.0, 0),
-    TELEPHONE(200, TELEGRAPH, 1900, 0.10, 1.1, 0),
-    CAFE_SMALL(150, null, 1850, 0.0, 1.1, 0),
-    CAFE_LARGE(300, CAFE_SMALL, 1900, 0.0, 1.2, 0),
-    POST_OFFICE(250, null, 1850, 0.0, 1.0, 0),
-    CUSTOMS(350, null, 1850, 0.0, 1.0, 0),
-    HOTEL_SMALL(400, null, 1850, 0.0, 1.2, 0),
-    HOTEL_LARGE(700, HOTEL_SMALL, 1900, 0.0, 1.3, 0),
-    SILO(300, null, 1850, 0.0, 1.0, 20),
-    LIQUID_STORAGE(300, null, 1850, 0.0, 1.0, 20);
+    TELEGRAPH(5000, null, 1850, 0.05, 1.0, 0),
+    TELEPHONE(10000, TELEGRAPH, 1900, 0.10, 1.1, 0),
+    CAFE_SMALL(8000, null, 1850, 0.0, 1.1, 0),
+    CAFE_LARGE(16000, CAFE_SMALL, 1900, 0.0, 1.2, 0),
+    POST_OFFICE(12000, null, 1850, 0.0, 1.0, 0),
+    CUSTOMS(25000, null, 1850, 0.0, 1.0, 0),
+    HOTEL_SMALL(20000, null, 1850, 0.0, 1.2, 0),
+    HOTEL_LARGE(40000, HOTEL_SMALL, 1900, 0.0, 1.3, 0),
+    SILO(15000, null, 1850, 0.0, 1.0, 20),
+    LIQUID_STORAGE(15000, null, 1850, 0.0, 1.0, 20);
 
     private final double cost;
     private final BuildingType replaces;
