@@ -27,6 +27,7 @@ public class CreateScenarioUI implements Runnable {
 
         PeriodTime periodTime = new PeriodTime(startYear, endYear);
         Scenario scenario = controller.createScenario(name, map, periodTime);
+        map.getScenarios().add(scenario); // <- ADICIONA O CENÁRIO AO MAPA!
 
         // Tipos de locomotiva
         ArrayList<String> tiposEscolhidos = new ArrayList<>();
@@ -127,6 +128,7 @@ public class CreateScenarioUI implements Runnable {
         }
 
         Map mapaEscolhido = maps.get(escolha - 1);
+        Repositories.getInstance().getMapRepository().setActiveMap(mapaEscolhido); // ← adiciona aqui
         run(mapaEscolhido); // chama o método principal
     }
 }
