@@ -6,7 +6,7 @@ import pt.ipp.isep.dei.repository.ScenarioRepository;
 
 public class CreateScenarioController {
 
-    private final ScenarioRepository scenarioRepository;
+    private ScenarioRepository scenarioRepository;
 
     public CreateScenarioController() {
         this.scenarioRepository = Repositories.getInstance().getScenarioRepository();
@@ -48,5 +48,21 @@ public class CreateScenarioController {
             System.out.println("Erro ao guardar o cenário: " + e.getMessage());
             return false;
         }
+    }
+
+    public Scenario getActiveScenario(){
+        return scenarioRepository.getActiveScenario();
+    }
+
+    public void setCurrentScenario(Scenario scenario){
+        scenarioRepository.setActiveScenario(scenario);
+    }
+
+    public ScenarioRepository getScenarioRepo(){
+        if (scenarioRepository  == null){
+            Repositories repositories = Repositories.getInstance();
+            scenarioRepository = repositories.getScenarioRepository();
+        }
+        return scenarioRepository;
     }
 }
