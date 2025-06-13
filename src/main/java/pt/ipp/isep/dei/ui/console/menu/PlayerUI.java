@@ -1,5 +1,8 @@
 package pt.ipp.isep.dei.ui.console.menu;
 
+import pt.ipp.isep.dei.domain.Player;
+import pt.ipp.isep.dei.repository.PlayerRepository;
+import pt.ipp.isep.dei.repository.Repositories;
 import pt.ipp.isep.dei.ui.console.*;
 import pt.ipp.isep.dei.ui.console.utils.Utils;
 
@@ -23,7 +26,11 @@ public class PlayerUI implements Runnable {
 
         int option = 0;
         do {
-            option = Utils.showAndSelectIndex(options, "\n\n--- ADMIN MENU -------------------------");
+
+            Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
+            System.out.print("Budget: " + player.getBalance());
+
+            option = Utils.showAndSelectIndex(options, "\n\n--- PLAYER MENU -------------------------");
 
             if ((option >= 0) && (option < options.size())) {
                 options.get(option).run();
