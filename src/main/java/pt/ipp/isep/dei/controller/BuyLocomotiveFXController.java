@@ -4,12 +4,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import pt.ipp.isep.dei.domain.FuelType;
-import pt.ipp.isep.dei.domain.LocomotiveType;
-import pt.ipp.isep.dei.domain.Player;
+import pt.ipp.isep.dei.domain.*;
 import pt.ipp.isep.dei.repository.Repositories;
 import pt.ipp.isep.dei.ui.ApplicationSession;
-import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.ui.MainFX;
 
 import java.util.Arrays;
@@ -89,9 +86,12 @@ public class BuyLocomotiveFXController {
 
         player.deductFunds(price);
 
+        ApplicationSession.getInstance().addOwnedLocomotive(new Locomotive(selected));
+
         feedbackLabel.setStyle("-fx-text-fill: green;");
         feedbackLabel.setText("Locomotive '" + selected.getName() + "' bought successfully!");
     }
+
 
     @FXML
     public void handleBack() {

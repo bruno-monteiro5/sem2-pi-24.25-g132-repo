@@ -124,6 +124,13 @@ public class MainMenuController {
     }
 
     @FXML
+    public void handleCreateTrain() {
+        loadFXML("/fxml/CreateTrain.fxml", "Create Train", 600, 400);
+
+
+    }
+
+    @FXML
     public void handleAssignTrainToARoute() {
     }
 

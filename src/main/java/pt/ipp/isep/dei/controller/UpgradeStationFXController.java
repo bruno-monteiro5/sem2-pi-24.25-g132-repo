@@ -76,7 +76,7 @@ public class UpgradeStationFXController {
         if (success) {
             feedbackLabel.setStyle("-fx-text-fill: green;");
             feedbackLabel.setText("Upgrade applied successfully.");
-            loadUpgrades();  // refresh upgrade list
+            loadUpgrades();
         } else {
             feedbackLabel.setStyle("-fx-text-fill: red;");
             feedbackLabel.setText("Upgrade failed. Not enough funds or conflict.");
