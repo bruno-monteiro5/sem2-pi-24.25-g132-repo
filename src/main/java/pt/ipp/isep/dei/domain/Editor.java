@@ -2,41 +2,35 @@ package pt.ipp.isep.dei.domain;
 
 /**
  * Represents an editor for managing elements in a {@link Map}.
- *
- * <p>This class provides methods to add industries to the map and list all
- * industries currently present. It acts as an intermediary tool for users
- * or systems to interact with a map's industries.</p>
+ * <p>
+ * This class provides methods to manipulate a map's elements,
+ * such as adding cities or industries (to be implemented).
  */
 public class Editor {
 
+    /**
+     * The map managed by this editor.
+     */
     private Map map;
 
     /**
      * Constructs an {@code Editor} for a specific map.
      *
-     * @param map The {@link Map} instance that this editor will manage. Must not be {@code null}.
+     * @param map the {@link Map} instance to be edited; must not be {@code null}
      */
     public Editor(Map map) {
         this.map = map;
     }
 
-    public void addIndustry(String name, Industry industry) {
-        try {
-            map.addIndustry(industry);
-            System.out.println("Industry '" + name + "' added successfully!");
-        } catch (IllegalArgumentException e) {
-            System.err.println("Could not add industry: The industry is not valid or already exists in the map.");
-        }
+    /**
+     * Returns a string representation of the editor.
+     *
+     * @return the class name and the associated map
+     */
+    @Override
+    public String toString() {
+        return String.format("Editor{map=%s}", map);
     }
-
-
-    public void listIndustries() {
-        System.out.println("All Industries in Map:");
-        for (Industry industry : map.getIndustries()) {
-            System.out.println(industry);
-        }
-    }
-
 }
 
 
