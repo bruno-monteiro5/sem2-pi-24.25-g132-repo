@@ -136,6 +136,8 @@ public class MainMenuController {
 
     @FXML
     public void handleListAllTrains() {
+        loadFXML("/fxml/ListAllTrains.fxml", "List All Trains", 600, 400);
+
     }
 
     @FXML
