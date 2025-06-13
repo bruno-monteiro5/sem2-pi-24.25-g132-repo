@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 
-
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="15.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.controller.LoginFXController">
-
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
+<StackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.controller.LoginFXController">
 
    <children>
+      <ImageView fitHeight="321.0" fitWidth="428.0">
+         <image>
+            <Image url="@/images/editore_background.png" />
+         </image>
+      </ImageView>
 
-      <Label text="Member Login" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="41.0" />
-         </font>
-      </Label>
+      <VBox alignment="CENTER" maxWidth="400" spacing="15.0" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-padding: 20;">
+         <padding>
+            <Insets bottom="20" left="20" right="20" top="20" />
+         </padding>
+         <children>
+            <Label textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="41.0" />
+               </font>
+            </Label>
 
-      <Label prefHeight="21.0" prefWidth="551.0" text="Email" />
-      <TextField fx:id="emailField" promptText="railroad@this.app" />
+            <Label prefHeight="21.0" prefWidth="38.0" text="Email" />
+            <TextField fx:id="emailField" promptText="railroad@this.app" />
 
-      <Label prefHeight="21.0" prefWidth="549.0" text="Password" />
-      <PasswordField fx:id="passwordField" promptText="........." />
+            <Label prefHeight="21.0" prefWidth="356.0" text="Password" />
+            <PasswordField fx:id="passwordField" promptText="........." />
 
-      <Button fx:id="loginButton" onAction="#handleLogin" prefWidth="200.0" style="-fx-background-color: #0097A7;" text="Login" textFill="#f5f5f5" />
-
+            <Button fx:id="loginButton" onAction="#handleLogin" prefWidth="200.0" style="-fx-background-color: #0097A7;" text="Login" textFill="#f5f5f5" />
+         </children>
+      </VBox>
    </children>
-
-</VBox>
+</StackPane>
