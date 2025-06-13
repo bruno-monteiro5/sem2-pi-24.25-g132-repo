@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pt.ipp.isep.dei.ui.MainMenuController"
-            prefWidth="980.0" prefHeight="700.0">
+<BorderPane prefHeight="700.0" prefWidth="980.0" style="-fx-background-color: linear-gradient(to bottom, #f0f8ff, #d9ecf2);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.ui.MainMenuController">
 
     <top>
-        <HBox spacing="20.0" alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT" spacing="20.0">
             <padding>
-                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0" />
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
             <children>
                 <Label fx:id="mapLabel" text="Map: -" />
@@ -28,7 +26,7 @@
     <center>
         <Pane fx:id="mapArea">
             <children>
-                <ImageView fx:id="mapImageView" fitWidth="650.0" fitHeight="640.0" preserveRatio="true">
+                <ImageView fx:id="mapImageView" fitHeight="640.0" fitWidth="650.0" preserveRatio="true">
                     <image>
                         <Image url="@/images/map.png" />
                     </image>
@@ -38,21 +36,21 @@
     </center>
 
     <right>
-        <VBox spacing="10.0" alignment="TOP_CENTER" prefHeight="700.0">
+        <VBox alignment="TOP_CENTER" prefHeight="700.0" spacing="10.0">
             <padding>
-                <Insets top="40.0" right="10.0" bottom="10.0" left="10.0" />
+                <Insets bottom="10.0" left="10.0" right="10.0" top="40.0" />
             </padding>
             <children>
-                <Button text="Build Station" onAction="#handleBuildStation" />
-                <Button text="Upgrade Station" onAction="#handleUpgradeStation" />
-                <Button text="See Station Details" onAction="#handleStationDetails" />
-                <Button text="Build a Railway Line" onAction="#handleBuildRailwayLine" />
-                <Button text="Buy a Locomotive" onAction="#handleBuyLocomotive" />
-                <Button text="Create a Train" onAction="#handleCreateTrain" />
-                <Button text="Assign train to a route" onAction="#handleAssignTrainToARoute" />
-                <Button text="List all trains" onAction="#handleListAllTrains" />
-                <Button text="Run Simulation" onAction="#handleStartSimulation" />
-                <Button text="Back to Login" onAction="#handleLogout" />
+                <Button onAction="#handleBuildStation" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Build Station" />
+                <Button onAction="#handleUpgradeStation" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Upgrade Station" />
+                <Button onAction="#handleStationDetails" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="See Station Details" />
+                <Button onAction="#handleBuildRailwayLine" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Build a Railway Line" />
+                <Button onAction="#handleBuyLocomotive" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Buy a Locomotive" />
+                <Button onAction="#handleCreateTrain" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Create a Train" />
+                <Button onAction="#handleAssignTrainToARoute" prefHeight="31.0" prefWidth="186.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Assign Train to Route" />
+                <Button onAction="#handleListAllTrains" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="List all trains" />
+                <Button onAction="#handleStartSimulation" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Run Simulation" />
+                <Button onAction="#handleLogout" style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" text="Back to Login" />
             </children>
         </VBox>
     </right>

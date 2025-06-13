@@ -132,6 +132,8 @@ public class MainMenuController {
 
     @FXML
     public void handleAssignTrainToARoute() {
+        loadFXML("/fxml/AssignTrainToRoute.fxml", "Assign Train To A Route", 600, 400);
+
     }
 
     @FXML
