@@ -120,8 +120,20 @@ public class AssignTrainToRouteUI implements Runnable {
 
 
 
+            List<PointOfRoute> points = route.getPointsOfRoute();
+
+            if (!points.isEmpty()) {
+                PointOfRoute lastPoint = points.get(points.size() - 1);
+                if (lastPoint.getStation().getName().equalsIgnoreCase(station.getName())) {
+                    System.out.println("Cannot add the same station twice in a row.");
+                    return;
+                }
+            }
+
+
             PointOfRoute point = new PointOfRoute(station, cargoes, selectedMode);
             route.addPointOfRoute(point);
+
 
             System.out.print("Add another point to the route? (Y/N): ");
             String choice = scanner.nextLine().trim();
