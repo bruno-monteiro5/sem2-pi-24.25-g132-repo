@@ -41,12 +41,12 @@ public class BuyLocomotiveFXController {
         }
         int currentYear = currentScenario.getPeriodTime().getStartYear();
 
-        List<LocomotiveType> filtered = Arrays.stream(LocomotiveType.values())
+        List<LocomotiveType> filtered = currentScenario.getAvailableLocomotiveTypes().stream()
                 .filter(l -> l.getFuelType().getClass().equals(selectedFuel.getClass()) &&
                         l.getStartYear() <= currentYear &&
-                        l.getEndYear() >= currentYear &&
-                        currentScenario.getAvailableLocomotiveTypes().contains(l))
+                        l.getEndYear() >= currentYear)
                 .collect(Collectors.toList());
+
 
         locomotiveComboBox.getItems().setAll(filtered);
         locomotiveDetailsArea.clear();
