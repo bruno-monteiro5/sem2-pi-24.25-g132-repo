@@ -44,12 +44,12 @@ public class LoginFXController {
             if ("PLAYER".equals(role)) {
                 loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
                 root = loader.load();
-                MainFX.setRootScene(root, "Railroad Simulator - Main Menu", 800, 600);
+                MainFX.setRootScene(root, "Railroad Simulator - Main Menu", 980, 700, true);
 
             } else if ("EDITOR".equals(role)) {
                 loader = new FXMLLoader(getClass().getResource("/fxml/EditorMainMenu.fxml"));
                 root = loader.load();
-                MainFX.setRootScene(root, "Editor - Railroad Editor Menu", 800, 600);
+                MainFX.setRootScene(root, "Editor - Railroad Editor Menu", 800, 600, false);
             }
 
         } catch (Exception e) {

@@ -41,16 +41,16 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="40.0" />
             </padding>
             <children>
-                <Button onAction="#handleBuildStation" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Build Station" />
-                <Button onAction="#handleUpgradeStation" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Upgrade Station" />
-                <Button onAction="#handleStationDetails" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="See Station Details" />
-                <Button onAction="#handleBuildRailwayLine" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Build a Railway Line" />
+                <Button onAction="#handleBuildStation" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Build Station" />
+                <Button onAction="#handleUpgradeStation" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Upgrade Station" />
+                <Button onAction="#handleStationDetails" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="See Station Details" />
+                <Button onAction="#handleBuildRailwayLine" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Build a Railway Line" />
                 <Button onAction="#handleBuyLocomotive" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Buy a Locomotive" />
                 <Button onAction="#handleCreateTrain" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Create a Train" />
-                <Button onAction="#handleAssignTrainToARoute" prefHeight="31.0" prefWidth="186.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Assign Train to Route" />
-                <Button onAction="#handleListAllTrains" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="List all trains" />
-                <Button onAction="#handleStartSimulation" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Run Simulation" />
-                <Button onAction="#handleLogout" style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" text="Back to Login" />
+                <Button onAction="#handleAssignTrainToARoute" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Assign Train to Route" />
+                <Button onAction="#handleListAllTrains" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="List all trains" />
+                <Button onAction="#handleStartSimulation" prefHeight="31.0" prefWidth="187.0" style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;" text="Run Simulation" />
+                <Button onAction="#handleLogout"  style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" text="Back to Login" />
             </children>
         </VBox>
     </right>

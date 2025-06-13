@@ -35,7 +35,7 @@ public class EditorMainMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
             Parent root = loader.load();
-            MainFX.setRootScene(root, "Login - Railroad Simulator", 400, 300);
+            MainFX.setRootScene(root, "Login - Railroad Simulator", 400, 300,false);
         } catch (IOException e) {
             showError("Error loading Login screen.");
         }
@@ -46,7 +46,7 @@ public class EditorMainMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent root = loader.load();
-            MainFX.setRootScene(root, title, 800, 600);
+            MainFX.setRootScene(root, title, 800, 600, false);
         } catch (Exception e) {
             showError("Could not load " + title + " screen.\nDetails: " + e.getMessage());
             e.printStackTrace();

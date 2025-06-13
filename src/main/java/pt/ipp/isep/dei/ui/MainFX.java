@@ -27,11 +27,27 @@ public class MainFX extends Application {
     }
 
 
-    public static void setRootScene(Parent root, String title, int width, int height) {
-        primaryStage.setScene(new Scene(root, width, height));
+    public static void setRootScene(Parent root, String title, int width, int height,boolean fullscreen) {
+        primaryStage.setFullScreen(false);
+
+        Scene scene = new Scene(root, width, height);
+        primaryStage.setScene(scene);
         primaryStage.setTitle(title);
+
+        if (fullscreen) {
+            primaryStage.setFullScreen(true);
+            primaryStage.setFullScreenExitHint("");
+        } else {
+            primaryStage.setWidth(width);
+            primaryStage.setHeight(height);
+            primaryStage.centerOnScreen();
+        }
+
         primaryStage.show();
     }
+
+
+
 
     public static Stage getPrimaryStage() {
         return primaryStage;
@@ -45,7 +61,7 @@ public class MainFX extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(MainFX.class.getResource("/fxml/EditorMainMenu.fxml"));
             Parent root = loader.load();
-            setRootScene(root, "Editor Main Menu", 800, 600);
+            setRootScene(root, "Editor Main Menu", 800, 600, false);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -87,7 +87,7 @@ public class UpgradeStationFXController {
     public void handleBack() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
-            MainFX.setRootScene(root, "Main Menu", 800, 600);
+            MainFX.setRootScene(root, "Main Menu", 800, 600,true);
         } catch (Exception e) {
             e.printStackTrace();
         }
