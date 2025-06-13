@@ -1,4 +1,4 @@
-package MDISC.USs;
+package MDISC;
 
 import java.io.FileWriter;
 import java.util.Arrays;
