@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import pt.ipp.isep.dei.domain.FuelType;
 import pt.ipp.isep.dei.domain.LocomotiveType;
+import pt.ipp.isep.dei.domain.Player;
+import pt.ipp.isep.dei.repository.Repositories;
 import pt.ipp.isep.dei.ui.ApplicationSession;
 import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.ui.MainFX;
@@ -71,8 +73,21 @@ public class BuyLocomotiveFXController {
         LocomotiveType selected = locomotiveComboBox.getValue();
         if (selected == null) {
             feedbackLabel.setText("Please select a locomotive.");
+            feedbackLabel.setStyle("-fx-text-fill: red;");
             return;
         }
+
+        Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
+        double price = selected.getPrice();
+
+        if (!player.canAfford(price)) {
+            feedbackLabel.setText("Not enough budget to buy this locomotive.");
+            feedbackLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        player.deductFunds(price);
+
         feedbackLabel.setStyle("-fx-text-fill: green;");
         feedbackLabel.setText("Locomotive '" + selected.getName() + "' bought successfully!");
     }
