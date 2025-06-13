@@ -2,8 +2,15 @@ package pt.ipp.isep.dei.domain;
 
 /**
  * Represents a building that can be added to a station.
+ * <p>
+ * Each building has a specific {@link BuildingType}, which defines its purpose and effect
+ * (e.g., increasing revenue, improving storage, facilitating operations).
  */
 public class Building {
+
+    /**
+     * The type of the building.
+     */
     private BuildingType type;
 
     /**
@@ -24,6 +31,13 @@ public class Building {
         return type;
     }
 
+    /**
+     * Compares this building with another object for equality.
+     * Two buildings are equal if they have the same type.
+     *
+     * @param obj the object to compare
+     * @return true if the objects represent the same building type, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -32,6 +46,11 @@ public class Building {
         return this.type == other.type;
     }
 
+    /**
+     * Returns a string representation of the building.
+     *
+     * @return the building's type as a string
+     */
     @Override
     public String toString() {
         return "Building: " + type.name();
