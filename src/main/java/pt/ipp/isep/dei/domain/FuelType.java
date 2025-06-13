@@ -56,7 +56,11 @@ public abstract class FuelType implements Comparable<FuelType> {
      * @return a list containing Steam, Diesel, and Electric fuel types
      */
     public static List<FuelType> availableFuelTypes() {
-        return List.of(new Steam(), new Diesel(), new Electric());
+        List<FuelType> types = new java.util.ArrayList<>();
+        types.add(new Steam());
+        types.add(new Diesel());
+        types.add(new Electric());
+        return types;
     }
 
     /**
