@@ -74,9 +74,9 @@ public class BuildRailwayLineController {
         }
 
         // Deduct funds and add the line
-        //fix the error
+        // Fix the error
         currentPlayer.deductFunds(cost);
-        //currentMap.addRailwayLine(newLine);
+        currentMap.addRailwayLine(newLine);
         railwayLineRepo.addRailwayLine(newLine);
 
         return true;

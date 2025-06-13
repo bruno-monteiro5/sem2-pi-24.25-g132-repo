@@ -337,7 +337,38 @@ public class Map implements Serializable {
         return new ArrayList<>(scenarios);
     }
 
+    /**
+     * Adds a railway line between stations if valid
+     */
+    public boolean addRailwayLine(RailwayLine line) {
+        if (line == null || railwayLines.contains(line)) {
+            return false;
+        }
+
+        // Verify if both the stations exist in this map
+        if (!stations.contains(line.getStation1()) || !stations.contains(line.getStation2())) {
+            return false;
+        }
+
+        return railwayLines.add(line);
+    }
+    /**
+     * Gets all railway lines
+     */
+    public List<RailwayLine> getRailwayLines() {
+        return new ArrayList<>(railwayLines);
+    }
+
+    /**
+     * Checks if stations are directly connected
+     * @param a First station
+     * @param b Second station
+     * @return Connecting line if exists, otherwise is null
+     */
+
     public RailwayLine getLineBetweenStations(Station a, Station b) {
+        if (a == null || b == null) return null;
+
         for (RailwayLine line : railwayLines) {
             if (line.connects(a, b)) {
                 return line;
@@ -345,6 +376,24 @@ public class Map implements Serializable {
         }
         return null;
     }
+    /**
+     * Removes railway line
+     * @return true if removed, false if the line didn't exist
+     */
+    public boolean removeRailwayLine(RailwayLine line) {
+        return railwayLines.remove(line);
+    }
+    /**
+     * Checks if two stations are  connected
+     * @param a First station
+     * @param b Second station
+     * @return true if connected by a line
+     */
+    public boolean areStationsConnected(Station a, Station b) {
+        return getLineBetweenStations(a, b) != null;
+    }
+
+
 
     /**
      * Provides a human-readable representation of the map.
