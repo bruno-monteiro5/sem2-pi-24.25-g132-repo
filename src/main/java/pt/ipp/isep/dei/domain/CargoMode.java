@@ -1,14 +1,14 @@
 package pt.ipp.isep.dei.domain;
 
 /**
- * Enum that represents how a train should load cargo before departure.
+ * Represents the cargo loading strategy for a train before departure.
  * <p>
- * Used to define when the train is allowed to leave the station.
+ * Determines when a train is allowed to leave the station based on its cargo load status.
  */
 public enum CargoMode {
 
     /**
-     * The train only departs when all carriages are fully loaded.
+     * The train departs only when all carriages are fully loaded.
      */
     FULL,
 
@@ -18,7 +18,7 @@ public enum CargoMode {
     HALF,
 
     /**
-     * The train departs with the available cargo, even if not full.
+     * The train departs with the available cargo, regardless of how much is loaded.
      */
     AVAILABLE
 }
