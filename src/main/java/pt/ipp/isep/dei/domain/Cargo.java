@@ -2,20 +2,39 @@ package pt.ipp.isep.dei.domain;
 
 /**
  * Represents a specific cargo that can be supplied or demanded by a station.
- * It encapsulates the type of cargo, the quantity, and other relevant details.
+ * <p>
+ * A Cargo object includes its type, quantity, whether it is supply or demand,
+ * and the base value used for calculating delivery rewards.
  */
 public class Cargo {
-    private CargoType type;    // The type of the cargo, now using the enum.
-    private int quantity;      // Quantity of cargo available (or required).
-    private boolean isSupply;// True if it's supply cargo, false if it's demand cargo.
+
+    /**
+     * The type of cargo (e.g., PASSENGERS, COAL).
+     */
+    private CargoType type;
+
+    /**
+     * The quantity of cargo available or required.
+     */
+    private int quantity;
+
+    /**
+     * True if the cargo represents supply; false if it is demand.
+     */
+    private boolean isSupply;
+
+    /**
+     * The base value of the cargo (used in revenue calculation).
+     */
     private double baseValue;
 
     /**
-     * Constructor for creating a Cargo object.
+     * Constructs a new Cargo object with the specified type, quantity, and role (supply/demand).
      *
-     * @param type      The type of the cargo (e.g., passengers, coal).
-     * @param quantity  The quantity of the cargo.
-     * @param isSupply  True if the cargo is in supply, false if it's in demand.
+     * @param type      the type of cargo
+     * @param quantity  the quantity of cargo
+     * @param isSupply  true if supply, false if demand
+     * @param baseValue the base value for this type of cargo
      */
     public Cargo(CargoType type, int quantity, boolean isSupply, double baseValue) {
         this.type = type;
@@ -24,45 +43,79 @@ public class Cargo {
         this.baseValue = baseValue;
     }
 
-    // Getters
+    /**
+     * Gets the type of cargo.
+     *
+     * @return the cargo type
+     */
     public CargoType getType() {
         return type;
     }
 
+    /**
+     * Gets the quantity of cargo.
+     *
+     * @return the quantity
+     */
     public int getQuantity() {
         return quantity;
     }
 
+    /**
+     * Checks whether the cargo is a supply.
+     *
+     * @return true if supply; false if demand
+     */
     public boolean isSupply() {
         return isSupply;
     }
 
+    /**
+     * Gets the base value of the cargo.
+     *
+     * @return the base value
+     */
     public double getBaseValue() {
         return this.baseValue;
     }
 
-    // Setters
+    /**
+     * Sets the type of the cargo.
+     *
+     * @param type the new cargo type
+     */
     public void setType(CargoType type) {
         this.type = type;
     }
 
+    /**
+     * Sets the quantity of the cargo.
+     *
+     * @param quantity the new quantity
+     */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
+    /**
+     * Sets whether the cargo is a supply.
+     *
+     * @param isSupply true if supply; false if demand
+     */
     public void setSupply(boolean isSupply) {
         this.isSupply = isSupply;
     }
 
     /**
-     * String representation for display or debugging purposes.
+     * Returns a formatted string representation of the cargo.
+     *
+     * @return string with type, quantity, supply flag, and base value
      */
     @Override
     public String toString() {
-        return "Cargo{" +
-                "type=" + type +
-                ", quantity=" + quantity +
-                ", isSupply=" + isSupply +
-                '}';
+        return String.format(
+                "Cargo{type=%s, quantity=%d, isSupply=%b, baseValue=%.2f}",
+                type.name(), quantity, isSupply, baseValue
+        );
     }
 }

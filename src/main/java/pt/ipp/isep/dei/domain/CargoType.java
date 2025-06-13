@@ -2,6 +2,9 @@ package pt.ipp.isep.dei.domain;
 
 /**
  * Enum representing the different types of cargo in the railway system.
+ * <p>
+ * These cargo types can be transported by trains, demanded by cities or industries,
+ * or supplied by stations depending on the simulation context.
  */
 public enum CargoType {
     PASSENGERS,
@@ -16,8 +19,11 @@ public enum CargoType {
 
     /**
      * Returns a formatted name for display purposes.
+     * <p>
+     * The name is converted to a more user-friendly format,
+     * with only the first letter capitalized.
      *
-     * @return A user-friendly name for the cargo type.
+     * @return a nicely formatted cargo type name
      */
     @Override
     public String toString() {
