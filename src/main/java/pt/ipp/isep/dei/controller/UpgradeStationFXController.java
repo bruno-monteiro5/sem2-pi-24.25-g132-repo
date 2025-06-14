@@ -26,7 +26,7 @@ public class UpgradeStationFXController {
     }
 
     private void loadStations() {
-        Object[] mapAndStations = controller.loadMapAndStations();
+        Object[] mapAndStations = controller.loadScenarioAndStations();
         if (mapAndStations != null) {
             List<Station> stations = (List<Station>) mapAndStations[1];
             stationComboBox.getItems().setAll(stations);

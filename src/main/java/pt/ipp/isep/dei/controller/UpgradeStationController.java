@@ -11,7 +11,6 @@ import java.util.List;
 public class UpgradeStationController {
 
     private PlayerRepository playerRepo;
-    private MapRepository mapRepo;
     private BuildingTypeRepository buildingTypeRepo;
     private ScenarioRepository scenarioRepo;
 
@@ -25,44 +24,42 @@ public class UpgradeStationController {
     /**
      * Constructor for dependency injection of repositories.
      */
-    public UpgradeStationController(PlayerRepository playerRepo, MapRepository mapRepo, BuildingTypeRepository buildingTypeRepo, ScenarioRepository scenarioRepo) {
+    public UpgradeStationController(PlayerRepository playerRepo, BuildingTypeRepository buildingTypeRepo, ScenarioRepository scenarioRepo) {
         this.playerRepo = playerRepo;
-        this.mapRepo = mapRepo;
         this.buildingTypeRepo = buildingTypeRepo;
         this.scenarioRepo = scenarioRepo;
     }
 
     private void initializeRepositories() {
         this.playerRepo = Repositories.getInstance().getPlayerRepository();
-        this.mapRepo = Repositories.getInstance().getMapRepository();
         this.buildingTypeRepo = Repositories.getInstance().getBuildingTypeRepository();
         this.scenarioRepo = Repositories.getInstance().getScenarioRepository();
     }
 
-    public boolean hasActiveMap() {
+    public boolean hasActiveScenario() {
         try {
-            mapRepo.getActiveMap();
+            scenarioRepo.getActiveScenario();
             return true;
         } catch (IllegalStateException e) {
             return false;
         }
     }
 
-    public Object[] loadMapAndStations() {
-        Map activeMap;
+    public Object[] loadScenarioAndStations() {
+        Scenario scenario;
 
         try {
-            activeMap = mapRepo.getActiveMap();
+            scenario = scenarioRepo.getActiveScenario();
         } catch (IllegalStateException e) {
             return null;
         }
 
-        if (activeMap == null) {
+        if (scenario == null) {
             return null;
         }
 
-        List<Station> stations = activeMap.getStations();
-        return new Object[]{activeMap, stations};
+        List<Station> stations = scenario.getStations();
+        return new Object[]{scenario, stations};
     }
 
     public List<BuildingType> getAvailableUpgrades(Station station) {
@@ -104,6 +101,4 @@ public class UpgradeStationController {
         }
         return scenario.getPeriodTime().getStartYear();
     }
-
-
 }

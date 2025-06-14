@@ -12,12 +12,12 @@ public class Scenario implements Serializable {
     private final ArrayList<LocomotiveType> availableLocomotiveTypes;
     private final ArrayList<Locomotive> locomotives = new ArrayList<>();
     private final ArrayList<Train> trains = new ArrayList<>();
-    public List<Station> getStations() {
-        return map.getStations();
-    }
+    private final List<Station> stations = new ArrayList<>();
     public List<Train> getTrains() {
         return trains;
     }
+    private List<RailwayLine> railwayLines = new ArrayList<>();
+
 
 
 
@@ -88,4 +88,76 @@ public class Scenario implements Serializable {
     public boolean isValid() {
         return periodTime != null && periodTime.isValid() && map != null;
     }
+
+
+    public boolean hasStationAt(Position p) {
+        for (Station s : stations) {
+            if (s.getLocation().equals(p)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean addStation(Station s) {
+        if (s == null){
+            return false;
+        }
+
+        for (Station station : stations) {
+            if (station.getName().equals(s.getName())) {
+                return false;
+            }
+        }
+
+        return stations.add(s);
+    }
+
+    public List<Station> getStations() {
+        return new ArrayList<>(stations);
+    }
+
+    public boolean addRailwayLine(RailwayLine line) {
+        if (line == null || railwayLines.contains(line)) {
+            return false;
+        }
+
+        // Verify if both the stations exist in this map
+        if (!stations.contains(line.getStation1()) || !stations.contains(line.getStation2())) {
+            return false;
+        }
+
+        return railwayLines.add(line);
+    }
+
+
+    public List<RailwayLine> getRailwayLines() {
+        return new ArrayList<>(railwayLines);
+    }
+
+
+    public RailwayLine getLineBetweenStations(Station a, Station b) {
+        if (a == null || b == null) return null;
+
+        for (RailwayLine line : railwayLines) {
+            if (line.connects(a, b)) {
+                return line;
+            }
+        }
+        return null;
+    }
+
+
+    public boolean removeRailwayLine(RailwayLine line) {
+        return railwayLines.remove(line);
+    }
+
+
+    public boolean areStationsConnected(Station a, Station b) {
+        return getLineBetweenStations(a, b) != null;
+    }
+
+
+
+
 }

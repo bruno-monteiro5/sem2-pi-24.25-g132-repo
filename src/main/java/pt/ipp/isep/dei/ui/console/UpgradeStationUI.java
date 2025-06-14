@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.ui.console;
 import pt.ipp.isep.dei.controller.UpgradeStationController;
 import pt.ipp.isep.dei.domain.BuildingType;
 import pt.ipp.isep.dei.domain.Map;
+import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.domain.Station;
 
 import java.util.List;
@@ -38,12 +39,12 @@ public class UpgradeStationUI implements Runnable {
     public void run() {
         System.out.println("\n\n--- Upgrade Station ------------------------");
 
-        if (!controller.hasActiveMap()) {
+        if (!controller.hasActiveScenario()) {
             System.out.println("No active map selected. Please create a map first.");
             return;
         }
 
-        loadMapAndStations();
+        loadScenarioAndStations();
 
         if (stations == null || stations.isEmpty()) {
             System.out.println("No stations available for upgrade.");
@@ -88,13 +89,15 @@ public class UpgradeStationUI implements Runnable {
     /**
      * Loads the current map and the list of stations from the controller.
      */
-    private void loadMapAndStations() {
-        Object[] result = controller.loadMapAndStations();
+    private void loadScenarioAndStations() {
+        Object[] result = controller.loadScenarioAndStations();
         if (result == null) {
-            System.out.println("Failed to load map and stations.");
+            System.out.println("Failed to load scenario and stations.");
             return;
         }
-        currentMap = (Map) result[0];
+
+        Scenario scenario = (Scenario) result[0];
+        currentMap = scenario.getMap();
         stations = (List<Station>) result[1];
     }
 

@@ -28,11 +28,9 @@ public class Map implements Serializable {
     private final int scale;
 
     private List<City> cities = new ArrayList<>();
-    private final List<Station> stations = new ArrayList<>();
     private final List<Industry> industries = new ArrayList<>();
     private final List<Position> ocupiedPositions = new ArrayList<>();
     private final List<Scenario> scenarios = new ArrayList<>();
-    private List<RailwayLine> railwayLines = new ArrayList<>();
 
     private static final int MIN_WIDTH = 50;
     private static final int MIN_HEIGHT = 50;
@@ -104,14 +102,6 @@ public class Map implements Serializable {
      *     boolean isInside = map.isInsideBounds(position);
      * </pre>
      */
-    public boolean hasStationAt(Position p) {
-        for (Station s : stations) {
-            if (s.getLocation().equals(p)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Verifies whether a position is valid within the map's boundaries.
@@ -204,19 +194,6 @@ public class Map implements Serializable {
      *     boolean success = map.addStation(newStation);
      * </pre>
      */
-    public boolean addStation(Station s) {
-        if (s == null){
-            return false;
-        }
-
-        for (Station station : stations) {
-            if (station.getName().equals(s.getName())) {
-                return false;
-            }
-        }
-
-        return stations.add(s);
-    }
 
     /**
      * Adds an {@link Industry} to the map, provided its position is valid and unoccupied.
@@ -309,9 +286,6 @@ public class Map implements Serializable {
      * Gets a copy of the list of all placed stations.
      * @return list of stations
      */
-    public List<Station> getStations() {
-        return new ArrayList<>(stations);
-    }
 
 
     /**
@@ -340,24 +314,10 @@ public class Map implements Serializable {
     /**
      * Adds a railway line between stations if valid
      */
-    public boolean addRailwayLine(RailwayLine line) {
-        if (line == null || railwayLines.contains(line)) {
-            return false;
-        }
 
-        // Verify if both the stations exist in this map
-        if (!stations.contains(line.getStation1()) || !stations.contains(line.getStation2())) {
-            return false;
-        }
-
-        return railwayLines.add(line);
-    }
     /**
      * Gets all railway lines
      */
-    public List<RailwayLine> getRailwayLines() {
-        return new ArrayList<>(railwayLines);
-    }
 
     /**
      * Checks if stations are directly connected
@@ -366,35 +326,12 @@ public class Map implements Serializable {
      * @return Connecting line if exists, otherwise is null
      */
 
-    public RailwayLine getLineBetweenStations(Station a, Station b) {
-        if (a == null || b == null) return null;
 
-        for (RailwayLine line : railwayLines) {
-            if (line.connects(a, b)) {
-                return line;
-            }
-        }
-        return null;
-    }
     /**
      * Removes railway line
      * @return true if removed, false if the line didn't exist
      */
-    public boolean removeRailwayLine(RailwayLine line) {
-        return railwayLines.remove(line);
-    }
-    /**
-     * Checks if two stations are  connected
-     * @param a First station
-     * @param b Second station
-     * @return true if connected by a line
-     */
-    public boolean areStationsConnected(Station a, Station b) {
-        return getLineBetweenStations(a, b) != null;
-    }
-
-
-
+   
     /**
      * Provides a human-readable representation of the map.
      *

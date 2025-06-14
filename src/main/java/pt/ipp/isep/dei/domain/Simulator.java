@@ -82,7 +82,7 @@ public class Simulator implements Runnable, Serializable {
 
             if (next == null) continue;
 
-            RailwayLine line = scenario.getMap().getLineBetweenStations(current, next);
+            RailwayLine line = scenario.getLineBetweenStations(current, next);
             if (line == null) continue;
 
             double distance = line.getLength();
