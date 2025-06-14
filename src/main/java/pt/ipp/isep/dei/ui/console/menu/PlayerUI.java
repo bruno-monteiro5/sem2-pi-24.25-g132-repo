@@ -23,6 +23,7 @@ public class PlayerUI implements Runnable {
         options.add(new MenuItem("Create a train", new CreateTrainUI()));
         options.add(new MenuItem("Assign a train to a route", new AssignTrainToRouteUI()));
         options.add(new MenuItem("List all trains", new ListTrainUI()));
+        options.add(new MenuItem("See Year Financial Results", new AnnualFinancialResultsUI()));
 
         int option = 0;
         do {
