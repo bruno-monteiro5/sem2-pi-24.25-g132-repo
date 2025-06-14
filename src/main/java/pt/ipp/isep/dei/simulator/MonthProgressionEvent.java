@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.simulator;
 
+import pt.ipp.isep.dei.domain.LocomotiveType;
 import pt.ipp.isep.dei.domain.Scenario;
 
 public class MonthProgressionEvent extends SimulationEvent {
@@ -16,10 +17,22 @@ public class MonthProgressionEvent extends SimulationEvent {
 
     @Override
     public void handle(SimulatorEngine engine) {
-        // Atualiza o tempo simulado no motor da simulação
+        // Atualiza o tempo simulado
         engine.setSimulationStart(year, month);
 
-        System.out.println("Tick " + engine.getCurrentTick() + ": Month changed to " + month + ", Year " + year);
+        System.out.printf("Tick %d: Month changed to %d, Year %d%n",
+                engine.getCurrentTick(), month, year);
+
+        for (LocomotiveType type : LocomotiveType.values()) {
+            if (type.getStartYear() == year &&
+                    !engine.getAnnouncedLocomotives().contains(type)) {
+
+                System.out.printf("🚨 New Locomotive Available: %s (introduced in %d)%n",
+                        type.getName(), year);
+
+                engine.getAnnouncedLocomotives().add(type);
+            }
+        }
 
         // Agendar o próximo mês
         int nextMonth = (month % 12) + 1;
@@ -27,11 +40,12 @@ public class MonthProgressionEvent extends SimulationEvent {
 
         if (nextYear <= scenario.getPeriodTime().getEndYear()) {
             engine.scheduleEvent(new MonthProgressionEvent(
-                    engine.getCurrentTick() + 5, // 5 ticks por mês
+                    engine.getCurrentTick() + 5,
                     nextMonth,
                     nextYear,
                     scenario
             ));
         }
     }
+
 }

@@ -14,6 +14,8 @@ public class SimulatorEngine {
     private final List<SimulationEvent> pastEvents = new ArrayList<>();
     private final Scenario scenario;
     private final Player player;
+    private final List<LocomotiveType> announcedLocomotives = new ArrayList<>();
+
 
     public Player getPlayer() {
         return player;
@@ -136,6 +138,10 @@ public class SimulatorEngine {
 
     public List<SimulationEvent> getPastEvents() {
         return new ArrayList<>(pastEvents);
+    }
+
+    public List<LocomotiveType> getAnnouncedLocomotives() {
+        return announcedLocomotives;
     }
 
 
