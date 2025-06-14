@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.domain;
 
+import pt.ipp.isep.dei.repository.Repositories;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,17 @@ public class Route implements Serializable {
         }
         return null; // caso seja a última estação ou não encontrada
     }
+
+    public RailwayLine getRailwayLine(Station from, Station to) {
+        for (RailwayLine line : Repositories.getInstance().getRailwayLineRepository().getAll()) {
+            if ((line.getStation1().equals(from) && line.getStation2().equals(to)) ||
+                    (line.getStation2().equals(from) && line.getStation1().equals(to))) {
+                return line;
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public String toString() {
