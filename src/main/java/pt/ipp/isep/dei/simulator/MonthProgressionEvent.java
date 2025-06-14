@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.simulator;
 
 import pt.ipp.isep.dei.domain.LocomotiveType;
 import pt.ipp.isep.dei.domain.Scenario;
+import pt.ipp.isep.dei.domain.Station;
 
 public class MonthProgressionEvent extends SimulationEvent {
     private final int month;
@@ -23,7 +24,6 @@ public class MonthProgressionEvent extends SimulationEvent {
         System.out.printf("Tick %d: Month changed to %d, Year %d%n",
                 engine.getCurrentTick(), month, year);
 
-        //AC04
         for (LocomotiveType type : LocomotiveType.values()) {
             if (type.getStartYear() == year &&
                     !engine.getAnnouncedLocomotives().contains(type)) {
@@ -32,6 +32,12 @@ public class MonthProgressionEvent extends SimulationEvent {
                         type.getName(), year);
 
                 engine.getAnnouncedLocomotives().add(type);
+            }
+        }
+
+        if (month == 1) {
+            for (Station station : scenario.getStations()) {
+                station.updateDemand();
             }
         }
 
