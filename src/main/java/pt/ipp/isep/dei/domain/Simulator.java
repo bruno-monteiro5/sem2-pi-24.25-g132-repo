@@ -67,9 +67,12 @@ public class Simulator implements Runnable, Serializable {
     }
 
     private void simulateStep() {
+
+        double factor = scenario.getIndustryGenerationFactor();
+
         // Generate cargoes
         for (Station station : scenario.getStations()) {
-            station.generateAnnualCargoes();
+            station.generateAnnualCargoes(factor);
         }
 
         // Move trains and deliver cargo

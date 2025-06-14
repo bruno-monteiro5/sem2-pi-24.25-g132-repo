@@ -234,6 +234,11 @@ public class BuildStationController {
     }
 
     public List<Station> listAllStations() {
-        return StationRepository.getInstance().getAll();
+        Scenario currentScenario = Repositories.getInstance().getScenarioRepository().getActiveScenario();
+        if (currentScenario == null) {
+            return new ArrayList<>();
+        }
+        return currentScenario.getStations();
     }
+
 }

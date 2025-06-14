@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.controller;
 import pt.ipp.isep.dei.domain.*;
 import pt.ipp.isep.dei.repository.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +32,8 @@ public class BuildRailwayLineController {
     }
 
     public List<Station> getAllStations() {
-        return stationRepo.getAll();
+        Scenario scenario = scenarioRepo.getActiveScenario();
+        return (scenario == null) ? new ArrayList<>() : scenario.getStations();
     }
 
     public List<LineType> getAllLineTypes() {

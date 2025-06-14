@@ -18,12 +18,14 @@ public class MonthProgressionEvent extends SimulationEvent {
 
     @Override
     public void handle(SimulatorEngine engine) {
-        // Atualiza o tempo simulado
+        // Update the simulated time
         engine.setSimulationStart(year, month);
 
         System.out.printf("Tick %d: Month changed to %d, Year %d%n",
                 engine.getCurrentTick(), month, year);
 
+
+        //A message alerting when a new locomotive becomes available, accordingly to its start year of service.
         for (LocomotiveType type : LocomotiveType.values()) {
             if (type.getStartYear() == year &&
                     !engine.getAnnouncedLocomotives().contains(type)) {
@@ -41,7 +43,7 @@ public class MonthProgressionEvent extends SimulationEvent {
             }
         }
 
-        // Agendar o próximo mês
+        // Schedule the next month
         int nextMonth = (month % 12) + 1;
         int nextYear = year + (month == 12 ? 1 : 0);
 
