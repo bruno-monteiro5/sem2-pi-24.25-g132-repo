@@ -43,7 +43,10 @@ public class AssignTrainToRouteController {
      * @return a list of all {@link Train} objects
      */
     public List<Train> getAvailableTrains() {
-        return trainRepository.getAll();
+        return Repositories.getInstance()
+                .getScenarioRepository()
+                .getActiveScenario()
+                .getTrains();
     }
 
 
