@@ -161,8 +161,7 @@ public class MainMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             Parent root = loader.load();
-            boolean fullscreen = title.equalsIgnoreCase("Railroad Simulator - Main Menu");
-            MainFX.setRootScene(root, title, width, height, fullscreen);
+            MainFX.setRootScene(root, title, width, height, true);
         } catch (IOException e) {
             showError("Failed to load " + title + " screen.");
         }
