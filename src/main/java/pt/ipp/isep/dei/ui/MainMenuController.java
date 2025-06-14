@@ -7,7 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -32,6 +34,10 @@ public class MainMenuController {
     @FXML private Label scaleLabel;
     @FXML private Pane mapArea;
     @FXML private ImageView mapImageView;
+    @FXML private Label noMapLabel;
+    @FXML private Slider zoomSlider;
+    @FXML private Button backToLoginButton;
+
 
     private Timeline budgetUpdater;
     private int cellSize;
@@ -51,6 +57,10 @@ public class MainMenuController {
         Map map = ApplicationSession.getInstance().getCurrentMap();
         Scenario scenario = ApplicationSession.getInstance().getCurrentScenario();
 
+        if (map == null) {
+            mapImageView.setVisible(false);
+            noMapLabel.setVisible(true);
+        }
         if (map != null) {
             mapLabel.setText("Map: " + map.getName());
             scaleLabel.setText("Scale: " + map.getScale());
@@ -61,14 +71,26 @@ public class MainMenuController {
             int mapWidthCells = map.getWidth();
             int mapHeightCells = map.getHeight();
 
-            cellSize = (int) Math.min(
-                    background.getWidth() / mapWidthCells,
-                    background.getHeight() / mapHeightCells
-            );
+            mapImageView.setFitWidth(mapWidthCells);
+            mapImageView.setFitHeight(mapHeightCells);
 
-            mapImageView.setFitWidth(mapWidthCells * cellSize);
-            mapImageView.setFitHeight(mapHeightCells * cellSize);
+            mapImageView.setFitWidth(650);
+            mapImageView.setFitHeight(640);
+
+            cellSize = (int) Math.min(
+                    650.0 / mapWidthCells,
+                    640.0 / mapHeightCells
+            );
             mapArea.setPrefSize(mapWidthCells * cellSize, mapHeightCells * cellSize);
+
+
+            mapImageView.setVisible(true);
+            noMapLabel.setVisible(false);
+
+            zoomSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+                mapImageView.setScaleX(newVal.doubleValue());
+                mapImageView.setScaleY(newVal.doubleValue());
+            });
         }
 
         if (scenario != null && scenario.getPeriodTime() != null) {
@@ -156,6 +178,28 @@ public class MainMenuController {
             showError("Error loading Login screen.");
         }
     }
+
+    @FXML
+    private void highlight(javafx.scene.input.MouseEvent e) {
+        Button btn = (Button) e.getSource();
+        if (btn == backToLoginButton) {
+            btn.setStyle("-fx-background-color: #90a4ae; -fx-text-fill: #263238; -fx-font-weight: bold;");
+        } else {
+            btn.setStyle("-fx-background-color: #004d40; -fx-text-fill: white;");
+        }
+    }
+
+    @FXML
+    private void resetHighlight(javafx.scene.input.MouseEvent e) {
+        Button btn = (Button) e.getSource();
+        if (btn == backToLoginButton) {
+            btn.setStyle("-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;");
+        } else {
+            btn.setStyle("-fx-background-color: #00695c; -fx-text-fill: white;");
+        }
+    }
+
+
 
     private void loadFXML(String path, String title, int width, int height) {
         try {
