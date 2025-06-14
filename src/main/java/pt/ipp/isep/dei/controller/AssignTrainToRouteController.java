@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.controller;
 
+import pt.ipp.isep.dei.domain.RailwayLine;
 import pt.ipp.isep.dei.domain.Route;
 import pt.ipp.isep.dei.domain.Station;
 import pt.ipp.isep.dei.domain.Train;
@@ -64,4 +65,15 @@ public class AssignTrainToRouteController {
     public void assignRouteToTrain(Train train, Route route) {
         train.assignRoute(route);
     }
+
+    public RailwayLine getRailwayLineBetween(Station a, Station b) {
+        for (RailwayLine line : Repositories.getInstance().getRailwayLineRepository().getAll()) {
+            if ((line.getStation1().equals(a) && line.getStation2().equals(b)) ||
+                    (line.getStation2().equals(a) && line.getStation1().equals(b))) {
+                return line;
+            }
+        }
+        return null;
+    }
+
 }

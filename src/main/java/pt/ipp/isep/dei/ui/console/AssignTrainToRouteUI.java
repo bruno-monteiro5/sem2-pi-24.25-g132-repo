@@ -131,13 +131,29 @@ public class AssignTrainToRouteUI implements Runnable {
             }
 
 
+
+            // Verificar se há linha entre a estação anterior e esta
+            List<PointOfRoute> existingPoints = route.getPointsOfRoute();
+            if (!existingPoints.isEmpty()) {
+                Station previous = existingPoints.get(existingPoints.size() - 1).getStation();
+                RailwayLine line = controller.getRailwayLineBetween(previous, station);
+                if (line == null) {
+                    System.out.printf("⚠️ There is no line between %s e %s. Station not added.%n",
+                            previous.getName(), station.getName());
+                    System.out.print("Add another point to the route? (Y/N): ");
+                    String choice = scanner.nextLine().trim();
+                    addMore = choice.equalsIgnoreCase("Y");
+                    continue;
+                }
+            }
+
             PointOfRoute point = new PointOfRoute(station, cargoes, selectedMode);
             route.addPointOfRoute(point);
-
 
             System.out.print("Add another point to the route? (Y/N): ");
             String choice = scanner.nextLine().trim();
             addMore = choice.equalsIgnoreCase("Y");
+
 
         } while (addMore);
 

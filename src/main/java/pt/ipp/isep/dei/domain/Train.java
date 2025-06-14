@@ -79,29 +79,42 @@ public class Train implements Serializable {
 
     public void resetAnnualDistance() {this.distanceTraveled = 0;}
 
+
     public int getTravelDuration() {
         Station from = this.currentStation;
         Station to = assignedRoute.getNextStation(from);
+
         if (from == null || to == null) return 1;
 
-        double travelTimeHours = getTravelTimeHours(to, from);
-        double TICKS_PER_HOUR = 1.0;
-        double travelTimeTicks = travelTimeHours * TICKS_PER_HOUR;
+        // Obter linha entre as estações
+        RailwayLine line = assignedRoute.getRailwayLine(from, to);
 
-        return Math.max(1, (int) Math.ceil(travelTimeTicks)); // nunca inferior a 1
-    }
+        // Velocidade base
+        double baseSpeed = this.locomotive.getType().getTopSpeed();
 
-    private double getTravelTimeHours(Station to, Station from) {
-        final double MAP_SCALE_KM = Repositories.getInstance().getMapRepository().getActiveMap().getScale();
+        // Ajuste por tipo de linha
+        boolean isDoubleTrack = (line != null && line.isDouble());
+        double speed = isDoubleTrack ? baseSpeed : baseSpeed * 0.8;
 
+        // Ajuste por número de carruagens (máx 30%)
+        int numCarriages = this.cargos.size();
+        double speedReduction = Math.min(0.05 * numCarriages, 0.30);
+        speed *= (1.0 - speedReduction);
+
+        // Distância e tempo
         double dx = to.getLocation().getX() - from.getLocation().getX();
         double dy = to.getLocation().getY() - from.getLocation().getY();
         double distanceInMapUnits = Math.sqrt(dx * dx + dy * dy);
 
-        double distanceInKm = distanceInMapUnits * MAP_SCALE_KM;
-        double speedKmPerHour = this.locomotive.getType().getTopSpeed();
-        return distanceInKm / speedKmPerHour;
+        double mapScaleKm = Repositories.getInstance().getMapRepository().getActiveMap().getScale();
+        double distanceInKm = distanceInMapUnits * mapScaleKm;
+
+        double travelTimeHours = distanceInKm / speed;
+        double travelTimeTicks = travelTimeHours; // 1 tick = 1 hora
+
+        return Math.max(1, (int) Math.ceil(travelTimeTicks));
     }
+
 
     @Override
     public String toString() {
