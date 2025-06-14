@@ -1,48 +1,101 @@
 package pt.ipp.isep.dei.ui.console.menu;
 
-import pt.ipp.isep.dei.controller.SimulatorController;
-import pt.ipp.isep.dei.repository.SimulatorRepository;
+import pt.ipp.isep.dei.domain.Scenario;
+import pt.ipp.isep.dei.repository.Repositories;
+import pt.ipp.isep.dei.simulator.SimulatorEngine;
+import pt.ipp.isep.dei.simulator.SimulationEvent;
+import pt.ipp.isep.dei.ui.ApplicationSession;
 
 import java.util.Scanner;
 
 public class SimulatorUI implements Runnable {
 
-    private final SimulatorController controller;
+    private SimulatorEngine engine;
+    private final Scanner scanner = new Scanner(System.in);
 
     public SimulatorUI() {
-        controller = new SimulatorController();
+        // Construtor vazio — compatível com menu principal
     }
 
-    @Override
     public void run() {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("\n=== Simulator Menu ===");
-            System.out.println("1. Start Simulation");
-            System.out.println("2. Pause Simulation");
-            System.out.println("3. Show Current Year");
-            System.out.println("0. Exit");
-
-            System.out.print("Option: ");
-            String input = scanner.nextLine();
-
-            switch (input) {
-                case "1":
-                    controller.startSimulation();
-                    break;
-                case "2":
-                    controller.pauseSimulation();
-                    break;
-                case "3":
-                    System.out.println("Current simulation year: " + controller.getCurrentYear());
-                    break;
-                case "0":
-                    controller.pauseSimulation();
-                    return;
-                default:
-                    System.out.println("Invalid option.");
-            }
+        Scenario scenario = Repositories.getInstance().getScenarioRepository().getActiveScenario();
+        if (scenario == null) {
+            System.out.println("Nenhum cenário carregado. Crie ou carregue um cenário primeiro.");
+            return;
         }
+
+        engine = new SimulatorEngine(scenario);
+
+        int option;
+        do {
+            printMenu();
+            option = readInt("Escolha uma opção: ");
+
+            switch (option) {
+                case 1 -> startSimulation();
+                case 2 -> runNextEvent();
+                case 3 -> pauseSimulation();
+                case 4 -> listFutureEvents();
+                case 5 -> listPastEvents();
+                case 0 -> System.out.println("A sair do menu da simulação...");
+                default -> System.out.println("Opção inválida.");
+            }
+
+        } while (option != 0);
+    }
+
+    private void printMenu() {
+        System.out.println("\n====== Menu da Simulação ======");
+        System.out.println("1. Iniciar simulação");
+        System.out.println("2. Avançar um evento");
+        System.out.println("3. Pausar simulação");
+        System.out.println("4. Ver eventos futuros");
+        System.out.println("5. Ver eventos passados");
+        System.out.println("0. Sair");
+    }
+
+    private void startSimulation() {
+        boolean started = engine.start();
+        if (started) {
+            System.out.println("Simulação iniciada.");
+        } else {
+            System.out.println("Simulação já está a correr.");
+        }
+    }
+
+    private void runNextEvent() {
+        if (engine.hasMoreEvents()) {
+            engine.runNextEvent();
+        } else {
+            System.out.println("Não há mais eventos agendados.");
+        }
+    }
+
+    private void pauseSimulation() {
+        engine.pause();
+        System.out.println("Simulação pausada.");
+    }
+
+    private void listFutureEvents() {
+        System.out.println("\n→ Eventos futuros:");
+        for (SimulationEvent event : engine.getFutureEvents()) {
+            System.out.printf("Tick %d: %s%n", event.getScheduledTick(), event.getClass().getSimpleName());
+        }
+    }
+
+    private void listPastEvents() {
+        System.out.println("\n→ Eventos passados:");
+        for (SimulationEvent event : engine.getPastEvents()) {
+            System.out.printf("Tick %d: %s%n", event.getScheduledTick(), event.getClass().getSimpleName());
+        }
+    }
+
+    private int readInt(String prompt) {
+        System.out.print(prompt);
+        while (!scanner.hasNextInt()) {
+            System.out.print("Valor inválido. Tente de novo: ");
+            scanner.next();
+        }
+        return scanner.nextInt();
     }
 }
