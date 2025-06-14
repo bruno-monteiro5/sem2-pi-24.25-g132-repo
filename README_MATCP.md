@@ -7,7 +7,7 @@
 
 ## Sprint 3
 
-📍 Location of the Jupyter Notebook: [Jupyter Notebook](src/main/java/MATCP/Sprint3/US31/MATCP_Project_Sprint3.ipynb)
+📍 Location of the Jupyter Notebook: [Jupyter Notebook](src/main/java/MATCP/Sprint3/MATCP_Project_Sprint3.ipynb)
 
 📄 Documentation links:
 - US30: [US030-README.md](docs/system-documentation/US030/US030-README.md)
