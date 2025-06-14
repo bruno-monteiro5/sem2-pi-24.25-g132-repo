@@ -1,12 +1,14 @@
 package pt.ipp.isep.dei.domain;
 
+import java.io.Serializable;
+
 /**
  * Represents a building that can be added to a station.
  * <p>
  * Each building has a specific {@link BuildingType}, which defines its purpose and effect
  * (e.g., increasing revenue, improving storage, facilitating operations).
  */
-public class Building {
+public class Building implements Serializable {
 
     /**
      * The type of the building.
