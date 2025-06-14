@@ -1,9 +1,6 @@
 package pt.ipp.isep.dei.simulator;
 
-import pt.ipp.isep.dei.domain.PointOfRoute;
-import pt.ipp.isep.dei.domain.Scenario;
-import pt.ipp.isep.dei.domain.Station;
-import pt.ipp.isep.dei.domain.Train;
+import pt.ipp.isep.dei.domain.*;
 
 import java.util.*;
 
@@ -16,11 +13,16 @@ public class SimulatorEngine {
     private final List<SimulationEvent> futureEventsSnapshot = new ArrayList<>();
     private final List<SimulationEvent> pastEvents = new ArrayList<>();
     private final Scenario scenario;
+    private final Player player;
 
-    public SimulatorEngine(Scenario scenario) {
-        this.scenario = scenario;
+    public Player getPlayer() {
+        return player;
     }
 
+    public SimulatorEngine(Scenario scenario, Player player) {
+        this.scenario = scenario;
+        this.player = player;
+    }
 
 
     private final PriorityQueue<SimulationEvent> eventQueue = new PriorityQueue<>();

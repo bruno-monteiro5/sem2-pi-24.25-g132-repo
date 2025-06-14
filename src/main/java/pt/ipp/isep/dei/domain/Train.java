@@ -35,6 +35,10 @@ public class Train implements Serializable {
         return cargos;
     }
 
+    public void clearCargos() {
+        cargos.clear();
+    }
+
     public void addCargo(Cargo cargo) {
         cargos.add(cargo);
     }

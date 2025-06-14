@@ -73,6 +73,15 @@ public class Player {
     }
 
     /**
+     * Adds funds to the player's balance.
+     *
+     * @param amount the amount to add
+     */
+    public void addToBudget(double amount) {
+        this.balance += amount;
+    }
+
+    /**
      * Returns a string representation of the player.
      *
      * @return the player's name and balance

@@ -1,7 +1,6 @@
 package pt.ipp.isep.dei.simulator;
 
-import pt.ipp.isep.dei.domain.Train;
-import pt.ipp.isep.dei.domain.Station;
+import pt.ipp.isep.dei.domain.*;
 
 public class TrainArrivalEvent extends SimulationEvent {
     private final Train train;
@@ -15,11 +14,46 @@ public class TrainArrivalEvent extends SimulationEvent {
 
     @Override
     public void handle(SimulatorEngine engine) {
+
+        Station from = train.getLastStationVisited();
+        Station to = station;
+
+
         train.setCurrentStation(station);
         train.setLastStationVisited(station);
 
         System.out.printf("Tick %d: Train %s arrived at %s%n",
                 engine.getCurrentTick(), train.getId(), station.getName());
+
+
+        // Calcular receita se veio de outra estação
+        if (from != null && !from.equals(to)) {
+            double dx = to.getLocation().getX() - from.getLocation().getX();
+            double dy = to.getLocation().getY() - from.getLocation().getY();
+            double distance = Math.sqrt(dx * dx + dy * dy);
+
+            double totalRevenue = 0.0;
+
+            for (Cargo cargo : train.getCargos()) {
+                CargoType type = cargo.getType();
+                double baseValue = type.getBaseValue();
+
+                double revenue = baseValue * (distance / 100.0); // ajustar escala do mapa
+                int demand = station.getDemandFor(type.name());
+                revenue *= 0.1 * (1 + demand); // procura [0-9] → 10% a 100%
+                revenue *= station.getTotalRevenueMultiplier(); // bónus dos edifícios
+
+                // Atualizar orçamento e estação
+                engine.getPlayer().addToBudget(revenue);
+                station.addRevenue(revenue);
+                station.registerDelivery(type);
+
+                System.out.printf(" → Delivered %s: +%.2f$ (demand=%d, bonus=%.2fx)\n",
+                        type, revenue, demand, station.getTotalRevenueMultiplier());
+            }
+
+            train.clearCargos(); // descarrega
+        }
 
         // Verificar se chegou ao fim da rota
         var route = train.getAssignedRoute();

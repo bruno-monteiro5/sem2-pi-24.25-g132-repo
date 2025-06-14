@@ -345,37 +345,19 @@ public class Station implements Serializable {
 
     public void generateAnnualCargoes() {
         if (servesCity()) {
-            addCargo(new Cargo(CargoType.PASSENGERS, 10, true,100));
-            addCargo(new Cargo(CargoType.MAIL, 5, true,60));
-
+            addCargo(new Cargo(CargoType.PASSENGERS, 10, true, CargoType.PASSENGERS.getBaseValue()));
+            addCargo(new Cargo(CargoType.MAIL, 5, true, CargoType.MAIL.getBaseValue()));
         }
 
         for (Industry industry : industries) {
             CargoType type = industry.getCargoType();
             int amount = industry.getYearlyQuantity();
+            double fixedValue = type.getBaseValue();
 
-
-            double fixedValue = 0;
-
-            switch (type) {
-                case COAL:
-                    fixedValue = 40;
-                    break;
-                case IRON_ORE:
-                    fixedValue = 50;
-                    break;
-                case STEEL:
-                    fixedValue = 70;
-                    break;
-                default:
-                    fixedValue = 30;
-            }
-            addCargo(new Cargo(type, industry.getYearlyQuantity(), false, fixedValue));
-
-            addCargo(new Cargo(industry.getCargoType(), industry.getYearlyQuantity(), false, fixedValue));
-
+            addCargo(new Cargo(type, amount, false, fixedValue));
         }
     }
+
 
 
 

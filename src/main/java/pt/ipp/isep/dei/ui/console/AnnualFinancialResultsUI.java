@@ -1,3 +1,4 @@
+/**
 package pt.ipp.isep.dei.ui.console;
 
 import pt.ipp.isep.dei.controller.AnnualFinancialResultsController;
@@ -19,3 +20,4 @@ public class AnnualFinancialResultsUI implements Runnable {
         // Implementação para persistência (opcional)
     }
 }
+*/

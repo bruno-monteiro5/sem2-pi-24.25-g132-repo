@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.ui.console.menu;
 
+import pt.ipp.isep.dei.domain.Player;
 import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.repository.Repositories;
 import pt.ipp.isep.dei.simulator.SimulatorEngine;
@@ -19,12 +20,14 @@ public class SimulatorUI implements Runnable {
 
     public void run() {
         Scenario scenario = Repositories.getInstance().getScenarioRepository().getActiveScenario();
-        if (scenario == null) {
-            System.out.println("Nenhum cenário carregado. Crie ou carregue um cenário primeiro.");
+        Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
+
+        if (scenario == null || player == null) {
+            System.out.println("Cenário ou jogador não estão carregados. Crie ou carregue um primeiro.");
             return;
         }
 
-        engine = new SimulatorEngine(scenario);
+        engine = new SimulatorEngine(scenario, player);
 
         int option;
         do {
