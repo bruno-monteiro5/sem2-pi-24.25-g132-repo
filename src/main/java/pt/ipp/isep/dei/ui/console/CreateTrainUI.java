@@ -19,7 +19,7 @@ public class CreateTrainUI implements Runnable {
     public void run() {
         System.out.println("\n=== Create Train ===");
 
-        List<Locomotive> locomotives = locomotiveRepository.getLocomotives();
+        List<Locomotive> locomotives = Repositories.getInstance().getScenarioRepository().getActiveScenario().getLocomotives();
         if (locomotives.isEmpty()) {
             System.out.println("No locomotives available. Buy one first.");
             return;

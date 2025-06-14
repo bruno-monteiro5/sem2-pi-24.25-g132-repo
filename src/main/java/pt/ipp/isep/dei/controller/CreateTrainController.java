@@ -14,7 +14,6 @@ public class CreateTrainController {
     public Train createTrainFromLocomotive(Locomotive loco) {
         Train train = trainRepository.createTrain(loco);
 
-        // Adicionar ao cenário atual
         ScenarioRepository scenarioRepository = Repositories.getInstance().getScenarioRepository();
         if (scenarioRepository.getActiveScenario() != null) {
             scenarioRepository.getActiveScenario().getTrains().add(train);

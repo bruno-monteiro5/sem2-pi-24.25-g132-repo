@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.controller;
 import pt.ipp.isep.dei.domain.Locomotive;
 import pt.ipp.isep.dei.domain.LocomotiveType;
 import pt.ipp.isep.dei.domain.Player;
+import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.repository.LocomotiveRepository;
 import pt.ipp.isep.dei.repository.Repositories;
 
@@ -21,16 +22,23 @@ public class BuyLocomotiveController {
      * @return The created Locomotive
      */
     public Locomotive buyLocomotive(LocomotiveType type) {
-        Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer(); // ou via Repositories se corrigido
+        Locomotive locomotive = new Locomotive(type);
 
-        if (!player.canAfford(type.getPrice())) {
-            throw new IllegalArgumentException("Player does not have enough funds to buy this locomotive.");
+        Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
+        Scenario scenario = Repositories.getInstance().getScenarioRepository().getActiveScenario();
+
+        if (player == null || scenario == null) {
+            throw new IllegalStateException("Missing active player or scenario");
         }
 
-        player.deductFunds(type.getPrice()); // ← aqui é onde o budget é atualizado
+        if (!player.canAfford(type.getPrice())) {
+            throw new IllegalStateException("Insufficient funds");
+        }
 
-        Locomotive locomotive = new Locomotive(type);
-        locomotiveRepository.save(locomotive);
+        player.deductFunds(type.getPrice()); //is here where the budget is updated
+
+        scenario.getLocomotives().add(locomotive);
+
         return locomotive;
     }
 
