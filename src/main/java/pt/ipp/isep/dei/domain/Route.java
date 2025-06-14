@@ -43,8 +43,8 @@ public class Route implements Serializable {
 
     public Station getNextStation(Station current) {
         for (int i = 0; i < pointsOfRoute.size() - 1; i++) {
-            if (pointsOfRoute.get(i).station().equals(current)) {
-                return pointsOfRoute.get(i + 1).station();
+            if (pointsOfRoute.get(i).getStation().equals(current)) {
+                return pointsOfRoute.get(i + 1).getStation();
             }
         }
         return null; // caso seja a última estação ou não encontrada

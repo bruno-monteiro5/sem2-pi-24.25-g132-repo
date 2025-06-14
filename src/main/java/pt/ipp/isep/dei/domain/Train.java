@@ -11,6 +11,8 @@ public class Train implements Serializable {
     private final List<Cargo> cargos;
     private Route assignedRoute;
     private Station currentStation;
+    private Station lastStationVisited;
+
     private double distanceTraveled;
 
     public Train(int id, Locomotive locomotive) {
@@ -61,11 +63,13 @@ public class Train implements Serializable {
         this.currentStation = currentStation;
     }
 
-    public void addDistance(double distance) {this.distanceTraveled += distance;}
+    public Station getLastStationVisited() {
+        return lastStationVisited;
+    }
 
-    public double getDistanceTraveled() {return distanceTraveled;}
-
-    public void resetAnnualDistance() {this.distanceTraveled = 0;}
+    public void setLastStationVisited(Station lastStationVisited) {
+        this.lastStationVisited = lastStationVisited;
+    }
 
     @Override
     public String toString() {

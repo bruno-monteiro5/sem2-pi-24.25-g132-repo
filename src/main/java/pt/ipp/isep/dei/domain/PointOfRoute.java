@@ -16,9 +16,6 @@ public class PointOfRoute implements Serializable {
         this.mode = mode;
     }
 
-    public Station station() {
-        return this.station;
-    }
 
     public Station getStation() {
         return station;

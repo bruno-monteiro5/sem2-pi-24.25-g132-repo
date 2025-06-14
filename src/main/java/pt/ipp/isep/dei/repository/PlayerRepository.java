@@ -14,7 +14,7 @@ import java.util.List;
  * during initialization.</p>
  */
 public class PlayerRepository {
-    private List<Player> players;
+    private final List<Player> players;
     private Player currentPlayer;
 
     /**
@@ -30,7 +30,7 @@ public class PlayerRepository {
      * Creates a default player and sets it as the current active player.
      */
     private void createDefaultPlayer() {
-        Player defaultPlayer = new Player("Default Player", 200001);
+        Player defaultPlayer = new Player("Default Player", 2000001);
         players.add(defaultPlayer);
         currentPlayer = defaultPlayer;
     }
