@@ -23,6 +23,7 @@ public class MonthProgressionEvent extends SimulationEvent {
         System.out.printf("Tick %d: Month changed to %d, Year %d%n",
                 engine.getCurrentTick(), month, year);
 
+        //AC04
         for (LocomotiveType type : LocomotiveType.values()) {
             if (type.getStartYear() == year &&
                     !engine.getAnnouncedLocomotives().contains(type)) {

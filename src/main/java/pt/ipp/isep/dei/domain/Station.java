@@ -342,16 +342,24 @@ public class Station implements Serializable {
         }
     }
 
-
-    public void generateAnnualCargoes() {
+    /**
+     * Generates annual cargoes for the station based on its context:
+     * - If the station serves a city, it always generates PASSENGERS and MAIL.
+     * - If the station has associated industries, generates cargoes based on their production.
+     *
+     * This method is called once per year and ensures that:
+     * - City-related services (like passengers/mail) are always available.
+     * - Industry production is added with fixed base values for each cargo type.
+     */
+    public void generateAnnualCargoes(double factor) {
         if (servesCity()) {
-            addCargo(new Cargo(CargoType.PASSENGERS, 10, true, CargoType.PASSENGERS.getBaseValue()));
-            addCargo(new Cargo(CargoType.MAIL, 5, true, CargoType.MAIL.getBaseValue()));
+            addCargo(new Cargo(CargoType.PASSENGERS, (int) (10 * factor), true, CargoType.PASSENGERS.getBaseValue()));
+            addCargo(new Cargo(CargoType.MAIL, (int) (5 * factor), true, CargoType.MAIL.getBaseValue()));
         }
 
         for (Industry industry : industries) {
             CargoType type = industry.getCargoType();
-            int amount = industry.getYearlyQuantity();
+            int amount = (int) (industry.getYearlyQuantity() * factor);
             double fixedValue = type.getBaseValue();
 
             addCargo(new Cargo(type, amount, false, fixedValue));
