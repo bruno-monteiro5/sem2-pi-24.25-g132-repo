@@ -21,7 +21,7 @@ public class Industry implements Serializable {
     private Position position;
     private IndustryType type;
     private CargoType cargoType;
-    private int yearlyOutput;
+    private int yearlyQuantity;
 
 
     /**
@@ -53,8 +53,8 @@ public class Industry implements Serializable {
         return this.cargoType;
     }
 
-    public int getYearlyOutput() {
-        return this.yearlyOutput;
+    public int getYearlyQuantity() {
+        return this.yearlyQuantity;
     }
 
 
