@@ -118,7 +118,7 @@ public class IndustryTest {
     void testGetYearlyOutput() {
         Industry industry = new Industry("Factory", new Position(1, 2), IndustryType.TRANSFORMING);
         // O valor padrão deve ser 0
-        assertEquals(0, industry.getYearlyOutput());
+        assertEquals(0, industry.getYearlyQuantity());
     }
 
 

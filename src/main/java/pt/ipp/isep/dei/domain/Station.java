@@ -3,8 +3,6 @@ package pt.ipp.isep.dei.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import pt.ipp.isep.dei.domain.Demand;
-import pt.ipp.isep.dei.domain.Delivery;
 
 
 /**
@@ -354,7 +352,7 @@ public class Station implements Serializable {
 
         for (Industry industry : industries) {
             CargoType type = industry.getCargoType();
-            int amount = industry.getYearlyOutput();
+            int amount = industry.getYearlyQuantity();
 
 
             double fixedValue = 0;
@@ -372,9 +370,9 @@ public class Station implements Serializable {
                 default:
                     fixedValue = 30;
             }
-            addCargo(new Cargo(type, industry.getYearlyOutput(), false, fixedValue));
+            addCargo(new Cargo(type, industry.getYearlyQuantity(), false, fixedValue));
 
-            addCargo(new Cargo(industry.getCargoType(), industry.getYearlyOutput(), false, fixedValue));
+            addCargo(new Cargo(industry.getCargoType(), industry.getYearlyQuantity(), false, fixedValue));
 
         }
     }
