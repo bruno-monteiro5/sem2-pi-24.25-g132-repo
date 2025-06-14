@@ -29,6 +29,7 @@ public class Repositories {
     private final RouteRepository routeRepository;
     private final ScenarioRepository scenarioRepository;
     private final SimulatorRepository simulatorRepository;
+    private final CargoDeliveryRepository cargoDeliveryRepository;
 
 
     private Repositories() {
@@ -47,6 +48,7 @@ public class Repositories {
         routeRepository = new RouteRepository();
         scenarioRepository = new ScenarioRepository();
         simulatorRepository = new SimulatorRepository();
+        cargoDeliveryRepository = new CargoDeliveryRepository();
 
     }
 
@@ -124,6 +126,8 @@ public class Repositories {
     }
 
     public SimulatorRepository getSimulatorRepository() {return simulatorRepository;}
+
+    public CargoDeliveryRepository getCargoDeliveryRepository() {return cargoDeliveryRepository;}
 
 
 
