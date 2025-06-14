@@ -131,9 +131,6 @@ public class AssignTrainToRouteUI implements Runnable {
             }
 
 
-            PointOfRoute point = new PointOfRoute(station, cargoes, selectedMode);
-            route.addPointOfRoute(point);
-
 
             // Verificar se há linha entre a estação anterior e esta
             List<PointOfRoute> existingPoints = route.getPointsOfRoute();
