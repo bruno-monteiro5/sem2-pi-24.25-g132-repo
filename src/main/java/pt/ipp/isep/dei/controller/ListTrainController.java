@@ -11,8 +11,10 @@ public class ListTrainController {
     private final TrainRepository repository = Repositories.getInstance().getTrainRepository();
 
     public List<Train> getAllTrainsSorted() {
-        List<Train> trains = repository.getAll();
-        Collections.sort(trains, new TrainComparator());
+        var scenario = Repositories.getInstance().getScenarioRepository().getActiveScenario();
+        List<Train> trains = (scenario == null) ? new java.util.ArrayList<>() : scenario.getTrains();
+        trains.sort(new TrainComparator());
         return trains;
     }
+
 }
