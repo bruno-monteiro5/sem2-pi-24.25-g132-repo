@@ -25,12 +25,16 @@ public class CreateScenarioUI implements Runnable {
         int endYear = sc.nextInt();
         sc.nextLine();
 
+        if (startYear > endYear) {
+            System.out.println("Error: Initial year must be less than or equal to final year.");
+            return;
+        }
+
         PeriodTime periodTime = new PeriodTime(startYear, endYear);
         Scenario scenario = controller.createScenario(name, map, periodTime);
         map.getScenarios().add(scenario);
 
-        // Tipos de locomotiva
-        ArrayList<String> tiposEscolhidos = new ArrayList<>();
+        ArrayList<String> chosenTypes = new ArrayList<>();
 
         System.out.println("Add types of locomotives (STEAM, DIESEL, ELECTRIC). Write 'end' to end:");
         String input = "";
@@ -40,8 +44,8 @@ public class CreateScenarioUI implements Runnable {
 
             if (!input.equalsIgnoreCase("END")) {
                 if (input.equals("STEAM") || input.equals("DIESEL") || input.equals("ELECTRIC")) {
-                    if (!tiposEscolhidos.contains(input)) {
-                        tiposEscolhidos.add(input);
+                    if (!chosenTypes.contains(input)) {
+                        chosenTypes.add(input);
                     }
                 } else {
                     System.out.println("Invalid type.");
@@ -84,7 +88,7 @@ public class CreateScenarioUI implements Runnable {
 
         for (LocomotiveType type : LocomotiveType.values()) {
             FuelType fuel = type.getFuelType();
-            for (String choose : tiposEscolhidos) {
+            for (String choose : chosenTypes) {
                 if ((choose.equals("STEAM") && fuel instanceof Steam) ||
                         (choose.equals("DIESEL") && fuel instanceof Diesel) ||
                         (choose.equals("ELECTRIC") && fuel instanceof Electric)) {
