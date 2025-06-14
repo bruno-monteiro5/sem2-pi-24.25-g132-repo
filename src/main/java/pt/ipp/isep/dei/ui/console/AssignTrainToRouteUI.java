@@ -138,7 +138,7 @@ public class AssignTrainToRouteUI implements Runnable {
                 Station previous = existingPoints.get(existingPoints.size() - 1).getStation();
                 RailwayLine line = controller.getRailwayLineBetween(previous, station);
                 if (line == null) {
-                    System.out.printf("⚠️ Não existe linha ferroviária entre %s e %s. Estação não adicionada.%n",
+                    System.out.printf("⚠️ There is no line between %s e %s. Station not added.%n",
                             previous.getName(), station.getName());
                     System.out.print("Add another point to the route? (Y/N): ");
                     String choice = scanner.nextLine().trim();
