@@ -19,68 +19,69 @@
     </top>
 
     <center>
-        <VBox spacing="15" alignment="CENTER">
-            <padding>
-                <Insets top="25" right="25" bottom="25" left="25"/>
-            </padding>
-            <children>
+        <StackPane alignment="CENTER">
+            <VBox spacing="15" alignment="CENTER" prefWidth="480" maxWidth="480">
+                <padding>
+                    <Insets top="25" right="25" bottom="25" left="25"/>
+                </padding>
+                <children>
 
-                <HBox spacing="10" alignment="CENTER">
-                    <Label text="Line Name:" style="-fx-font-weight: bold;"/>
-                    <TextField fx:id="lineNameField" prefWidth="300"/>
-                </HBox>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Line Name:" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="lineNameField" prefWidth="300"/>
+                    </HBox>
 
-                <HBox spacing="10" alignment="CENTER">
-                    <Label text="Start Station:" style="-fx-font-weight: bold;"/>
-                    <ComboBox fx:id="startStationComboBox" prefWidth="300"/>
-                </HBox>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Start Station:" style="-fx-font-weight: bold;"/>
+                        <ComboBox fx:id="startStationComboBox" prefWidth="300"/>
+                    </HBox>
 
-                <HBox spacing="10" alignment="CENTER">
-                    <Label text="End Station:" style="-fx-font-weight: bold;"/>
-                    <ComboBox fx:id="endStationComboBox" prefWidth="300"/>
-                </HBox>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="End Station:" style="-fx-font-weight: bold;"/>
+                        <ComboBox fx:id="endStationComboBox" prefWidth="300"/>
+                    </HBox>
 
-                <HBox spacing="10" alignment="CENTER">
-                    <Label text="Distance (km):" style="-fx-font-weight: bold;"/>
-                    <TextField fx:id="distanceField" prefWidth="300"/>
-                </HBox>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Distance (km):" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="distanceField" prefWidth="300"/>
+                    </HBox>
 
-                <HBox spacing="10" alignment="CENTER">
-                    <Label text="Intermediate Stations:" style="-fx-font-weight: bold;"/>
-                    <ComboBox fx:id="intermediateStationComboBox" prefWidth="200"/>
-                    <Button text="Add Station"
-                            fx:id="addIntermediateBtn"
-                            onAction="#handleAddIntermediate"
-                            style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"/>
-                </HBox>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Intermediate Stations:" style="-fx-font-weight: bold;"/>
+                        <ComboBox fx:id="intermediateStationComboBox" prefWidth="200"/>
+                        <Button text="Add Station"
+                                fx:id="addIntermediateBtn"
+                                onAction="#handleAddIntermediate"
+                                style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
 
-                <ListView fx:id="intermediateStationsListView"
-                          prefWidth="400"
-                          prefHeight="100"
-                          style="-fx-control-inner-background: #f8f8f8;"/>
+                    <ListView fx:id="intermediateStationsListView"
+                              prefWidth="400"
+                              prefHeight="100"
+                              style="-fx-control-inner-background: #f8f8f8;"/>
 
-                <Label fx:id="statusLabel"
-                       text=""
-                       style="-fx-text-fill: red; -fx-font-style: italic;" />
+                    <Label fx:id="statusLabel"
+                           text=""
+                           style="-fx-text-fill: red; -fx-font-style: italic;" />
 
-                <HBox spacing="15" alignment="CENTER">
-                    <Button text="Build Line"
-                            onAction="#handleBuildLine"
-                            style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
+                    <HBox spacing="15" alignment="CENTER">
+                        <Button text="Build Line"
+                                onAction="#handleBuildLine"
+                                style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
+                                prefWidth="180"/>
+
+                        <Button text="Clear Form"
+                                onAction="#handleClearForm"
+                                style="-fx-background-color: #b71c1c; -fx-text-fill: white; -fx-font-weight: bold;"
+                                prefWidth="180"/>
+                    </HBox>
+
+                    <Button text="Back to Menu"
+                            onAction="#handleBack"
+                            style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;"
                             prefWidth="180"/>
-
-                    <Button text="Clear Form"
-                            onAction="#handleClearForm"
-                            style="-fx-background-color: #b71c1c; -fx-text-fill: white; -fx-font-weight: bold;"
-                            prefWidth="180"/>
-                </HBox>
-
-                <Button text="Back to Menu"
-                        onAction="#handleBack"
-                        style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;"
-                        prefWidth="180"/>
-
-            </children>
-        </VBox>
+                </children>
+            </VBox>
+        </StackPane>
     </center>
 </BorderPane>
