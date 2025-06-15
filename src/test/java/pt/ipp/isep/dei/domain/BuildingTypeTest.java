@@ -1,123 +1,60 @@
 package pt.ipp.isep.dei.domain;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test class for the BuildingType enum.
+ * Unit tests for the {@link BuildingType} enum.
+ * Verifies correctness of getters, availability logic, and toString formatting.
  */
-class BuildingTypeTest {
+public class BuildingTypeTest {
 
     /**
-     * Tests the getCost() method for a BuildingType.
-     * Ensures the cost is correctly returned.
+     * Tests getter methods for all core attributes.
      */
     @Test
-    void testGetCost() {
-        // Arrange
-        BuildingType buildingType = BuildingType.TELEGRAPH;
+    public void testBasicGetters() {
+        BuildingType type = BuildingType.TELEPHONE;
 
-        // Act
-        double cost = buildingType.getCost();
-
-        // Assert
-        assertEquals(100, cost, "Cost should match the value defined in the BuildingType.");
+        assertEquals(10000, type.getCost());
+        assertEquals(BuildingType.TELEGRAPH, type.getReplaces());
+        assertEquals(1900, type.getAvailableYear());
+        assertEquals(0.10, type.getEfficiencyBonus());
+        assertEquals(1.1, type.getRevenueMultiplier());
+        assertEquals(0, type.getExtraStorageCapacity());
     }
 
     /**
-     * Tests the getReplaces() method for a BuildingType that replaces another type.
-     * Ensures the replaced building type is returned correctly.
+     * Tests the availability check for buildings.
      */
     @Test
-    void testGetReplaces_NotNull() {
-        // Arrange
-        BuildingType buildingType = BuildingType.TELEPHONE;
+    public void testIsAvailableIn() {
+        BuildingType type = BuildingType.CAFE_LARGE;
 
-        // Act
-        BuildingType replaces = buildingType.getReplaces();
-
-        // Assert
-        assertEquals(BuildingType.TELEGRAPH, replaces, "The replaced building type should be TELEGRAPH for TELEPHONE.");
+        assertFalse(type.isAvailableIn(1850)); // before availability
+        assertTrue(type.isAvailableIn(1900));  // at year
+        assertTrue(type.isAvailableIn(2000));  // after
     }
 
     /**
-     * Tests the getReplaces() method for a BuildingType that does not replace another type.
-     * Ensures null is returned when there is no replaced building type.
+     * Tests the getBuildingTypeDetails method returns self.
      */
     @Test
-    void testGetReplaces_Null() {
-        // Arrange
-        BuildingType buildingType = BuildingType.POST_OFFICE;
+    public void testSelfReferenceMethod() {
+        BuildingType type = BuildingType.HOTEL_SMALL;
 
-        // Act
-        BuildingType replaces = buildingType.getReplaces();
-
-        // Assert
-        assertNull(replaces, "Replaced building type should be null for POST_OFFICE.");
+        assertSame(type, type.getBuildingTypeDetails());
     }
 
     /**
-     * Tests the isAvailableIn() method for a year less than the available year of the BuildingType.
-     * Verifies that false is returned in this case.
+     * Tests the toString method with basic info.
      */
     @Test
-    void testIsAvailableIn_YearBeforeAvailable() {
-        // Arrange
-        BuildingType buildingType = BuildingType.TELEPHONE;
+    public void testToStringBasicInfo() {
+        String result = BuildingType.SILO.toString();
 
-        // Act
-        boolean isAvailable = buildingType.isAvailableIn(1899);
-
-        // Assert
-        assertFalse(isAvailable, "BuildingType TELEPHONE should not be available before 1900.");
-    }
-
-    /**
-     * Tests the isAvailableIn() method for the exact year when the BuildingType becomes available.
-     * Verifies that true is returned in this case.
-     */
-    @Test
-    void testIsAvailableIn_YearExactAvailable() {
-        // Arrange
-        BuildingType buildingType = BuildingType.TELEPHONE;
-
-        // Act
-        boolean isAvailable = buildingType.isAvailableIn(1900);
-
-        // Assert
-        assertTrue(isAvailable, "BuildingType TELEPHONE should be available starting from 1900.");
-    }
-
-    /**
-     * Tests the isAvailableIn() method for a year greater than the available year of the BuildingType.
-     * Verifies that true is returned in this case.
-     */
-    @Test
-    void testIsAvailableIn_YearAfterAvailable() {
-        // Arrange
-        BuildingType buildingType = BuildingType.TELEGRAPH;
-
-        // Act
-        boolean isAvailable = buildingType.isAvailableIn(1900);
-
-        // Assert
-        assertTrue(isAvailable, "BuildingType TELEGRAPH should be available after 1850.");
-    }
-
-    /**
-     * Tests the getBuildingTypeDetails() method.
-     * Verifies that the method returns the current building type itself.
-     */
-    @Test
-    void testGetBuildingTypeDetails() {
-        // Arrange
-        BuildingType buildingType = BuildingType.CAFE_LARGE;
-
-        // Act
-        BuildingType result = buildingType.getBuildingTypeDetails();
-
-        // Assert
-        assertEquals(buildingType, result, "The getBuildingTypeDetails method should return the current building type.");
+        assertTrue(result.contains("SILO"));
+        assertTrue(result.contains("availableYear=1850"));
+        assertTrue(result.contains("extraStorageCapacity=20"));
     }
 }

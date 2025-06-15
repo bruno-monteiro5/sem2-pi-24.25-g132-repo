@@ -1,4 +1,3 @@
-
 package pt.ipp.isep.dei.domain;
 
 import org.junit.jupiter.api.Test;
@@ -6,48 +5,40 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the {@link Locomotive} class.
- * Ensures 100% test coverage of all public methods.
+ *
+ * This class checks if the Locomotive object is created correctly,
+ * and if its methods work as expected.
  */
 public class LocomotiveTest {
 
     /**
-     * Test constructor and getters.
+     * Tests the constructor and getter methods.
+     *
+     * This test checks if the locomotive type is stored correctly after creation,
+     * and that the start year is initialized to 0 by default.
      */
     @Test
     public void testConstructorAndGetters() {
-        Locomotive loco = new Locomotive(1, LocomotiveType.DASH_9);
-        assertEquals(1, loco.getId());
-        assertEquals(LocomotiveType.DASH_9, loco.getType());
+        LocomotiveType type = LocomotiveType.GG1;
+        Locomotive loco = new Locomotive(type);
+
+        assertEquals(type, loco.getType()); // check if type is stored
+        assertEquals(0, loco.getStartYear()); // check default start year
     }
 
     /**
-     * Test toString() method.
+     * Tests the toString method.
+     *
+     * This test checks if the string representation of the locomotive includes
+     * the name, fuel type, and top speed from its type.
      */
     @Test
     public void testToString() {
-        Locomotive loco = new Locomotive(1, LocomotiveType.DASH_9);
+        Locomotive loco = new Locomotive(LocomotiveType.HUDSON);
         String result = loco.toString();
-        assertTrue(result.contains("Locomotive {"));
-        assertTrue(result.contains("ID=1"));
-        assertTrue(result.contains("Dash-9"));
-        assertTrue(result.contains("Diesel"));
-        assertTrue(result.contains("Speed="));
-    }
 
-    /**
-     * Test equals() and hashCode().
-     */
-    @Test
-    public void testEqualsAndHashCode() {
-        Locomotive loco1 = new Locomotive(1, LocomotiveType.DASH_9);
-        Locomotive loco2 = new Locomotive(1, LocomotiveType.STREAMLINER);
-        Locomotive loco3 = new Locomotive(2, LocomotiveType.DASH_9);
-
-        assertEquals(loco1, loco2); // Same ID
-        assertNotEquals(loco1, loco3); // Different ID
-
-        assertEquals(loco1.hashCode(), loco2.hashCode());
-        assertNotEquals(loco1.hashCode(), loco3.hashCode());
+        assertTrue(result.contains("Hudson")); // name from type
+        assertTrue(result.contains("Steam"));  // fuel type
+        assertTrue(result.contains(String.valueOf(LocomotiveType.HUDSON.getTopSpeed()))); // top speed
     }
 }
-
