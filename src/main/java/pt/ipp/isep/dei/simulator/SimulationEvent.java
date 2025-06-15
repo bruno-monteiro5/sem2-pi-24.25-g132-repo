@@ -4,8 +4,6 @@ package pt.ipp.isep.dei.simulator;
 public abstract class SimulationEvent implements Comparable<SimulationEvent> {
     private final int scheduledTick;
 
-
-
     public SimulationEvent(int scheduledTick) {
         this.scheduledTick = scheduledTick;
     }
