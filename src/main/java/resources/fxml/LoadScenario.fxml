@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pt.ipp.isep.dei.controller.LoadScenarioFXController"
+            prefWidth="600.0" prefHeight="300.0"
+            style="-fx-background-color: linear-gradient(to bottom, #f0f8ff, #d9ecf2);">
+
+    <top>
+        <Label text="📂 Load Scenario"
+               BorderPane.alignment="CENTER"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #003b49; -fx-padding: 20 0 10 0;"
+               maxWidth="Infinity"
+               alignment="CENTER"/>
+    </top>
+
+    <center>
+        <VBox spacing="12" alignment="CENTER">
+            <padding>
+                <Insets top="20" right="25" bottom="20" left="25"/>
+            </padding>
+            <children>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Filename:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="filenameField" promptText="scenario.ser" prefWidth="200"/>
+                </HBox>
+
+                <Label fx:id="feedbackLabel"
+                       text=""
+                       style="-fx-text-fill: red; -fx-font-style: italic;"/>
+
+                <HBox spacing="15" alignment="CENTER">
+                    <Button text="Load"
+                            onAction="#handleLoad"
+                            style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="150"/>
+                    <Button text="Back to Menu"
+                            onAction="#handleBack"
+                            style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;"
+                            prefWidth="150"/>
+                </HBox>
+
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

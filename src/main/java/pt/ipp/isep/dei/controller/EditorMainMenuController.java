@@ -42,8 +42,12 @@ public class EditorMainMenuController {
 
     @FXML
     public void handleSaveScenario() {
-        loadScene("/fxml/SaveScenario.fxml", "Scenario Map");
+        loadScene("/fxml/SaveScenario.fxml", "Save Scenario");
     }
+
+    @FXML
+    private void handleLoadScenario() {loadScene("/fxml/LoadScenario.fxml", "Load Scenario"); }
+
 
     @FXML
     public void handleBack() {
