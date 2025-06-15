@@ -11,7 +11,7 @@
             fx:controller="pt.ipp.isep.dei.controller.BuildStationFXController">
 
     <center>
-        <VBox alignment="CENTER" spacing="15">
+        <VBox alignment="CENTER" spacing="15" maxWidth="420" prefWidth="420">
             <padding>
                 <Insets bottom="25" left="25" right="25" top="25" />
             </padding>
