@@ -365,11 +365,19 @@ public class MainMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             Parent root = loader.load();
-            MainFX.setRootScene(root, title, width, height, true);
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mapArea.getScene().getWindow());
+            dialogStage.setTitle(title);
+            dialogStage.setResizable(false);
+            dialogStage.setScene(new Scene(root, width, height));
+            dialogStage.show();
         } catch (IOException e) {
             showError("Failed to load " + title + " screen.");
         }
     }
+
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

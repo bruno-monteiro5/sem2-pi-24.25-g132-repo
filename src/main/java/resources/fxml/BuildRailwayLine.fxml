@@ -22,7 +22,7 @@
         <StackPane alignment="CENTER">
             <VBox spacing="15" alignment="CENTER" prefWidth="480" maxWidth="480">
                 <padding>
-                    <Insets top="25" right="25" bottom="25" left="25"/>
+                    <Insets top="25" right="25" bottom="5" left="25"/> <!-- reduzido bottom -->
                 </padding>
                 <children>
 
@@ -64,22 +64,27 @@
                            text=""
                            style="-fx-text-fill: red; -fx-font-style: italic;" />
 
-                    <HBox spacing="15" alignment="CENTER">
-                        <Button text="Build Line"
-                                onAction="#handleBuildLine"
-                                style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
-                                prefWidth="180"/>
+                    <VBox spacing="5" alignment="CENTER">
+                        <children>
+                            <HBox spacing="15" alignment="CENTER">
+                                <Button text="Build Line"
+                                        onAction="#handleBuildLine"
+                                        style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
+                                        prefWidth="180"/>
 
-                        <Button text="Clear Form"
-                                onAction="#handleClearForm"
-                                style="-fx-background-color: #b71c1c; -fx-text-fill: white; -fx-font-weight: bold;"
-                                prefWidth="180"/>
-                    </HBox>
+                                <Button text="Clear Form"
+                                        onAction="#handleClearForm"
+                                        style="-fx-background-color: #b71c1c; -fx-text-fill: white; -fx-font-weight: bold;"
+                                        prefWidth="180"/>
+                            </HBox>
 
-                    <Button text="Back to Menu"
-                            onAction="#handleBack"
-                            style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;"
-                            prefWidth="180"/>
+                            <Button text="Back to Menu"
+                                    onAction="#handleBack"
+                                    style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;"
+                                    prefWidth="180"/>
+                        </children>
+                    </VBox>
+
                 </children>
             </VBox>
         </StackPane>
