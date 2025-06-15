@@ -1,11 +1,5 @@
 package pt.ipp.isep.dei.repository;
 
-import pt.ipp.isep.dei.controller.SimulatorController;
-import pt.ipp.isep.dei.domain.Scenario;
-import pt.ipp.isep.dei.domain.Simulator;
-
-import java.util.ArrayList;
-
 /**
  * Inspired on https://refactoring.guru/design-patterns/singleton/java/example
  *
@@ -28,7 +22,6 @@ public class Repositories {
     private final TrainRepository trainRepository;
     private final RouteRepository routeRepository;
     private final ScenarioRepository scenarioRepository;
-    private final SimulatorRepository simulatorRepository;
     private final CargoDeliveryRepository cargoDeliveryRepository;
 
 
@@ -47,7 +40,6 @@ public class Repositories {
         trainRepository = new TrainRepository();
         routeRepository = new RouteRepository();
         scenarioRepository = new ScenarioRepository();
-        simulatorRepository = new SimulatorRepository();
         cargoDeliveryRepository = new CargoDeliveryRepository();
 
     }
@@ -124,8 +116,6 @@ public class Repositories {
     public RailwayLineRepository getRailwayLineRepository() {
         return railwayLineRepository;
     }
-
-    public SimulatorRepository getSimulatorRepository() {return simulatorRepository;}
 
     public CargoDeliveryRepository getCargoDeliveryRepository() {return cargoDeliveryRepository;}
 
