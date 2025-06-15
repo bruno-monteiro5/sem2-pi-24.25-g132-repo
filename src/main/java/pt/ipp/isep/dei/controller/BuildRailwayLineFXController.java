@@ -31,10 +31,7 @@ public class BuildRailwayLineFXController {
     }
 
     private void loadStations() {
-        ObservableList<String> stations = FXCollections.observableArrayList(
-                "Lisboa Oriente", "Porto Campanhã", "Faro", "Coimbra B",
-                "Aveiro", "Braga", "Guarda", "Évora", "Beja", "Viana do Castelo"
-        );
+        ObservableList<String> stations = FXCollections.observableArrayList();
 
         startStationComboBox.setItems(stations);
         endStationComboBox.setItems(stations);
@@ -112,8 +109,7 @@ public class BuildRailwayLineFXController {
             }
 
             showStatus("Railway line created successfully!", "green");
-            handleClearForm(null); // Limpa o formulário após sucesso
-
+            handleClearForm(null);
         } catch (NumberFormatException e) {
             showStatus("Invalid distance value. Please enter a valid number.", "red");
         }
