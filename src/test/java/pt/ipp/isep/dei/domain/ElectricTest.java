@@ -1,38 +1,29 @@
 package pt.ipp.isep.dei.domain;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for the Electric class.
+ * Unit test for the {@link Electric} fuel type.
+ *
+ * This test checks that the Electric fuel type behaves as expected.
  */
 public class ElectricTest {
 
     /**
-     * Tests that Electric returns the correct name.
+     * Tests all public methods of the Electric class.
+     *
+     * It checks that:
+     * - The name is "Electric"
+     * - The toString() returns "Electric"
+     * - The method requiresElectrifiedLine() returns true
      */
     @Test
-    void testName() {
-        FuelType electric = new Electric();
-        assertEquals("Electric", electric.name());
-    }
+    public void testElectricMethods() {
+        Electric electric = new Electric();
 
-    /**
-     * Tests that Electric returns the correct string representation.
-     */
-    @Test
-    void testToString() {
-        FuelType electric = new Electric();
-        assertEquals("Electric", electric.toString());
-    }
-
-    /**
-     * Tests that Electric requires electrification.
-     */
-    @Test
-    void testRequiresElectrifiedLine() {
-        FuelType electric = new Electric();
-        assertTrue(electric.requiresElectrifiedLine());
+        assertEquals("Electric", electric.name());             // name should be "Electric"
+        assertEquals("Electric", electric.toString());         // toString should return "Electric"
+        assertTrue(electric.requiresElectrifiedLine());        // Electric trains need electrified lines
     }
 }

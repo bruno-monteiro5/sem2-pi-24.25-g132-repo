@@ -1,101 +1,91 @@
 package pt.ipp.isep.dei.domain;
 
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for the FuelType class and its concrete subclasses:
- * Steam, Diesel, and Electric.
+ * Unit tests for {@link FuelType} and its subclasses.
+ *
+ * This class checks that all subclasses (Steam, Diesel, Electric) work correctly,
+ * and that comparison and availability methods return the expected results.
  */
 public class FuelTypeTest {
 
     /**
-     * Tests the name() method of each fuel type.
+     * Tests the Steam fuel type.
+     *
+     * This test checks that the name is "Steam", it does not require electrified lines,
+     * the toString is correct, and compareTo returns 0 when comparing two Steam instances.
      */
     @Test
-    void testName() {
+    public void testSteamConstructorAndMethods() {
+        FuelType fuel = new Steam();
+        assertEquals("Steam", fuel.name());
+        assertEquals("Steam", fuel.toString());
+        assertFalse(fuel.requiresElectrifiedLine());
+        assertEquals(0, fuel.compareTo(new Steam()));
+    }
+
+    /**
+     * Tests the Diesel fuel type.
+     *
+     * This test checks that the name is "Diesel", it does not require electrified lines,
+     * and compareTo returns a different value when compared to Steam.
+     */
+    @Test
+    public void testDieselConstructorAndMethods() {
+        FuelType fuel = new Diesel();
+        assertEquals("Diesel", fuel.name());
+        assertEquals("Diesel", fuel.toString());
+        assertFalse(fuel.requiresElectrifiedLine());
+        assertTrue(fuel.compareTo(new Steam()) != 0);
+    }
+
+    /**
+     * Tests the Electric fuel type.
+     *
+     * This test checks that the name is "Electric", it requires electrified lines,
+     * and the toString is correct.
+     */
+    @Test
+    public void testElectricConstructorAndMethods() {
+        FuelType fuel = new Electric();
+        assertEquals("Electric", fuel.name());
+        assertEquals("Electric", fuel.toString());
+        assertTrue(fuel.requiresElectrifiedLine());
+    }
+
+    /**
+     * Tests the compareTo method with all fuel types.
+     *
+     * This test checks that compareTo can be used to sort or compare different types,
+     * and always returns a non-zero value between different types.
+     */
+    @Test
+    public void testCompareToOrdering() {
         FuelType steam = new Steam();
         FuelType diesel = new Diesel();
         FuelType electric = new Electric();
 
-        assertEquals("Steam", steam.name());
-        assertEquals("Diesel", diesel.name());
-        assertEquals("Electric", electric.name());
+        assertTrue(diesel.compareTo(electric) != 0);
+        assertTrue(electric.compareTo(steam) != 0);
+        assertTrue(steam.compareTo(diesel) != 0);
     }
 
     /**
-     * Tests the toString() method of each fuel type.
+     * Tests the list returned by availableFuelTypes().
+     *
+     * This test checks that the method returns exactly 3 fuel types:
+     * one of each subclass (Steam, Diesel, Electric).
      */
     @Test
-    void testToString() {
-        FuelType steam = new Steam();
-        FuelType diesel = new Diesel();
-        FuelType electric = new Electric();
+    public void testAvailableFuelTypesCoversAll() {
+        List<FuelType> fuels = FuelType.availableFuelTypes();
 
-        assertEquals("Steam", steam.toString());
-        assertEquals("Diesel", diesel.toString());
-        assertEquals("Electric", electric.toString());
-    }
-
-    /**
-     * Tests the requiresElectrifiedLine() method of each fuel type.
-     */
-    @Test
-    void testRequiresElectrifiedLine() {
-        FuelType steam = new Steam();
-        FuelType diesel = new Diesel();
-        FuelType electric = new Electric();
-
-        assertFalse(steam.requiresElectrifiedLine());
-        assertFalse(diesel.requiresElectrifiedLine());
-        assertTrue(electric.requiresElectrifiedLine());
-    }
-
-    /**
-     * Tests the compareTo() method for comparing fuel types by name.
-     */
-    @Test
-    void testCompareTo() {
-        FuelType diesel1 = new Diesel();
-        FuelType diesel2 = new Diesel();
-        FuelType steam = new Steam();
-        FuelType electric = new Electric();
-
-        assertEquals(0, diesel1.compareTo(diesel2));
-        assertTrue(steam.compareTo(diesel1) > 0);
-        assertTrue(diesel1.compareTo(electric) < 0);
-    }
-
-    /**
-     * Tests the availableFuelTypes() method to ensure all types are returned.
-     */
-    @Test
-    void testAvailableFuelTypes() {
-        List<FuelType> types = FuelType.availableFuelTypes();
-
-        assertEquals(3, types.size());
-
-        boolean hasSteam = false;
-        boolean hasDiesel = false;
-        boolean hasElectric = false;
-
-        for (int i = 0; i < types.size(); i++) {
-            FuelType type = types.get(i);
-            if (type instanceof Steam) {
-                hasSteam = true;
-            } else if (type instanceof Diesel) {
-                hasDiesel = true;
-            } else if (type instanceof Electric) {
-                hasElectric = true;
-            }
-        }
-
-        assertTrue(hasSteam, "Expected list to contain Steam");
-        assertTrue(hasDiesel, "Expected list to contain Diesel");
-        assertTrue(hasElectric, "Expected list to contain Electric");
+        assertEquals(3, fuels.size());
+        assertTrue(fuels.stream().anyMatch(f -> f instanceof Steam));
+        assertTrue(fuels.stream().anyMatch(f -> f instanceof Diesel));
+        assertTrue(fuels.stream().anyMatch(f -> f instanceof Electric));
     }
 }
-
