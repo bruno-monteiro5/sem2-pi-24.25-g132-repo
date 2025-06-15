@@ -41,7 +41,7 @@ public class AssignTrainToRouteUI implements Runnable {
         Route route = new Route();
         route.setName(routeName);
 
-        boolean addMore;
+        boolean addMore = true;
         do {
             System.out.println("\n--- Add Point to Route ---");
 
@@ -52,39 +52,46 @@ public class AssignTrainToRouteUI implements Runnable {
             }
 
             System.out.println("Available Stations:");
-            for (Station s : stations) {
-                System.out.println("- " + s.getName());
+            for (int i = 0; i < stations.size(); i++) {
+                System.out.printf("%d. %s\n", i + 1, stations.get(i).getName());
             }
 
-            System.out.print("Enter Station name: ");
-            String stationName = scanner.nextLine().trim();
-            Station station = stations.stream()
-                    .filter(s -> s.getName().equalsIgnoreCase(stationName))
-                    .findFirst()
-                    .orElse(null);
-
-            if (station == null) {
-                System.out.println("Station not found.");
+            System.out.print("Enter station number: ");
+            int stationIndex;
+            try {
+                stationIndex = Integer.parseInt(scanner.nextLine().trim()) - 1;
+                if (stationIndex < 0 || stationIndex >= stations.size()) {
+                    System.out.println("Invalid station selection.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input.");
                 return;
             }
+            Station station = stations.get(stationIndex);
 
+            CargoType[] cargoTypes = CargoType.values();
             System.out.println("Available cargo types:");
-            for (CargoType type : CargoType.values()) {
-                System.out.println("- " + type.name());
+            for (int i = 0; i < cargoTypes.length; i++) {
+                System.out.printf("%d. %s\n", i + 1, cargoTypes[i].name());
             }
 
-            System.out.print("Enter cargo types to pick up : ");
+            System.out.print("Enter the numbers of cargo types to pick up (comma separated): ");
             String input = scanner.nextLine().trim();
             String[] cargoStrings = input.split(",");
             List<String> cargoes = new ArrayList<>();
 
-            for (String c : cargoStrings) {
-                String cleaned = c.trim().toUpperCase();
+            for (String s : cargoStrings) {
                 try {
-                    CargoType.valueOf(cleaned);
-                    cargoes.add(cleaned);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Invalid cargo type: " + cleaned);
+                    int index = Integer.parseInt(s.trim()) - 1;
+                    if (index >= 0 && index < cargoTypes.length) {
+                        cargoes.add(cargoTypes[index].name());
+                    } else {
+                        System.out.println("Invalid cargo number: " + (index + 1));
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input: " + s);
                     return;
                 }
             }
@@ -99,11 +106,10 @@ public class AssignTrainToRouteUI implements Runnable {
             String modeInput = scanner.nextLine().trim().toUpperCase();
 
             CargoMode selectedMode = null;
-
             try {
-                int modeIndex = Integer.parseInt(modeInput) - 1;
-                if (modeIndex >= 0 && modeIndex < modes.length) {
-                    selectedMode = modes[modeIndex];
+                int modeIdx = Integer.parseInt(modeInput) - 1;
+                if (modeIdx >= 0 && modeIdx < modes.length) {
+                    selectedMode = modes[modeIdx];
                 }
             } catch (NumberFormatException ignored) {}
 
@@ -118,10 +124,7 @@ public class AssignTrainToRouteUI implements Runnable {
                 return;
             }
 
-
-
             List<PointOfRoute> points = route.getPointsOfRoute();
-
             if (!points.isEmpty()) {
                 PointOfRoute lastPoint = points.get(points.size() - 1);
                 if (lastPoint.getStation().getName().equalsIgnoreCase(station.getName())) {
@@ -130,30 +133,28 @@ public class AssignTrainToRouteUI implements Runnable {
                 }
             }
 
-
-
-            // Verificar se há linha entre a estação anterior e esta
-            List<PointOfRoute> existingPoints = route.getPointsOfRoute();
-            if (!existingPoints.isEmpty()) {
-                Station previous = existingPoints.get(existingPoints.size() - 1).getStation();
+            boolean validToAdd = true;
+            if (!points.isEmpty()) {
+                Station previous = points.get(points.size() - 1).getStation();
                 RailwayLine line = controller.getRailwayLineBetween(previous, station);
                 if (line == null) {
-                    System.out.printf("⚠️ There is no line between %s e %s. Station not added.%n",
+                    System.out.printf("⚠️ There is no line between %s and %s. Station not added.%n",
                             previous.getName(), station.getName());
                     System.out.print("Add another point to the route? (Y/N): ");
                     String choice = scanner.nextLine().trim();
                     addMore = choice.equalsIgnoreCase("Y");
-                    continue;
+                    validToAdd = false;
                 }
             }
 
-            PointOfRoute point = new PointOfRoute(station, cargoes, selectedMode);
-            route.addPointOfRoute(point);
+            if (validToAdd) {
+                PointOfRoute point = new PointOfRoute(station, cargoes, selectedMode);
+                route.addPointOfRoute(point);
 
-            System.out.print("Add another point to the route? (Y/N): ");
-            String choice = scanner.nextLine().trim();
-            addMore = choice.equalsIgnoreCase("Y");
-
+                System.out.print("Add another point to the route? (Y/N): ");
+                String choice = scanner.nextLine().trim();
+                addMore = choice.equalsIgnoreCase("Y");
+            }
 
         } while (addMore);
 

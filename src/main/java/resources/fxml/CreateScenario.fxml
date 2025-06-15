@@ -2,9 +2,10 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pt.ipp.isep.dei.controller.CreateScenarioFXController"
             prefWidth="700.0" prefHeight="600.0"
             style="-fx-background-color: linear-gradient(to bottom, #f0f8ff, #d9ecf2);">
@@ -18,66 +19,71 @@
     </top>
 
     <center>
-        <ScrollPane fitToWidth="true" fitToHeight="true">
-            <VBox spacing="15" alignment="CENTER">
-                <padding>
-                    <Insets top="25" right="25" bottom="25" left="25"/>
-                </padding>
-                <children>
+        <VBox spacing="8" alignment="CENTER">
+            <padding>
+                <Insets top="25" right="25" bottom="5" left="25"/> <!-- mínimo espaço abaixo -->
+            </padding>
+            <children>
 
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Scenario Name:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="scenarioNameField" promptText="Enter scenario name..." prefWidth="250"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Start Year:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="startYearField" prefWidth="100"/>
+                    <Label text="End Year:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="endYearField" prefWidth="100"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Industry Generation Factor:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="industryFactorField" prefWidth="100" promptText="e.g. 1.0"/>
+                </HBox>
+
+                <VBox spacing="5" alignment="CENTER">
+                    <Label text="Available Locomotive Types:" style="-fx-font-weight: bold;"/>
                     <HBox spacing="10" alignment="CENTER">
-                        <Label text="Scenario Name:" style="-fx-font-weight: bold;"/>
-                        <TextField fx:id="scenarioNameField" promptText="Enter scenario name..." prefWidth="200"/>
+                        <CheckBox fx:id="steamCheckBox" text="Steam"/>
+                        <CheckBox fx:id="dieselCheckBox" text="Diesel"/>
+                        <CheckBox fx:id="electricCheckBox" text="Electric"/>
                     </HBox>
+                </VBox>
 
-                    <HBox spacing="10" alignment="CENTER">
-                        <Label text="Start Year:" style="-fx-font-weight: bold;"/>
-                        <TextField fx:id="startYearField" prefWidth="100"/>
-                        <Label text="End Year:" style="-fx-font-weight: bold;"/>
-                        <TextField fx:id="endYearField" prefWidth="100"/>
-                    </HBox>
+                <VBox spacing="8" alignment="CENTER">
+                    <Label text="Add Ports (optional):" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="portNameField" promptText="Port Name" prefWidth="250"/>
 
-                    <HBox spacing="10" alignment="CENTER">
-                        <Label text="Industry Generation Factor:" style="-fx-font-weight: bold;"/>
-                        <TextField fx:id="industryFactorField" prefWidth="100" promptText="e.g. 1.0"/>
-                    </HBox>
+                    <TextArea fx:id="importArea" promptText="Imported Cargos (comma-separated)"
+                              prefRowCount="2" prefWidth="400"/>
+                    <TextArea fx:id="exportArea" promptText="Exported Cargos (comma-separated)"
+                              prefRowCount="2" prefWidth="400"/>
+                    <TextArea fx:id="transformArea" promptText="Transformed Cargos (comma-separated)"
+                              prefRowCount="2" prefWidth="400"/>
 
-                    <VBox spacing="5">
-                        <Label text="Available Locomotive Types:" style="-fx-font-weight: bold;"/>
-                        <HBox spacing="10" alignment="CENTER">
-                            <CheckBox fx:id="steamCheckBox" text="Steam"/>
-                            <CheckBox fx:id="dieselCheckBox" text="Diesel"/>
-                            <CheckBox fx:id="electricCheckBox" text="Electric"/>
-                        </HBox>
-                    </VBox>
+                    <Button text="Add Port"
+                            onAction="#handleAddPort"
+                            style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="180"/>
+                </VBox>
 
-                    <VBox spacing="10">
-                        <Label text="Add Ports (optional):" style="-fx-font-weight: bold;"/>
-                        <TextField fx:id="portNameField" promptText="Port Name"/>
+                <Label fx:id="feedbackLabel"
+                       text=""
+                       style="-fx-text-fill: red; -fx-font-style: italic;"/>
 
-                        <TextArea fx:id="importArea" promptText="Imported Cargos (comma-separated)" prefRowCount="2"/>
-                        <TextArea fx:id="exportArea" promptText="Exported Cargos (comma-separated)" prefRowCount="2"/>
-                        <TextArea fx:id="transformArea" promptText="Transformed Cargos (comma-separated)" prefRowCount="2"/>
+                <HBox spacing="15" alignment="CENTER">
+                    <Button text="Create Scenario"
+                            onAction="#handleCreateScenario"
+                            style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="180"/>
+                    <Button text="Back to Menu"
+                            onAction="#handleBack"
+                            style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;"
+                            prefWidth="150"/>
+                </HBox>
 
-                        <Button text="Add Port" onAction="#handleAddPort"
-                                style="-fx-background-color: #90caf9; -fx-text-fill: black; -fx-font-weight: bold;"/>
-                    </VBox>
-
-                    <Label fx:id="feedbackLabel" text="" style="-fx-text-fill: red;"/>
-
-                    <HBox spacing="15" alignment="CENTER">
-                        <Button text="Create Scenario"
-                                onAction="#handleCreateScenario"
-                                style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
-                                prefWidth="180"/>
-
-                        <Button text="Back to Menu"
-                                onAction="#handleBack"
-                                style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" />
-                    </HBox>
-
-                </children>
-            </VBox>
-        </ScrollPane>
+            </children>
+        </VBox>
     </center>
 </BorderPane>

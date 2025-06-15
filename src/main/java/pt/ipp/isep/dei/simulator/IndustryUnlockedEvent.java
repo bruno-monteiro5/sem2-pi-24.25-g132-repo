@@ -18,7 +18,6 @@ public class IndustryUnlockedEvent extends SimulationEvent {
         System.out.printf("[Tick %d] IndustryUnlockedEvent: New industry unlocked → %s%n",
                 getScheduledTick(), industry.getName());
 
-        // (opcional) Mostrar alerta ao utilizador, notificar GUI, atualizar estatísticas...
     }
 
     public Industry getIndustry() {

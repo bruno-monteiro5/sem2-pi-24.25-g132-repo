@@ -13,16 +13,16 @@ public class LoadScenarioUI implements Runnable {
     @Override
     public void run() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Nome do ficheiro a carregar (ex: cenario1.dat): ");
+        System.out.print("File name loading: ");
         String filename = sc.nextLine();
 
         try {
             Scenario scenario = ScenarioFileHandler.loadScenarioFromFile(filename);
             controller.setCurrentScenario(scenario);
             controller.getScenarioRepo().add(scenario);
-            System.out.println("Cenário carregado: " + scenario.getName());
+            System.out.println("Scenario loaded: " + scenario.getName());
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Erro ao carregar cenário: " + e.getMessage());
+            System.out.println("Error while loading scenario: " + e.getMessage());
         }
     }
 }
