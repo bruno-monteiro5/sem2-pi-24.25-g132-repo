@@ -36,6 +36,11 @@ public class EditorMainMenuController {
     }
 
     @FXML
+    public void handleLoadMap() {
+        loadScene("/fxml/LoadMap.fxml", "Load Map");
+    }
+
+    @FXML
     public void handleBack() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
