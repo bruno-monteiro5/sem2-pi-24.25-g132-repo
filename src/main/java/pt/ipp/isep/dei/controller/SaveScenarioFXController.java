@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.repository.Repositories;
 import pt.ipp.isep.dei.ui.MainFX;
 
+import java.io.File;
 import java.io.IOException;
 
 public class SaveScenarioFXController {
@@ -38,7 +39,6 @@ public class SaveScenarioFXController {
         }
     }
 
-
     @FXML
     public void handleSave() {
         String filename = filenameField.getText().trim();
@@ -58,8 +58,19 @@ public class SaveScenarioFXController {
             return;
         }
 
+        // Adiciona a extensão .ser se necessário
+        if (!filename.endsWith(".ser")) {
+            filename += ".ser";
+        }
+
+        // Cria a pasta 'scenarios' se não existir
+        File dir = new File("scenarios");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
         try {
-            ScenarioFileHandler.saveScenarioToFile(scenario,"scenarios/" + filename);
+            ScenarioFileHandler.saveScenarioToFile(scenario, "scenarios/" + filename);
             feedbackLabel.setStyle("-fx-text-fill: green; -fx-font-style: italic;");
             feedbackLabel.setText("✔ Scenario saved successfully.");
         } catch (IOException e) {
