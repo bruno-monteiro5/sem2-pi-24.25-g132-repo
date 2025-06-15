@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -191,10 +192,17 @@ public class MainMenuController {
 
 
             eventListView.setItems(ApplicationSession.getInstance().getSimulatorEventMessages());
+            ApplicationSession.getInstance().getSimulatorEventMessages().addListener((ListChangeListener<String>) change -> {
+                while (change.next()) {
+                    if (change.wasAdded()) {
+                        Platform.runLater(() -> eventListView.scrollTo(eventListView.getItems().size() - 1));
+                    }
+                }
+            });
 
         } else {
             startButton.setDisable(true);
-            pauseButton.setDisable(true);
+            pauseButton.setDisable(false);
         }
 
         startAutoUpdate();
@@ -208,7 +216,7 @@ public class MainMenuController {
             if (event.isControlDown()) {
                 double zoomFactorDelta = (event.getDeltaY() > 0) ? 1.1 : 0.9;
                 double oldZoom = zoomFactor;
-                zoomFactor = clamp(zoomFactor * zoomFactorDelta, 0.2, 5.0);
+                zoomFactor = clamp(zoomFactor * zoomFactorDelta, 1, 5.0);
 
                 Bounds viewportBounds = mapScrollPane.getViewportBounds();
                 Bounds contentBounds = mapArea.getBoundsInParent();
