@@ -169,7 +169,6 @@ public class MainMenuController {
 
             if (simulatorEngine == null) {
                 simulatorEngine = new SimulatorEngine(scenario, player);
-                simulatorEngine.setEventListener();
                 ApplicationSession.getInstance().setSimulatorEngine(simulatorEngine);
             }
 
@@ -188,6 +187,8 @@ public class MainMenuController {
                     if (!messages.contains(msg)) {
                         messages.add(msg);
                     }
+
+                    eventListView.scrollTo(messages.size() - 1);
                 });
             });
 
