@@ -19,30 +19,32 @@
     </top>
 
     <center>
-        <VBox spacing="20" alignment="CENTER">
-            <padding>
-                <Insets top="30" right="30" bottom="30" left="30"/>
-            </padding>
+        <StackPane alignment="CENTER">
+            <VBox spacing="20" alignment="CENTER" prefWidth="400" maxWidth="400">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
 
-            <HBox spacing="10" alignment="CENTER">
-                <Label text="Locomotive:" style="-fx-font-weight: bold;"/>
-                <ComboBox fx:id="locomotiveComboBox" prefWidth="300"/>
-            </HBox>
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Locomotive:" style="-fx-font-weight: bold;"/>
+                    <ComboBox fx:id="locomotiveComboBox" prefWidth="300"/>
+                </HBox>
 
-            <Label fx:id="statusLabel"
-                   text=""
-                   style="-fx-text-fill: red; -fx-font-style: italic;" />
+                <Label fx:id="statusLabel"
+                       text=""
+                       style="-fx-text-fill: red; -fx-font-style: italic;" />
 
-            <HBox spacing="15" alignment="CENTER">
-                <Button text="Create Train"
-                        onAction="#onCreateTrain"
-                        style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
-                        prefWidth="180"/>
+                <HBox spacing="15" alignment="CENTER">
+                    <Button text="Create Train"
+                            onAction="#onCreateTrain"
+                            style="-fx-background-color: #00695c; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="180"/>
 
-                <Button text="Back to Menu"
-                        onAction="#handleBack"
-                        style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" />
-            </HBox>
-        </VBox>
+                    <Button text="Back to Menu"
+                            onAction="#handleBack"
+                            style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" />
+                </HBox>
+            </VBox>
+        </StackPane>
     </center>
 </BorderPane>
