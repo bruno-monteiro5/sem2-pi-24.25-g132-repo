@@ -245,6 +245,8 @@ public class Scenario implements Serializable {
         return getLineBetweenStations(a, b) != null;
     }
 
+
+
     /**
      * Returns a string representation of the scenario.
      *

@@ -25,6 +25,10 @@ public class MonthProgressionEvent extends SimulationEvent {
         System.out.printf("Tick %d: Month changed to %d, Year %d%n",
                 engine.getCurrentTick(), month, year);
 
+        if (month == 1) {
+            engine.generateMonthlyCargo();
+        }
+
 
         //A message alerting when a new locomotive becomes available, accordingly to its start year of service.
         for (LocomotiveType type : LocomotiveType.values()) {
@@ -52,10 +56,13 @@ public class MonthProgressionEvent extends SimulationEvent {
         }
 
         if (month == 1) {
+            double factor = scenario.getIndustryGenerationFactor();
             for (Station station : scenario.getStations()) {
+                station.generateAnnualCargoes(factor);
                 station.updateDemand();
             }
         }
+
 
         // Schedule the next month
         int nextMonth = (month % 12) + 1;

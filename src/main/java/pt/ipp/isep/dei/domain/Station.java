@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.domain;
 
+import pt.ipp.isep.dei.repository.Repositories;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +52,6 @@ public class Station implements Serializable {
     private ArrayList<Demand> demandList = new ArrayList<>();
     private double totalRevenue = 0;
     private ArrayList<Delivery> deliveries = new ArrayList<>();
-
 
 
 
@@ -508,6 +509,45 @@ public class Station implements Serializable {
 
         return totalExtraCapacity;
     }
+
+    public boolean hasDemandFor(String cargoTypeName) {
+        for (Cargo cargo : demandCargo) {
+            if (cargo.getType().name().equals(cargoTypeName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    private void addOrUpdateCargo(List<Cargo> list, CargoType type, int quantity, boolean isSupply) {
+        for (Cargo c : list) {
+            if (c.getType() == type) {
+                c.setQuantity(c.getQuantity() + quantity);
+                return;
+            }
+        }
+
+        double baseValue = type.getBaseValue(); // Presumido que vem do enum
+        list.add(new Cargo(type, quantity, isSupply, baseValue));
+    }
+
+    public List<Industry> getIndustriesInRange() {
+        List<Industry> inRange = new ArrayList<>();
+        List<Industry> allIndustries = Repositories.getInstance().getIndustryRepository().findAll();
+
+        for (Industry ind : allIndustries) {
+            if (this.getLocation().distanceTo(ind.getPosition()) <= 5) {
+                inRange.add(ind);
+            }
+        }
+
+        return inRange;
+    }
+
+
+
 
 }
 

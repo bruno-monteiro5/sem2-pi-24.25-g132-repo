@@ -85,4 +85,14 @@ public enum IndustryData {
     public int getCost() { return cost; }
     public int getProfitability() { return profitability; }
     public IndustryType getType() { return type; }
+
+    public static IndustryData fromName(String name) {
+        for (IndustryData data : IndustryData.values()) {
+            if (data.getName().equalsIgnoreCase(name)) {
+                return data;
+            }
+        }
+        return null;
+    }
+
 }
