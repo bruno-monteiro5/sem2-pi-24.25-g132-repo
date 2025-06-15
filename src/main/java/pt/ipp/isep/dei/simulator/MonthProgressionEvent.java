@@ -58,4 +58,11 @@ public class MonthProgressionEvent extends SimulationEvent {
         }
     }
 
+    @Override
+    public String getDescription() {
+        return String.format("Tick %d: Month changed to %d, Year %d",
+                getScheduledTick(), month, year);
+    }
+
+
 }

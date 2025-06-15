@@ -40,4 +40,13 @@ public class RouteCompletionEvent extends SimulationEvent {
     public boolean isForwardJourney() {
         return forwardJourney;
     }
+
+    @Override
+    public String getDescription() {
+        String direction = forwardJourney ? "FORWARD" : "BACKWARD";
+        return String.format("Tick %d: Train %s completed %s journey on route %s.",
+                getScheduledTick(), train.getId(), direction, route.getName());
+    }
+
+
 }

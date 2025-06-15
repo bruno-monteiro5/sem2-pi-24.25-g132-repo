@@ -11,6 +11,7 @@ import java.util.List;
 public class TrainDepartureEvent extends SimulationEvent {
     private final Train train;
     private final Station from;
+    private Station to;
 
     public TrainDepartureEvent(int tick, Train train, Station from) {
         super(tick);
@@ -46,6 +47,7 @@ public class TrainDepartureEvent extends SimulationEvent {
 
         // Continuar com a viagem
         train.setCurrentStation(next);
+        this.to = next;
 
         System.out.printf("Tick %d: Train %s departed from %s to %s%n",
                 engine.getCurrentTick(), train.getId(), from.getName(), next.getName());
@@ -53,10 +55,14 @@ public class TrainDepartureEvent extends SimulationEvent {
 
         int arrivalTick = engine.getCurrentTick() + train.getTravelDuration();
         engine.scheduleEvent(new TrainArrivalEvent(arrivalTick, train, next));
-
-
     }
 
+    @Override
+    public String getDescription() {
+        if (to == null) return "Train departure not completed yet.";
+        return String.format("Tick %d: Train %s departed from %s to %s",
+                getScheduledTick(), train.getId(), from.getName(), to.getName());
+    }
 
 }
 
