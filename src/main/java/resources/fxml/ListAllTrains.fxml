@@ -19,21 +19,23 @@
     </top>
 
     <center>
-        <VBox spacing="10" alignment="CENTER">
-            <padding>
-                <Insets top="25" right="25" bottom="25" left="25"/>
-            </padding>
+        <StackPane alignment="CENTER">
+            <VBox spacing="10" alignment="CENTER" prefWidth="600" maxWidth="600">
+                <padding>
+                    <Insets top="25" right="25" bottom="25" left="25"/>
+                </padding>
 
-            <TextArea fx:id="trainListArea"
-                      editable="false"
-                      wrapText="true"
-                      prefHeight="350"
-                      prefWidth="600"
-                      style="-fx-control-inner-background: #f4f9ff; -fx-border-color: #b0bec5;" />
+                <TextArea fx:id="trainListArea"
+                          editable="false"
+                          wrapText="true"
+                          prefHeight="350"
+                          prefWidth="600"
+                          style="-fx-control-inner-background: #f4f9ff; -fx-border-color: #b0bec5;" />
 
-            <Button text="Back to Menu"
-                    onAction="#handleBack"
-                    style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" />
-        </VBox>
+                <Button text="Back to Menu"
+                        onAction="#handleBack"
+                        style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" />
+            </VBox>
+        </StackPane>
     </center>
 </BorderPane>

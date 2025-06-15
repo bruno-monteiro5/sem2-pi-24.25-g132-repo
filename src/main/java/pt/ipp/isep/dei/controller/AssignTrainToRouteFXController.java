@@ -100,6 +100,8 @@ public class AssignTrainToRouteFXController {
             MainFX.setRootScene(root, "Main Menu", 800, 600,true);
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("FXML error: " + e.getMessage());
+
         }
     }
 }
