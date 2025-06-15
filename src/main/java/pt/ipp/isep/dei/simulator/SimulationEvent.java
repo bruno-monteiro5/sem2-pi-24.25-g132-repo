@@ -18,4 +18,7 @@ public abstract class SimulationEvent implements Comparable<SimulationEvent> {
     public int compareTo(SimulationEvent other) {
         return Integer.compare(this.scheduledTick, other.scheduledTick);
     }
+
+    public abstract String getDescription();
+
 }
