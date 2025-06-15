@@ -26,7 +26,7 @@ public class AnnualFinancialResultsController {
         double trainCost = calculateTrainMaintenance();
         double fuelCost = calculateFuelCost(currentYear);
 
-        resetAnnualData(); // Limpa dados para o próximo ano
+        resetAnnualData();
 
         return new AnnualFinancialResults(currentYear, revenue, trackCost, trainCost, fuelCost);
     }
@@ -78,7 +78,6 @@ public class AnnualFinancialResultsController {
     }
 
     private double getCargoBaseValue(CargoType type) {
-        // Valores base conforme especificado no problema
         switch (type) {
             case PASSENGERS: return 100;
             case MAIL: return 60;
