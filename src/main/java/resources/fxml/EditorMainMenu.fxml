@@ -16,6 +16,7 @@
                 <Button onAction="#handleSaveMap" prefWidth="200" text="Save Map" />
                 <Button onAction="#handleLoadMap" prefWidth="200" text="Load Map" />
                 <Button onAction="#handleSaveScenario" prefWidth="200" text="Save Scenario" />
+                <Button onAction="#handleLoadScenario" prefWidth="200" text="Load Scenario" />
                 <Button onAction="#handleBack" prefWidth="200" style="-fx-background-color: #b0bec5; -fx-text-fill: #263238;" text="Back to Login" />
             </children>
         </VBox>
