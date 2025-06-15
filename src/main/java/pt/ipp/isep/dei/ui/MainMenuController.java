@@ -2,14 +2,14 @@ package pt.ipp.isep.dei.ui;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -20,6 +20,7 @@ import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.domain.Player;
 import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.repository.Repositories;
+import pt.ipp.isep.dei.simulator.SimulatorEngine;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -37,6 +38,21 @@ public class MainMenuController {
     @FXML private Label noMapLabel;
     @FXML private Slider zoomSlider;
     @FXML private Button backToLoginButton;
+    @FXML
+    private Button startButton;
+
+    @FXML
+    private Button pauseButton;
+
+    @FXML
+    private ListView<String> eventListView;
+
+    private SimulatorEngine simulatorEngine;
+
+    private final ObservableList<String> eventMessages = FXCollections.observableArrayList();
+    private Timeline simulationLoop;
+
+
 
 
     private Timeline budgetUpdater;
@@ -60,8 +76,7 @@ public class MainMenuController {
         if (map == null) {
             mapImageView.setVisible(false);
             noMapLabel.setVisible(true);
-        }
-        if (map != null) {
+        } else {
             mapLabel.setText("Map: " + map.getName());
             scaleLabel.setText("Scale: " + map.getScale());
 
@@ -71,9 +86,6 @@ public class MainMenuController {
             int mapWidthCells = map.getWidth();
             int mapHeightCells = map.getHeight();
 
-            mapImageView.setFitWidth(mapWidthCells);
-            mapImageView.setFitHeight(mapHeightCells);
-
             mapImageView.setFitWidth(650);
             mapImageView.setFitHeight(640);
 
@@ -82,7 +94,6 @@ public class MainMenuController {
                     640.0 / mapHeightCells
             );
             mapArea.setPrefSize(mapWidthCells * cellSize, mapHeightCells * cellSize);
-
 
             mapImageView.setVisible(true);
             noMapLabel.setVisible(false);
@@ -96,11 +107,26 @@ public class MainMenuController {
         if (scenario != null && scenario.getPeriodTime() != null) {
             scenarioLabel.setText("Scenario: " + scenario.getName());
             yearLabel.setText("Year: " + scenario.getPeriodTime().getStartYear());
+
+            // INICIALIZAR O SIMULADOR
+            simulatorEngine = new SimulatorEngine(scenario, Repositories.getInstance().getPlayerRepository().getCurrentPlayer());
+            eventListView.setItems(eventMessages); // Bind à ListView
+
+            simulatorEngine.setEventListener(event -> {
+                Platform.runLater(() -> {
+                    String msg = String.format("[Tick %d] %s", event.getScheduledTick(), event.getClass().getSimpleName());
+                    eventMessages.add(msg);
+                });
+            });
+        } else {
+            startButton.setDisable(true);
+            pauseButton.setDisable(true);
         }
 
         updateBudget();
         startBudgetAutoUpdate();
     }
+
 
     private void updateBudget() {
         Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
@@ -165,10 +191,6 @@ public class MainMenuController {
     }
 
     @FXML
-    public void handleStartSimulation() {
-    }
-
-    @FXML
     public void handleLogout() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
@@ -218,4 +240,29 @@ public class MainMenuController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
+
+    @FXML
+    private void handleStartSimulation() {
+        if (simulatorEngine != null) {
+            if (simulationLoop == null) {
+                simulationLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> simulatorEngine.runNextEvent()));
+                simulationLoop.setCycleCount(Timeline.INDEFINITE);
+            }
+
+            simulationLoop.play();
+            eventMessages.add("▶ Simulação iniciada");
+        }
+    }
+
+
+    @FXML
+    private void handlePauseSimulation() {
+        if (simulationLoop != null) {
+            simulationLoop.pause();
+            eventMessages.add("⏸ Simulação pausada");
+        }
+    }
+
 }
