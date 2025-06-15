@@ -12,7 +12,7 @@ public class TrainComparator implements Comparator<Train> {
 
         if (typeComparison != 0) return typeComparison;
 
-        //Order by name
+        //Order the locomotives by name
 
         return t1.getLocomotive().getType().getName()
                 .compareTo(t2.getLocomotive().getType().getName());
