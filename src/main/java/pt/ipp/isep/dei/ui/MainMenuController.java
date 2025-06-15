@@ -59,7 +59,8 @@ public class MainMenuController {
 
     private SimulatorEngine simulatorEngine;
 
-    private final ObservableList<String> eventMessages = FXCollections.observableArrayList();
+    private static final ObservableList<String> sharedEventMessages = FXCollections.observableArrayList();
+
     private Timeline simulationLoop;
 
 
@@ -97,7 +98,6 @@ public class MainMenuController {
 
             setupZoomOnScroll();
 
-
             int mapWidth = map.getWidth();
             int mapHeight = map.getHeight();
 
@@ -125,9 +125,6 @@ public class MainMenuController {
             int mapWidthCells = map.getWidth();
             int mapHeightCells = map.getHeight();
 
-            mapImageView.setFitWidth(mapWidthCells);
-            mapImageView.setFitHeight(mapHeightCells);
-
             mapImageView.setFitWidth(650);
             mapImageView.setFitHeight(640);
 
@@ -137,7 +134,6 @@ public class MainMenuController {
             );
             mapArea.setPrefSize(mapWidthCells * cellSize, mapHeightCells * cellSize);
 
-
             mapImageView.setVisible(true);
             noMapLabel.setVisible(false);
         }
@@ -146,16 +142,19 @@ public class MainMenuController {
             scenarioLabel.setText("Scenario: " + scenario.getName());
             yearLabel.setText("Year: " + scenario.getPeriodTime().getStartYear());
 
-            // INICIALIZAR O SIMULADOR
-            simulatorEngine = new SimulatorEngine(scenario, Repositories.getInstance().getPlayerRepository().getCurrentPlayer());
-            eventListView.setItems(eventMessages); // Bind à ListView
+            Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
 
-            simulatorEngine.setEventListener(event -> {
-                Platform.runLater(() -> {
-                    String msg = String.format("[Tick %d] %s", event.getScheduledTick(), event.getClass().getSimpleName());
-                    eventMessages.add(msg);
-                });
-            });
+            simulatorEngine = ApplicationSession.getInstance().getSimulatorEngine();
+
+            if (simulatorEngine == null) {
+                simulatorEngine = new SimulatorEngine(scenario, player);
+                simulatorEngine.setEventListener(); // Registo único e direto
+                ApplicationSession.getInstance().setSimulatorEngine(simulatorEngine);
+            }
+
+            // Ligação da lista global de eventos à ListView
+            eventListView.setItems(ApplicationSession.getInstance().getSimulatorEventMessages());
+
         } else {
             startButton.setDisable(true);
             pauseButton.setDisable(true);
@@ -164,6 +163,9 @@ public class MainMenuController {
         updateBudget();
         startBudgetAutoUpdate();
     }
+
+
+
 
     private void setupZoomOnScroll() {
         mapScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
@@ -302,29 +304,25 @@ public class MainMenuController {
     @FXML
     private void handleStartSimulation() {
         if (simulatorEngine != null) {
-            // Limpa eventos anteriores
-            eventMessages.clear();
+            // Limpa mensagens anteriores da lista partilhada
+            ApplicationSession.getInstance().getSimulatorEventMessages().clear();
 
-            // Garante que o listener está atualizado
-            simulatorEngine.setEventListener(event -> {
-                Platform.runLater(() -> {
-                    String msg = String.format("[Tick %d] %s", event.getScheduledTick(), event.getClass().getSimpleName());
-                    eventMessages.add(msg);
-                });
-            });
-
-            // Cria o loop se ainda não existir
+            // Cria o loop apenas uma vez
             if (simulationLoop == null) {
                 simulationLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> simulatorEngine.runNextEvent()));
                 simulationLoop.setCycleCount(Timeline.INDEFINITE);
             }
 
+            // Inicia a simulação
             simulatorEngine.start();
             simulationLoop.play();
 
-            eventMessages.add("▶ Simulation started");
+            ApplicationSession.getInstance().getSimulatorEventMessages().add("▶ Simulation started");
         }
     }
+
+
+
 
 
 
@@ -332,8 +330,9 @@ public class MainMenuController {
     private void handlePauseSimulation() {
         if (simulationLoop != null) {
             simulationLoop.pause();
-            eventMessages.add("⏸ Simulation paused");
+            sharedEventMessages.add("⏸ Simulation paused");
         }
     }
+
 
 }

@@ -15,10 +15,8 @@ public class IndustryUnlockedEvent extends SimulationEvent {
 
     @Override
     public void handle(SimulatorEngine engine) {
-        engine.notifyEvent(this);
         System.out.printf("[Tick %d] IndustryUnlockedEvent: New industry unlocked → %s%n",
                 getScheduledTick(), industry.getName());
-        engine.notifyEventHandled(this);
 
     }
 

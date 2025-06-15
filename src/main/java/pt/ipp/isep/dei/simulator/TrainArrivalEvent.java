@@ -14,7 +14,6 @@ public class TrainArrivalEvent extends SimulationEvent {
 
     @Override
     public void handle(SimulatorEngine engine) {
-        engine.notifyEvent(this);
 
         Station from = train.getLastStationVisited();
         Station to = station;
@@ -82,8 +81,6 @@ public class TrainArrivalEvent extends SimulationEvent {
         // Agendar próxima partida (mesmo que fim de rota — podes ajustar lógica depois)
         int departureTick = engine.getCurrentTick() + 1;
         engine.scheduleEvent(new TrainDepartureEvent(departureTick, train, station));
-
-        engine.notifyEventHandled(this);
     }
 
 }
