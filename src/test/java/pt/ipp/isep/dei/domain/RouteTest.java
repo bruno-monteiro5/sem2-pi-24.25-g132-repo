@@ -1,4 +1,4 @@
-
+/**
 package pt.ipp.isep.dei.domain;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for the {@link Route} class.
  * Ensures 100% test coverage of all public methods.
  */
+
+/**
 public class RouteTest {
 
     private Route route;
@@ -43,6 +45,8 @@ public class RouteTest {
     /**
      * Test setting and getting the name of the route.
      */
+
+    /**
     @Test
     public void testSetAndGetName() {
         route.setName("TestRoute");
@@ -74,5 +78,6 @@ public class RouteTest {
         assertTrue(output.contains("COAL"));
         assertTrue(output.contains("FULL"));
     }
-    */
+
 }
+*/

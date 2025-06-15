@@ -1,38 +1,29 @@
 package pt.ipp.isep.dei.domain;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for the Steam class.
+ * Unit test for the {@link Steam} fuel type.
+ *
+ * This test checks that the Steam fuel type behaves as expected.
  */
 public class SteamTest {
 
     /**
-     * Tests that Steam returns the correct name.
+     * Tests all public methods of the Steam class.
+     *
+     * It checks that:
+     * - The name is "Steam"
+     * - The toString() returns "Steam"
+     * - The method requiresElectrifiedLine() returns false
      */
     @Test
-    void testName() {
-        FuelType steam = new Steam();
-        assertEquals("Steam", steam.name());
-    }
+    public void testSteamMethods() {
+        Steam steam = new Steam();
 
-    /**
-     * Tests that Steam returns the correct string representation.
-     */
-    @Test
-    void testToString() {
-        FuelType steam = new Steam();
-        assertEquals("Steam", steam.toString());
-    }
-
-    /**
-     * Tests that Steam does not require electrification.
-     */
-    @Test
-    void testRequiresElectrifiedLine() {
-        FuelType steam = new Steam();
-        assertFalse(steam.requiresElectrifiedLine());
+        assertEquals("Steam", steam.name());             // name should be "Steam"
+        assertEquals("Steam", steam.toString());         // toString should also return "Steam"
+        assertFalse(steam.requiresElectrifiedLine());    // Steam trains do not need electrified lines
     }
 }

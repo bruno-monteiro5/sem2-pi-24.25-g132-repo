@@ -1,38 +1,29 @@
 package pt.ipp.isep.dei.domain;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for the Diesel class.
+ * Unit test for the {@link Diesel} fuel type.
+ *
+ * This test checks that the Diesel fuel type behaves as expected.
  */
 public class DieselTest {
 
     /**
-     * Tests that Diesel returns the correct name.
+     * Tests all public methods of the Diesel class.
+     *
+     * It checks that:
+     * - The name is "Diesel"
+     * - The toString() returns "Diesel"
+     * - The method requiresElectrifiedLine() returns false
      */
     @Test
-    void testName() {
-        FuelType diesel = new Diesel();
-        assertEquals("Diesel", diesel.name());
-    }
+    public void testDieselMethods() {
+        Diesel diesel = new Diesel();
 
-    /**
-     * Tests that Diesel returns the correct string representation.
-     */
-    @Test
-    void testToString() {
-        FuelType diesel = new Diesel();
-        assertEquals("Diesel", diesel.toString());
-    }
-
-    /**
-     * Tests that Diesel does not require electrification.
-     */
-    @Test
-    void testRequiresElectrifiedLine() {
-        FuelType diesel = new Diesel();
-        assertFalse(diesel.requiresElectrifiedLine());
+        assertEquals("Diesel", diesel.name());             // name should be "Diesel"
+        assertEquals("Diesel", diesel.toString());         // toString should return "Diesel"
+        assertFalse(diesel.requiresElectrifiedLine());     // Diesel trains do not need electrified lines
     }
 }
