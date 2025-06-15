@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import pt.ipp.isep.dei.domain.Map;
+import pt.ipp.isep.dei.ui.ApplicationSession;
 import pt.ipp.isep.dei.ui.MainFX;
 
 import java.io.File;
@@ -15,8 +16,6 @@ public class LoadMapFXController {
 
     @FXML
     private Label feedbackLabel;
-
-    private final CreateMapController controller = new CreateMapController();
 
     @FXML
     public void handleLoad() {
@@ -37,7 +36,7 @@ public class LoadMapFXController {
 
         try {
             Map loadedMap = MapFileHandler.loadMapFromFile(filename);
-            controller.getMapRepository().setActiveMap(loadedMap);
+            ApplicationSession.getInstance().setCurrentMap(loadedMap); // ✅ correto
             feedbackLabel.setStyle("-fx-text-fill: green; -fx-font-style: italic;");
             feedbackLabel.setText("✔ Map loaded: " + loadedMap.getName());
         } catch (IOException | ClassNotFoundException e) {
@@ -51,4 +50,3 @@ public class LoadMapFXController {
         MainFX.goToEditorMenu();
     }
 }
-
