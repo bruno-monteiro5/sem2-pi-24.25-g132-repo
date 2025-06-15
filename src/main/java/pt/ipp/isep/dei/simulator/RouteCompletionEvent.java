@@ -21,9 +21,12 @@ public class RouteCompletionEvent extends SimulationEvent {
 
     @Override
     public void handle(SimulatorEngine engine) {
+        engine.notifyEvent(this);
         String direction = forwardJourney ? "FORWARD" : "BACKWARD";
         System.out.printf("[Tick %d] RouteCompletionEvent: Train %s completed %s journey on route %s.%n",
                 getScheduledTick(), train.getId(), direction, route.getName());
+
+        engine.notifyEventHandled(this);
 
         // Aqui podes adicionar efeitos futuros, como estatísticas ou registo no FinanceManager
     }

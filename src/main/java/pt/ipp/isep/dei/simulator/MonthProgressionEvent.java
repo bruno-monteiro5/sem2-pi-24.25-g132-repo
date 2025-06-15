@@ -18,6 +18,8 @@ public class MonthProgressionEvent extends SimulationEvent {
 
     @Override
     public void handle(SimulatorEngine engine) {
+        engine.notifyEvent(this);
+
         // Update the simulated time
         engine.setSimulationStart(year, month);
 
@@ -55,6 +57,7 @@ public class MonthProgressionEvent extends SimulationEvent {
                     scenario
             ));
         }
+        engine.notifyEventHandled(this);
     }
 
 }

@@ -20,6 +20,7 @@ public class TrainDepartureEvent extends SimulationEvent {
 
     @Override
     public void handle(SimulatorEngine engine) {
+        engine.notifyEvent(this);
         List<PointOfRoute> points = train.getAssignedRoute().getPointsOfRoute();
         Station next = null;
 
@@ -50,8 +51,11 @@ public class TrainDepartureEvent extends SimulationEvent {
         System.out.printf("Tick %d: Train %s departed from %s to %s%n",
                 engine.getCurrentTick(), train.getId(), from.getName(), next.getName());
 
+
         int arrivalTick = engine.getCurrentTick() + train.getTravelDuration();
         engine.scheduleEvent(new TrainArrivalEvent(arrivalTick, train, next));
+
+        engine.notifyEventHandled(this);
     }
 
 
