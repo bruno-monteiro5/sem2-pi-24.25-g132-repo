@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.simulator;
 import pt.ipp.isep.dei.domain.*;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class SimulatorEngine {
     private int currentTick = 0;
@@ -15,6 +16,7 @@ public class SimulatorEngine {
     private final Scenario scenario;
     private final Player player;
     private final List<LocomotiveType> announcedLocomotives = new ArrayList<>();
+    private Consumer<SimulationEvent> eventListener;
 
 
     public Player getPlayer() {
@@ -39,9 +41,14 @@ public class SimulatorEngine {
             currentTick = next.getScheduledTick();
             next.handle(this);
 
-            pastEvents.add(next); // guardar no histórico
+            pastEvents.add(next);
             futureEventsSnapshot.clear();
-            futureEventsSnapshot.addAll(eventQueue); // atualizar snapshot
+            futureEventsSnapshot.addAll(eventQueue);
+
+            // 👉 Notificar o controlador de UI
+            if (eventListener != null) {
+                eventListener.accept(next);
+            }
         }
     }
 
@@ -65,6 +72,10 @@ public class SimulatorEngine {
 
     public int getCurrentSimulatedMonth() {
         return currentMonth;
+    }
+
+    public void setEventListener(Consumer<SimulationEvent> listener) {
+        this.eventListener = listener;
     }
 
     public boolean start() {
@@ -143,6 +154,19 @@ public class SimulatorEngine {
     public List<LocomotiveType> getAnnouncedLocomotives() {
         return announcedLocomotives;
     }
+
+    public void notifyEvent(SimulationEvent event) {
+        if (eventListener != null) {
+            eventListener.accept(event);
+        }
+    }
+
+    public void notifyEventHandled(SimulationEvent event) {
+        if (eventListener != null) {
+            eventListener.accept(event);
+        }
+    }
+
 
 
 
