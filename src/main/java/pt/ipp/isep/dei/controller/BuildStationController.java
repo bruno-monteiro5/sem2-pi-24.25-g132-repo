@@ -6,24 +6,37 @@ import pt.ipp.isep.dei.repository.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller responsible for building stations on the map and interacting with repositories.
+ * Provides validation, station name suggestion, overlap detection, and creation logic.
+ */
 public class BuildStationController {
 
     private MapRepository mapRepo;
     private StationTypeRepository stationTypeRepository;
     private PlayerRepository playerRepo;
 
+    /**
+     * Default constructor using the singleton repositories.
+     */
     public BuildStationController() {
         getMapRepo();
         getStationTypeRepository();
         getPlayerRepo();
     }
 
+    /**
+     * Constructor for injecting repositories directly.
+     */
     public BuildStationController(MapRepository mapRepo, StationTypeRepository stationTypeRepository, PlayerRepository playerRepo) {
         this.mapRepo = mapRepo;
         this.stationTypeRepository = stationTypeRepository;
         this.playerRepo = playerRepo;
     }
 
+    /**
+     * Lazily retrieves the map repository.
+     */
     public MapRepository getMapRepo() {
         if (mapRepo == null) {
             Repositories repositories = Repositories.getInstance();
@@ -32,6 +45,9 @@ public class BuildStationController {
         return mapRepo;
     }
 
+    /**
+     * Lazily retrieves the station type repository.
+     */
     public StationTypeRepository getStationTypeRepository() {
         if (stationTypeRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -40,6 +56,9 @@ public class BuildStationController {
         return stationTypeRepository;
     }
 
+    /**
+     * Lazily retrieves the player repository.
+     */
     public PlayerRepository getPlayerRepo() {
         if (playerRepo == null) {
             Repositories repositories = Repositories.getInstance();
@@ -48,11 +67,17 @@ public class BuildStationController {
         return playerRepo;
     }
 
+    /**
+     * Validates if the given position is suitable for placing a station.
+     */
     public boolean validatePosition(Position position) {
         Map map = mapRepo.getActiveMap();
         return map.validatePosition(position);
     }
 
+    /**
+     * Creates and adds a station to the scenario and deducts cost from the player.
+     */
     public boolean createStation(Position position, StationType stationType, String name, String center) {
         Map currentMap = mapRepo.getActiveMap();
         Player currentPlayer = playerRepo.getCurrentPlayer();
@@ -104,6 +129,9 @@ public class BuildStationController {
         return true;
     }
 
+    /**
+     * Suggests a name for a station based on the closest city.
+     */
     public String getSuggestedName(Position position, StationType stationType) {
         return suggestedName(position, stationType);
     }
@@ -137,24 +165,39 @@ public class BuildStationController {
         return Math.sqrt(dx * dx + dy * dy);
     }
 
+    /**
+     * Sets the center location of a station (unused in actual logic).
+     */
     public boolean setLocationCenter(Position position, int x, int y) {
         if (position == null) return false;
         position = new Position(x, y);
         return true;
     }
 
+    /**
+     * Creates a new position on the active map.
+     */
     public Position createPositon(int x, int y) {
         return mapRepo.getActiveMap().createPosition(x, y);
     }
 
+    /**
+     * Returns all available station types.
+     */
     public List<StationType> getStationTypes() {
         return stationTypeRepository.getAllStationTypes();
     }
 
+    /**
+     * Sets the selected map as active.
+     */
     public void selectedMap(Map map) {
         mapRepo.setActiveMap(map);
     }
 
+    /**
+     * Checks if there is an active map.
+     */
     public boolean hasActiveMap() {
         try {
             mapRepo.getActiveMap();
@@ -164,6 +207,9 @@ public class BuildStationController {
         }
     }
 
+    /**
+     * Checks if the new station's area overlaps any existing station's radius.
+     */
     private boolean isInsideOtherStationRadius(Position newPos, StationType newType, String newDirection) {
         List<Position> areaNew;
 
@@ -197,6 +243,9 @@ public class BuildStationController {
         return false;
     }
 
+    /**
+     * Builds a square of positions centered around the given position.
+     */
     private List<Position> getCenteredSquare(Position center, int size) {
         List<Position> positions = new ArrayList<>();
         int half = size / 2;
@@ -211,6 +260,9 @@ public class BuildStationController {
         return positions;
     }
 
+    /**
+     * Builds a square of positions anchored at a corner.
+     */
     private List<Position> getCornerSquare(Position corner, String direction) {
         List<Position> positions = new ArrayList<>();
         int size = 4;
@@ -233,6 +285,9 @@ public class BuildStationController {
         return positions;
     }
 
+    /**
+     * Lists all stations in the current active scenario.
+     */
     public List<Station> listAllStations() {
         Scenario currentScenario = Repositories.getInstance().getScenarioRepository().getActiveScenario();
         if (currentScenario == null) {
@@ -240,5 +295,4 @@ public class BuildStationController {
         }
         return currentScenario.getStations();
     }
-
 }
