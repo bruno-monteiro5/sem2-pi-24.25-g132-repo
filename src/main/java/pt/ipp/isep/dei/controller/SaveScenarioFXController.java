@@ -23,14 +23,21 @@ public class SaveScenarioFXController {
     public void initialize() {
         try {
             Scenario scenario = Repositories.getInstance().getScenarioRepository().getActiveScenario();
-            scenarioNameLabel.setText("Current Scenario: " + scenario.getName());
-            feedbackLabel.setText("");
-        } catch (IllegalStateException e) {
+            if (scenario != null) {
+                scenarioNameLabel.setText("Current Scenario: " + scenario.getName());
+                feedbackLabel.setText("");
+            } else {
+                scenarioNameLabel.setText("No scenario loaded.");
+                feedbackLabel.setStyle("-fx-text-fill: red; -fx-font-style: italic;");
+                feedbackLabel.setText("⚠ You must create or load a scenario before saving.");
+            }
+        } catch (Exception e) {
             scenarioNameLabel.setText("No scenario loaded.");
             feedbackLabel.setStyle("-fx-text-fill: red; -fx-font-style: italic;");
-            feedbackLabel.setText("⚠ You must create a scenario before saving.");
+            feedbackLabel.setText("⚠ You must create or load a scenario before saving.");
         }
     }
+
 
     @FXML
     public void handleSave() {
@@ -52,7 +59,7 @@ public class SaveScenarioFXController {
         }
 
         try {
-            ScenarioFileHandler.saveScenarioToFile(scenario, filename);
+            ScenarioFileHandler.saveScenarioToFile(scenario,"scenarios/" + filename);
             feedbackLabel.setStyle("-fx-text-fill: green; -fx-font-style: italic;");
             feedbackLabel.setText("✔ Scenario saved successfully.");
         } catch (IOException e) {

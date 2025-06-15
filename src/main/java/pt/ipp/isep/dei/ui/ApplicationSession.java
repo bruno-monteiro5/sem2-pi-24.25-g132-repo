@@ -1,9 +1,14 @@
 package pt.ipp.isep.dei.ui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import pt.ipp.isep.dei.domain.*;
+import pt.ipp.isep.dei.simulator.SimulationEvent;
+import pt.ipp.isep.dei.simulator.SimulatorEngine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ApplicationSession {
 
@@ -11,6 +16,9 @@ public class ApplicationSession {
 
     private Map currentMap;
     private Scenario currentScenario;
+    private SimulatorEngine simulatorEngine;
+    private Consumer<SimulationEvent> sharedEventListener = null;
+    private final ObservableList<String> simulatorEventMessages = FXCollections.observableArrayList();
 
     private final List<Locomotive> ownedLocomotives = new ArrayList<>();
     private final List<Train> createdTrains = new ArrayList<>();
@@ -55,4 +63,32 @@ public class ApplicationSession {
     public List<Train> getCreatedTrains() {
         return new ArrayList<>(createdTrains);
     }
+
+    //Simulator
+    public SimulatorEngine getSimulatorEngine() {
+        return simulatorEngine;
+    }
+
+    public void setSimulatorEngine(SimulatorEngine simulatorEngine) {
+        this.simulatorEngine = simulatorEngine;
+    }
+
+    public boolean hasSharedEventListener() {
+        return sharedEventListener != null;
+    }
+
+    public Consumer<SimulationEvent> getSharedEventListener() {
+        return sharedEventListener;
+    }
+
+    public void registerSharedEventListener(Consumer<SimulationEvent> listener) {
+        if (this.sharedEventListener == null) {
+            this.sharedEventListener = listener;
+        }
+    }
+
+    public ObservableList<String> getSimulatorEventMessages() {
+        return simulatorEventMessages;
+    }
+
 }
