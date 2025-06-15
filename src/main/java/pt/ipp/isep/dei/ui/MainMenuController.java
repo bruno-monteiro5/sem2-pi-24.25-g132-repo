@@ -28,6 +28,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import pt.ipp.isep.dei.domain.Position;
 import javafx.scene.layout.StackPane;
+import javafx.geometry.Bounds;
+
 
 
 
@@ -96,7 +98,6 @@ public class MainMenuController {
             mapLabel.setText("Map: " + map.getName());
             scaleLabel.setText("Scale: " + map.getScale());
 
-            setupZoomOnScroll();
 
             int mapWidth = map.getWidth();
             int mapHeight = map.getHeight();
@@ -111,15 +112,18 @@ public class MainMenuController {
                 double visualX = pos.getX() * cellSize;
                 double visualY = pos.getY() * cellSize;
 
-                Circle dot = new Circle(visualX, visualY, cellSize / 2.5);
-                dot.setFill(Color.DARKBLUE);
-                dot.setStroke(Color.WHITE);
-                dot.setStrokeWidth(1.5);
+                ImageView stationIcon = new ImageView(new Image(
+                        getClass().getResource("/images/station_icon.png").toExternalForm()));
+                stationIcon.setFitWidth(24);
+                stationIcon.setFitHeight(24);
 
-                Tooltip tooltip = new Tooltip(station.getName());
-                Tooltip.install(dot, tooltip);
+                stationIcon.setLayoutX(visualX - stationIcon.getFitWidth() / 2);
+                stationIcon.setLayoutY(visualY - stationIcon.getFitHeight() / 2);
 
-                mapArea.getChildren().add(dot);
+                Tooltip.install(stationIcon, new Tooltip(station.getName()));
+
+                mapArea.getChildren().add(stationIcon);
+
             }
 
             int mapWidthCells = map.getWidth();
@@ -127,6 +131,10 @@ public class MainMenuController {
 
             mapImageView.setFitWidth(650);
             mapImageView.setFitHeight(640);
+
+            mapArea.setMinSize(mapImageView.getFitWidth(), mapImageView.getFitHeight());
+            mapArea.setPrefSize(mapImageView.getFitWidth(), mapImageView.getFitHeight());
+
 
             cellSize = (int) Math.min(
                     650.0 / mapWidthCells,
@@ -136,6 +144,7 @@ public class MainMenuController {
 
             mapImageView.setVisible(true);
             noMapLabel.setVisible(false);
+            Platform.runLater(this::setupZoomOnScroll);
         }
 
         if (scenario != null && scenario.getPeriodTime() != null) {
@@ -170,19 +179,42 @@ public class MainMenuController {
     private void setupZoomOnScroll() {
         mapScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.isControlDown()) {
-                if (event.getDeltaY() > 0) {
-                    zoomFactor += ZOOM_DELTA;
-                } else {
-                    zoomFactor -= ZOOM_DELTA;
-                    if (zoomFactor < ZOOM_DELTA) zoomFactor = ZOOM_DELTA;
-                }
+                double zoomFactorDelta = event.getDeltaY() > 0 ? 1.1 : 0.9;
+                double oldZoom = zoomFactor;
+                zoomFactor *= zoomFactorDelta;
+                zoomFactor = clamp(zoomFactor, 0.2, 5.0);
+
+                Bounds viewport = mapScrollPane.getViewportBounds();
+                Bounds contentSize = mapArea.getBoundsInParent();
+
+                double mouseX = event.getX();
+                double mouseY = event.getY();
+
+                double posX = (mapScrollPane.getHvalue() * (contentSize.getWidth() - viewport.getWidth()) + mouseX) / oldZoom;
+                double posY = (mapScrollPane.getVvalue() * (contentSize.getHeight() - viewport.getHeight()) + mouseY) / oldZoom;
 
                 mapArea.setScaleX(zoomFactor);
                 mapArea.setScaleY(zoomFactor);
 
+                Platform.runLater(() -> {
+                    double newContentWidth = mapArea.getBoundsInParent().getWidth();
+                    double newContentHeight = mapArea.getBoundsInParent().getHeight();
+
+                    double scrollH = (posX * zoomFactor - mouseX) / (newContentWidth - viewport.getWidth());
+                    double scrollV = (posY * zoomFactor - mouseY) / (newContentHeight - viewport.getHeight());
+
+                    mapScrollPane.setHvalue(clamp(scrollH, 0, 1));
+                    mapScrollPane.setVvalue(clamp(scrollV, 0, 1));
+                });
+
                 event.consume();
             }
         });
+    }
+
+
+    private double clamp(double value, double min, double max) {
+        return Math.max(min, Math.min(max, value));
     }
 
 
@@ -227,6 +259,7 @@ public class MainMenuController {
 
     @FXML
     public void handleBuildRailwayLine() {
+        loadFXML("/fxml/BuildRailwayLine.fxml", "Build Railway Line", 600, 400);
     }
 
     @FXML
