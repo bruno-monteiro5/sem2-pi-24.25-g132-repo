@@ -53,7 +53,7 @@ public class TrainDepartureEvent extends SimulationEvent {
                 engine.getCurrentTick(), train.getId(), from.getName(), next.getName());
 
 
-        int arrivalTick = engine.getCurrentTick() + train.getTravelDuration();
+        int arrivalTick = engine.getCurrentTick() + train.getTravelDuration(from, next);
         engine.scheduleEvent(new TrainArrivalEvent(arrivalTick, train, next));
     }
 

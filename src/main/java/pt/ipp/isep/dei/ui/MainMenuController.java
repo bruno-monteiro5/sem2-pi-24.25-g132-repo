@@ -174,20 +174,24 @@ public class MainMenuController {
 
             simulatorEngine.setEventListener(event -> {
                 Platform.runLater(() -> {
-                    updateTime();
-
-                    String description = event.getDescription();
-                    ObservableList<String> messages = ApplicationSession.getInstance().getSimulatorEventMessages();
-
-                    for (String line : description.split("\n")) {
-                        if (!messages.contains(line)) {
-                            messages.add(line);
+                    if (event instanceof MonthProgressionEvent) {
+                        String description = event.getDescription();
+                        if (description.toLowerCase().contains("new locomotive available")) {
+                            showTemporaryAlert(description);
                         }
+                    }
+
+                    updateTime();
+                    String msg = event.getDescription();
+                    ObservableList<String> messages = ApplicationSession.getInstance().getSimulatorEventMessages();
+                    if (!messages.contains(msg)) {
+                        messages.add(msg);
                     }
 
                     eventListView.scrollTo(messages.size() - 1);
                 });
             });
+
 
             eventListView.setItems(ApplicationSession.getInstance().getSimulatorEventMessages());
             ApplicationSession.getInstance().getSimulatorEventMessages().addListener((ListChangeListener<String>) change -> {
@@ -411,7 +415,14 @@ public class MainMenuController {
         monthLabel.setText("Month: " + month);
     }
 
+    private void showTemporaryAlert(String message) {
+        alertLabel.setText(message);
+        alertLabel.setVisible(true);
 
+        Timeline hideAlert = new Timeline(new KeyFrame(Duration.seconds(2), e -> alertLabel.setVisible(false)));
+        hideAlert.setCycleCount(1);
+        hideAlert.play();
+    }
 
 
 

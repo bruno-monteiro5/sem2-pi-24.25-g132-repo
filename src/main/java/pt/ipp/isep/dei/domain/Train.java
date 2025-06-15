@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Train implements Serializable {
+public class    Train implements Serializable {
 
     private final int id;
     private final Locomotive locomotive;
@@ -84,16 +84,13 @@ public class Train implements Serializable {
     public void resetAnnualDistance() {this.distanceTraveled = 0;}
 
 
-    public int getTravelDuration() {
-        Station from = this.currentStation;
-        Station to = assignedRoute.getNextStation(from);
-
+    public int getTravelDuration(Station from, Station to) {
         if (from == null || to == null) return 1;
 
         // Obter linha entre as estações
         RailwayLine line = assignedRoute.getRailwayLine(from, to);
 
-        // Velocidade base
+        // Velocidade base da locomotiva
         double baseSpeed = this.locomotive.getType().getTopSpeed();
 
         // Ajuste por tipo de linha
@@ -105,19 +102,22 @@ public class Train implements Serializable {
         double speedReduction = Math.min(0.05 * numCarriages, 0.30);
         speed *= (1.0 - speedReduction);
 
-        // Distância e tempo
+        // Distância em unidades do mapa
         double dx = to.getLocation().getX() - from.getLocation().getX();
         double dy = to.getLocation().getY() - from.getLocation().getY();
         double distanceInMapUnits = Math.sqrt(dx * dx + dy * dy);
 
+        // Conversão para km
         double mapScaleKm = Repositories.getInstance().getMapRepository().getActiveMap().getScale();
         double distanceInKm = distanceInMapUnits * mapScaleKm;
 
+        // Tempo de viagem (em horas → 1 tick = 1 hora)
         double travelTimeHours = distanceInKm / speed;
-        double travelTimeTicks = travelTimeHours; // 1 tick = 1 hora
+        double travelTimeTicks = travelTimeHours;
 
         return Math.max(1, (int) Math.ceil(travelTimeTicks));
     }
+
 
 
     @Override
