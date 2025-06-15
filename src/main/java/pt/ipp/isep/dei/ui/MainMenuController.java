@@ -302,22 +302,37 @@ public class MainMenuController {
     @FXML
     private void handleStartSimulation() {
         if (simulatorEngine != null) {
+            // Limpa eventos anteriores
+            eventMessages.clear();
+
+            // Garante que o listener está atualizado
+            simulatorEngine.setEventListener(event -> {
+                Platform.runLater(() -> {
+                    String msg = String.format("[Tick %d] %s", event.getScheduledTick(), event.getClass().getSimpleName());
+                    eventMessages.add(msg);
+                });
+            });
+
+            // Cria o loop se ainda não existir
             if (simulationLoop == null) {
                 simulationLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> simulatorEngine.runNextEvent()));
                 simulationLoop.setCycleCount(Timeline.INDEFINITE);
             }
 
+            simulatorEngine.start();
             simulationLoop.play();
-            eventMessages.add("▶ Simulação iniciada");
+
+            eventMessages.add("▶ Simulation started");
         }
     }
+
 
 
     @FXML
     private void handlePauseSimulation() {
         if (simulationLoop != null) {
             simulationLoop.pause();
-            eventMessages.add("⏸ Simulação pausada");
+            eventMessages.add("⏸ Simulation paused");
         }
     }
 
