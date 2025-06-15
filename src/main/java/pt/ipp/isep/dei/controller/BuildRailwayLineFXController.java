@@ -13,7 +13,6 @@ import pt.ipp.isep.dei.ui.MainFX;
 import java.io.IOException;
 
 public class BuildRailwayLineFXController {
-    // Campos FXML
     @FXML private TextField lineNameField;
     @FXML private ComboBox<String> startStationComboBox;
     @FXML private ComboBox<String> endStationComboBox;
@@ -22,15 +21,12 @@ public class BuildRailwayLineFXController {
     @FXML private ListView<String> intermediateStationsListView;
     @FXML private Label statusLabel;
 
-    // Lista observável para estações intermediárias
     private final ObservableList<String> intermediateStations = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        // Configura a ListView para usar a lista observável
         intermediateStationsListView.setItems(intermediateStations);
 
-        // Carrega estações nos ComboBox (exemplo - na prática viria de um serviço/repositório)
         loadStations();
     }
 
@@ -70,7 +66,6 @@ public class BuildRailwayLineFXController {
             return;
         }
 
-        // Adiciona a estação
         intermediateStations.add(selectedStation);
         intermediateStationComboBox.getSelectionModel().clearSelection();
         showStatus("Station added: " + selectedStation, "green");
@@ -78,7 +73,6 @@ public class BuildRailwayLineFXController {
 
     @FXML
     public void handleClearForm(ActionEvent actionEvent) {
-        // Limpa todos os campos
         lineNameField.clear();
         startStationComboBox.getSelectionModel().clearSelection();
         endStationComboBox.getSelectionModel().clearSelection();
@@ -90,7 +84,6 @@ public class BuildRailwayLineFXController {
 
     @FXML
     public void handleBuildLine(ActionEvent actionEvent) {
-        // Validações dos campos obrigatórios
         if (lineNameField.getText().trim().isEmpty()) {
             showStatus("Please enter a line name.", "red");
             return;
@@ -117,9 +110,6 @@ public class BuildRailwayLineFXController {
                 showStatus("Distance must be greater than zero.", "red");
                 return;
             }
-
-            // Aqui você chamaria o serviço para criar a linha ferroviária
-            // railwayService.buildRailwayLine(...);
 
             showStatus("Railway line created successfully!", "green");
             handleClearForm(null); // Limpa o formulário após sucesso
