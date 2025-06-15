@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import pt.ipp.isep.dei.ui.MainFX;
 
 import java.io.IOException;
 
@@ -129,18 +130,11 @@ public class BuildRailwayLineFXController {
     }
 
     @FXML
-    public void handleBack(ActionEvent actionEvent) {
+    public void handleBack() {
         try {
-            // Obtém a cena atual a partir de qualquer nó da interface
-            Scene currentScene = lineNameField.getScene();
-
-            // Carrega a tela do menu principal
-            Parent root = FXMLLoader.load(getClass().getResource("/pt/ipp/isep/dei/view/MainMenu.fxml"));
-
-            // Define a nova cena
-            currentScene.setRoot(root);
-        } catch (IOException e) {
-            showStatus("Error loading main menu.", "red");
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
+            MainFX.setRootScene(root, "Main Menu", 800, 600,true);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

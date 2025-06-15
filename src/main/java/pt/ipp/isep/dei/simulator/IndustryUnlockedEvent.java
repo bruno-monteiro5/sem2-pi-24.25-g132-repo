@@ -23,4 +23,11 @@ public class IndustryUnlockedEvent extends SimulationEvent {
     public Industry getIndustry() {
         return industry;
     }
+
+    @Override
+    public String getDescription() {
+        return String.format("Tick %d: New industry unlocked: %s",
+                getScheduledTick(), industry.getName());
+    }
+
 }

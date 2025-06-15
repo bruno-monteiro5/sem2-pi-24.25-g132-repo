@@ -2,7 +2,7 @@
 
 The full implementation and explanation of this user story is available in:
 
-📍 [Jupyter Notebook](src/main/java/MATCP/Sprint3/MATCP_Project_Sprint3.ipynb)
+📍 [Jupyter Notebook](src/main/java/MATCP/Sprint3/US30_US31)
 
 Included in the notebook:
 - Pearson correlation analysis

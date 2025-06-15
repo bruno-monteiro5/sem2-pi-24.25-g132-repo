@@ -58,7 +58,7 @@
 
     <center>
         <StackPane>
-            <ScrollPane fx:id="mapScrollPane" fitToWidth="true" fitToHeight="true">
+            <ScrollPane fx:id="mapScrollPane" fitToWidth="false" fitToHeight="false">
                 <StackPane fx:id="mapArea">
                     <ImageView fx:id="mapImageView" preserveRatio="true" />
                 </StackPane>

@@ -28,6 +28,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import pt.ipp.isep.dei.domain.Position;
 import javafx.scene.layout.StackPane;
+import javafx.geometry.Bounds;
+
 
 
 
@@ -97,32 +99,54 @@ public class MainMenuController {
         } else {
             mapLabel.setText("Map: " + map.getName());
             scaleLabel.setText("Scale: " + map.getScale());
-            setupZoomOnScroll();
+
+
+            int mapWidth = map.getWidth();
+            int mapHeight = map.getHeight();
 
             Image background = new Image("/images/map.png");
             mapImageView.setImage(background);
+
+            List<Station> stations = Repositories.getInstance().getStationRepository().getAll();
+
+            for (Station station : stations) {
+                Position pos = station.getLocation();
+                double visualX = pos.getX() * cellSize;
+                double visualY = pos.getY() * cellSize;
+
+                ImageView stationIcon = new ImageView(new Image(
+                        getClass().getResource("/images/station_icon.png").toExternalForm()));
+                stationIcon.setFitWidth(24);
+                stationIcon.setFitHeight(24);
+
+                stationIcon.setLayoutX(visualX - stationIcon.getFitWidth() / 2);
+                stationIcon.setLayoutY(visualY - stationIcon.getFitHeight() / 2);
+
+                Tooltip.install(stationIcon, new Tooltip(station.getName()));
+
+                mapArea.getChildren().add(stationIcon);
+
+            }
+
+            int mapWidthCells = map.getWidth();
+            int mapHeightCells = map.getHeight();
+
             mapImageView.setFitWidth(650);
             mapImageView.setFitHeight(640);
 
-            cellSize = (int) Math.min(650.0 / map.getWidth(), 640.0 / map.getHeight());
-            mapArea.setPrefSize(map.getWidth() * cellSize, map.getHeight() * cellSize);
+            mapArea.setMinSize(mapImageView.getFitWidth(), mapImageView.getFitHeight());
+            mapArea.setPrefSize(mapImageView.getFitWidth(), mapImageView.getFitHeight());
 
-            for (Station station : Repositories.getInstance().getStationRepository().getAll()) {
-                Position pos = station.getLocation();
-                double x = pos.getX() * cellSize;
-                double y = pos.getY() * cellSize;
 
-                Circle dot = new Circle(x, y, cellSize / 2.5);
-                dot.setFill(Color.DARKBLUE);
-                dot.setStroke(Color.WHITE);
-                dot.setStrokeWidth(1.5);
-
-                Tooltip.install(dot, new Tooltip(station.getName()));
-                mapArea.getChildren().add(dot);
-            }
+            cellSize = (int) Math.min(
+                    650.0 / mapWidthCells,
+                    640.0 / mapHeightCells
+            );
+            mapArea.setPrefSize(mapWidthCells * cellSize, mapHeightCells * cellSize);
 
             mapImageView.setVisible(true);
             noMapLabel.setVisible(false);
+            Platform.runLater(this::setupZoomOnScroll);
         }
 
         if (scenario != null && scenario.getPeriodTime() != null) {
@@ -131,14 +155,16 @@ public class MainMenuController {
             monthLabel.setText("Month: 1");
 
             Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
+
             simulatorEngine = ApplicationSession.getInstance().getSimulatorEngine();
 
             if (simulatorEngine == null) {
                 simulatorEngine = new SimulatorEngine(scenario, player);
-                simulatorEngine.setEventListener(); // mantém o que já tinhas
+                simulatorEngine.setEventListener(); // Registo único e direto
                 ApplicationSession.getInstance().setSimulatorEngine(simulatorEngine);
             }
 
+            // Ligação da lista global de eventos à ListView
             eventListView.setItems(ApplicationSession.getInstance().getSimulatorEventMessages());
 
         } else {
@@ -149,16 +175,48 @@ public class MainMenuController {
         startAutoUpdate();
     }
 
+
+
+
     private void setupZoomOnScroll() {
         mapScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.isControlDown()) {
-                zoomFactor += (event.getDeltaY() > 0) ? ZOOM_DELTA : -ZOOM_DELTA;
-                if (zoomFactor < ZOOM_DELTA) zoomFactor = ZOOM_DELTA;
+                double zoomFactorDelta = event.getDeltaY() > 0 ? 1.1 : 0.9;
+                double oldZoom = zoomFactor;
+                zoomFactor *= zoomFactorDelta;
+                zoomFactor = clamp(zoomFactor, 0.2, 5.0);
+
+                Bounds viewport = mapScrollPane.getViewportBounds();
+                Bounds contentSize = mapArea.getBoundsInParent();
+
+                double mouseX = event.getX();
+                double mouseY = event.getY();
+
+                double posX = (mapScrollPane.getHvalue() * (contentSize.getWidth() - viewport.getWidth()) + mouseX) / oldZoom;
+                double posY = (mapScrollPane.getVvalue() * (contentSize.getHeight() - viewport.getHeight()) + mouseY) / oldZoom;
+
                 mapArea.setScaleX(zoomFactor);
                 mapArea.setScaleY(zoomFactor);
+
+                Platform.runLater(() -> {
+                    double newContentWidth = mapArea.getBoundsInParent().getWidth();
+                    double newContentHeight = mapArea.getBoundsInParent().getHeight();
+
+                    double scrollH = (posX * zoomFactor - mouseX) / (newContentWidth - viewport.getWidth());
+                    double scrollV = (posY * zoomFactor - mouseY) / (newContentHeight - viewport.getHeight());
+
+                    mapScrollPane.setHvalue(clamp(scrollH, 0, 1));
+                    mapScrollPane.setVvalue(clamp(scrollV, 0, 1));
+                });
+
                 event.consume();
             }
         });
+    }
+
+
+    private double clamp(double value, double min, double max) {
+        return Math.max(min, Math.min(max, value));
     }
 
 
@@ -216,6 +274,7 @@ public class MainMenuController {
 
     @FXML
     public void handleBuildRailwayLine() {
+        loadFXML("/fxml/BuildRailwayLine.fxml", "Build Railway Line", 600, 400);
     }
 
     @FXML

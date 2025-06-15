@@ -83,4 +83,11 @@ public class TrainArrivalEvent extends SimulationEvent {
         engine.scheduleEvent(new TrainDepartureEvent(departureTick, train, station));
     }
 
+    @Override
+    public String getDescription() {
+        return String.format("Tick %d: Train %s arrived at %s",
+                getScheduledTick(), train.getId(),station.getName());
+    }
+
+
 }

@@ -88,7 +88,7 @@ public class SimulatorEngine {
 
         this.eventListener = event -> {
             Platform.runLater(() -> {
-                String msg = String.format("[Tick %d] %s", event.getScheduledTick(), event.getClass().getSimpleName());
+                String msg = event.getDescription();
                 System.out.println("🟢 Listener ativado → a adicionar: " + msg);
 
                 if (alreadyAddedMessages.add(msg)) {
