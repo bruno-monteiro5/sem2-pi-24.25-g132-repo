@@ -177,5 +177,9 @@ public class SimulatorEngine {
         return announcedLocomotives;
     }
 
+    public void setEventListener(Consumer<SimulationEvent> listener) {
+        this.eventListener = listener;
+    }
+
 
 }

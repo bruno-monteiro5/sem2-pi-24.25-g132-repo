@@ -20,11 +20,25 @@
                         <Label fx:id="mapLabel" text="Map: -" />
                         <Label fx:id="scenarioLabel" text="Scenario: -" />
                         <Label fx:id="yearLabel" text="Year: -" />
-                        <Label fx:id="monthLabel" text="Month: -" /> <!-- ADICIONADO -->
+                        <Label fx:id="monthLabel" text="Month: -" />
                         <Label fx:id="budgetLabel" text="Budget: -" />
                         <Label fx:id="scaleLabel" text="Scale: -" />
                     </children>
                 </HBox>
+
+                <!-- ✅ Alert label (temporário) -->
+                <Label fx:id="alertLabel"
+                       text=""
+                       visible="false"
+                       style="-fx-background-color: yellow;
+                              -fx-text-fill: red;
+                              -fx-font-weight: bold;
+                              -fx-font-size: 14px;
+                              -fx-padding: 6 12 6 12;
+                              -fx-background-radius: 10;"
+                       alignment="CENTER"
+                       maxWidth="Infinity" />
+
                 <HBox alignment="CENTER" spacing="10">
                     <children>
                         <Button onAction="#handleStartSimulation"

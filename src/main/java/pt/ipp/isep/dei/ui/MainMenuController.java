@@ -23,12 +23,15 @@ import pt.ipp.isep.dei.domain.Player;
 import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.domain.Station;
 import pt.ipp.isep.dei.repository.Repositories;
+import pt.ipp.isep.dei.simulator.MonthProgressionEvent;
 import pt.ipp.isep.dei.simulator.SimulatorEngine;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import pt.ipp.isep.dei.domain.Position;
 import javafx.scene.layout.StackPane;
 import javafx.geometry.Bounds;
+import pt.ipp.isep.dei.simulator.MonthProgressionEvent;
+
 
 
 
@@ -51,6 +54,8 @@ public class MainMenuController {
     @FXML private Label noMapLabel;
     @FXML private Button backToLoginButton;
     @FXML private Label monthLabel;
+    @FXML private Label alertLabel;
+
 
     @FXML
     private Button startButton;
@@ -100,7 +105,6 @@ public class MainMenuController {
             mapLabel.setText("Map: " + map.getName());
             scaleLabel.setText("Scale: " + map.getScale());
 
-
             int mapWidth = map.getWidth();
             int mapHeight = map.getHeight();
 
@@ -123,26 +127,13 @@ public class MainMenuController {
                 stationIcon.setLayoutY(visualY - stationIcon.getFitHeight() / 2);
 
                 Tooltip.install(stationIcon, new Tooltip(station.getName()));
-
                 mapArea.getChildren().add(stationIcon);
-
             }
 
-            int mapWidthCells = map.getWidth();
-            int mapHeightCells = map.getHeight();
-
+            cellSize = (int) Math.min(650.0 / mapWidth, 640.0 / mapHeight);
+            mapArea.setPrefSize(mapWidth * cellSize, mapHeight * cellSize);
             mapImageView.setFitWidth(650);
             mapImageView.setFitHeight(640);
-
-            mapArea.setMinSize(mapImageView.getFitWidth(), mapImageView.getFitHeight());
-            mapArea.setPrefSize(mapImageView.getFitWidth(), mapImageView.getFitHeight());
-
-
-            cellSize = (int) Math.min(
-                    650.0 / mapWidthCells,
-                    640.0 / mapHeightCells
-            );
-            mapArea.setPrefSize(mapWidthCells * cellSize, mapHeightCells * cellSize);
 
             mapImageView.setVisible(true);
             noMapLabel.setVisible(false);
@@ -160,11 +151,28 @@ public class MainMenuController {
 
             if (simulatorEngine == null) {
                 simulatorEngine = new SimulatorEngine(scenario, player);
-                simulatorEngine.setEventListener(); // Registo único e direto
                 ApplicationSession.getInstance().setSimulatorEngine(simulatorEngine);
             }
 
-            // Ligação da lista global de eventos à ListView
+            simulatorEngine.setEventListener(event -> {
+                Platform.runLater(() -> {
+                    if (event instanceof MonthProgressionEvent) {
+                        String description = event.getDescription();
+                        if (description.toLowerCase().contains("new locomotive available")) {
+                            showTemporaryAlert(description);
+                        }
+                    }
+
+                    updateTime();
+                    String msg = String.format("[Tick %d] %s", simulatorEngine.getCurrentTick(), event.getClass().getSimpleName());
+                    ObservableList<String> messages = ApplicationSession.getInstance().getSimulatorEventMessages();
+                    if (!messages.contains(msg)) {
+                        messages.add(msg);
+                    }
+                });
+            });
+
+
             eventListView.setItems(ApplicationSession.getInstance().getSimulatorEventMessages());
 
         } else {
@@ -381,6 +389,15 @@ public class MainMenuController {
     public void updateDateLabels(int year, int month) {
         yearLabel.setText("Year: " + year);
         monthLabel.setText("Month: " + month);
+    }
+
+    private void showTemporaryAlert(String message) {
+        alertLabel.setText(message);
+        alertLabel.setVisible(true);
+
+        Timeline hideAlert = new Timeline(new KeyFrame(Duration.seconds(2), e -> alertLabel.setVisible(false)));
+        hideAlert.setCycleCount(1);
+        hideAlert.play();
     }
 
 
