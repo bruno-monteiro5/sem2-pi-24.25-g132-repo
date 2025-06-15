@@ -6,42 +6,53 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="700.0" prefWidth="980.0" style="-fx-background-color: linear-gradient(to bottom, #f0f8ff, #d9ecf2);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.ui.MainMenuController">
+<BorderPane prefHeight="700.0" prefWidth="980.0"
+            style="-fx-background-color: linear-gradient(to bottom, #f0f8ff, #d9ecf2);"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pt.ipp.isep.dei.ui.MainMenuController">
 
     <top>
         <VBox spacing="10" style="-fx-padding: 10;">
-           <children>
-               <HBox spacing="20">
-                  <children>
-                      <Label fx:id="mapLabel" text="Map: -" />
-                      <Label fx:id="scenarioLabel" text="Scenario: -" />
-                      <Label fx:id="yearLabel" text="Year: -" />
-                      <Label fx:id="budgetLabel" text="Budget: -" />
-                      <Label fx:id="scaleLabel" text="Scale: -" />
-                  </children>
-               </HBox>
-               <HBox alignment="CENTER" spacing="10">
-                  <children>
-                      <Button onAction="#handleStartSimulation" fx:id="startButton" style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 6 18;" text="▶ Start" />
-                      <Button onAction="#handlePauseSimulation" fx:id="pauseButton" style="-fx-background-color: #ef6c00; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 6 18;" text="⏸ Pause" />
-                  </children>
-               </HBox>
-           </children>
+            <children>
+                <HBox spacing="20">
+                    <children>
+                        <Label fx:id="mapLabel" text="Map: -" />
+                        <Label fx:id="scenarioLabel" text="Scenario: -" />
+                        <Label fx:id="yearLabel" text="Year: -" />
+                        <Label fx:id="monthLabel" text="Month: -" /> <!-- ADICIONADO -->
+                        <Label fx:id="budgetLabel" text="Budget: -" />
+                        <Label fx:id="scaleLabel" text="Scale: -" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <Button onAction="#handleStartSimulation"
+                                fx:id="startButton"
+                                style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 6 18;"
+                                text="▶ Start" />
+                        <Button onAction="#handlePauseSimulation"
+                                fx:id="pauseButton"
+                                style="-fx-background-color: #ef6c00; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 6 18;"
+                                text="⏸ Pause" />
+                    </children>
+                </HBox>
+            </children>
         </VBox>
     </top>
 
     <left>
         <VBox prefWidth="200" style="-fx-padding: 10;">
-           <children>
-               <Region VBox.vgrow="ALWAYS" />
-               <VBox spacing="5">
-                  <children>
-                      <Label text="Events" />
-                      <ListView fx:id="eventListView" />
-                  </children>
-               </VBox>
-               <Region VBox.vgrow="ALWAYS" />
-           </children>
+            <children>
+                <Region VBox.vgrow="ALWAYS" />
+                <VBox spacing="5">
+                    <children>
+                        <Label text="Events" />
+                        <ListView fx:id="eventListView" />
+                    </children>
+                </VBox>
+                <Region VBox.vgrow="ALWAYS" />
+            </children>
         </VBox>
     </left>
 
@@ -52,40 +63,60 @@
                     <ImageView fx:id="mapImageView" preserveRatio="true" />
                 </StackPane>
             </ScrollPane>
-               <Label fx:id="noMapLabel" style="-fx-font-size: 18px; -fx-text-fill: darkred;" text="No map loaded. Please return to login." visible="false" />
+            <Label fx:id="noMapLabel"
+                   style="-fx-font-size: 18px; -fx-text-fill: darkred;"
+                   text="No map loaded. Please return to login."
+                   visible="false" />
         </StackPane>
     </center>
 
     <right>
         <VBox prefWidth="200" style="-fx-padding: 10;">
-           <children>
-               <Region VBox.vgrow="ALWAYS" />
-               <VBox alignment="CENTER" spacing="10">
-                  <children>
-                      <Button onAction="#handleBuildStation" onMouseEntered="#highlight" onMouseExited="#resetHighlight" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Build Station" />
-                      <Button onAction="#handleUpgradeStation" onMouseEntered="#highlight" onMouseExited="#resetHighlight" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Upgrade Station" />
-                      <Button onAction="#handleStationDetails" onMouseEntered="#highlight" onMouseExited="#resetHighlight" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: #00695c; -fx-text-fill: white;" text="See Station Details" />
-                      <Button onAction="#handleBuildRailwayLine" onMouseEntered="#highlight" onMouseExited="#resetHighlight" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Build a Railway Line" />
-                      <Button onAction="#handleBuyLocomotive" onMouseEntered="#highlight" onMouseExited="#resetHighlight" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Buy a Locomotive" />
-                      <Button onAction="#handleCreateTrain" onMouseEntered="#highlight" onMouseExited="#resetHighlight" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Create a Train" />
-                      <Button onAction="#handleAssignTrainToARoute" onMouseEntered="#highlight" onMouseExited="#resetHighlight" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Assign Train to Route" />
-                      <Button onAction="#handleListAllTrains" onMouseEntered="#highlight" onMouseExited="#resetHighlight" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: #00695c; -fx-text-fill: white;" text="List all trains" />
-                      <Button fx:id="backToLoginButton" onAction="#handleLogout" onMouseEntered="#highlight" onMouseExited="#resetHighlight" style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" text="Back to Login" />
-                  </children>
-   
-               </VBox>
-               <Region VBox.vgrow="ALWAYS" />
-           </children>
+            <children>
+                <Region VBox.vgrow="ALWAYS" />
+                <VBox alignment="CENTER" spacing="10">
+                    <children>
+                        <Button onAction="#handleBuildStation" onMouseEntered="#highlight" onMouseExited="#resetHighlight"
+                                prefHeight="31.0" prefWidth="185.0"
+                                style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Build Station" />
+                        <Button onAction="#handleUpgradeStation" onMouseEntered="#highlight" onMouseExited="#resetHighlight"
+                                prefHeight="31.0" prefWidth="185.0"
+                                style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Upgrade Station" />
+                        <Button onAction="#handleStationDetails" onMouseEntered="#highlight" onMouseExited="#resetHighlight"
+                                prefHeight="31.0" prefWidth="185.0"
+                                style="-fx-background-color: #00695c; -fx-text-fill: white;" text="See Station Details" />
+                        <Button onAction="#handleBuildRailwayLine" onMouseEntered="#highlight" onMouseExited="#resetHighlight"
+                                prefHeight="31.0" prefWidth="185.0"
+                                style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Build a Railway Line" />
+                        <Button onAction="#handleBuyLocomotive" onMouseEntered="#highlight" onMouseExited="#resetHighlight"
+                                prefHeight="31.0" prefWidth="185.0"
+                                style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Buy a Locomotive" />
+                        <Button onAction="#handleCreateTrain" onMouseEntered="#highlight" onMouseExited="#resetHighlight"
+                                prefHeight="31.0" prefWidth="185.0"
+                                style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Create a Train" />
+                        <Button onAction="#handleAssignTrainToARoute" onMouseEntered="#highlight" onMouseExited="#resetHighlight"
+                                prefHeight="31.0" prefWidth="185.0"
+                                style="-fx-background-color: #00695c; -fx-text-fill: white;" text="Assign Train to Route" />
+                        <Button onAction="#handleListAllTrains" onMouseEntered="#highlight" onMouseExited="#resetHighlight"
+                                prefHeight="31.0" prefWidth="185.0"
+                                style="-fx-background-color: #00695c; -fx-text-fill: white;" text="List all trains" />
+                        <Button fx:id="backToLoginButton" onAction="#handleLogout"
+                                onMouseEntered="#highlight" onMouseExited="#resetHighlight"
+                                style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;"
+                                text="Back to Login" />
+                    </children>
+                </VBox>
+                <Region VBox.vgrow="ALWAYS" />
+            </children>
         </VBox>
     </right>
 
-
     <bottom>
         <HBox alignment="BOTTOM_RIGHT" spacing="10" style="-fx-padding: 10;">
-           <children>
-               <Label text="Zoom with Ctrl + Scroll"
-                      style="-fx-font-size: 13px; -fx-font-family: 'Segoe UI Semibold'; -fx-text-fill: #666; -fx-padding: 2 6 2 6;" />
-           </children>
+            <children>
+                <Label text="Zoom with Ctrl + Scroll"
+                       style="-fx-font-size: 13px; -fx-font-family: 'Segoe UI Semibold'; -fx-text-fill: #666; -fx-padding: 2 6 2 6;" />
+            </children>
         </HBox>
     </bottom>
 

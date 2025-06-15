@@ -48,6 +48,8 @@ public class MainMenuController {
     @FXML private ImageView mapImageView;
     @FXML private Label noMapLabel;
     @FXML private Button backToLoginButton;
+    @FXML private Label monthLabel;
+
     @FXML
     private Button startButton;
 
@@ -95,44 +97,29 @@ public class MainMenuController {
         } else {
             mapLabel.setText("Map: " + map.getName());
             scaleLabel.setText("Scale: " + map.getScale());
-
             setupZoomOnScroll();
-
-            int mapWidth = map.getWidth();
-            int mapHeight = map.getHeight();
 
             Image background = new Image("/images/map.png");
             mapImageView.setImage(background);
+            mapImageView.setFitWidth(650);
+            mapImageView.setFitHeight(640);
 
-            List<Station> stations = Repositories.getInstance().getStationRepository().getAll();
+            cellSize = (int) Math.min(650.0 / map.getWidth(), 640.0 / map.getHeight());
+            mapArea.setPrefSize(map.getWidth() * cellSize, map.getHeight() * cellSize);
 
-            for (Station station : stations) {
+            for (Station station : Repositories.getInstance().getStationRepository().getAll()) {
                 Position pos = station.getLocation();
-                double visualX = pos.getX() * cellSize;
-                double visualY = pos.getY() * cellSize;
+                double x = pos.getX() * cellSize;
+                double y = pos.getY() * cellSize;
 
-                Circle dot = new Circle(visualX, visualY, cellSize / 2.5);
+                Circle dot = new Circle(x, y, cellSize / 2.5);
                 dot.setFill(Color.DARKBLUE);
                 dot.setStroke(Color.WHITE);
                 dot.setStrokeWidth(1.5);
 
-                Tooltip tooltip = new Tooltip(station.getName());
-                Tooltip.install(dot, tooltip);
-
+                Tooltip.install(dot, new Tooltip(station.getName()));
                 mapArea.getChildren().add(dot);
             }
-
-            int mapWidthCells = map.getWidth();
-            int mapHeightCells = map.getHeight();
-
-            mapImageView.setFitWidth(650);
-            mapImageView.setFitHeight(640);
-
-            cellSize = (int) Math.min(
-                    650.0 / mapWidthCells,
-                    640.0 / mapHeightCells
-            );
-            mapArea.setPrefSize(mapWidthCells * cellSize, mapHeightCells * cellSize);
 
             mapImageView.setVisible(true);
             noMapLabel.setVisible(false);
@@ -141,18 +128,17 @@ public class MainMenuController {
         if (scenario != null && scenario.getPeriodTime() != null) {
             scenarioLabel.setText("Scenario: " + scenario.getName());
             yearLabel.setText("Year: " + scenario.getPeriodTime().getStartYear());
+            monthLabel.setText("Month: 1");
 
             Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
-
             simulatorEngine = ApplicationSession.getInstance().getSimulatorEngine();
 
             if (simulatorEngine == null) {
                 simulatorEngine = new SimulatorEngine(scenario, player);
-                simulatorEngine.setEventListener(); // Registo único e direto
+                simulatorEngine.setEventListener(); // mantém o que já tinhas
                 ApplicationSession.getInstance().setSimulatorEngine(simulatorEngine);
             }
 
-            // Ligação da lista global de eventos à ListView
             eventListView.setItems(ApplicationSession.getInstance().getSimulatorEventMessages());
 
         } else {
@@ -160,26 +146,16 @@ public class MainMenuController {
             pauseButton.setDisable(true);
         }
 
-        updateBudget();
-        startBudgetAutoUpdate();
+        startAutoUpdate();
     }
-
-
-
 
     private void setupZoomOnScroll() {
         mapScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.isControlDown()) {
-                if (event.getDeltaY() > 0) {
-                    zoomFactor += ZOOM_DELTA;
-                } else {
-                    zoomFactor -= ZOOM_DELTA;
-                    if (zoomFactor < ZOOM_DELTA) zoomFactor = ZOOM_DELTA;
-                }
-
+                zoomFactor += (event.getDeltaY() > 0) ? ZOOM_DELTA : -ZOOM_DELTA;
+                if (zoomFactor < ZOOM_DELTA) zoomFactor = ZOOM_DELTA;
                 mapArea.setScaleX(zoomFactor);
                 mapArea.setScaleY(zoomFactor);
-
                 event.consume();
             }
         });
@@ -198,11 +174,24 @@ public class MainMenuController {
         }
     }
 
-    private void startBudgetAutoUpdate() {
-        budgetUpdater = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateBudget()));
+    private void startAutoUpdate() {
+        budgetUpdater = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            updateBudget();
+            updateTime();
+        }));
         budgetUpdater.setCycleCount(Timeline.INDEFINITE);
         budgetUpdater.play();
     }
+
+    private void updateTime() {
+        if (simulatorEngine != null) {
+            int year = simulatorEngine.getCurrentSimulatedYear();
+            int month = simulatorEngine.getCurrentSimulatedMonth();
+            yearLabel.setText("Year: " + year);
+            monthLabel.setText("Month: " + month);
+        }
+    }
+
 
     @FXML
     public void handleBuildStation() {
@@ -333,6 +322,13 @@ public class MainMenuController {
             sharedEventMessages.add("⏸ Simulation paused");
         }
     }
+
+    public void updateDateLabels(int year, int month) {
+        yearLabel.setText("Year: " + year);
+        monthLabel.setText("Month: " + month);
+    }
+
+
 
 
 }
