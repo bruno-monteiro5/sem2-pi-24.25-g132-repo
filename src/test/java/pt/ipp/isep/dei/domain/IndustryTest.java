@@ -1,126 +1,120 @@
 package pt.ipp.isep.dei.domain;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the {@link Industry} class.
- * This test class ensures 100% statement and branch coverage.
+ *
+ * These tests verify object creation, accessors, mutators,
+ * position checking, and equality logic.
  */
 public class IndustryTest {
 
     /**
-     * Tests the constructor with custom parameters.
+     * Tests the constructor with manual name, position and type.
+     *
+     * It checks that all fields are correctly stored,
+     * and that cargoType and yearlyQuantity are default.
      */
     @Test
-    void testConstructorWithNameTypeAndPosition() {
-        Position position = new Position(5, 10);
-        Industry industry = new Industry("Coal Mine", position, IndustryType.PRIMARY);
+    public void testConstructorWithNamePositionType() {
+        Position pos = new Position(1, 2);
+        Industry industry = new Industry("FactoryA", pos, IndustryType.MIXED);
 
-        assertEquals("Coal Mine", industry.getName());
-        assertEquals(position, industry.getPosition());
-        assertEquals(IndustryType.PRIMARY, industry.getType());
+        assertEquals("FactoryA", industry.getName());
+        assertEquals(pos, industry.getPosition());
+        assertEquals(IndustryType.MIXED, industry.getType());
+        assertNull(industry.getCargoType());
+        assertEquals(0, industry.getYearlyQuantity());
     }
 
     /**
-     * Tests the constructor using predefined IndustryData.
+     * Tests the constructor that uses IndustryData.
+     *
+     * It checks that the name and type are taken from IndustryData,
+     * and that the position is assigned as expected.
      */
     @Test
-    void testConstructorWithIndustryData() {
-        IndustryData data = IndustryData.COAL_MINE;
-        Position position = new Position(3, 6);
-        Industry industry = new Industry(data, position);
+    public void testConstructorWithIndustryData() {
+        Position pos = new Position(3, 4);
+        Industry industry = new Industry(IndustryData.COAL_MINE, pos);
 
-        assertEquals(data.getName(), industry.getName());
-        assertEquals(position, industry.getPosition());
-        assertEquals(data.getType(), industry.getType());
+        assertEquals(IndustryData.COAL_MINE.getName(), industry.getName());
+        assertEquals(IndustryData.COAL_MINE.getType(), industry.getType());
+        assertEquals(pos, industry.getPosition());
     }
 
     /**
-     * Tests the get and set methods for name, position, and type.
+     * Tests the setters for name, position and type.
+     *
+     * This test ensures that the values are correctly updated.
      */
     @Test
-    void testGettersAndSetters() {
-        Position pos1 = new Position(2, 2);
-        Position pos2 = new Position(3, 3);
-        Industry industry = new Industry("Test", pos1, IndustryType.MIXED);
-
-        industry.setName("Updated");
-        assertEquals("Updated", industry.getName());
-
-        industry.setPosition(pos2);
-        assertEquals(pos2, industry.getPosition());
-
+    public void testSetters() {
+        Industry industry = new Industry("Old", new Position(0, 0), IndustryType.PRIMARY);
+        industry.setName("New");
+        industry.setPosition(new Position(5, 5));
         industry.setType(IndustryType.TRANSFORMING);
+
+        assertEquals("New", industry.getName());
+        assertEquals(new Position(5, 5), industry.getPosition());
         assertEquals(IndustryType.TRANSFORMING, industry.getType());
     }
 
     /**
-     * Tests the toString() method for expected formatting.
+     * Tests the string representation of the Industry object.
+     *
+     * Checks that it includes the name, position and type.
      */
     @Test
-    void testToString() {
-        Industry industry = new Industry("Bakery", new Position(1, 1), IndustryType.MIXED);
-        String result = industry.toString();
+    public void testToString() {
+        Industry industry = new Industry("Ind", new Position(1, 1), IndustryType.PRIMARY);
+        String str = industry.toString();
 
-        assertTrue(result.contains("Bakery"));
-        assertTrue(result.contains("Position"));
-        assertTrue(result.contains("MIXED"));
+        assertTrue(str.contains("Ind"));
+        assertTrue(str.contains("1"));
+        assertTrue(str.contains("PRIMARY"));
     }
 
     /**
-     * Tests the isAtPosition method for both matching and non-matching positions.
+     * Tests the method isAtPosition.
+     *
+     * It should return true if the position matches, false otherwise.
      */
     @Test
-    void testIsAtPosition() {
-        Position p1 = new Position(7, 7);
-        Position p2 = new Position(8, 8);
-        Industry industry = new Industry("Oil Well", p1, IndustryType.PRIMARY);
+    public void testIsAtPosition() {
+        Position pos = new Position(2, 2);
+        Industry industry = new Industry("Test", pos, IndustryType.MIXED);
 
-        assertTrue(industry.isAtPosition(new Position(7, 7)));
-        assertFalse(industry.isAtPosition(p2));
+        assertTrue(industry.isAtPosition(new Position(2, 2)));
+        assertFalse(industry.isAtPosition(new Position(0, 0)));
     }
 
     /**
-     * Tests the equals method for various conditions:
-     * - Equal industries (same name, position, type)
-     * - Different name (case-insensitive)
-     * - Different position
-     * - Different type
-     * - Null and wrong class
+     * Tests the equals method.
+     *
+     * Verifies equality using:
+     * - same name (case-insensitive)
+     * - same position
+     * - same type
+     *
+     * Also tests inequality in all cases and with invalid types or null.
      */
     @Test
-    void testEquals() {
-        Position pos = new Position(4, 4);
-        Industry i1 = new Industry("Iron Mine", pos, IndustryType.PRIMARY);
-        Industry i2 = new Industry("iron mine", new Position(4, 4), IndustryType.PRIMARY);
+    public void testEquals() {
+        Position pos = new Position(3, 3);
+        Industry i1 = new Industry("Same", pos, IndustryType.PRIMARY);
+        Industry i2 = new Industry("same", new Position(3, 3), IndustryType.PRIMARY);
         Industry i3 = new Industry("Different", pos, IndustryType.PRIMARY);
-        Industry i4 = new Industry("Iron Mine", new Position(1, 1), IndustryType.PRIMARY);
-        Industry i5 = new Industry("Iron Mine", pos, IndustryType.MIXED);
+        Industry i4 = new Industry("Same", new Position(4, 4), IndustryType.PRIMARY);
+        Industry i5 = new Industry("Same", pos, IndustryType.MIXED);
 
-        assertEquals(i1, i2);
-        assertNotEquals(i1, i3);
-        assertNotEquals(i1, i4);
-        assertNotEquals(i1, i5);
-        assertNotEquals(i1, null);
-        assertNotEquals(i1, "not an industry");
+        assertEquals(i1, i2);              // same name (case-insensitive), position, type
+        assertNotEquals(i1, i3);           // different name
+        assertNotEquals(i1, i4);           // different position
+        assertNotEquals(i1, i5);           // different type
+        assertNotEquals(i1, null);         // null comparison
+        assertNotEquals(i1, "not an industry"); // different class
     }
-
-    @Test
-    void testGetCargoType() {
-        Industry industry = new Industry("Factory", new Position(1, 2), IndustryType.TRANSFORMING);
-        // O valor padrão deve ser null
-        assertNull(industry.getCargoType());
-    }
-
-    @Test
-    void testGetYearlyOutput() {
-        Industry industry = new Industry("Factory", new Position(1, 2), IndustryType.TRANSFORMING);
-        // O valor padrão deve ser 0
-        assertEquals(0, industry.getYearlyQuantity());
-    }
-
-
 }
-
