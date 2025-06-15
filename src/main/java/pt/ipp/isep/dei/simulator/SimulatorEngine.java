@@ -1,6 +1,9 @@
 package pt.ipp.isep.dei.simulator;
 
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import pt.ipp.isep.dei.domain.*;
+import pt.ipp.isep.dei.ui.ApplicationSession;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -74,9 +77,29 @@ public class SimulatorEngine {
         return currentMonth;
     }
 
-    public void setEventListener(Consumer<SimulationEvent> listener) {
-        this.eventListener = listener;
+    public void setEventListener() {
+        if (this.eventListener != null) {
+            return;
+        }
+
+        // Referência à lista partilhada de eventos
+        ObservableList<String> list = ApplicationSession.getInstance().getSimulatorEventMessages();
+        Set<String> alreadyAddedMessages = new HashSet<>();
+
+        this.eventListener = event -> {
+            Platform.runLater(() -> {
+                String msg = String.format("[Tick %d] %s", event.getScheduledTick(), event.getClass().getSimpleName());
+                System.out.println("🟢 Listener ativado → a adicionar: " + msg);
+
+                if (alreadyAddedMessages.add(msg)) {
+                    list.add(msg);
+                }
+            });
+        };
     }
+
+
+
 
     public boolean start() {
         if (isRunning) return false;
@@ -154,20 +177,6 @@ public class SimulatorEngine {
     public List<LocomotiveType> getAnnouncedLocomotives() {
         return announcedLocomotives;
     }
-
-    public void notifyEvent(SimulationEvent event) {
-        if (eventListener != null) {
-            eventListener.accept(event);
-        }
-    }
-
-    public void notifyEventHandled(SimulationEvent event) {
-        if (eventListener != null) {
-            eventListener.accept(event);
-        }
-    }
-
-
 
 
 }
