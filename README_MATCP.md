@@ -9,7 +9,9 @@
 
 📍 Location of the Jupyter Notebook: [Jupyter Notebook](src/main/java/MATCP/Sprint3/US30_US31/MATCP_Project_Sprint3.ipynb)
 
-📄 Documentation links:
-- US30: [US030-README.md](docs/system-documentation/US030/US030-README.md)
-- US31: [US031-README.md](docs/system-documentation/US031/US031-README.md)
+📍 Location of US29 : [US29](src/main/java/MATCP/Sprint3/US29/data_us29.csv)
+
+📄 Documentation - All the documentation about us 30 and us 31 can be found in the Sprint 3 Jupyter Notebook (link above). 
+
+💻 Code - All the code about us 30 and us 31 can be found in the Sprint 3 Jupyter Notebook (link above). 
 
