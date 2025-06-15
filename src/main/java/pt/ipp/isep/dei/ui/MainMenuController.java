@@ -7,11 +7,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,11 +21,20 @@ import javafx.util.Duration;
 import pt.ipp.isep.dei.domain.Map;
 import pt.ipp.isep.dei.domain.Player;
 import pt.ipp.isep.dei.domain.Scenario;
+import pt.ipp.isep.dei.domain.Station;
 import pt.ipp.isep.dei.repository.Repositories;
 import pt.ipp.isep.dei.simulator.SimulatorEngine;
+import javafx.scene.shape.Circle;
+import javafx.scene.paint.Color;
+import pt.ipp.isep.dei.domain.Position;
+import javafx.scene.layout.StackPane;
+
+
+
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 public class MainMenuController {
@@ -33,10 +44,9 @@ public class MainMenuController {
     @FXML private Label yearLabel;
     @FXML private Label budgetLabel;
     @FXML private Label scaleLabel;
-    @FXML private Pane mapArea;
+    @FXML private StackPane mapArea;
     @FXML private ImageView mapImageView;
     @FXML private Label noMapLabel;
-    @FXML private Slider zoomSlider;
     @FXML private Button backToLoginButton;
     @FXML
     private Button startButton;
@@ -53,10 +63,15 @@ public class MainMenuController {
     private Timeline simulationLoop;
 
 
+    @FXML private ScrollPane mapScrollPane;
+
 
 
     private Timeline budgetUpdater;
     private int cellSize;
+    private double zoomFactor = 1.0;
+    private final double ZOOM_DELTA = 0.1;
+
 
     private static MainMenuController instance;
 
@@ -80,11 +95,38 @@ public class MainMenuController {
             mapLabel.setText("Map: " + map.getName());
             scaleLabel.setText("Scale: " + map.getScale());
 
+            setupZoomOnScroll();
+
+
+            int mapWidth = map.getWidth();
+            int mapHeight = map.getHeight();
+
             Image background = new Image("/images/map.png");
             mapImageView.setImage(background);
 
+            List<Station> stations = Repositories.getInstance().getStationRepository().getAll();
+
+            for (Station station : stations) {
+                Position pos = station.getLocation();
+                double visualX = pos.getX() * cellSize;
+                double visualY = pos.getY() * cellSize;
+
+                Circle dot = new Circle(visualX, visualY, cellSize / 2.5);
+                dot.setFill(Color.DARKBLUE);
+                dot.setStroke(Color.WHITE);
+                dot.setStrokeWidth(1.5);
+
+                Tooltip tooltip = new Tooltip(station.getName());
+                Tooltip.install(dot, tooltip);
+
+                mapArea.getChildren().add(dot);
+            }
+
             int mapWidthCells = map.getWidth();
             int mapHeightCells = map.getHeight();
+
+            mapImageView.setFitWidth(mapWidthCells);
+            mapImageView.setFitHeight(mapHeightCells);
 
             mapImageView.setFitWidth(650);
             mapImageView.setFitHeight(640);
@@ -95,13 +137,9 @@ public class MainMenuController {
             );
             mapArea.setPrefSize(mapWidthCells * cellSize, mapHeightCells * cellSize);
 
+
             mapImageView.setVisible(true);
             noMapLabel.setVisible(false);
-
-            zoomSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-                mapImageView.setScaleX(newVal.doubleValue());
-                mapImageView.setScaleY(newVal.doubleValue());
-            });
         }
 
         if (scenario != null && scenario.getPeriodTime() != null) {
@@ -125,6 +163,24 @@ public class MainMenuController {
 
         updateBudget();
         startBudgetAutoUpdate();
+    }
+
+    private void setupZoomOnScroll() {
+        mapScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (event.isControlDown()) {
+                if (event.getDeltaY() > 0) {
+                    zoomFactor += ZOOM_DELTA;
+                } else {
+                    zoomFactor -= ZOOM_DELTA;
+                    if (zoomFactor < ZOOM_DELTA) zoomFactor = ZOOM_DELTA;
+                }
+
+                mapArea.setScaleX(zoomFactor);
+                mapArea.setScaleY(zoomFactor);
+
+                event.consume();
+            }
+        });
     }
 
 
