@@ -41,6 +41,11 @@ public class EditorMainMenuController {
     }
 
     @FXML
+    public void handleSaveScenario() {
+        loadScene("/fxml/SaveScenario.fxml", "Scenario Map");
+    }
+
+    @FXML
     public void handleBack() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
