@@ -62,6 +62,14 @@ public class Position implements Serializable {
         this.y = y;
     }
 
+
+    public int distanceTo(Position other) {
+        int dx = this.x - other.x;
+        int dy = this.y - other.y;
+        return (int) Math.sqrt(dx * dx + dy * dy);
+    }
+
+
     /**
      * Provides a string representation of the position in the format "Position{x=X, y=Y}".
      *

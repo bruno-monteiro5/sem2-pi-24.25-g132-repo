@@ -43,6 +43,14 @@ public class Cargo {
         this.baseValue = baseValue;
     }
 
+    public Cargo(Cargo original) {
+        this.type = original.type;
+        this.quantity = original.quantity;
+        this.isSupply = original.isSupply;
+        this.baseValue = original.baseValue;
+    }
+
+
     /**
      * Gets the type of cargo.
      *

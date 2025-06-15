@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.simulator;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import pt.ipp.isep.dei.domain.*;
+import pt.ipp.isep.dei.repository.Repositories;
 import pt.ipp.isep.dei.ui.ApplicationSession;
 
 import java.util.*;
@@ -181,6 +182,60 @@ public class SimulatorEngine {
     public Consumer<SimulationEvent> getEventListener() {
         return eventListener;
     }
+
+    public void generateMonthlyCargo() {
+        List<Station> stations = Repositories.getInstance().getStationRepository().getAll();
+        Scenario scenario = ApplicationSession.getInstance().getCurrentScenario();
+        double factor = scenario.getIndustryGenerationFactor(); // e.g., 1.0 = 100%
+
+        for (Station station : stations) {
+            List<Industry> industries = station.getIndustriesInRange();
+
+            for (Industry industry : industries) {
+                String industryName = industry.getName();
+                IndustryData data = IndustryData.fromName(industryName);
+
+                if (data == null) {
+                    System.out.printf("⚠️ Industry '%s' not found in IndustryData. Skipping.%n", industryName);
+                    continue;
+                }
+
+                // Generate supplied cargo
+                for (String cargoName : data.getSuppliedCargos()) {
+                    try {
+                        CargoType type = CargoType.valueOf(cargoName.toUpperCase());
+                        int quantity = (int) (10 * factor);
+                        Cargo cargo = new Cargo(type, quantity, true, type.getBaseValue());
+                        station.addSupplyCargo(cargo);
+
+                        System.out.printf("🟢 Generated SUPPLY cargo: %s x%d for station %s (Industry: %s)%n",
+                                type.name(), quantity, station.getName(), industryName);
+                    } catch (IllegalArgumentException e) {
+                        System.out.printf("❌ Unknown cargo type (supply): '%s' from industry '%s'%n",
+                                cargoName, industryName);
+                    }
+                }
+
+                // Generate demanded cargo
+                for (String cargoName : data.getDemandedCargos()) {
+                    try {
+                        CargoType type = CargoType.valueOf(cargoName.toUpperCase());
+                        int quantity = (int) (10 * factor);
+                        Cargo cargo = new Cargo(type, quantity, false, type.getBaseValue());
+                        station.addDemandCargo(cargo);
+
+                        System.out.printf("🟡 Generated DEMAND cargo: %s x%d for station %s (Industry: %s)%n",
+                                type.name(), quantity, station.getName(), industryName);
+                    } catch (IllegalArgumentException e) {
+                        System.out.printf("❌ Unknown cargo type (demand): '%s' from industry '%s'%n",
+                                cargoName, industryName);
+                    }
+                }
+            }
+        }
+    }
+
+
 
 
 

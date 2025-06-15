@@ -236,6 +236,19 @@ public class Train implements Serializable {
         return Math.max(1, (int) Math.ceil(travelTimeTicks));
     }
 
+    public boolean acceptsCargo(Cargo cargo) {
+        if (assignedRoute == null || cargo == null) return false;
+
+        for (PointOfRoute point : assignedRoute.getPointsOfRoute()) {
+            Station station = point.getStation();
+            if (station.hasDemandFor(cargo.getType().name())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     /**
      * Returns a string representation of the train.
      *
