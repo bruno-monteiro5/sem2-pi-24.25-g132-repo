@@ -34,6 +34,19 @@ public class MonthProgressionEvent extends SimulationEvent {
                 System.out.printf("🚨 New Locomotive Available: %s (introduced in %d)%n",
                         type.getName(), year);
 
+                engine.getEventListener().accept(new SimulationEvent(getScheduledTick()) {
+                    @Override
+                    public void handle(SimulatorEngine engine) {
+                        // sem ação
+                    }
+
+                    @Override
+                    public String getDescription() {
+                        return String.format("🚨 New Locomotive Available: %s (introduced in %d)", type.getName(), year);
+                    }
+                });
+
+
                 engine.getAnnouncedLocomotives().add(type);
             }
         }

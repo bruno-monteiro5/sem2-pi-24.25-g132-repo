@@ -1,12 +1,8 @@
 package pt.ipp.isep.dei;
 
-import pt.ipp.isep.dei.repository.Repositories;
-import pt.ipp.isep.dei.repository.SimulatorRepository;
 import pt.ipp.isep.dei.ui.MainFX;
 import pt.ipp.isep.dei.ui.console.menu.MainMenuUI;
-import pt.ipp.isep.dei.ui.console.menu.SimulatorUI;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**

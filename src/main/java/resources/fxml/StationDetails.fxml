@@ -19,32 +19,34 @@
     </top>
 
     <center>
-        <VBox spacing="15" alignment="CENTER">
-            <padding>
-                <Insets top="25" right="25" bottom="25" left="25"/>
-            </padding>
-            <children>
+        <StackPane alignment="CENTER">
+            <VBox spacing="15" alignment="CENTER" prefWidth="480" maxWidth="480">
+                <padding>
+                    <Insets top="25" right="25" bottom="25" left="25"/>
+                </padding>
+                <children>
 
-                <HBox spacing="10" alignment="CENTER">
-                    <Label text="Select Station:" style="-fx-font-weight: bold;"/>
-                    <ComboBox fx:id="stationComboBox" prefWidth="300"/>
-                </HBox>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Select Station:" style="-fx-font-weight: bold;"/>
+                        <ComboBox fx:id="stationComboBox" prefWidth="300"/>
+                    </HBox>
 
-                <TextArea fx:id="detailsArea"
-                          editable="false"
-                          prefRowCount="15"
-                          wrapText="true"
-                          prefWidth="600"
-                          style="-fx-control-inner-background: #f4f9ff; -fx-border-color: #b0bec5;"/>
+                    <TextArea fx:id="detailsArea"
+                              editable="false"
+                              prefRowCount="15"
+                              wrapText="true"
+                              prefWidth="600"
+                              style="-fx-control-inner-background: #f4f9ff; -fx-border-color: #b0bec5;"/>
 
-                <Label fx:id="warningLabel"
-                       text=""
-                       style="-fx-text-fill: red; -fx-font-style: italic;" />
+                    <Label fx:id="warningLabel"
+                           text=""
+                           style="-fx-text-fill: red; -fx-font-style: italic;" />
 
-                <Button text="Back to Menu"
-                        onAction="#handleBack"
-                        style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" />
-            </children>
-        </VBox>
+                    <Button text="Back to Menu"
+                            onAction="#handleBack"
+                            style="-fx-background-color: #b0bec5; -fx-text-fill: #263238; -fx-font-weight: bold;" />
+                </children>
+            </VBox>
+        </StackPane>
     </center>
 </BorderPane>

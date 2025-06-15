@@ -178,5 +178,10 @@ public class SimulatorEngine {
         this.eventListener = listener;
     }
 
+    public Consumer<SimulationEvent> getEventListener() {
+        return eventListener;
+    }
+
+
 
 }
