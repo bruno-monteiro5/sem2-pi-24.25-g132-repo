@@ -169,6 +169,7 @@ public class MainMenuController {
 
             if (simulatorEngine == null) {
                 simulatorEngine = new SimulatorEngine(scenario, player);
+                simulatorEngine.setEventListener();
                 ApplicationSession.getInstance().setSimulatorEngine(simulatorEngine);
             }
 
@@ -182,7 +183,7 @@ public class MainMenuController {
                     }
 
                     updateTime();
-                    String msg = String.format("[Tick %d] %s", simulatorEngine.getCurrentTick(), event.getClass().getSimpleName());
+                    String msg = event.getDescription();
                     ObservableList<String> messages = ApplicationSession.getInstance().getSimulatorEventMessages();
                     if (!messages.contains(msg)) {
                         messages.add(msg);

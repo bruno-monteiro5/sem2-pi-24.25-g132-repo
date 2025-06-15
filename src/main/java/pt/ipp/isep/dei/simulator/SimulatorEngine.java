@@ -82,20 +82,17 @@ public class SimulatorEngine {
             return;
         }
 
-        // Referência à lista partilhada de eventos
         ObservableList<String> list = ApplicationSession.getInstance().getSimulatorEventMessages();
-        Set<String> alreadyAddedMessages = new HashSet<>();
 
         this.eventListener = event -> {
             Platform.runLater(() -> {
-                String msg = event.getDescription();
-
-                if (alreadyAddedMessages.add(msg)) {
-                    list.add(msg);
-                }
+                String msg = event.getDescription(); // usa getDescription()
+                System.out.println("🟢 Listener ativado → a adicionar: " + msg);
+                list.add(msg); // ← essencial para aparecer na ListView
             });
         };
     }
+
 
 
 
