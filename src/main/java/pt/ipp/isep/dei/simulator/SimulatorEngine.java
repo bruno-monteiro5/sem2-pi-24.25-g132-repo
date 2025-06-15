@@ -89,7 +89,6 @@ public class SimulatorEngine {
         this.eventListener = event -> {
             Platform.runLater(() -> {
                 String msg = event.getDescription();
-                System.out.println("🟢 Listener ativado → a adicionar: " + msg);
 
                 if (alreadyAddedMessages.add(msg)) {
                     list.add(msg);
@@ -122,19 +121,19 @@ public class SimulatorEngine {
 
 
         for (Train train : scenario.getTrains()) {
-            System.out.println(">> Verificando train " + train.getId());
+            System.out.println(">> Verifying train " + train.getId());
 
             if (train.getAssignedRoute() == null) {
-                System.out.println("⚠️ Train " + train.getId() + " não tem rota atribuída!");
+                System.out.println("⚠️ Train " + train.getId() + " does not have route atributted!");
                 continue;
             }
 
             List<PointOfRoute> points = train.getAssignedRoute().getPointsOfRoute();
-            System.out.println(">> Rota atribuída tem " + points.size() + " pontos");
+            System.out.println(">> Atributted route has " + points.size() + " points");
 
             if (!points.isEmpty()) {
                 Station initialStation = points.get(0).getStation();
-                System.out.println(">> Primeira estação: " + initialStation.getName());
+                System.out.println(">> First Station: " + initialStation.getName());
 
                 train.setLastStationVisited(initialStation);
                 scheduleEvent(new TrainDepartureEvent(currentTick, train, initialStation));

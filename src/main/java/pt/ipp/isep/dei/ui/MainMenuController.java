@@ -370,10 +370,6 @@ public class MainMenuController {
     }
 
 
-
-
-
-
     @FXML
     private void handlePauseSimulation() {
         if (simulationLoop != null) {
