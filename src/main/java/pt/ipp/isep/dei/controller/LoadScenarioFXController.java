@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import pt.ipp.isep.dei.domain.Scenario;
 import pt.ipp.isep.dei.repository.Repositories;
+import pt.ipp.isep.dei.ui.ApplicationSession;
 import pt.ipp.isep.dei.ui.MainFX;
 
 import java.io.File;
@@ -36,7 +37,11 @@ public class LoadScenarioFXController {
 
         try {
             Scenario scenario = ScenarioFileHandler.loadScenarioFromFile(file.getPath());
-            Repositories.getInstance().getScenarioRepository().setActiveScenario(scenario);
+
+            ApplicationSession.getInstance().setCurrentScenario(scenario);
+
+            Repositories.getInstance().getScenarioRepository().add(scenario);
+
             feedbackLabel.setStyle("-fx-text-fill: green; -fx-font-style: italic;");
             feedbackLabel.setText("✔ Scenario loaded: " + scenario.getName());
         } catch (IOException | ClassNotFoundException e) {
