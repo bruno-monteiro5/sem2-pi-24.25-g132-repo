@@ -72,8 +72,8 @@
 
     <center>
         <StackPane>
-            <ScrollPane fx:id="mapScrollPane" fitToWidth="false" fitToHeight="false">
-                <StackPane fx:id="mapArea">
+            <ScrollPane fx:id="mapScrollPane" fitToWidth="true" fitToHeight="true">
+                <StackPane fx:id="mapArea" alignment="CENTER" style="-fx-background-color: transparent;">
                     <ImageView fx:id="mapImageView" preserveRatio="true" />
                 </StackPane>
             </ScrollPane>

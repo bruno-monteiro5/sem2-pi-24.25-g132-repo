@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,6 +32,8 @@ import pt.ipp.isep.dei.domain.Position;
 import javafx.scene.layout.StackPane;
 import javafx.geometry.Bounds;
 import pt.ipp.isep.dei.simulator.MonthProgressionEvent;
+
+import javafx.geometry.Point2D;
 
 
 
@@ -130,14 +133,28 @@ public class MainMenuController {
                 mapArea.getChildren().add(stationIcon);
             }
 
-            cellSize = (int) Math.min(650.0 / mapWidth, 640.0 / mapHeight);
-            mapArea.setPrefSize(mapWidth * cellSize, mapHeight * cellSize);
+            int mapWidthCells = map.getWidth();
+            int mapHeightCells = map.getHeight();
+
             mapImageView.setFitWidth(650);
             mapImageView.setFitHeight(640);
 
+            mapArea.setMinSize(mapImageView.getFitWidth(), mapImageView.getFitHeight());
+            mapArea.setPrefSize(mapImageView.getFitWidth(), mapImageView.getFitHeight());
+            mapArea.setAlignment(mapImageView, Pos.CENTER);
+            setupZoomOnScroll();
+
+
+
+            cellSize = (int) Math.min(
+                    650.0 / mapWidthCells,
+                    640.0 / mapHeightCells
+            );
+            mapArea.setPrefSize(mapWidthCells * cellSize, mapHeightCells * cellSize);
+
             mapImageView.setVisible(true);
             noMapLabel.setVisible(false);
-            Platform.runLater(this::setupZoomOnScroll);
+
         }
 
         if (scenario != null && scenario.getPeriodTime() != null) {
@@ -189,29 +206,24 @@ public class MainMenuController {
     private void setupZoomOnScroll() {
         mapScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.isControlDown()) {
-                double zoomFactorDelta = event.getDeltaY() > 0 ? 1.1 : 0.9;
+                double zoomFactorDelta = (event.getDeltaY() > 0) ? 1.1 : 0.9;
                 double oldZoom = zoomFactor;
-                zoomFactor *= zoomFactorDelta;
-                zoomFactor = clamp(zoomFactor, 0.2, 5.0);
+                zoomFactor = clamp(zoomFactor * zoomFactorDelta, 0.2, 5.0);
 
-                Bounds viewport = mapScrollPane.getViewportBounds();
-                Bounds contentSize = mapArea.getBoundsInParent();
+                Bounds viewportBounds = mapScrollPane.getViewportBounds();
+                Bounds contentBounds = mapArea.getBoundsInParent();
 
-                double mouseX = event.getX();
-                double mouseY = event.getY();
-
-                double posX = (mapScrollPane.getHvalue() * (contentSize.getWidth() - viewport.getWidth()) + mouseX) / oldZoom;
-                double posY = (mapScrollPane.getVvalue() * (contentSize.getHeight() - viewport.getHeight()) + mouseY) / oldZoom;
+                Point2D mousePoint = mapArea.sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
+                double dx = (mousePoint.getX() + mapScrollPane.getHvalue() * (contentBounds.getWidth() - viewportBounds.getWidth())) / oldZoom;
+                double dy = (mousePoint.getY() + mapScrollPane.getVvalue() * (contentBounds.getHeight() - viewportBounds.getHeight())) / oldZoom;
 
                 mapArea.setScaleX(zoomFactor);
                 mapArea.setScaleY(zoomFactor);
 
                 Platform.runLater(() -> {
-                    double newContentWidth = mapArea.getBoundsInParent().getWidth();
-                    double newContentHeight = mapArea.getBoundsInParent().getHeight();
-
-                    double scrollH = (posX * zoomFactor - mouseX) / (newContentWidth - viewport.getWidth());
-                    double scrollV = (posY * zoomFactor - mouseY) / (newContentHeight - viewport.getHeight());
+                    Bounds newBounds = mapArea.getBoundsInParent();
+                    double scrollH = (dx * zoomFactor - mousePoint.getX()) / (newBounds.getWidth() - viewportBounds.getWidth());
+                    double scrollV = (dy * zoomFactor - mousePoint.getY()) / (newBounds.getHeight() - viewportBounds.getHeight());
 
                     mapScrollPane.setHvalue(clamp(scrollH, 0, 1));
                     mapScrollPane.setVvalue(clamp(scrollV, 0, 1));
@@ -221,6 +233,8 @@ public class MainMenuController {
             }
         });
     }
+
+
 
 
     private double clamp(double value, double min, double max) {
