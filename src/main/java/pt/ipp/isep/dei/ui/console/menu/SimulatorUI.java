@@ -15,7 +15,6 @@ public class SimulatorUI implements Runnable {
     private final Scanner scanner = new Scanner(System.in);
 
     public SimulatorUI() {
-        // Construtor vazio — compatível com menu principal
     }
 
     public void run() {
@@ -23,7 +22,7 @@ public class SimulatorUI implements Runnable {
         Player player = Repositories.getInstance().getPlayerRepository().getCurrentPlayer();
 
         if (scenario == null || player == null) {
-            System.out.println("Cenário ou jogador não estão carregados. Crie ou carregue um primeiro.");
+            System.out.println("Scenario or player not loaded. Create or load one first.");
             return;
         }
 
@@ -32,7 +31,7 @@ public class SimulatorUI implements Runnable {
         int option;
         do {
             printMenu();
-            option = readInt("Escolha uma opção: ");
+            option = readInt("Choose option: ");
 
             switch (option) {
                 case 1 -> startSimulation();
@@ -40,29 +39,29 @@ public class SimulatorUI implements Runnable {
                 case 3 -> pauseSimulation();
                 case 4 -> listFutureEvents();
                 case 5 -> listPastEvents();
-                case 0 -> System.out.println("A sair do menu da simulação...");
-                default -> System.out.println("Opção inválida.");
+                case 0 -> System.out.println("Leaving simulation menu...");
+                default -> System.out.println("Invalid option.");
             }
 
         } while (option != 0);
     }
 
     private void printMenu() {
-        System.out.println("\n====== Menu da Simulação ======");
-        System.out.println("1. Iniciar simulação");
-        System.out.println("2. Avançar um evento");
-        System.out.println("3. Pausar simulação");
-        System.out.println("4. Ver eventos futuros");
-        System.out.println("5. Ver eventos passados");
-        System.out.println("0. Sair");
+        System.out.println("\n====== Simulation Menu ======");
+        System.out.println("1. Start simulation");
+        System.out.println("2. Advance an event");
+        System.out.println("3. Pause simulation");
+        System.out.println("4. See future events");
+        System.out.println("5. See past events");
+        System.out.println("0. Exit");
     }
 
     private void startSimulation() {
         boolean started = engine.start();
         if (started) {
-            System.out.println("Simulação iniciada.");
+            System.out.println("Simulation initiated.");
         } else {
-            System.out.println("Simulação já está a correr.");
+            System.out.println("Simulation already running.");
         }
     }
 
@@ -70,24 +69,24 @@ public class SimulatorUI implements Runnable {
         if (engine.hasMoreEvents()) {
             engine.runNextEvent();
         } else {
-            System.out.println("Não há mais eventos agendados.");
+            System.out.println("There are no more events scheduled.");
         }
     }
 
     private void pauseSimulation() {
         engine.pause();
-        System.out.println("Simulação pausada.");
+        System.out.println("Simulation paused.");
     }
 
     private void listFutureEvents() {
-        System.out.println("\n→ Eventos futuros:");
+        System.out.println("\n→ Future events:");
         for (SimulationEvent event : engine.getFutureEvents()) {
             System.out.printf("Tick %d: %s%n", event.getScheduledTick(), event.getClass().getSimpleName());
         }
     }
 
     private void listPastEvents() {
-        System.out.println("\n→ Eventos passados:");
+        System.out.println("\n→ Past events:");
         for (SimulationEvent event : engine.getPastEvents()) {
             System.out.printf("Tick %d: %s%n", event.getScheduledTick(), event.getClass().getSimpleName());
         }
@@ -96,7 +95,7 @@ public class SimulatorUI implements Runnable {
     private int readInt(String prompt) {
         System.out.print(prompt);
         while (!scanner.hasNextInt()) {
-            System.out.print("Valor inválido. Tente de novo: ");
+            System.out.print("Invalid value. Try again: ");
             scanner.next();
         }
         return scanner.nextInt();

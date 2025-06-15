@@ -16,19 +16,19 @@ public class SaveScenarioUI implements Runnable {
     public void run() {
         Scenario currentScenario = controller.getActiveScenario();
         if (currentScenario == null) {
-            System.out.println("Nenhum cenário carregado.");
+            System.out.println("No scenario loaded.");
             return;
         }
 
         Scanner sc = new Scanner(System.in);
-        System.out.print("Nome do ficheiro para guardar (ex: cenario1.dat): ");
+        System.out.print("Name of the file to save: ");
         String filename = sc.nextLine();
 
         try {
             ScenarioFileHandler.saveScenarioToFile(currentScenario, filename);
-            System.out.println("Cenário guardado com sucesso.");
+            System.out.println("Scenario saved successfully.");
         } catch (IOException e) {
-            System.out.println("Erro ao guardar o cenário: " + e.getMessage());
+            System.out.println("Error while saving: " + e.getMessage());
         }
     }
 }
