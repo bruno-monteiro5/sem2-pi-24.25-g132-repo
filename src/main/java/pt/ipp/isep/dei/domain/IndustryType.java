@@ -26,7 +26,7 @@ public enum IndustryType {
      */
     MIXED("Mixed Industry");
 
-    private final String description; // Detailed description of the industry type
+    private final String description;
 
     /**
      * Constructs an {@link IndustryType} with a specific description.

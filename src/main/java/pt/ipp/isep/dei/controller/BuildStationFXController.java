@@ -10,20 +10,39 @@ import pt.ipp.isep.dei.ui.MainFX;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
-
 import java.io.IOException;
 
+/**
+ * JavaFX controller responsible for the "Build Station" interface.
+ * <p>
+ * Handles user input, validation, and interaction with the BuildStationController.
+ */
 public class BuildStationFXController {
 
+    /** ComboBox for selecting the type of station. */
     @FXML private ComboBox<StationType> typeComboBox;
+
+    /** ComboBox for selecting the direction (only applies to STATION). */
     @FXML private ComboBox<String> directionComboBox;
+
+    /** TextField for entering the name of the station. */
     @FXML private TextField nameField;
+
+    /** TextField for entering the X coordinate. */
     @FXML private TextField xField;
+
+    /** TextField for entering the Y coordinate. */
     @FXML private TextField yField;
+
+    /** Label for showing status messages to the user. */
     @FXML private Label messageLabel;
 
+    /** Controller that manages the domain logic for station creation. */
     private final BuildStationController controller = new BuildStationController();
 
+    /**
+     * Initializes the JavaFX interface. Sets up combo box values and behavior.
+     */
     @FXML
     public void initialize() {
         typeComboBox.getItems().addAll(StationType.values());
@@ -36,6 +55,10 @@ public class BuildStationFXController {
         });
     }
 
+    /**
+     * Handles the user action of creating a station.
+     * Validates input and interacts with the controller.
+     */
     @FXML
     public void handleCreateStation() {
         messageLabel.setText("");
@@ -69,8 +92,6 @@ public class BuildStationFXController {
                 messageLabel.setText("Failed to create station.");
             }
 
-
-
         } catch (NumberFormatException e) {
             messageLabel.setStyle("-fx-text-fill: red;");
             messageLabel.setText("Invalid coordinates.");
@@ -83,11 +104,14 @@ public class BuildStationFXController {
         }
     }
 
+    /**
+     * Returns to the main menu screen.
+     */
     @FXML
     public void handleBack() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
-            MainFX.setRootScene(root, "Main Menu", 800, 600,true);
+            MainFX.setRootScene(root, "Main Menu", 800, 600, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
